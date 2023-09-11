@@ -15,10 +15,10 @@ const GridComponent: React.FC<GridComponentProps> = ({
   }));
 
   return (
-    <div>
+    <div className="flex justify-center items-center gap-2 mt-10">
       <div className="grid grid-cols-3 grid-rows-3 gap-4 p-4 text-black">
         {gridItems.map((item) => (
-          <div key={item.id} className="w-full h-24 bg-gray-200 rounded-lg">
+          <div key={item.id} className="w-28 h-28 bg-gray-200 rounded-lg">
             {item.data}
           </div>
         ))}
