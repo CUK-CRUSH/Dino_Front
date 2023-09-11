@@ -16,11 +16,10 @@ const AdminPage = () => {
                 <div className="absolute inset-0 flex justify-center items-center z-10">
                   <div className="w-[90%] h-[100%] bg-black rounded-2xl relative">
                     <div className="flex justify-center">
-                      <div className="w-24 h-24 bg-gray-200 rounded-full mt-20"></div>
+                      <div className="w-24 h-24 bg-gray-200 rounded-full mt-14"></div>
                     </div>
                     <div className="text-center text-xl mt-2">
                       <p>name</p>
-                      <p>description</p>
                     </div>
                     <GridComponent
                       inputValue={inputValue}
