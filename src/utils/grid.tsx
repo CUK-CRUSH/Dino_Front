@@ -32,12 +32,7 @@ const GridComponent = () => {
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
-        input1={clickedBox !== null ? boxInputs[clickedBox]?.input1 || "" : ""}
-        input2={clickedBox !== null ? boxInputs[clickedBox]?.input2 || "" : ""}
-        input3={clickedBox !== null ? boxInputs[clickedBox]?.input3 || "" : ""}
-        input4={clickedBox !== null ? boxInputs[clickedBox]?.input4 || "" : ""}
-        input5={clickedBox !== null ? boxInputs[clickedBox]?.input5 || "" : ""}
-        input6={clickedBox !== null ? boxInputs[clickedBox]?.input6 || "" : ""}
+        inputs={clickedBox !== null ? Object.values(boxInputs[clickedBox]) : []}
         clickedBox={clickedBox}
       />
     </div>
