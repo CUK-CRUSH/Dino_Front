@@ -5,9 +5,8 @@ import { RootState } from "@store/index";
 const AdminPage = () => {
   const boxInputs = useSelector((state: RootState) => state.boxData);
 
-  // 첫 번째 박스의 값을 가져옵니다.
-  const firstBoxInput1 = boxInputs[0].input1;
-  const firstBoxInput2 = boxInputs[0].input2;
+  // const firstBoxInput1 = boxInputs[0].input1;
+  // const firstBoxInput2 = boxInputs[0].input2;
   return (
     <div>
       <main className="my-10 text-white">
@@ -22,8 +21,8 @@ const AdminPage = () => {
                     </div>
                     <div className="text-center text-xl mt-2">
                       <p>name</p>
-                      <p> {firstBoxInput1}</p>
-                      <p> {firstBoxInput2}</p>
+                      {/* <p> {firstBoxInput1}</p>
+                      <p> {firstBoxInput2}</p> */}
                     </div>
                     <GridComponent />
                   </div>
