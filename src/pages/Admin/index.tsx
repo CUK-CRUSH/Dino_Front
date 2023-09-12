@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import GridComponent from "../../utils/grid";
-import { FaSearch } from "react-icons/fa";
 
 const AdminPage = () => {
   const [inputValue, setInputValue] = useState("");
@@ -25,13 +24,6 @@ const AdminPage = () => {
                       inputValue={inputValue}
                       currentIndex={currentIndex}
                     />
-                    {Array(9)
-                      .fill("newjeans - hype boy")
-                      .map((hi, index) => (
-                        <div className="text-[11px]" key={index}>
-                          {hi}
-                        </div>
-                      ))}
                   </div>
                 </div>
               </div>
