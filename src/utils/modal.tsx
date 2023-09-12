@@ -1,11 +1,13 @@
 import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { updateBoxData } from "@reducer/boxData";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
   input1: string;
   input2: string;
-  onSubmit: (input1: string, input2: string) => void;
+  clickedBox: number | null;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -13,10 +15,12 @@ const Modal: React.FC<ModalProps> = ({
   onClose,
   input1,
   input2,
-  onSubmit,
+  clickedBox,
 }) => {
   const [modalInput1, setModalInput1] = useState(input1);
   const [modalInput2, setModalInput2] = useState(input2);
+
+  const dispatch = useDispatch();
 
   const handleInputChange1 = (e: React.ChangeEvent<HTMLInputElement>) => {
     setModalInput1(e.target.value);
@@ -27,11 +31,15 @@ const Modal: React.FC<ModalProps> = ({
   };
 
   const handleSubmit = () => {
-    console.log("Input 1:", modalInput1);
-    console.log("Input 2:", modalInput2);
-
-    onSubmit(modalInput1, modalInput2);
-    onClose();
+    if (clickedBox !== null) {
+      dispatch(
+        updateBoxData({
+          boxId: clickedBox,
+          data: { input1: modalInput1, input2: modalInput2 },
+        })
+      );
+      onClose();
+    }
   };
 
   return isOpen ? (
