@@ -1,6 +1,7 @@
 import GridComponent from "@utils/grid";
 import { useSelector } from "react-redux";
 import { RootState } from "@store/index";
+import UnsplashImage from "@utils/unsplash";
 
 const AdminPage = () => {
   const boxInputs = useSelector((state: RootState) => state.boxData);
@@ -21,6 +22,7 @@ const AdminPage = () => {
                     </div>
                     <div className="text-center text-xl mt-2">
                       <p>name</p>
+                      <UnsplashImage />
                       {/* <p> {firstBoxInput1}</p>
                       <p> {firstBoxInput2}</p> */}
                     </div>
