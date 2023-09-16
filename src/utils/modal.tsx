@@ -65,7 +65,16 @@ const Modal: React.FC<ModalProps> = ({
     <div className="fixed inset-0 flex items-center justify-center z-50 text-white">
       <div className="bg-black p-4 rounded-lg">
         <div className="flex flex-col">
-          {modalInputs.map((input, index) => (
+          <input
+            type="text"
+            value={modalInputs[0]}
+            onChange={(e: ChangeEvent<HTMLInputElement>) =>
+              handleInputChange(0, e.target.value)
+            }
+            placeholder={`Input 1`}
+            className={` mb-2`}
+          />
+          {modalInputs.slice(1, 19).map((input, index) => (
             <div
               key={index}
               className={`flex ${index % 2 === 1 ? "mb-2" : ""}`}
@@ -74,14 +83,15 @@ const Modal: React.FC<ModalProps> = ({
                 type="text"
                 value={input}
                 onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  handleInputChange(index, e.target.value)
+                  handleInputChange(index + 1, e.target.value)
                 }
-                placeholder={`Input ${index + 1}`}
+                placeholder={`Input ${index + 2}`}
                 className={`mb-2`}
               />
             </div>
           ))}
         </div>
+
         <div className="flex justify-between">
           <button onClick={handleSubmit}>Submit</button>
           <button onClick={onClose}>X</button>
