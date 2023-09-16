@@ -72,7 +72,7 @@ const Modal: React.FC<ModalProps> = ({
               handleInputChange(0, e.target.value)
             }
             placeholder={`Input 1`}
-            className={` mb-2`}
+            className={`mb-2`}
           />
           {modalInputs.slice(1, 19).map((input, index) => (
             <div

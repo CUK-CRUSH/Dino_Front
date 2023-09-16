@@ -19,16 +19,19 @@ const GridComponent = () => {
     <div className="flex justify-center items-center gap-2 my-10">
       <div className="grid grid-cols-2 grid-rows-2 gap-4 p-4 text-black">
         {boxInputs.map((box, boxId) => (
-          <div
-            key={boxId}
-            className="w-[175px] h-[175px] bg-gray-200 rounded-lg cursor-pointer"
-            onClick={() => handleBoxClick(boxId)}
-          >
-            <div>{box.input1}</div>
-            <div>{box.input2}</div>
+          <div>
+            <div
+              key={boxId}
+              className="w-[175px] h-[175px] bg-gray-200 rounded-lg cursor-pointer"
+              onClick={() => handleBoxClick(boxId)}
+            >
+              <div>{box.input1}</div>
+              <div>{box.input2}</div>
+            </div>
           </div>
         ))}
       </div>
+
       <Modal
         isOpen={isModalOpen}
         onClose={() => setIsModalOpen(false)}
