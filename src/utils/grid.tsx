@@ -16,7 +16,7 @@ const GridComponent = () => {
   };
 
   return (
-    <div className="flex justify-center items-center gap-2 my-10">
+    <div className="flex justify-center items-center gap-2 my-20">
       <div className="grid grid-cols-2 grid-rows-2 gap-4 p-4 text-black">
         {boxInputs.map((box, boxId) => (
           <div>

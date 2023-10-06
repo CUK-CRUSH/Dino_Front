@@ -1,6 +1,5 @@
-import React, { useState, ChangeEvent, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";
-import { updateBoxData } from "@reducer/boxData";
 
 interface ModalProps {
   isOpen: boolean;
@@ -23,78 +22,18 @@ const Modal: React.FC<ModalProps> = ({
     setModalInputs(inputs);
   }, [inputs]);
 
-  const handleInputChange = (index: number, value: string) => {
-    const newInputs = [...modalInputs];
-    newInputs[index] = value;
-    setModalInputs(newInputs);
-  };
-
-  const handleSubmit = () => {
-    if (clickedBox !== null) {
-      dispatch(
-        updateBoxData({
-          boxId: clickedBox,
-          data: {
-            input1: modalInputs[0],
-            input2: modalInputs[1],
-            input3: modalInputs[2],
-            input4: modalInputs[3],
-            input5: modalInputs[4],
-            input6: modalInputs[5],
-            input7: modalInputs[6],
-            input8: modalInputs[7],
-            input9: modalInputs[8],
-            input10: modalInputs[9],
-            input11: modalInputs[10],
-            input12: modalInputs[11],
-            input13: modalInputs[12],
-            input14: modalInputs[13],
-            input15: modalInputs[14],
-            input16: modalInputs[15],
-            input17: modalInputs[16],
-            input18: modalInputs[17],
-            input19: modalInputs[18],
-          },
-        })
-      );
-      onClose();
-    }
-  };
-
   return isOpen ? (
     <div className="fixed inset-0 flex items-center justify-center z-50 text-white">
-      <div className="bg-black p-4 rounded-lg">
-        <div className="flex flex-col">
-          <input
-            type="text"
-            value={modalInputs[0]}
-            onChange={(e: ChangeEvent<HTMLInputElement>) =>
-              handleInputChange(0, e.target.value)
-            }
-            placeholder={`Input 1`}
-            className={`mb-2`}
-          />
-          {modalInputs.slice(1, 19).map((input, index) => (
-            <div
-              key={index}
-              className={`flex ${index % 2 === 1 ? "mb-2" : ""}`}
-            >
-              <input
-                type="text"
-                value={input}
-                onChange={(e: ChangeEvent<HTMLInputElement>) =>
-                  handleInputChange(index + 1, e.target.value)
-                }
-                placeholder={`Input ${index + 2}`}
-                className={`mb-2`}
-              />
-            </div>
-          ))}
+      <div className="h-full w-full flex flex-col bg-black ">
+        <div className="h-1/3 rounded-b-3xl bg-white">
+          <div className="flex justify-between">
+            <button onClick={onClose}>❌</button>
+          </div>
+          <p>사진 데이터를 담은 img태그가 들어옴</p>
         </div>
 
-        <div className="flex justify-between">
-          <button onClick={handleSubmit}>Submit</button>
-          <button onClick={onClose}>X</button>
+        <div className=" h-2/3 ">
+          <p>hi</p>
         </div>
       </div>
     </div>
