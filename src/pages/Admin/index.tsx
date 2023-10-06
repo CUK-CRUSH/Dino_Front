@@ -9,7 +9,10 @@ const AdminPage = () => {
         </div>
 
         <div className="bg-black h-4/5 rounded-t-3xl relative">
-          <img className="w-20 h-20 rounded-full bg-red-700 absolute  left-1/2 transform -translate-x-1/2 -translate-y-6"></img>
+          <img
+            src="/profileSample.jpg"
+            className="w-20 h-20 rounded-full bg-red-700 absolute  left-1/2 transform -translate-x-1/2 -translate-y-6"
+          />
           <GridComponent />
         </div>
       </div>
