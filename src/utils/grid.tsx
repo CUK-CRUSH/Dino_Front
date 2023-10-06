@@ -1,43 +1,38 @@
+// GridComponent.tsx
 import React, { useState } from "react";
-import { useSelector } from "react-redux";
-import { RootState } from "../store";
 import Modal from "@utils/modal";
 
 const GridComponent = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [clickedBox, setClickedBox] = useState<number | null>(null);
+  const [urlData, setUrlData] = useState({ title: "", artist: "", url: "" });
 
-  // Redux를 사용하여 상태를 가져옵니다.
-  const boxInputs = useSelector((state: RootState) => state.boxData);
-
-  const handleBoxClick = (boxId: number) => {
-    setClickedBox(boxId);
+  // Function to handle opening the Modal
+  const openModal = () => {
     setIsModalOpen(true);
+  };
+
+  // Function to update urlData
+  const updateUrlData = (title: string, artist: string, url: string) => {
+    setUrlData({ title, artist, url });
+    setIsModalOpen(false); // Close the UrlModal
   };
 
   return (
     <div className="flex justify-center items-center gap-2 my-20">
-      <div className="grid grid-cols-2 grid-rows-2 gap-4 p-4 text-black">
-        {boxInputs.map((box, boxId) => (
-          <div>
-            <div
-              key={boxId}
-              className="w-[175px] h-[175px] bg-gray-200 rounded-lg cursor-pointer"
-              onClick={() => handleBoxClick(boxId)}
-            >
-              <div>{box.input1}</div>
-              <div>{box.input2}</div>
-            </div>
-          </div>
-        ))}
+      <div className="grid grid-cols-2 grid-rows-2 gap-4 text-black">
+        <button className="text-white" onClick={openModal}>
+          Open Modal
+        </button>
       </div>
 
-      <Modal
-        isOpen={isModalOpen}
-        onClose={() => setIsModalOpen(false)}
-        inputs={clickedBox !== null ? Object.values(boxInputs[clickedBox]) : []}
-        clickedBox={clickedBox}
-      />
+      {isModalOpen && (
+        <Modal
+          isOpen={isModalOpen}
+          onClose={() => setIsModalOpen(false)}
+          urlData={urlData}
+          updateUrlData={updateUrlData}
+        />
+      )}
     </div>
   );
 };
