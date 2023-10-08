@@ -18,7 +18,7 @@ const UrlModal: React.FC<UrlModalProps> = ({
 
   const handleSave = () => {
     updateUrlData(title, artist, url);
-    onClose(); // Close the UrlModal after saving data
+    onClose();
   };
 
   return isOpen ? (

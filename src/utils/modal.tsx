@@ -20,7 +20,6 @@ const Modal: React.FC<ModalProps> = ({
   const openUrlModal = () => {
     setIsUrlModalOpen(true);
   };
-
   return isOpen ? (
     <div className="fixed inset-0 flex items-center justify-center z-50 text-white">
       <div className="h-full w-full flex flex-col bg-black">
