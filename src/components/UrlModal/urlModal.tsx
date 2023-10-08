@@ -1,4 +1,3 @@
-// UrlModal.tsx
 import React, { useState } from "react";
 
 interface UrlModalProps {

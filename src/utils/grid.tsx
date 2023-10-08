@@ -16,8 +16,18 @@ const GridComponent = () => {
   };
 
   const updateUrlData = (title: string, artist: string, url: string) => {
-    if (currentIndex !== null && currentIndex !== undefined) {
-      dispatch(updateGridData({ index: currentIndex, title, artist, url }));
+    if (currentIndex !== null) {
+      const boxIndex = currentIndex;
+      const dataIndex = 0;
+      dispatch(
+        updateGridData({
+          boxIndex,
+          dataIndex,
+          title,
+          artist,
+          url,
+        })
+      );
     }
     setIsModalOpen(false);
   };
@@ -41,7 +51,7 @@ const GridComponent = () => {
         <Modal
           isOpen={isModalOpen}
           onClose={() => setIsModalOpen(false)}
-          urlData={urlData[currentIndex]}
+          urlData={urlData[currentIndex].boxData}
           updateUrlData={updateUrlData}
         />
       )}

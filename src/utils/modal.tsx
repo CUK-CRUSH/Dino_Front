@@ -1,12 +1,16 @@
-// Modal.tsx
 import React, { useState } from "react";
 import UrlModal from "@components/UrlModal/urlModal";
 
 interface ModalProps {
   isOpen: boolean;
   onClose: () => void;
-  urlData: { title: string; artist: string; url: string };
-  updateUrlData: (title: string, artist: string, url: string) => void;
+  urlData: { title: string; artist: string; url: string }[];
+  updateUrlData: (
+    title: string,
+    artist: string,
+    url: string,
+    currentIndex: number | null
+  ) => void;
 }
 
 const Modal: React.FC<ModalProps> = ({
@@ -16,10 +20,13 @@ const Modal: React.FC<ModalProps> = ({
   updateUrlData,
 }) => {
   const [isUrlModalOpen, setIsUrlModalOpen] = useState(false);
+  const [currentIndex, setCurrentIndex] = useState<number | null>(null);
 
-  const openUrlModal = () => {
+  const openUrlModal = (index: number) => {
     setIsUrlModalOpen(true);
+    setCurrentIndex(index);
   };
+
   return isOpen ? (
     <div className="fixed inset-0 flex items-center justify-center z-50 text-white">
       <div className="h-full w-full flex flex-col bg-black">
@@ -31,20 +38,32 @@ const Modal: React.FC<ModalProps> = ({
         </div>
 
         <div className="h-2/3">
-          <button className="text-white mb-8 mr-5" onClick={openUrlModal}>
-            Open UrlModal
-          </button>
           <div>
-            <p>Title: {urlData.title}</p>
-            <p>Artist: {urlData.artist}</p>
-            <p>URL: {urlData.url}</p>
+            {urlData.map((data, index) => (
+              <div
+                className="flex flex-row my-6 mx-5 border-b border-white "
+                key={index}
+              >
+                <div>
+                  <button onClick={() => openUrlModal(index)}>
+                    {index + 1}
+                    {data.title}
+                  </button>
+                </div>
+                <div className="ml-2">{data.artist}</div>
+              </div>
+            ))}
           </div>
         </div>
-        {isUrlModalOpen && (
+
+        {isUrlModalOpen && currentIndex !== null && (
           <UrlModal
             isOpen={isUrlModalOpen}
             onClose={() => setIsUrlModalOpen(false)}
-            updateUrlData={updateUrlData}
+            updateUrlData={(title, artist, url) => {
+              updateUrlData(title, artist, url, currentIndex);
+              setIsUrlModalOpen(false);
+            }}
           />
         )}
       </div>
