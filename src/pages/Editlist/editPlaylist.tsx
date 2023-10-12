@@ -7,6 +7,7 @@ interface EditPlsyListProps {}
 const EditPlsyList: React.FC<EditPlsyListProps> = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isAddMusicModalOpen, setIsAddMusicModalOpen] = useState(false);
+  const [selectImage, setSelectImage] = useState<File | null>(null);
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -29,12 +30,37 @@ const EditPlsyList: React.FC<EditPlsyListProps> = () => {
     setIsAddMusicModalOpen(false);
   };
 
+  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      setSelectImage(file);
+    }
+  };
+
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 text-white">
       <div className="h-full w-full flex flex-col bg-black relative">
-        <div className="h-1/3 rounded-b-3xl bg-white">
-          <p>사진 데이터를 담은 img 태그가 들어옴</p>
+        <div
+          className="h-1/3 rounded-b-3xl bg-white"
+          onClick={() => document.getElementById("imageInput")?.click()}
+        >
+          {selectImage ? (
+            <img
+              src={URL.createObjectURL(selectImage)}
+              alt="Selected"
+              className="h-full w-full rounded-b-3xl flex justify-center items-center"
+            />
+          ) : (
+            <p>클릭하여 이미지를 업로드하세요</p>
+          )}
         </div>
+        <input
+          type="file"
+          id="imageInput"
+          accept="image/*"
+          style={{ display: "none" }}
+          onChange={handleImageChange}
+        />
         <div className="h-2/3">
           {isEditing ? (
             <div>
