@@ -1,5 +1,3 @@
-import GridComponent from "@utils/grid";
-
 const AdminPage = () => {
   return (
     <main>
@@ -13,7 +11,6 @@ const AdminPage = () => {
             src="/profileSample.jpg"
             className="w-20 h-20 rounded-full bg-red-700 absolute  left-1/2 transform -translate-x-1/2 -translate-y-6"
           />
-          <GridComponent />
         </div>
       </div>
     </main>
