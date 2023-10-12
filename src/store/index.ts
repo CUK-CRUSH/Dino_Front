@@ -1,11 +1,13 @@
 import { configureStore } from "@reduxjs/toolkit";
 import counterReducer from "@reducer/counter";
 import uiReducer from "@reducer/uiSlice";
+import imageReducer from "@reducer/imageSlice";
 
 export const store = configureStore({
   reducer: {
     counter: counterReducer,
     ui: uiReducer,
+    image: imageReducer,
   },
 });
 

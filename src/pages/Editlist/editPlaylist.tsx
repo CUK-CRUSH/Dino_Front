@@ -1,13 +1,19 @@
 import AddMusic from "@components/Addmusic/addMusic";
+import { selectImage } from "@reducer/imageSlice";
+import { RootState } from "@store/index";
 import React, { useState } from "react";
 import { AiFillPlusCircle } from "react-icons/ai";
+import { useDispatch, useSelector } from "react-redux";
 
 interface EditPlsyListProps {}
 
 const EditPlsyList: React.FC<EditPlsyListProps> = () => {
   const [isEditing, setIsEditing] = useState(false);
   const [isAddMusicModalOpen, setIsAddMusicModalOpen] = useState(false);
-  const [selectImage, setSelectImage] = useState<File | null>(null);
+  const selectedImage = useSelector(
+    (state: RootState) => state.image.selectedImage
+  );
+  const dispatch = useDispatch();
 
   const handleEditClick = () => {
     setIsEditing(true);
@@ -33,7 +39,8 @@ const EditPlsyList: React.FC<EditPlsyListProps> = () => {
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (file) {
-      setSelectImage(file);
+      // 이미지를 Redux store에 선택한 이미지로 저장
+      dispatch(selectImage(URL.createObjectURL(file)));
     }
   };
 
@@ -44,9 +51,9 @@ const EditPlsyList: React.FC<EditPlsyListProps> = () => {
           className="h-1/3 rounded-b-3xl bg-white"
           onClick={() => document.getElementById("imageInput")?.click()}
         >
-          {selectImage ? (
+          {selectedImage ? (
             <img
-              src={URL.createObjectURL(selectImage)}
+              src={selectedImage}
               alt="Selected"
               className="h-full w-full rounded-b-3xl flex justify-center items-center"
             />
