@@ -1,11 +1,28 @@
+import { updateArtist, updateTitle, updateURL } from "@reducer/musicadd";
+import { RootState } from "@store/index";
 import React from "react";
 import { FaTimes } from "react-icons/fa";
+import { useSelector, useDispatch } from "react-redux";
 
 interface AddMusicProps {
   onClose: () => void;
 }
 
 const AddMusic: React.FC<AddMusicProps> = ({ onClose }) => {
+  const dispatch = useDispatch();
+  const { title, artist, url } = useSelector(
+    (state: RootState) => state.musicAdd
+  );
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(updateTitle(e.target.value));
+  };
+
+  const handleArtistChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(updateArtist(e.target.value));
+  };
+  const handleURLChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    dispatch(updateURL(e.target.value));
+  };
   return (
     <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-70 text-white">
       <div className="bg-black w-full h-full  p-6 relative">
@@ -25,6 +42,8 @@ const AddMusic: React.FC<AddMusicProps> = ({ onClose }) => {
               type="text"
               placeholder="Title"
               className="w-full p-2 border border-gray-400 rounded"
+              value={title}
+              onChange={handleTitleChange}
             />
           </div>
           <div>
@@ -33,6 +52,8 @@ const AddMusic: React.FC<AddMusicProps> = ({ onClose }) => {
               type="text"
               placeholder="Artist"
               className="w-full p-2 border border-gray-400 rounded"
+              value={artist}
+              onChange={handleArtistChange}
             />
           </div>
           <div>
@@ -41,10 +62,15 @@ const AddMusic: React.FC<AddMusicProps> = ({ onClose }) => {
               type="url"
               placeholder="URL"
               className="w-full p-2 border border-gray-400 rounded"
+              value={url}
+              onChange={handleURLChange}
             />
           </div>
           <div className="flex justify-center">
-            <button className="bg-white text-black w-full mt-4 rounded-3xl h-10">
+            <button
+              className="bg-white text-black w-full mt-4 rounded-3xl h-10"
+              onClick={onClose}
+            >
               Add
             </button>
           </div>

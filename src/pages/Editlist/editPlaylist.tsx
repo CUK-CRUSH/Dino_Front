@@ -1,9 +1,10 @@
-import AddMusic from "@components/Addmusic/addMusic";
-import { selectImage } from "@reducer/imageSlice";
-import { RootState } from "@store/index";
 import React, { useState } from "react";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
+import { selectImage } from "@reducer/imageSlice";
+import { updateArtist, updateTitle, updateURL } from "@reducer/musicadd";
+import { RootState } from "@store/index";
+import AddMusic from "@components/Addmusic/addMusic";
 
 interface EditPlsyListProps {}
 
@@ -13,6 +14,7 @@ const EditPlsyList: React.FC<EditPlsyListProps> = () => {
   const selectedImage = useSelector(
     (state: RootState) => state.image.selectedImage
   );
+  const musicData = useSelector((state: RootState) => state.musicAdd);
   const dispatch = useDispatch();
 
   const handleEditClick = () => {
@@ -25,6 +27,9 @@ const EditPlsyList: React.FC<EditPlsyListProps> = () => {
   };
 
   const handleCancelClick = () => {
+    dispatch(updateTitle(""));
+    dispatch(updateArtist(""));
+    dispatch(updateURL(""));
     setIsEditing(false);
   };
 
@@ -72,10 +77,15 @@ const EditPlsyList: React.FC<EditPlsyListProps> = () => {
           {isEditing ? (
             <div>
               <div className="flex justify-between m-2">
-                <button className="text-red-500" onClick={handleSaveClick}>
+                <button className="text-red-500" onClick={handleCancelClick}>
                   Cancel
                 </button>
-                <button onClick={handleCancelClick}>Save</button>
+                <button onClick={handleSaveClick}>Save</button>
+              </div>
+              <div className="flex flex-row">
+                <h3>Title: {musicData.title}</h3>
+                <h3>Artist: {musicData.artist}</h3>
+                <h3>URL: {musicData.url}</h3>
               </div>
               <div className="absolute right-1 bottom-1">
                 <button onClick={handleAddMusicClick}>
@@ -84,12 +94,20 @@ const EditPlsyList: React.FC<EditPlsyListProps> = () => {
               </div>
             </div>
           ) : (
-            <div className="flex justify-end m-2">
-              <button onClick={handleEditClick}>Edit</button>
+            <div>
+              <div className="flex justify-end m-2">
+                <button onClick={handleEditClick}>Edit</button>
+              </div>
+              <div className="flex flex-row">
+                <h3>Title: {musicData.title}</h3>
+                <h3>Artist: {musicData.artist}</h3>
+                <h3>URL: {musicData.url}</h3>
+              </div>
             </div>
           )}
         </div>
       </div>
+
       {isAddMusicModalOpen && (
         <AddMusic onClose={() => handleCloseAddMusicModal()} />
       )}
