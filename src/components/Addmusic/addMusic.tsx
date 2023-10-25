@@ -1,3 +1,4 @@
+import Layout from "@components/Layout/layout";
 import { updateArtist, updateTitle, updateURL } from "@reducer/musicadd";
 import { RootState } from "@store/index";
 import React from "react";
@@ -24,8 +25,8 @@ const AddMusic: React.FC<AddMusicProps> = ({ onClose }) => {
     dispatch(updateURL(e.target.value));
   };
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50 bg-black bg-opacity-70 text-white">
-      <div className="bg-black w-full h-full  p-6 relative">
+    <Layout>
+      <div className="bg-black w-full h-full  p-6 ">
         <button
           className="absolute top-2 right-2 text-gray-600 hover:text-red-500"
           onClick={onClose}
@@ -76,7 +77,7 @@ const AddMusic: React.FC<AddMusicProps> = ({ onClose }) => {
           </div>
         </div>
       </div>
-    </div>
+    </Layout>
   );
 };
 

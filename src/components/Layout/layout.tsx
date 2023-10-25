@@ -1,6 +1,4 @@
 import React, { ReactNode } from "react";
-import Footer from "./footer";
-import Header from "./header";
 
 interface LayoutProps {
   children: ReactNode;
@@ -8,12 +6,12 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ children }) => {
   return (
-    <div>
-      <Header />
-      <main className="my-20 lg:w-2/3 lg:mx-auto xl:w-2/3 xl:mx-auto">
-        {children}
-      </main>
-      <Footer />
+    <div className="overflow-hidden">
+      <div className="h-full w-full max-h-full flex justify-center">
+        <main className="max-w-[450px] w-full h-screen overflow-y-auto overflow-x-hidden relative">
+          {children}
+        </main>
+      </div>
     </div>
   );
 };

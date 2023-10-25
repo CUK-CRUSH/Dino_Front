@@ -5,6 +5,7 @@ import { selectImage } from "@reducer/imageSlice";
 import { updateArtist, updateTitle, updateURL } from "@reducer/musicadd";
 import { RootState } from "@store/index";
 import AddMusic from "@components/Addmusic/addMusic";
+import Layout from "@components/Layout/layout";
 
 interface EditPlsyListProps {}
 
@@ -50,8 +51,8 @@ const EditPlsyList: React.FC<EditPlsyListProps> = () => {
   };
 
   return (
-    <div className="fixed inset-0 flex items-center justify-center z-50 text-white">
-      <div className="h-full w-full flex flex-col bg-black relative">
+    <Layout>
+      <div className="h-full w-full flex flex-col bg-black">
         <div
           className="h-1/3 rounded-b-3xl bg-white"
           onClick={() => document.getElementById("imageInput")?.click()}
@@ -111,7 +112,7 @@ const EditPlsyList: React.FC<EditPlsyListProps> = () => {
       {isAddMusicModalOpen && (
         <AddMusic onClose={() => handleCloseAddMusicModal()} />
       )}
-    </div>
+    </Layout>
   );
 };
 
