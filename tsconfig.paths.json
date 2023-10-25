@@ -7,7 +7,9 @@
       "@pages/*": ["./pages/*"],
       "@reducer/*": ["./reducer/*"],
       "@store/*": ["./store/*"],
-      "@assets/*": ["./assets/*"]
+      "@assets/*": ["./assets/*"],
+      "@utils/*": ["./utils/*"],
+      "@api/*": ["./api/*"]
     }
   }
 }
