@@ -1,4 +1,3 @@
-import Layout from "@components/Layout/layout";
 import { useQuery, gql } from "@apollo/client";
 import LoadingPage from "@pages/loading";
 
