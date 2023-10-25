@@ -5,7 +5,6 @@ import { selectImage } from "@reducer/imageSlice";
 import { updateArtist, updateTitle, updateURL } from "@reducer/musicadd";
 import { RootState } from "@store/index";
 import AddMusic from "@components/Addmusic/addMusic";
-import Layout from "@components/Layout/layout";
 
 interface EditPlsyListProps {}
 
@@ -51,68 +50,65 @@ const EditPlsyList: React.FC<EditPlsyListProps> = () => {
   };
 
   return (
-    <Layout>
-      <div className="h-full w-full flex flex-col bg-black">
-        <div
-          className="h-1/3 rounded-b-3xl bg-white"
-          onClick={() => document.getElementById("imageInput")?.click()}
-        >
-          {selectedImage ? (
-            <img
-              src={selectedImage}
-              alt="Selected"
-              className="h-full w-full rounded-b-3xl flex justify-center items-center"
-            />
-          ) : (
-            <p>클릭하여 이미지를 업로드하세요</p>
-          )}
-        </div>
-        <input
-          type="file"
-          id="imageInput"
-          accept="image/*"
-          style={{ display: "none" }}
-          onChange={handleImageChange}
-        />
-        <div className="h-2/3">
-          {isEditing ? (
-            <div>
-              <div className="flex justify-between m-2">
-                <button className="text-red-500" onClick={handleCancelClick}>
-                  Cancel
-                </button>
-                <button onClick={handleSaveClick}>Save</button>
-              </div>
-              <div className="flex flex-row">
-                <h3>Title: {musicData.title}</h3>
-                <h3>Artist: {musicData.artist}</h3>
-                <h3>URL: {musicData.url}</h3>
-              </div>
-              <div className="absolute right-1 bottom-1">
-                <button onClick={handleAddMusicClick}>
-                  <AiFillPlusCircle size={56} />
-                </button>
-              </div>
-            </div>
-          ) : (
-            <div>
-              <div className="flex justify-end m-2">
-                <button onClick={handleEditClick}>Edit</button>
-              </div>
-              <div className="flex flex-row">
-                <h3>Title: {musicData.title}</h3>
-                <h3>Artist: {musicData.artist}</h3>
-                <h3>URL: {musicData.url}</h3>
-              </div>
-            </div>
-          )}
-        </div>
+    <div className="z-30 h-full w-full flex flex-col bg-black">
+      <div
+        className="h-1/3 rounded-b-3xl bg-white"
+        onClick={() => document.getElementById("imageInput")?.click()}
+      >
+        {selectedImage ? (
+          <img
+            src={selectedImage}
+            alt="Selected"
+            className="h-full w-full rounded-b-3xl flex justify-center items-center"
+          />
+        ) : (
+          <p>클릭하여 이미지를 업로드하세요</p>
+        )}
       </div>
-
+      <input
+        type="file"
+        id="imageInput"
+        accept="image/*"
+        style={{ display: "none" }}
+        onChange={handleImageChange}
+      />
+      <div className="h-2/3">
+        {isEditing ? (
+          <div>
+            <div className="flex justify-between m-2">
+              <button className="text-red-500" onClick={handleCancelClick}>
+                Cancel
+              </button>
+              <button onClick={handleSaveClick}>Save</button>
+            </div>
+            <div className="flex flex-row">
+              <h3>Title: {musicData.title}</h3>
+              <h3>Artist: {musicData.artist}</h3>
+              <h3>URL: {musicData.url}</h3>
+            </div>
+            <div className="absolute right-1 bottom-1">
+              <button onClick={handleAddMusicClick}>
+                <AiFillPlusCircle size={56} />
+              </button>
+            </div>
+          </div>
+        ) : (
+          <div>
+            <div className="flex justify-end m-2">
+              <button onClick={handleEditClick}>Edit</button>
+            </div>
+            <div className="flex flex-row">
+              <h3>Title: {musicData.title}</h3>
+              <h3>Artist: {musicData.artist}</h3>
+              <h3>URL: {musicData.url}</h3>
+            </div>
+          </div>
+        )}
+      </div>
       {isAddMusicModalOpen && (
         <AddMusic onClose={() => handleCloseAddMusicModal()} />
       )}
-    </Layout>
+    </div>
   );
 };
 

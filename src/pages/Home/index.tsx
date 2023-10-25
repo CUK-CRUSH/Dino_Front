@@ -31,7 +31,7 @@ const Home = () => {
   if (error) return <p>Error : {error.message}</p>;
 
   return (
-    <Layout>
+    <div>
       {/* GraphQL 예시(공식문서 참고) */}
       {data?.locations.map(({ id, name, description, photo }) => (
         <div key={id}>
@@ -43,7 +43,7 @@ const Home = () => {
           <br />
         </div>
       ))}
-    </Layout>
+    </div>
   );
 };
 
