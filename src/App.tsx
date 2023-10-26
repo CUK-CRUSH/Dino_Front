@@ -2,7 +2,7 @@ import React from "react";
 import loadable from "@loadable/component";
 import { Route, Routes } from "react-router-dom";
 import Layout from "@components/Layout/layout";
-const Home = loadable(() => import("@pages/Home"));
+const Home = loadable(() => import("@pages/Home/home"));
 const LogIn = loadable(() => import("@pages/LogIn"));
 const SignUp = loadable(() => import("@pages/SignUp"));
 const Admin = loadable(() => import("@pages/Admin"));
