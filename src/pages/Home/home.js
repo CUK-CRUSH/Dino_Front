@@ -26,7 +26,7 @@ const Home = () => {
                 <div className="left-[68.3px] top-[737px] absolute origin-top-left rotate-[14.83deg] text-center text-black text-xl font-semibold font-['Noto Sans']">Share your playlist</div>
 
                 <div className="w-64 h-64 px-5 py-5 left-[206px] top-[524px] absolute justify-center items-center inline-flex">
-                    <div className="w-56 h-56 relative">
+                    <div className="animate-rotate w-56 h-56 relative">
                         <div className="w-2.5 h-11 left-[30.98px] top-[34.92px] absolute origin-top-left rotate-[-43.96deg] text-black text-xl font-semibold font-['Noto Sans']">!</div>
                         <div className="w-px h-11 left-[21.88px] top-[45.73px] absolute origin-top-left rotate-[-50.70deg] text-black text-xl font-semibold font-['Noto Sans']"> </div>
                         <div className="w-4 h-11 left-[14.18px] top-[57.80px] absolute origin-top-left rotate-[-58.14deg] text-black text-xl font-semibold font-['Noto Sans']">t</div>
