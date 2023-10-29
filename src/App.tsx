@@ -3,10 +3,12 @@ import loadable from "@loadable/component";
 import { Route, Routes } from "react-router-dom";
 import Layout from "@components/Layout/layout";
 const Home = loadable(() => import("@pages/Home/home"));
-const LogIn = loadable(() => import("@pages/LogIn"));
+// @ts-ignore
+const LogIn = loadable(() => import("@pages/LogIn/login"));
 const SignUp = loadable(() => import("@pages/SignUp"));
 const Admin = loadable(() => import("@pages/Admin"));
 const EditPlayList = loadable(() => import("@pages/Editlist/editPlaylist"));
+const Validation = loadable(() => import("@pages/Validation/validation"));
 
 function App() {
   return (
@@ -17,6 +19,7 @@ function App() {
         <Route path="/signup" element={<SignUp />} />
         <Route path="/admin" element={<Admin />} />
         <Route path="/admin/:id" element={<EditPlayList />} />
+          <Route path="/login/validation" element={<Validation />} />
       </Routes>
     </Layout>
   );
