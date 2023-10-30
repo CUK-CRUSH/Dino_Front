@@ -62,7 +62,9 @@ const EditPlsyList: React.FC<EditPlsyListProps> = () => {
             className="h-full w-full rounded-b-3xl flex justify-center items-center"
           />
         ) : (
-          <p>클릭하여 이미지를 업로드하세요</p>
+          <p className="h-full flex justify-center items-end">
+            Please upload a background photo!
+          </p>
         )}
       </div>
       <input
@@ -97,10 +99,11 @@ const EditPlsyList: React.FC<EditPlsyListProps> = () => {
             <div className="flex justify-end m-2">
               <button onClick={handleEditClick}>Edit</button>
             </div>
+            {/* 나중에 maping해서 데이터 보여주기 */}
+
             <div className="flex flex-row">
               <h3>Title: {musicData.title}</h3>
               <h3>Artist: {musicData.artist}</h3>
-              <h3>URL: {musicData.url}</h3>
             </div>
           </div>
         )}
