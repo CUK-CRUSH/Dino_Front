@@ -83,11 +83,19 @@ const EditPlsyList: React.FC<EditPlsyListProps> = () => {
               </button>
               <button onClick={handleSaveClick}>Save</button>
             </div>
-            <div className="flex flex-row">
-              <h3>Title: {musicData.title}</h3>
-              <h3>Artist: {musicData.artist}</h3>
-              <h3>URL: {musicData.url}</h3>
+            <div className="w-full text-lg mt-10 flex flex-col justify-around">
+              <div className="flex flex-row justify-around pb-2 mx-5 border-b border-white">
+                <div className="flex flex-row items-center mr-20">
+                  <h3 className="mr-10">1</h3>
+                  <h3>{musicData.title}</h3>
+                </div>
+                <div className="flex flex-row items-center ml-20">
+                  <h3 className="mr-2">{musicData.artist}</h3>
+                  <button className="ml-10">▶️</button>
+                </div>
+              </div>
             </div>
+
             <div className="absolute right-1 bottom-1">
               <button onClick={handleAddMusicClick}>
                 <AiFillPlusCircle size={56} />
@@ -101,9 +109,17 @@ const EditPlsyList: React.FC<EditPlsyListProps> = () => {
             </div>
             {/* 나중에 maping해서 데이터 보여주기 */}
 
-            <div className="flex flex-row">
-              <h3>Title: {musicData.title}</h3>
-              <h3>Artist: {musicData.artist}</h3>
+            <div className="w-full text-lg mt-10 flex flex-col justify-around">
+              <div className="flex flex-row justify-around pb-2 mx-5 border-b border-white">
+                <div className="flex flex-row items-center mr-20">
+                  <h3 className="mr-10">1</h3>
+                  <h3>{musicData.title}</h3>
+                </div>
+                <div className="flex flex-row items-center ml-20">
+                  <h3 className="mr-2">{musicData.artist}</h3>
+                  <button className="ml-10">▶️</button>
+                </div>
+              </div>
             </div>
           </div>
         )}
