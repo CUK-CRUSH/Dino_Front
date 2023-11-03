@@ -3,6 +3,7 @@ import Layout from "@components/Layout/layout";
 import mylist2 from "@assets/Mylist2.png";
 import googlelogo from "@assets/Google logo.png";
 import facebook from "@assets/facebook-3 logo.png";
+import { GoogleLogin } from '@react-oauth/google';
 
 const login = () => {
     return (
@@ -19,8 +20,16 @@ const login = () => {
                     <div className="w-[360px] h-[58px] left-0 top-0 absolute bg-white rounded-[30px] border border-zinc-300" />
                     <div className="w-[214px] h-[23px] left-[73px] top-[18px] absolute">
                         <img className="z-30 left-[88px] top-[690px]" src={googlelogo}></img>
+                        <div className="left-[34px] top-0 absolute text-center text-black text-[17px] font-semibold font-['Noto Sans']">
+                            Continue with Google <GoogleLogin clientId={ process.env.REACT_APP_GOOGLE_CLIENT_ID }
+                            onSuccess={credentialResponse => {
+                                console.log(credentialResponse);
+                            }}
+                            onError={() => {
+                                console.log('Login Failed');
+                            }}
+                        />;</div>
 
-                        <div className="left-[34px] top-0 absolute text-center text-black text-[17px] font-semibold font-['Noto Sans']"><Link to={"/login/validation"}>Continue with Google</Link></div>
 
                         <div className="w-[22px] h-[22px] left-0 top-[1px] absolute flex-col justify-start items-start inline-flex">
                             <div className="w-[21.50px] h-[22px] relative">
