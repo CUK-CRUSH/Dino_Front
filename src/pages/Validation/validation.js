@@ -1,7 +1,7 @@
-import { Link } from 'react-router-dom';
+
 import Layout from "@components/Layout/layout";
 import { debounce } from "lodash";
-import axios from "axios";
+
 
 const Validation = () => {
     const onChange = debounce((e) => {

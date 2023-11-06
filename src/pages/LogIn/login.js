@@ -19,7 +19,7 @@ const login = () => {
                 <div className="w-[360px] h-[58px] left-[15px] top-[671px] absolute">
                     <div className="w-[360px] h-[58px] left-0 top-0 absolute bg-white rounded-[30px] border border-zinc-300" />
                     <div className="w-[214px] h-[23px] left-[73px] top-[18px] absolute">
-                        <img className="z-30 left-[88px] top-[690px]" src={googlelogo}></img>
+                        <img className="z-30 left-[88px] top-[690px]" src={googlelogo} alt={googlelogo}></img>
                         <div className="left-[34px] top-0 absolute text-center text-black text-[17px] font-semibold font-['Noto Sans']">
                             Continue with Google <GoogleLogin clientId={ process.env.REACT_APP_GOOGLE_CLIENT_ID }
                             onSuccess={credentialResponse => {
@@ -48,7 +48,7 @@ const login = () => {
                 <div className="w-[360px] h-[58px] left-[15px] top-[743px] absolute">
                     <div className="w-[360px] h-[58px] left-0 top-0 absolute bg-white rounded-[30px] border border-zinc-300" />
                     <div className="w-[235px] h-[23px] left-[62px] top-[18px] absolute">
-                        <img className="z-20 left-[77px] top-[762px]" src={facebook}></img>
+                        <img className="z-20 left-[77px] top-[762px]" src={facebook} alt={facebook}></img>
                         <div className="left-[34px] top-0 absolute text-center text-black text-[17px] font-semibold font-['Noto Sans']"><Link to={"/login/validation"}>Continue with Facebook</Link></div>
                         <div className="w-[22px] h-[22px] left-0 top-[1px] absolute flex-col justify-start items-start inline-flex" />
                     </div>
@@ -58,7 +58,7 @@ const login = () => {
                     <path fillRule="evenodd" clipRule="evenodd" d="M32 64C49.6731 64 64 49.6731 64 32C64 14.3269 49.6731 0 32 0C14.3269 0 0 14.3269 0 32C0 49.6731 14.3269 64 32 64ZM32 44.5333C38.922 44.5333 44.5333 38.922 44.5333 32C44.5333 25.078 38.922 19.4667 32 19.4667C25.078 19.4667 19.4667 25.078 19.4667 32C19.4667 38.922 25.078 44.5333 32 44.5333ZM28.2033 7.68698C28.2833 8.419 27.7547 9.07726 27.0227 9.15724C16.7614 10.2784 11.5194 18.8042 10.2037 22.9311C9.97998 23.6327 9.2299 24.0201 8.52832 23.7964C7.82673 23.5727 7.43932 22.8226 7.663 22.121C9.15149 17.4524 15.0133 7.78682 26.7331 6.50635C27.4651 6.42637 28.1234 6.95495 28.2033 7.68698ZM26.148 15.8981C26.8822 15.8414 27.4314 15.2002 27.3746 14.466C27.3179 13.7318 26.6767 13.1826 25.9425 13.2394C19.4306 13.7427 16.0136 19.1095 15.0979 21.6963C14.8521 22.3905 15.2156 23.1524 15.9098 23.3981C16.604 23.6439 17.3659 23.2804 17.6117 22.5862C18.3515 20.4961 21.1285 16.2861 26.148 15.8981Z" fill="#121212"/>
                 </svg>
 
-                <img className="w-[179px] h-[55px] left-[106px] top-[248px] absolute" src={mylist2} />
+                <img className="w-[179px] h-[55px] left-[106px] top-[248px] absolute" src={mylist2}  alt={mylist2}/>
             </div>
         </Layout>
     );

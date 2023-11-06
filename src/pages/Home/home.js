@@ -17,12 +17,12 @@ const Home = () => {
                 <div className="w-[76px] h-[35px] left-[299px] top-[47px] absolute bg-white rounded-[30px] shadow" />
                 <div className="w-[46.40px] h-[49px] left-[10px] top-[40px] absolute">
                 </div>
-                <img className="left-[10px] top-[40px] absolute" src={cd}/>
-                <img className="w-24 h-7 left-[57px] top-[52px] absolute" src={mylist1}/>
+                <img className="left-[10px] top-[40px] absolute" src={cd} alt={cd}/>
+                <img className="w-24 h-7 left-[57px] top-[52px] absolute" src={mylist1} alt={mylist1}/>
                 <div className="left-[317px] top-[54px] absolute text-neutral-900 text-sm font-semibold font-['Noto Sans']"><Link to={"/login"}>Login</Link></div>
                 <div className="left-[239px] top-[54px] absolute text-neutral-900 text-sm font-semibold font-['Noto Sans']">Sign up</div>
-                <img className="w-64 h-[307px] left-[15px] top-[179px] absolute" src={sloagan}/>
-                <img src={elipse} className=" left-[15px] top-[730px] absolute" />
+                <img className="w-64 h-[307px] left-[15px] top-[179px] absolute" src={sloagan} alt={sloagan}/>
+                <img src={elipse} className=" left-[15px] top-[730px] absolute"  alt={elipse}/>
                 <div className="left-[68.3px] top-[737px] absolute origin-top-left rotate-[14.83deg] text-center text-black text-xl font-semibold font-['Noto Sans']">Share your playlist</div>
 
                 <div className="w-[262px] h-[262px] pl-[19px] pr-5 pt-5 pb-[19.01px] left-[206px] top-[524px] absolute justify-center items-center inline-flex">
