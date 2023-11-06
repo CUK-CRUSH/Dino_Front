@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectImage, selectUserProfileImage } from "@reducer/imageSlice";
+import { selectImage } from "@reducer/imageSlice";
 import { updateProfile, setUserProfileImage } from "@reducer/userProfileSlice"; // Import setUserProfileImage action
 import { RootState } from "@store/index";
 

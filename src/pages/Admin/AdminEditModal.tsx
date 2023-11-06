@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectImage, selectUserProfileImage } from "@reducer/imageSlice";
+import { selectImage } from "@reducer/imageSlice";
 import { updateProfile, setUserProfileImage } from "@reducer/userProfileSlice";
 import { RootState } from "@store/index";
 
@@ -33,13 +33,13 @@ const AdminEditModal: React.FC<AdminEditModalProps> = ({ onClose }) => {
     onClose(); // Close the modal without saving changes
   };
 
-  const handleBackgroundImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      dispatch(selectImage(imageUrl));
-    }
-  };
+  // const handleBackgroundImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = e.target.files?.[0];
+  //   if (file) {
+  //     const imageUrl = URL.createObjectURL(file);
+  //     dispatch(selectImage(imageUrl));
+  //   }
+  // };
 
   const handleNewUserProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target?.files?.[0];

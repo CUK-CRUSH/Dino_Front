@@ -2,8 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux"; // Import the useDispatch hook
 import { selectImage } from "@reducer/imageSlice";
 import { RootState } from "@store/index";
-import AddMusic from "@components/Addmusic/addMusic";
-import { Link } from "react-router-dom";
 import AdminEditModal from "./AdminEditModal";
 
 interface AdminPageProps {}
@@ -182,10 +180,10 @@ const calculateOptionsModalPosition = (e: { target: any; }) => {
 };
 
 export default AdminPage;
-function dispatch(arg0: {
-  // Load user profile data from the Redux store on component mount
-  payload: any; type: "image/selectImage";
-}) {
-  throw new Error("Function not implemented.");
-}
+// function dispatch(arg0: {
+//   // Load user profile data from the Redux store on component mount
+//   payload: any; type: "image/selectImage";
+// }) {
+//   throw new Error("Function not implemented.");
+// }
 
