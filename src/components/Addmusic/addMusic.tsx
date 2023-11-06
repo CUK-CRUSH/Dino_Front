@@ -36,7 +36,7 @@ const AddMusic: React.FC<AddMusicProps> = ({ onClose }) => {
           <div className="text-center py-20">
             <h2 className="text-2xl font-bold mb-4">Add Music</h2>
           </div>
-          <div className="space-y-4 mx-4">
+          <div className="space-y-4 mx-4 min-h-screen">
             <div>
               <h3 className="text-[15px] leading-[18px] mb-2">Title</h3>
               <input
@@ -69,7 +69,7 @@ const AddMusic: React.FC<AddMusicProps> = ({ onClose }) => {
             </div>
             <div className="flex justify-center">
               <button
-                className="bg-white text-black w-full mt-4 rounded-3xl h-10"
+                className="bg-white text-black w-full xl:mt-40 lg:mt-40 sm:mt-20 md:mt-20  rounded-3xl h-10"
                 onClick={onClose}
               >
                 Add
