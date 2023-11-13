@@ -42,7 +42,7 @@ const AddMusic: React.FC<AddMusicProps> = ({ onClose }) => {
               <input
                 type="text"
                 placeholder="Title"
-                className="w-full p-2 border border-gray-400 rounded"
+                className="w-full p-2 border border-gray-400 text-black rounded"
                 value={title}
                 onChange={handleTitleChange}
               />
@@ -52,7 +52,7 @@ const AddMusic: React.FC<AddMusicProps> = ({ onClose }) => {
               <input
                 type="text"
                 placeholder="Artist"
-                className="w-full p-2 border border-gray-400 rounded"
+                className="w-full p-2 border border-gray-400 text-black rounded"
                 value={artist}
                 onChange={handleArtistChange}
               />
@@ -62,7 +62,7 @@ const AddMusic: React.FC<AddMusicProps> = ({ onClose }) => {
               <input
                 type="url"
                 placeholder="URL"
-                className="w-full p-2 border border-gray-400 rounded"
+                className="w-full p-2 border border-gray-400 text-black rounded"
                 value={url}
                 onChange={handleURLChange}
               />

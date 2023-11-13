@@ -5,6 +5,7 @@ import { selectImage } from "@reducer/imageSlice";
 import { updateArtist, updateTitle, updateURL } from "@reducer/musicadd";
 import { RootState } from "@store/index";
 import AddMusic from "@components/Addmusic/addMusic";
+import { Link } from "react-router-dom";
 
 interface EditPlsyListProps {}
 
@@ -50,7 +51,7 @@ const EditPlsyList: React.FC<EditPlsyListProps> = () => {
   };
 
   return (
-    <div className="z-30 h-full w-full flex flex-col bg-black">
+    <div className="z-30 h-full w-full flex flex-col bg-black text-white">
       <div
         className="h-1/3 rounded-b-3xl bg-white"
         onClick={() => document.getElementById("imageInput")?.click()}
@@ -98,7 +99,7 @@ const EditPlsyList: React.FC<EditPlsyListProps> = () => {
 
             <div className="absolute right-1 bottom-1">
               <button onClick={handleAddMusicClick}>
-                <AiFillPlusCircle size={56} />
+                <AiFillPlusCircle size={56} color="white" />
               </button>
             </div>
           </div>
@@ -113,7 +114,9 @@ const EditPlsyList: React.FC<EditPlsyListProps> = () => {
               <div className="flex flex-row justify-around pb-2 mx-5 border-b border-white">
                 <div className="flex flex-row items-center mr-20">
                   <h3 className="mr-10">1</h3>
-                  <h3>{musicData.title}</h3>
+                  <a href={musicData.url}>
+                    <h3>{musicData.title}</h3>
+                  </a>
                 </div>
                 <div className="flex flex-row items-center ml-20">
                   <h3 className="mr-2">{musicData.artist}</h3>
