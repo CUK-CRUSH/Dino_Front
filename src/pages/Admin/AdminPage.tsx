@@ -77,8 +77,36 @@ const calculateOptionsModalPosition = (e: { target: any; }) => {
     }
   };
 
+
+    <div className="w-[390px] h-[844px] relative bg-white">
+        <div className="w-[390px] h-[677px] left-0 top-[167px] absolute bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px]" />
+        <div className="w-[75px] h-[75px] left-[158px] top-[130px] absolute bg-gray-200 rounded-full" />
+        <div className="w-[100px] h-5 left-[145px] top-[224px] absolute text-center text-white text-[25px] font-bold font-['Noto Sans'] leading-[18px]">meow</div>
+        <div className="left-[68px] top-[58px] absolute">
+            <div className="left-0 top-[35px] absolute text-center text-neutral-400 text-[15px] font-medium font-['Noto Sans'] leading-[18px]">Please upload a background photo!</div>
+            <div className="w-[29px] h-[29px] left-[113px] top-0 absolute flex-col justify-start items-start inline-flex" />
+        </div>
+        <div className="left-[150px] top-[263px] absolute text-center text-white text-[15px] font-medium font-['Noto Sans'] leading-[18px]">introduction</div>
+        <div className="w-[22px] h-1 left-[352px] top-[193px] absolute">
+            <div className="w-1 h-1 left-0 top-0 absolute bg-white rounded-full" />
+            <div className="w-1 h-1 left-[9px] top-0 absolute bg-white rounded-full" />
+            <div className="w-1 h-1 left-[18px] top-0 absolute bg-white rounded-full" />
+        </div>
+        <div className="w-[52.60px] h-[59px] left-[169.20px] top-[146px] absolute">
+            <div className="w-[21px] h-[21px] left-[15.80px] top-0 absolute bg-neutral-400 rounded-full" />
+            <img className="w-[52.60px] h-[34px] left-0 top-[25px] absolute" src="https://via.placeholder.com/53x34" />
+        </div>
+        <div className="w-[169px] h-[169px] left-[16px] top-[323px] absolute">
+            <div className="w-[169px] h-[169px] left-0 top-0 absolute rounded-[13px] border-2 border-zinc-300" />
+            <div className="left-[44px] top-[124px] absolute text-center text-zinc-300 text-[13px] font-medium font-['Noto Sans'] leading-[18px]">New PlayList</div>
+            <div className="w-[55px] h-[55px] left-[55px] top-[48px] absolute">
+            </div>
+        </div>
+    </div>
+
+
   return (
-    <div className="z-30 h-full w-full flex flex-col bg-black">
+    <div className="w-[390px] h-[844px] relative bg-white">
       <div
         className="h-1/4 rounded-b-3xl bg-white"
         onClick={() => document.getElementById("imageInput")?.click()}
@@ -106,15 +134,19 @@ const calculateOptionsModalPosition = (e: { target: any; }) => {
       )} */}
 
       {/* Username and introductory text section */}
+        <div className="w-[390px] h-[677px] bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px]" >
 
-      <div style={{ display: "flex", justifyContent: "flex-end" }}>
   <button
     onClick={(e) => calculateOptionsModalPosition(e)}
-    className="px-3 py-1 bg-black-500 text-white font-bold"
+    className="px-[16px] py-[26px] bg-black-500 text-white font-bold"
   >
-    · · ·
+      <div className="w-[22px] h-1 relative">
+          <div className="w-1 h-1 left-0 top-0 absolute bg-white rounded-full" />
+          <div className="w-1 h-1 left-[9px] top-0 absolute bg-white rounded-full" />
+          <div className="w-1 h-1 left-[18px] top-0 absolute bg-white rounded-full" />
+      </div>
   </button>
-</div>
+
 
       {isOptionsModalOpen && (
   <div
@@ -153,8 +185,6 @@ const calculateOptionsModalPosition = (e: { target: any; }) => {
         </Link>
       </div> 다른 페이지로 Edit 열기 */}
 
-
-      <div className="bg-black p-1 text-white flex flex-col items-center justify-start">
         <div className="mb-0 flex items-center flex-col">
           {/* User Profile Icon and Username */}
           <div className="w-16 h-16 rounded-full overflow-hidden mb-2 bg-gradient-to-tr from-blue-500 via-green-500 to-yellow-500">
@@ -169,12 +199,12 @@ const calculateOptionsModalPosition = (e: { target: any; }) => {
         </div>
 
         <p className="text-lg2 font-light">{introText}</p>
-      </div>
 
       <button className="w-[140px] h-[140px] rounded-[13px] border-2 border-zinc-300 font-light text-zinc-300 text-4xl mt-5 ml-10">
         +
         <div className="text-sm mt-2">Add New Playlist</div>
       </button>
+    </div>
     </div>
   );
 };
