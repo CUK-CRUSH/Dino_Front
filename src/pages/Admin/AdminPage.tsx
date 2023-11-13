@@ -77,8 +77,9 @@ const calculateOptionsModalPosition = (e: { target: any; }) => {
     }
   };
 
+
   return (
-    <div className="z-30 h-full w-full flex flex-col bg-black">
+    <div className="w-[390px] h-[844px] relative bg-white">
       <div
         className="h-1/4 rounded-b-3xl bg-white"
         onClick={() => document.getElementById("imageInput")?.click()}
@@ -106,15 +107,19 @@ const calculateOptionsModalPosition = (e: { target: any; }) => {
       )} */}
 
       {/* Username and introductory text section */}
+        <div className="w-[390px] h-[677px] bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px]" >
 
-      <div style={{ display: "flex", justifyContent: "flex-end" }}>
   <button
     onClick={(e) => calculateOptionsModalPosition(e)}
-    className="px-3 py-1 bg-black-500 text-white font-bold"
+    className="px-[16px] py-[26px] bg-black-500 text-white font-bold"
   >
-    · · ·
+      <div className="w-[22px] h-1 relative">
+          <div className="w-1 h-1 left-0 top-0 absolute bg-white rounded-full" />
+          <div className="w-1 h-1 left-[9px] top-0 absolute bg-white rounded-full" />
+          <div className="w-1 h-1 left-[18px] top-0 absolute bg-white rounded-full" />
+      </div>
   </button>
-</div>
+
 
       {isOptionsModalOpen && (
   <div
@@ -153,8 +158,6 @@ const calculateOptionsModalPosition = (e: { target: any; }) => {
         </Link>
       </div> 다른 페이지로 Edit 열기 */}
 
-
-      <div className="bg-black p-1 text-white flex flex-col items-center justify-start">
         <div className="mb-0 flex items-center flex-col">
           {/* User Profile Icon and Username */}
           <div className="w-16 h-16 rounded-full overflow-hidden mb-2 bg-gradient-to-tr from-blue-500 via-green-500 to-yellow-500">
@@ -169,12 +172,12 @@ const calculateOptionsModalPosition = (e: { target: any; }) => {
         </div>
 
         <p className="text-lg2 font-light">{introText}</p>
-      </div>
 
       <button className="w-[140px] h-[140px] rounded-[13px] border-2 border-zinc-300 font-light text-zinc-300 text-4xl mt-5 ml-10">
         +
         <div className="text-sm mt-2">Add New Playlist</div>
       </button>
+    </div>
     </div>
   );
 };
