@@ -17,7 +17,7 @@ const login = () => {
                 </svg>
                 <br></br>
                 <img className="w-[179px] h-[55px]" src={mylist2}  alt={mylist2}/>
-                    <div className={"h-[200px]"}></div>
+                    <div className={"h-[100px]"}></div>
                     <div className={"flex flex-row"}>
                     <div className="w-[284px] h-[49px]">
                         <div className="w-[284px] h-[35px] bg-black rounded-[30px] flex flex-row justify-center items-center">
