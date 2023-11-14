@@ -62,9 +62,9 @@ const EditPlsyList: React.FC<EditPlsyListProps> = () => {
             className="h-full w-full rounded-b-3xl flex justify-center items-center"
           />
         ) : (
-          <p className="h-full flex justify-center items-end">
-            Please upload a background photo!
-          </p>
+            <>
+            <div className="mt-[153px] text-center text-neutral-400 text-[15px] font-medium font-['Noto Sans'] leading-[18px]">Setting a representative image</div>
+            </>
         )}
       </div>
       <input
@@ -76,7 +76,7 @@ const EditPlsyList: React.FC<EditPlsyListProps> = () => {
       />
       <div className="h-2/3">
         {isEditing ? (
-          <div>
+          <div>s
             <div className="flex justify-between m-2">
               <button className="text-red-500" onClick={handleCancelClick}>
                 Cancel

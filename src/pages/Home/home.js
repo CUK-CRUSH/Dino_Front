@@ -8,7 +8,7 @@ import Layout from "@components/Layout/layout";
 const Home = () => {
     return (
         <Layout>
-            <div className="w-[390px] h-[844px] relative">
+            <div className="w-full h-full absolute">
                 <div className="w-[152px] h-[35px] left-[223px] top-[47px] absolute bg-neutral-200 rounded-[30px]" />
                 <div className="origin-top-left rotate-[-150deg] w-[254px] h-[254px] left-[383.97px] top-[481px] absolute">
                     <div className="w-[254px] h-[254px] left-0 top-0 absolute origin-top-left rotate-[-150deg] bg-white rounded-full" />
