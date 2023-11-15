@@ -6,6 +6,7 @@
     "@apollo/client": "^3.8.2",
     "@craco/craco": "^7.1.0",
     "@loadable/component": "^5.15.3",
+    "@react-oauth/google": "^0.11.1",
     "@reduxjs/toolkit": "^1.9.5",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",
@@ -19,6 +20,7 @@
     "axios": "^1.4.0",
     "daisyui": "^3.7.3",
     "graphql": "^16.8.0",
+    "lodash": "^4.17.21",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^4.10.1",
@@ -29,7 +31,7 @@
     "web-vitals": "^2.1.4"
   },
   "scripts": {
-    "start": "craco start",
+    "start": "set PORT=8080 && craco start",
     "build": "craco build",
     "test": "craco test",
     "eject": "react-scripts eject"
@@ -53,6 +55,7 @@
     ]
   },
   "devDependencies": {
+    "@babel/plugin-proposal-private-property-in-object": "^7.21.11",
     "@types/loadable__component": "^5.13.4",
     "autoprefixer": "^10.4.14",
     "craco-alias": "^3.0.1",
