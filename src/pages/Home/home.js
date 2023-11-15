@@ -8,19 +8,30 @@ import Layout from "@components/Layout/layout";
 const Home = () => {
     return (
         <Layout>
-            <div className="w-[390px] h-[844px] relative">
-                <div className="w-[152px] h-[35px] left-[223px] top-[47px] absolute bg-neutral-200 rounded-[30px]" />
+            <div className="w-full h-full absolute">
+
+
+
                 <div className="origin-top-left rotate-[-150deg] w-[254px] h-[254px] left-[383.97px] top-[481px] absolute">
                     <div className="w-[254px] h-[254px] left-0 top-0 absolute origin-top-left rotate-[-150deg] bg-white rounded-full" />
                     <div className="w-[49px] h-[49px] left-[-38.20px] top-[-139.83px] absolute origin-top-left rotate-[-150deg] bg-black rounded-full" />
                 </div>
-                <div className="w-[76px] h-[35px] left-[299px] top-[47px] absolute bg-white rounded-[30px] shadow" />
-                <div className="w-[46.40px] h-[49px] left-[10px] top-[40px] absolute">
+                <div className={"h-[30px]"}></div>
+                <div className={"flex flex-row items-center align-middle justify-center"}>
+                <img className={"w-[50px] ml-1"} src={cd} alt={cd}/>
+                <img className="w-24 h-7" src={mylist1} alt={mylist1}/>
+
+                <div className={"grow"}></div>
+                <div className="flex flex-row w-[145px] pr mr-1 h-[35px] bg-neutral-200 rounded-[30px] justify-center items-center" >
+                    <div className="text-neutral-900 text-sm font-semibold font-['Noto Sans']"><Link to={"/login"}>Login</Link></div>
+                    <div className={"w-[10px]"}></div>
+                <div className="flex flex-row justify-center items-center w-[76px] h-[35px] bg-white rounded-[30px] shadow z-40 ">
+                <p className="text-neutral-900 text-sm font-semibold font-['Noto Sans']">Sign up</p>
                 </div>
-                <img className="left-[10px] top-[40px] absolute" src={cd} alt={cd}/>
-                <img className="w-24 h-7 left-[57px] top-[52px] absolute" src={mylist1} alt={mylist1}/>
-                <div className="left-[317px] top-[54px] absolute text-neutral-900 text-sm font-semibold font-['Noto Sans']"><Link to={"/login"}>Login</Link></div>
-                <div className="left-[239px] top-[54px] absolute text-neutral-900 text-sm font-semibold font-['Noto Sans']">Sign up</div>
+                </div>
+                </div>
+
+
                 <img className="w-64 h-[307px] left-[15px] top-[179px] absolute" src={sloagan} alt={sloagan}/>
                 <img src={elipse} className=" left-[15px] top-[730px] absolute"  alt={elipse}/>
                 <div className="left-[68.3px] top-[737px] absolute origin-top-left rotate-[14.83deg] text-center text-black text-xl font-semibold font-['Noto Sans']">Share your playlist</div>
