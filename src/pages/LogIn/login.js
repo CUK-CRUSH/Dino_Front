@@ -1,23 +1,39 @@
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import Layout from "@components/Layout/layout";
 import mylist2 from "@assets/Mylist2.png";
 import googlelogo from "@assets/Google logo.png";
 import facebook from "@assets/facebook-3 logo.png";
 import axios from "axios";
 
-const login = () => {
+const Login = () => {
+  // 1. login/google의 header에서 Location 값을 가져온다.
+  // 2. Location으로 get요청을 보내서 토큰 값들을 갖고온다.
+  const [accessToken, setAccessToken] = useState(null);
   const handleLogin = async (e) => {
     e.preventDefault();
-    console.log(`${process.env.REACT_APP_SERVER}`);
+    axios.defaults.withCredentials = true;
     try {
-      const res = await axios.get(
-        `${process.env.REACT_APP_SERVER}/login/google`
-      );
-      console.log(res);
+      await axios
+        .get(`/login/google`, {
+          headers: {
+            "Content-Type": `application/json`,
+          },
+        })
+        .then((res) => {
+          console.log("test");
+          const redirect_url = res.headers["Location"];
+          console.log(redirect_url);
+        })
+        .catch((ex) => console.log("실패 ㅠㅠ" + ex))
+        .finally(() => {
+          console.log("ENd");
+        });
     } catch (error) {
-      console.error(error);
+      console.error("로그인 중에 문제가 발생했습니다", error);
     }
   };
+
   return (
     <Layout>
       <div className="w-full h-full relative bg-white">
@@ -75,7 +91,7 @@ const login = () => {
             </div>
           </div>
           <div className={"flex flex-row justify-center"}>
-            <Link to={"http://34.64.96.158:8080/login/google"}>
+            <button onClick={handleLogin}>
               <div className="w-full bg-white">
                 <div className="w-[360px] h-[58px] flex flex-row items-center justify-center rounded-[30px] border border-zinc-300">
                   <img
@@ -89,7 +105,7 @@ const login = () => {
                   </div>
                 </div>
               </div>
-            </Link>
+            </button>
           </div>
           <div className={"h-[10px]"}></div>
           <div className={"flex flex-row justify-center"}>
@@ -115,4 +131,4 @@ const login = () => {
   );
 };
 
-export default login;
+export default Login;
