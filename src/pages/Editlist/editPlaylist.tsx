@@ -1,44 +1,44 @@
-import React, { useState } from "react";
+import React from "react";
 import { AiFillPlusCircle } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { selectImage } from "@reducer/imageSlice";
 import { updateArtist, updateTitle, updateURL } from "@reducer/musicadd";
+import { setIsEditing } from "@reducer/editPlayList/isEdit";
 import { RootState } from "@store/index";
-import AddMusic from "@components/Addmusic/addMusic";
+import { useNavigate } from "react-router-dom";
 
 interface EditPlsyListProps {}
 
 const EditPlsyList: React.FC<EditPlsyListProps> = () => {
-  const [isEditing, setIsEditing] = useState(false);
-  const [isAddMusicModalOpen, setIsAddMusicModalOpen] = useState(false);
+  const isEditing = useSelector(
+    (state: RootState) => state.editPlaylistToggle.isEditing
+  );
+
   const selectedImage = useSelector(
     (state: RootState) => state.image.selectedImage
   );
   const musicData = useSelector((state: RootState) => state.musicAdd);
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleEditClick = () => {
-    setIsEditing(true);
+    dispatch(setIsEditing(true));
   };
 
   const handleSaveClick = () => {
     // 추가적으로 저장할 수 있는 기능을 넣는다.
-    setIsEditing(false);
+    dispatch(setIsEditing(false));
   };
 
   const handleCancelClick = () => {
     dispatch(updateTitle(""));
     dispatch(updateArtist(""));
     dispatch(updateURL(""));
-    setIsEditing(false);
+    dispatch(setIsEditing(false));
   };
 
   const handleAddMusicClick = () => {
-    setIsAddMusicModalOpen(true);
-  };
-
-  const handleCloseAddMusicModal = () => {
-    setIsAddMusicModalOpen(false);
+    navigate(`/admin/1/edit`);
   };
 
   const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -93,7 +93,6 @@ const EditPlsyList: React.FC<EditPlsyListProps> = () => {
       <div className="h-2/3">
         {isEditing ? (
           <div>
-            s
             <div className="flex justify-between m-2">
               <button className="text-red-500" onClick={handleCancelClick}>
                 Cancel
@@ -142,9 +141,6 @@ const EditPlsyList: React.FC<EditPlsyListProps> = () => {
           </div>
         )}
       </div>
-      {isAddMusicModalOpen && (
-        <AddMusic onClose={() => handleCloseAddMusicModal()} />
-      )}
     </div>
   );
 };
