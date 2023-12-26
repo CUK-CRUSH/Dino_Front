@@ -75,7 +75,7 @@ const AdminEditModal: React.FC<AdminEditModalProps> = ({ onClose }) => {
           </button>
         </div>
 
-        {/* Rest of your modal content */}
+        {/* 유저 프로필 사진 */}
         <div className="mb-4">
           <label htmlFor="newUserProfileImageInput" className="cursor-pointer text-blue-500">
             Change Profile Image
@@ -96,6 +96,7 @@ const AdminEditModal: React.FC<AdminEditModalProps> = ({ onClose }) => {
           </div>
         </div>
 
+        {/* 유저 이름 */}
         <div className="mb-4">
           <input
             type="text"
@@ -106,6 +107,7 @@ const AdminEditModal: React.FC<AdminEditModalProps> = ({ onClose }) => {
           />
         </div>
 
+        {/* 유저 소개 */}
         <div className="mb-4">
           <textarea
             value={introText}

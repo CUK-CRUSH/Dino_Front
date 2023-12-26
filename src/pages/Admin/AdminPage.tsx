@@ -172,7 +172,7 @@ const AdminPage: React.FC<AdminPageProps> = () => {
           </button>
         </Link>
       </div> 다른 페이지로 Edit 열기 */}
-
+  
           {/* 유저 프로필 */}
           <div className=" flex items-center flex-col z-40">
             {/* User Profile Icon and Username */}
