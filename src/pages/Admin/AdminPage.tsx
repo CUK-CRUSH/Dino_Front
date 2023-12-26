@@ -4,6 +4,8 @@ import { selectImage } from "@reducer/imageSlice";
 import { RootState } from "@store/index";
 import AdminEditModal from "./AdminEditModal";
 import Layout from "@components/Layout/layout";
+import {Link} from "react-router-dom";
+
 
 interface AdminPageProps { }
 
@@ -14,8 +16,8 @@ const AdminPage: React.FC<AdminPageProps> = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false); // Local state to manage the modal
 
   // State for username and introductory text
-  const [username, setUsername] = useState("ㄴㄴㄴ");
-  const [introText, setIntroText] = useState("ㅁㄴㅇㄴㅁㅇㄴㅁㅇ  ");
+  const [username, setUsername] = useState("");
+  const [introText, setIntroText] = useState("");
 
   // Load user profile data from the Redux store on component mount
   const userProfile = useSelector((state: RootState) => state.userProfile);
@@ -78,7 +80,7 @@ const AdminPage: React.FC<AdminPageProps> = () => {
       dispatch(selectImage(URL.createObjectURL(file)));
     }
   };
-
+  
   return (
     <Layout>
       <div className=" h-full w-full relative bg-white">
@@ -192,10 +194,15 @@ const AdminPage: React.FC<AdminPageProps> = () => {
             </div>
           </div>
           
-          <button className="w-[150px] h-[150px] rounded-[13px] border-2 border-zinc-300 font-light text-zinc-300 text-4xl ml-[16px] mt-[42px]">
+          {/* 플레이리스트 편집이동 (아이디는 임시) */}
+          <Link to='13'>
+          <button
+            className="w-[150px] h-[150px] rounded-[13px] border-2 border-zinc-300 font-light text-zinc-300 text-4xl ml-[16px] mt-[42px]"
+            >
             +
             <div className="text-center text-zinc-300 text-[13px] font-medium font-['Noto Sans'] leading-[18px]">New PlayList</div>
           </button>
+          </Link>
         </div>
       </div>
     </Layout>

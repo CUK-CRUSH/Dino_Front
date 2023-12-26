@@ -6,6 +6,7 @@ import { RootState } from "@store/index";
 
 interface AdminEditPageProps {}
 
+// 보류
 const AdminEditPage: React.FC<AdminEditPageProps> = () => {
   const selectedBackgroundImage = useSelector((state: RootState) => state.image.selectedImage);
   const userProfileImage = useSelector((state: RootState) => state.image.userProfileImage);

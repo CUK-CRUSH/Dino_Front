@@ -9,7 +9,7 @@ const LogIn = loadable(() => import("@pages/LogIn/login"));
 
 const SignUp = loadable(() => import("@pages/SignUp"));
 const Admin = loadable(() => import("@pages/Admin/AdminPage"));
-const EditPlayList = loadable(() => import("@pages/Editlist/editPlaylist"));
+const EditPlayList = loadable(() => import("@pages/Editlist/EditPlaylist"));
 const Validation = loadable(() => import("@pages/Validation/validation"));
 
 function App() {

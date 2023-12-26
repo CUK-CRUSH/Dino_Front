@@ -6,7 +6,7 @@ import { updateArtist, updateTitle, updateURL } from "@reducer/musicadd";
 import { RootState } from "@store/index";
 import AddMusic from "@components/Addmusic/addMusic";
 
-interface EditPlsyListProps {}
+interface EditPlsyListProps {  }
 
 const EditPlsyList: React.FC<EditPlsyListProps> = () => {
   const [isEditing, setIsEditing] = useState(false);
