@@ -40,16 +40,16 @@ const AdminPage: React.FC<AdminPageProps> = () => {
     setOptionsModalOpen(false);
   };
 
-  const [optionsModalPosition, setOptionsModalPosition] = useState({ top: 0, left: 0 });
+  const [optionsModalPosition, setOptionsModalPosition] = useState<{top: number, left : number}>({ top: 0, left: 0 });
 
   // 옵션모달 열리는 창 위치
   const calculateOptionsModalPosition = (e: { target: any; }) => {
     const button = e.target;
     const rect = button.getBoundingClientRect();
-    console.log(rect)
+
     setOptionsModalPosition({
-      top: rect.top + rect.height + window.scrollY,
-      left: rect.left + window.scrollX - 120,
+      top: rect.top + rect.height + 10,
+      left: rect.left  - 133 ,
     });
 
     openOptionsModal();
