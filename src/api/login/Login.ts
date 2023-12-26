@@ -1,9 +1,6 @@
 import { axiosLoginInstance } from "@api/axiosInstance";
 import { AxiosResponse } from "axios";
-
-interface LoginDTO {
-  accessToken: string;
-}
+import { LoginDTO } from "types/login";
 
 export async function getLogin(): Promise<LoginDTO | null> {
   try {
