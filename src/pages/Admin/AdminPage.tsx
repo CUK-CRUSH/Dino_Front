@@ -176,14 +176,14 @@ const AdminPage: React.FC<AdminPageProps> = () => {
       </div> 다른 페이지로 Edit 열기 */}
   
           {/* 유저 프로필 */}
-          <div className=" flex items-center flex-col z-40">
+          <div className="flex items-center flex-col z-40">
             {/* User Profile Icon and Username */}
-            <div className="w-[75px] h-[75px] mt-[15px] rounded-full overflow-hidden ">
+            <div className="w-[75px] h-[75px] mt-[-35px] rounded-full overflow-hidden ">
               <img
                 src={userProfile?.userProfileImage ?? "default-image-url.jpg"}
                 alt="User Profile"
-                className="w-full h-full object-cover"
-              />
+                className=" w-[80px] h-[75px] object-cover"
+              /> 
             </div>
 
             <div className="w-[250px] text-center text-white text-[25px] font-bold font-['Noto Sans'] leading-[18px] mt-[19px]">
