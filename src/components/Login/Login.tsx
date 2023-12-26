@@ -8,13 +8,13 @@ import { getLogin } from "@api/login/Login";
 const LoginComponents = () => {
   // 1. login/google의 header에서 Location 값을 가져온다.
   // 2. Location으로 get요청을 보내서 토큰 값들을 갖고온다.
-  const [accessToken, setAccessToken] = useState<string | null>(null);
+  // const [accessToken, setAccessToken] = useState<string | null>(null);
   const handleLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
 
     const loginData = await getLogin();
     if (loginData) {
-      setAccessToken(loginData.accessToken);
+      // setAccessToken(loginData.accessToken);
       console.log("로그인 성공 : ", loginData.accessToken);
     } else {
       console.log("로그인 실패");
