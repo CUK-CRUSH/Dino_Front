@@ -1,6 +1,6 @@
 import { debounce } from "lodash";
 
-const Validation = () => {
+const ValidationProps = () => {
   const onChange = debounce((e) => {
     console.log(e.target.value);
   }, 500);
@@ -70,4 +70,4 @@ const Validation = () => {
   );
 };
 
-export default Validation;
+export default ValidationProps;
