@@ -1,20 +1,25 @@
-import React from "react";
 import loadable from "@loadable/component";
 import { Route, Routes } from "react-router-dom";
-const Home = loadable(() => import("@pages/Home"));
-const LogIn = loadable(() => import("@pages/LogIn"));
-const SignUp = loadable(() => import("@pages/SignUp"));
-
-
+import Layout from "@components/Layout/layout";
+import AdminEditPage from "@pages/Admin/AdminEditPage";
+const Home = loadable(() => import("@pages/Home/home"));
+const LogIn = loadable(() => import("@pages/LogIn/login"));
+const Admin = loadable(() => import("@pages/Admin/AdminPage"));
+const EditPlayList = loadable(() => import("@pages/Editlist/editPlaylist"));
+const Validation = loadable(() => import("@pages/Validation/validation"));
 
 function App() {
   return (
-    <Routes>
-      <Route path="/" element={<Home />} />
-      <Route path="/login" element={<LogIn />} />
-      <Route path="/signup" element={<SignUp />} />
-      
-    </Routes>
+    <Layout>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<LogIn />} />
+        <Route path="/admin" element={<Admin />} />
+        <Route path="/admin/edit" element={<AdminEditPage />} />
+        <Route path="/admin/:id" element={<EditPlayList />} />
+        <Route path="/login/validation" element={<Validation />} />
+      </Routes>
+    </Layout>
   );
 }
 
