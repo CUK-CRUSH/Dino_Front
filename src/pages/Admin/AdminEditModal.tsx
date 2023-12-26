@@ -8,15 +8,19 @@ interface AdminEditModalProps {
   onClose: () => void; // A function to close the modal
 }
 
+// 프로필 수정 모달
 const AdminEditModal: React.FC<AdminEditModalProps> = ({ onClose }) => {
   const selectedBackgroundImage = useSelector((state: RootState) => state.image.selectedImage);
   const userProfileImage = useSelector((state: RootState) => state.image.userProfileImage);
   const dispatch = useDispatch();
 
   const [newUserProfileImage, setNewUserProfileImage] = useState<string | null>(null);
-  const [username, setUsername] = useState("Your Username");
-  const [introText, setIntroText] = useState("Welcome to the Admin Page");
 
+  // 유저네임, 유저소개란 
+  const [username, setUsername] = useState<string>("");
+  const [introText, setIntroText] = useState<string>("");
+
+  // 저장
   const handleSaveClick = () => {
     // Save changes to Redux store
     dispatch(updateProfile({ username, introText }));
@@ -29,6 +33,7 @@ const AdminEditModal: React.FC<AdminEditModalProps> = ({ onClose }) => {
     onClose(); // Close the modal
   };
 
+  // 취소
   const handleCancelClick = () => {
     onClose(); // Close the modal without saving changes
   };
@@ -41,6 +46,7 @@ const AdminEditModal: React.FC<AdminEditModalProps> = ({ onClose }) => {
   //   }
   // };
 
+  // 프로필사진 변경
   const handleNewUserProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target?.files?.[0];
     if (file) {
@@ -52,9 +58,6 @@ const AdminEditModal: React.FC<AdminEditModalProps> = ({ onClose }) => {
       reader.readAsDataURL(file);
     }
   };
-
-
-  // Rest of your component code remains the same
 
   return (
     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50">
@@ -97,6 +100,7 @@ const AdminEditModal: React.FC<AdminEditModalProps> = ({ onClose }) => {
           <input
             type="text"
             value={username}
+            placeholder="Your Username"
             onChange={(e) => setUsername(e.target.value)}
             className="w-full p-2 border bg-white"
           />
@@ -105,6 +109,7 @@ const AdminEditModal: React.FC<AdminEditModalProps> = ({ onClose }) => {
         <div className="mb-4">
           <textarea
             value={introText}
+            placeholder="Welcome to the Admin Page"
             onChange={(e) => setIntroText(e.target.value)}
             className="w-full p-2 border bg-white"
           />
