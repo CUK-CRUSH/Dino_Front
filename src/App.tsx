@@ -6,7 +6,7 @@ const Home = loadable(() => import("@pages/Home/home"));
 const LogIn = loadable(() => import("@pages/LogIn/login"));
 const Admin = loadable(() => import("@pages/Admin/AdminPage"));
 const EditPlayList = loadable(() => import("@pages/Editlist/editPlaylist"));
-const AddMusic = loadable(() => import("@pages/Editlist/addMusic"));
+const AddMusic = loadable(() => import("@pages/AddMusic/addMusic"));
 const Validation = loadable(() => import("@pages/Validation/validation"));
 
 function App() {
