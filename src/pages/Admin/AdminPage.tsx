@@ -4,7 +4,7 @@ import { selectImage } from "@reducer/imageSlice";
 import { RootState } from "@store/index";
 import AdminEditModal from "./AdminEditModal";
 import Layout from "@components/Layout/layout";
-import {Link} from "react-router-dom";
+import { AddPalyList } from "@components/Admin/AddPlayList";
 
 
 interface AdminPageProps { }
@@ -195,14 +195,8 @@ const AdminPage: React.FC<AdminPageProps> = () => {
           </div>
           
           {/* 플레이리스트 편집이동 (아이디는 임시) */}
-          <Link to='13'>
-          <button
-            className="w-[150px] h-[150px] rounded-[13px] border-2 border-zinc-300 font-light text-zinc-300 text-4xl ml-[16px] mt-[42px]"
-            >
-            +
-            <div className="text-center text-zinc-300 text-[13px] font-medium font-['Noto Sans'] leading-[18px]">New PlayList</div>
-          </button>
-          </Link>
+          <AddPalyList />                 
+
         </div>
       </div>
     </Layout>
