@@ -183,6 +183,10 @@ const calculateOptionsModalPosition = (e: { target: any; }) => {
 
 
       <AddPalyList />
+      <AddPalyList />
+
+      <AddPalyList />
+      <AddPalyList />
     </div>
     </div>
     </Layout>
