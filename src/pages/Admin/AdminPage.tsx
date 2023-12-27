@@ -117,7 +117,7 @@ const calculateOptionsModalPosition = (e: { target: any; }) => {
       )} */}
 
       {/* Username and introductory text section */}
-        <div className="h-full w-full left-0 top-[167px] absolute bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px]" >
+        <div className="h-full w-full left-0 top-[167px] absolute bg-neutral-500 rounded-tl-[30px] rounded-tr-[30px]" >
   <div className={"w-[22px] h-30 left-[300px] top-[15px] absolute"}>
   <button
     onClick={(e) => calculateOptionsModalPosition(e)}

@@ -12,6 +12,7 @@ const useWindowSizeCustom = () => {
   });
 
   useEffect(() => {
+    console.log(window.innerWidth)
     if (typeof window !== "undefined") {
       const handleResize = () => {
         if (window.innerWidth <= 390) {
@@ -22,8 +23,8 @@ const useWindowSizeCustom = () => {
         }
         else {
             setWindowSize({
-                width: 373,
-                height: 373,
+                width: 374,
+                height: 375,
               });
         }
       };
