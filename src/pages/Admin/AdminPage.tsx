@@ -6,10 +6,12 @@ import AdminEditModal from "./AdminEditModal";
 import Layout from "@components/Layout/layout";
 import {Link} from "react-router-dom";
 
-
+interface MyComponentProps {
+  customMargin: string;
+}
 interface AdminPageProps { }
 
-const AdminPage: React.FC<AdminPageProps> = () => {
+const AdminPage: React.FC<AdminPageProps> = ({customMargin}) => {
   const selectedImage = useSelector((state: RootState) => state.image.selectedImage);
   const dispatch = useDispatch(); // Initialize dispatch
 
@@ -54,8 +56,6 @@ const AdminPage: React.FC<AdminPageProps> = () => {
 
     openOptionsModal();
   };
-
-
 
   useEffect(() => {
     // Update the state with user profile data when it's available
@@ -195,14 +195,41 @@ const AdminPage: React.FC<AdminPageProps> = () => {
           </div>
           
           {/* 플레이리스트 편집이동 (아이디는 임시) */}
-          <Link to='13'>
+          <div style={{ '--custom-margin': customMargin }} className="inline-block mx-[var(--custom-margin)] my-[20px]">
+          <button
+            className="w-[150px] h-[150px] rounded-[13px] border-2 border-zinc-300 font-light text-zinc-300 text-4xl"
+            >
+                        <Link to='13'>
+
+            +
+            <div className="text-center text-zinc-300 text-[13px] font-medium font-['Noto Sans'] leading-[18px]">New PlayList</div>
+            </Link>
+          </button>
+          </div>
+
+          <div className="inline-block">
           <button
             className="w-[150px] h-[150px] rounded-[13px] border-2 border-zinc-300 font-light text-zinc-300 text-4xl ml-[16px] mt-[42px]"
             >
+                        <Link to='13'>
+
             +
             <div className="text-center text-zinc-300 text-[13px] font-medium font-['Noto Sans'] leading-[18px]">New PlayList</div>
+            </Link>
           </button>
-          </Link>
+          </div>
+
+          <div className="inline-block">
+          <button
+            className="w-[150px] h-[150px] rounded-[13px] border-2 border-zinc-300 font-light text-zinc-300 text-4xl ml-[16px] mt-[42px]"
+            >
+                        <Link to='13'>
+
+            +
+            <div className="text-center text-zinc-300 text-[13px] font-medium font-['Noto Sans'] leading-[18px]">New PlayList</div>
+            </Link>
+          </button>
+          </div>
         </div>
       </div>
     </Layout>
