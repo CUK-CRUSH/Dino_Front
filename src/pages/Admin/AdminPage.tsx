@@ -117,7 +117,7 @@ const calculateOptionsModalPosition = (e: { target: any; }) => {
       )} */}
 
       {/* Username and introductory text section */}
-        <div className="h-full w-full left-0 top-[167px] absolute bg-neutral-500 rounded-tl-[30px] rounded-tr-[30px]" >
+        <div className="h-full w-full left-0 top-[167px] absolute bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px]" >
   <div className={"w-[22px] h-30 left-[300px] top-[15px] absolute"}>
   <button
     onClick={(e) => calculateOptionsModalPosition(e)}
@@ -168,7 +168,7 @@ const calculateOptionsModalPosition = (e: { target: any; }) => {
 
         <div className=" flex items-center flex-col z-40">
           {/* User Profile Icon and Username */}
-          <div className="w-[75px] h-[75px] mt-[15px] rounded-full overflow-hidden ">
+          <div className="w-[75px] h-[75px] mt-[-35px] rounded-full overflow-hidden ">
           <img
             src={userProfile?.userProfileImage ?? "default-image-url.jpg"}
             alt="User Profile"
