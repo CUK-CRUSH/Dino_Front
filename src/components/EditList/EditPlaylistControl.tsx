@@ -7,16 +7,22 @@ export const EditPlaylistControls: React.FC<EditPlayListControlsDTO> = ({
   onEdit,
 }) => {
   return (
-    <div className="flex justify-between m-2">
+    <div className="flex justify-between m-3  ">
       {isEditing ? (
         <>
-          <button className="text-red-500" onClick={onCancel}>
-            Cancel
-          </button>
-          <button onClick={onSave}>Save</button>
+          <div>
+            <button className="text-red-500" onClick={onCancel}>
+              Cancel
+            </button>
+          </div>
+          <div>
+            <button onClick={onSave}>Save</button>
+          </div>
         </>
       ) : (
-        <button onClick={onEdit}>Edit</button>
+        <div className="ml-auto ">
+          <button onClick={onEdit}>Edit</button>
+        </div>
       )}
     </div>
   );
