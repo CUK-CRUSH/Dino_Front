@@ -1,6 +1,7 @@
 import loadable from "@loadable/component";
 import { Route, Routes } from "react-router-dom";
 import Layout from "@components/Layout/layout";
+
 import AdminEditPage from "@pages/Admin/AdminEditPage";
 const Home = loadable(() => import("@pages/Home/home"));
 const LogIn = loadable(() => import("@pages/LogIn/login"));
@@ -15,7 +16,6 @@ function App() {
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LogIn />} />
         <Route path="/admin" element={<Admin />} />
-        <Route path="/admin/edit" element={<AdminEditPage />} />
         <Route path="/admin/:id" element={<EditPlayList />} />
         <Route path="/login/validation" element={<Validation />} />
       </Routes>
