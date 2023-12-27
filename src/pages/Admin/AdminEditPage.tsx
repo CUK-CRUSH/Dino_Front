@@ -1,14 +1,12 @@
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { selectImage } from "@reducer/imageSlice";
-import { updateProfile, setUserProfileImage } from "@reducer/userProfileSlice";
+import { updateProfile, setUserProfileImage } from "@reducer/userProfileSlice"; // Import setUserProfileImage action
 import { RootState } from "@store/index";
 
-interface AdminEditModalProps {
-  onClose: () => void; // A function to close the modal
-}
+interface AdminEditPageProps {}
 
-const AdminEditModal: React.FC<AdminEditModalProps> = ({ onClose }) => {
+const AdminEditPage: React.FC<AdminEditPageProps> = () => {
   const selectedBackgroundImage = useSelector((state: RootState) => state.image.selectedImage);
   const userProfileImage = useSelector((state: RootState) => state.image.userProfileImage);
   const dispatch = useDispatch();
@@ -26,20 +24,22 @@ const AdminEditModal: React.FC<AdminEditModalProps> = ({ onClose }) => {
     if (selectedBackgroundImage) {
       dispatch(selectImage(selectedBackgroundImage));
     }
-    onClose(); // Close the modal
   };
 
   const handleCancelClick = () => {
-    onClose(); // Close the modal without saving changes
+    // Revert changes, if any
+    setUsername("Your Username");
+    setIntroText("Welcome to the Admin Page");
+    setNewUserProfileImage(null);
   };
 
-  // const handleBackgroundImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const file = e.target.files?.[0];
-  //   if (file) {
-  //     const imageUrl = URL.createObjectURL(file);
-  //     dispatch(selectImage(imageUrl));
-  //   }
-  // };
+  const handleBackgroundImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (file) {
+      const imageUrl = URL.createObjectURL(file);
+      dispatch(selectImage(imageUrl));
+    }
+  };
 
   const handleNewUserProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target?.files?.[0];
@@ -53,26 +53,31 @@ const AdminEditModal: React.FC<AdminEditModalProps> = ({ onClose }) => {
     }
   };
 
-
-  // Rest of your component code remains the same
-
   return (
-    <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50">
-      {/* The following div creates a semi-transparent overlay background */}
-      <div className="absolute inset-0 bg-gray-800 opacity-75"></div>
+    <div className="h-screen flex flex-col bg-white">
+      <div
+        className="h-1/4 bg-blue-500 relative"
+        onClick={() => document.getElementById("backgroundImageInput")?.click()}
+      >
+        {selectedBackgroundImage ? (
+          <img
+            src={selectedBackgroundImage}
+            alt="Selected"
+            className="h-full w-full object-cover"
+          />
+        ) : (
+          <p className="text-black text-center p-4">Click to upload a background image</p>
+        )}
+      </div>
+      <input
+        type="file"
+        id="backgroundImageInput"
+        accept="image/*"
+        style={{ display: "none" }}
+        onChange={handleBackgroundImageChange}
+      />
 
-      <div className="relative w-full max-w-lg p-6 bg-white rounded-lg shadow-lg">
-        {/* Modal content */}
-        <div className="mb-4">
-          {/* Close button */}
-          <button onClick={handleCancelClick} className="absolute top-2 right-2 text-gray-600 hover:text-gray-800">
-            <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12"></path>
-            </svg>
-          </button>
-        </div>
-
-        {/* Rest of your modal content */}
+      <div className="p-4">
         <div className="mb-4">
           <label htmlFor="newUserProfileImageInput" className="cursor-pointer text-blue-500">
             Change Profile Image
@@ -86,7 +91,7 @@ const AdminEditModal: React.FC<AdminEditModalProps> = ({ onClose }) => {
           />
           <div className="mb-0 flex items-center flex-col">
             <img
-              src={newUserProfileImage || userProfileImage || "default-image-url.jpg"} // Set the image source from Redux state
+              src={newUserProfileImage || userProfileImage || "placeholder-image-url.jpg"}
               alt="User Profile"
               className="w-16 h-16 rounded-full overflow-hidden mb-2 bg-gradient-to-tr from-blue-500 via-green-500 to-yellow-500"
             />
@@ -123,4 +128,4 @@ const AdminEditModal: React.FC<AdminEditModalProps> = ({ onClose }) => {
   );
 };
 
-export default AdminEditModal;
+export default AdminEditPage;
