@@ -2,6 +2,8 @@ import loadable from "@loadable/component";
 import { Route, Routes } from "react-router-dom";
 import Layout from "@components/Layout/layout";
 import AdminEditPage from "@pages/Admin/AdminEditPage";
+import "@styles/global.css";
+
 const Home = loadable(() => import("@pages/Home/home"));
 const LogIn = loadable(() => import("@pages/LogIn/login"));
 const Admin = loadable(() => import("@pages/Admin/AdminPage"));
