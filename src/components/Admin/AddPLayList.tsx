@@ -16,7 +16,7 @@ export const AddPalyList = () => {
     }
     
     console.log(customMargin)
-  },[windowSize.width])
+  },[windowSize.width,customMargin])
   
   return (
     <div style={{margin: `${customMargin}px`}} className="inline ">
