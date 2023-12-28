@@ -87,18 +87,13 @@ const AdminEditModal: React.FC<AdminEditModalProps> = ({ onClose }) => {
       {/* The following div creates a semi-transparent overlay background */}
       <div className="absolute inset-0 bg-gray-800 opacity-75"></div>
       <div className={`relative ${size ? "w-[390px]" : "w-full"} h-full mt-5 bg-white rounded-t-3xl shadow-lg`}>
-        {/* Modal content */}
-        <div className="mb-4">
-          {/* Close button */}
-          <button onClick={handleCancelClick} className="absolute top-2 right-2 text-gray-600 hover:text-gray-800">
-            Save
-          </button>
-        </div>
-
-        {/* Rest of your modal content */}
-        <div className="mb-4">
-          <button onClick={handleCancelClick} className="text-red-600	 hover:text-gray-800">
+        {/* 상단 취소/저장 버튼 */}
+        <div className="flex justify-between h-[50px]">
+          <button onClick={handleCancelClick} className="text-red-600 ml-[10px]">
             Cancel
+          </button>
+          <button onClick={handleSaveClick} className="text-gray-800 mr-[10px]">
+            Save
           </button>
         </div>
 
