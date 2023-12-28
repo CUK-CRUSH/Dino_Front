@@ -120,16 +120,11 @@ const AdminPage: React.FC<AdminPageProps> = () => {
         {/* Username and introductory text section */}
         <div className="h-full w-full left-0 top-[167px] absolute bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px]" >
           {/* ... 설정창 */}
-          <div className={"w-[22px] h-30 left-[330px] top-[0px] absolute"}>
+          <div className={"w-[22px] right-[20px] top-[0px] absolute "}>
             <button
-              className="text-white text-3xl font-bold tracking-wider"
+              className=" text-white text-3xl font-bold tracking-wider "
               onClick={(e) => calculateOptionsModalPosition(e)}
             >...
-              <div className="w-[22px] h-1 relative">
-                {/* <div className="w-1 h-1 left-[36px] top-0 absolute bg-white rounded-full" />
-                <div className="w-1 h-1 left-[45px] top-0 absolute bg-white rounded-full" />
-                <div className="w-1 h-1 left-[54px] top-0 absolute bg-white rounded-full" /> */}
-              </div>
             </button>
           </div>
 
