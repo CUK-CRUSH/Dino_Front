@@ -6,6 +6,7 @@ import { RootState } from "@store/index";
 import camera from "../../assets/Admin/camera.svg";
 import edit from "../../assets/Admin/editButton.svg";
 import useWindowSizeCustom from "@hooks/useWindowSizeCustom";
+import '../../styles/Admin/style.css';
 
 
 interface AdminEditModalProps {
@@ -82,15 +83,29 @@ const AdminEditModal: React.FC<AdminEditModalProps> = ({ onClose }) => {
       dispatch(selectImage(URL.createObjectURL(file)));
     }
   };
+
+  // 열고닫기
+  const [isOpen, setIsOpen] = useState(true);
+
+  const handleToggleClick = () => {
+    setIsOpen(!isOpen);
+  
+    setTimeout(() => {
+      handleCancelClick();
+    }, 900);
+  };
+  
   return (
     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50">
       {/* The following div creates a semi-transparent overlay background */}
-      <div className="absolute inset-0 bg-gray-800 opacity-75"></div>
-      <div className={`relative ${size ? "w-[390px]" : "w-full"} h-full mt-5 bg-white rounded-t-3xl shadow-lg`}>
+      <div className="absolute inset-0 bg-gray-800 opacity-75 "></div>
+      <div 
+        className={`relative ${size ? "w-[390px]" : "w-full"} h-full mt-5 bg-white rounded-t-3xl shadow-lg
+        animate-slide-${isOpen ? 'in' : 'out'}`}>
         {/* 상단 취소/저장 버튼 */}
         <div className="flex justify-between h-[50px]">
-          <button onClick={handleCancelClick} className="text-red-600 ml-[10px]">
-            Cancel
+        <button onClick={() => { handleToggleClick(); }} className="text-red-600 ml-[10px]">
+              Cancel
           </button>
           <button onClick={handleSaveClick} className="text-gray-800 mr-[10px]">
             Save
