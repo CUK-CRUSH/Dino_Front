@@ -1,17 +1,17 @@
-import React, { useState } from "react";
+import React from "react";
 import { updateArtist, updateTitle, updateURL } from "@reducer/musicadd";
 import { RootState } from "@store/index";
 import { IoInformationCircleOutline } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
+import { toggleShowInformation } from "@reducer/toggle/addMusicToggle";
 
 const AddMusic: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const [showInformation, setShowInformation] = useState(false);
 
   const handleInformationToggle = () => {
-    setShowInformation(!showInformation);
+    dispatch(toggleShowInformation());
   };
 
   const handleSave = () => {
@@ -19,6 +19,10 @@ const AddMusic: React.FC = () => {
   };
   const { title, artist, url } = useSelector(
     (state: RootState) => state.musicAdd
+  );
+
+  const { showInformation } = useSelector(
+    (state: RootState) => state.addMusicInformationToggle
   );
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(updateTitle(e.target.value));
@@ -43,6 +47,7 @@ const AddMusic: React.FC = () => {
             placeholder="Title"
             className="w-full p-2 border bg-black border-white  rounded"
             value={title}
+            required
             onChange={handleTitleChange}
           />
         </div>
@@ -53,6 +58,7 @@ const AddMusic: React.FC = () => {
             placeholder="Artist"
             className="w-full p-2 border bg-black border-white  rounded"
             value={artist}
+            required
             onChange={handleArtistChange}
           />
         </div>
@@ -62,6 +68,7 @@ const AddMusic: React.FC = () => {
             <IoInformationCircleOutline
               onClick={handleInformationToggle}
               color="white"
+              className="cursor-pointer"
             />
           </div>
           <input
@@ -69,6 +76,7 @@ const AddMusic: React.FC = () => {
             placeholder="https://www.youtube.com/"
             className="w-full p-2 border bg-black border-white  rounded"
             value={url}
+            required
             onChange={handleURLChange}
           />
           {showInformation && (
