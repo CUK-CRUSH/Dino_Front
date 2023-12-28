@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { AiFillPlusCircle } from "react-icons/ai";
+import { AiFillPlusCircle, AiOutlinePicture } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { updateArtist, updateTitle, updateURL } from "@reducer/musicadd";
 import { setIsEditing } from "@reducer/editPlayList/isEdit";
@@ -11,6 +11,7 @@ import { MusicDataRow } from "@components/EditList/MusicDataRow";
 import useImageCompress from "@hooks/useImageCompress";
 import { dataURItoFile } from "@utils/ImageCrop/common";
 import ImageCropper from "@utils/ImageCrop/ImageCropper";
+import LoadingPage from "@utils/loading";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
   const isEditing = useSelector(
@@ -29,7 +30,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
 
     const compressedImage = await compressImage(imageFile);
 
-    // 이미지 서버 저장 로직
     if (!compressedImage) return;
     const imageUrl = URL.createObjectURL(compressedImage);
     setCompressedImage(imageUrl);
@@ -71,10 +71,20 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
             <img
               className="h-full w-full rounded-b-3xl object-cover"
               src={compressedImage}
+              alt="Img"
             />
           ) : (
-            <div className="h-full rounded-b-3xl bg-white cursor-pointer">
-              {isCompressLoading ? "이미지 압축 중.." : "이미지가 없어요."}
+            <div className="h-full flex items-center justify-center rounded-b-3xl text-center bg-white cursor-pointer">
+              {isCompressLoading ? (
+                <LoadingPage />
+              ) : (
+                <div className="flex flex-col justify-center items-center h-full">
+                  <AiOutlinePicture size={32} className="text-gray-400" />
+                  <span className="text-center text-neutral-400 text-[15px] font-medium leading-[18px] pt-[6px]">
+                    Setting a representative image
+                  </span>
+                </div>
+              )}
             </div>
           )}
         </ImageCropper>
