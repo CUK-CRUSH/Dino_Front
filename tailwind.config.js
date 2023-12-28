@@ -12,13 +12,14 @@ module.exports = {
   theme: {
     extend: {
       animation: {
-        rotate: 'rotate 60s linear infinite',
+        rotate: "rotate 60s linear infinite",
+        flowing: "flowing 20s linear infinite",
       },
       keyframes: {
-        rotate: {
-          '0%': { transform: 'rotate(0deg)' },
-          '100%': { transform: 'rotate(360deg)' },
-        }
+        flowing: {
+          "0%, 100%": { transform: "translateX(0)" },
+          "50%": { transform: "translateX(-100%)" },
+        },
       },
     },
   },

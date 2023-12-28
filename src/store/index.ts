@@ -4,6 +4,7 @@ import uiReducer from "@reducer/uiSlice";
 import imageReducer from "@reducer/imageSlice";
 import musicadd from "@reducer/musicadd";
 import userProfileReducer from "@reducer/userProfileSlice";
+import isEdit from "@reducer/editPlayList/isEdit";
 
 export const store = configureStore({
   reducer: {
@@ -12,6 +13,7 @@ export const store = configureStore({
     image: imageReducer,
     musicAdd: musicadd,
     userProfile: userProfileReducer,
+    editPlaylistToggle: isEdit,
   },
 });
 
