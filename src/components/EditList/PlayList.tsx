@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { AiFillPlusCircle, AiOutlinePicture } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { updateArtist, updateTitle, updateURL } from "@reducer/musicadd";
@@ -23,7 +23,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const { isLoading: isCompressLoading, compressImage } = useImageCompress();
 
   const handleUploadImage = (image: string) => setUploadImage(image);
-  const handleCompressImage = async () => {
+  const handleCompressImage = useCallback(async () => {
     if (!uploadImage) return;
 
     const imageFile = dataURItoFile(uploadImage);
@@ -33,7 +33,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     if (!compressedImage) return;
     const imageUrl = URL.createObjectURL(compressedImage);
     setCompressedImage(imageUrl);
-  };
+  }, [uploadImage, compressImage]);
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -61,7 +61,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     if (uploadImage) {
       handleCompressImage();
     }
-  }, [uploadImage]);
+  }, [uploadImage, handleCompressImage]);
 
   return (
     <div className="z-30 h-full w-full flex flex-col bg-black text-white">
