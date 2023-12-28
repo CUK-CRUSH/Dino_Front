@@ -72,13 +72,13 @@ const AdminPage: React.FC<AdminPageProps> = () => {
   }, [userProfile]);
 
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      // Save the selected image to Redux store
-      dispatch(selectImage(URL.createObjectURL(file)));
-    }
-  };
+  // const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = e.target.files?.[0];
+  //   if (file) {
+  //     // Save the selected image to Redux store
+  //     dispatch(selectImage(URL.createObjectURL(file)));
+  //   }
+  // };
 
   return (
     <Layout>

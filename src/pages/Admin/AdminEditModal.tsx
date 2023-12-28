@@ -76,13 +76,13 @@ const AdminEditModal: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
   const selectedImage = useSelector((state: RootState) => state.image.selectedImage);
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      // Save the selected image to Redux store
-      dispatch(selectImage(URL.createObjectURL(file)));
-    }
-  };
+  // const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = e.target.files?.[0];
+  //   if (file) {
+  //     // Save the selected image to Redux store
+  //     dispatch(selectImage(URL.createObjectURL(file)));
+  //   }
+  // };
 
   // 열고닫기
   const [isOpen, setIsOpen] = useState(true);
