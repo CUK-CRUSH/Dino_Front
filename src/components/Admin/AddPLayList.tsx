@@ -11,7 +11,13 @@ export const AddPalyList = () => {
   const [customMargin,setCustomMargin] = useState<number>(0);
 
   useEffect(()=>{
+    if (window.innerWidth <= 390){
       setCustomMargin((((windowSize.width)/2-150)/2));
+    }
+    else {
+      setCustomMargin((((374)/2-150)/2));
+
+    }
 
   },[windowSize.width,customMargin])
   

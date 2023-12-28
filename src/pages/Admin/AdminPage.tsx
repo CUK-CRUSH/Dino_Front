@@ -167,8 +167,6 @@ const AdminPage: React.FC<AdminPageProps> = () => {
           <AddPalyList />
           <AddPalyList />
 
-          <AddPalyList />
-          <AddPalyList />
         </div>
       </div>
     </Layout>
