@@ -1,12 +1,18 @@
+import React, { useState } from "react";
 import { updateArtist, updateTitle, updateURL } from "@reducer/musicadd";
 import { RootState } from "@store/index";
-import React from "react";
+import { IoInformationCircleOutline } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 const AddMusic: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const [showInformation, setShowInformation] = useState(false);
+
+  const handleInformationToggle = () => {
+    setShowInformation(!showInformation);
+  };
 
   const handleSave = () => {
     navigate(`/admin/1`);
@@ -25,45 +31,57 @@ const AddMusic: React.FC = () => {
     dispatch(updateURL(e.target.value));
   };
   return (
-    <div className="z-30 h-full w-full flex flex-col bg-black text-white">
+    <div className="z-30 h-full w-full flex flex-col bg-black text-white py-10">
       <div className="text-center py-20">
         <h2 className="text-2xl font-bold mb-4">Add Music</h2>
       </div>
-      <div className="space-y-4 mx-4">
+      <div className="space-y-8 mx-4">
         <div>
-          <h3 className="text-[15px] leading-[18px] mb-4">Title</h3>
+          <h3 className="text-[15px] leading-[18px] mb-3">Title</h3>
           <input
             type="text"
             placeholder="Title"
-            className="w-full p-2 border bg-black border-white  text-white rounded"
+            className="w-full p-2 border bg-black border-white  rounded"
             value={title}
             onChange={handleTitleChange}
           />
         </div>
         <div>
-          <h3 className="text-[15px] leading-[18px] mb-4">Artist</h3>
+          <h3 className="text-[15px] leading-[18px] mb-3">Artist</h3>
           <input
             type="text"
             placeholder="Artist"
-            className="w-full p-2 border bg-black border-white  text-white rounded"
+            className="w-full p-2 border bg-black border-white  rounded"
             value={artist}
             onChange={handleArtistChange}
           />
         </div>
         <div>
-          <h3 className="text-[15px] leading-[18px] mb-4">URL</h3>
+          <div className="flex flex-row ">
+            <h3 className="text-[15px] leading-[18px] mb-3 mr-1 ">URL</h3>
+            <IoInformationCircleOutline
+              onClick={handleInformationToggle}
+              color="white"
+            />
+          </div>
           <input
             type="url"
-            placeholder="URL"
-            className="w-full p-2 border bg-black border-white  text-white rounded"
+            placeholder="https://www.youtube.com/"
+            className="w-full p-2 border bg-black border-white  rounded"
             value={url}
             onChange={handleURLChange}
           />
+          {showInformation && (
+            <div className="p-2 mt-4 bg-[#3B3B3B] rounded-xl">
+              {/* 추가 정보 내용 */}
+              <p>Please add the youtube link as the url.</p>
+            </div>
+          )}
         </div>
         <div className="flex justify-center">
           <button
             onClick={handleSave}
-            className="bg-white text-black w-full xl:mt-40 lg:mt-40 sm:mt-20 md:mt-20  rounded-3xl h-10"
+            className="bg-white font-bold text-black w-full xl:mt-40 lg:mt-40 sm:mt-20 md:mt-20  rounded-3xl h-16"
           >
             Add
           </button>
