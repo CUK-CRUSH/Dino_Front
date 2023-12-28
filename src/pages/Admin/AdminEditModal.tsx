@@ -4,6 +4,7 @@ import { selectImage } from "@reducer/imageSlice";
 import { updateProfile, setUserProfileImage } from "@reducer/userProfileSlice";
 import { RootState } from "@store/index";
 import camera from "../../assets/Admin/camera.svg";
+import edit from "../../assets/Admin/editButton.svg";
 import useWindowSizeCustom from "@hooks/useWindowSizeCustom";
 
 
@@ -138,7 +139,7 @@ const AdminEditModal: React.FC<AdminEditModalProps> = ({ onClose }) => {
             alt="User Profile"
             className="w-full h-full object-cover object-center"
           />
-            <img src={camera} alt="Overlay" 
+          <img src={camera} alt="Overlay"
             className="absolute top-0 left-[20px] w-[25px] h-full  opacity-50" />
 
           <input
@@ -151,21 +152,40 @@ const AdminEditModal: React.FC<AdminEditModalProps> = ({ onClose }) => {
           />
         </label>
 
-        <div className="mb-4">
+        {/* 유저 닉네임 */}
+        <div className="ml-4 mb-2 text-sm">
+          User Name
+        </div>
+
+        <div className="mb-4 flex flex-col items-center relative">
           <input
             type="text"
             value={username}
+            placeholder="User Name"
             onChange={(e) => setUsername(e.target.value)}
-            className="w-full p-2 border bg-white"
+            className="w-11/12 p-2 border-b border-black focus:outline-none bg-white"
           />
+          <div className="absolute right-4 top-3">
+            <img src={edit} alt="Edit" className="w-4 h-4 cursor-pointer" />
+          </div>
         </div>
 
-        <div className="mb-4">
-          <textarea
+        {/* 한줄소개 */}
+
+        <div className="ml-4 mb-2 text-sm">
+          Comment
+        </div>
+
+        <div className="mb-4 flex flex-col items-center relative">
+          <input
             value={introText}
+            placeholder="Comment"
             onChange={(e) => setIntroText(e.target.value)}
-            className="w-full p-2 border bg-white"
+            className="w-11/12 p-2 border-b border-black focus:outline-none bg-white"
           />
+          <div className="absolute right-4 top-3">
+            <img src={edit} alt="Edit" className="w-4 h-4 cursor-pointer" />
+          </div>
         </div>
       </div>
     </div>
