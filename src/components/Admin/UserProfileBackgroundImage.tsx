@@ -1,6 +1,6 @@
 import { UserBackgroundImageDTO } from "types/Admin"
 
-const UserBackground = ({userBackgroundImage} : UserBackgroundImageDTO) => {
+const UserProfileBackground = ({userBackgroundImage} : UserBackgroundImageDTO) => {
     
     return(
         
@@ -21,4 +21,4 @@ const UserBackground = ({userBackgroundImage} : UserBackgroundImageDTO) => {
     )
 }
 
-export default UserBackground
+export default UserProfileBackground
