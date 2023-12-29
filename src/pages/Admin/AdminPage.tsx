@@ -1,6 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux"; // Import the useDispatch hook
-import { selectImage } from "@reducer/imageSlice";
+import { useSelector } from "react-redux"; // Import the useDispatch hook
 import { RootState } from "@store/index";
 import AdminEditModal from "./AdminEditModal";
 import Layout from "@components/Layout/layout";
@@ -11,7 +10,6 @@ interface AdminPageProps { }
 
 const AdminPage: React.FC<AdminPageProps> = () => {
   const selectedImage = useSelector((state: RootState) => state.image.selectedImage);
-  const dispatch = useDispatch(); // Initialize dispatch
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false); // Local state to manage the modal
 
@@ -72,13 +70,13 @@ const AdminPage: React.FC<AdminPageProps> = () => {
   }, [userProfile]);
 
 
-  const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
-    if (file) {
-      // Save the selected image to Redux store
-      dispatch(selectImage(URL.createObjectURL(file)));
-    }
-  };
+  // const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   const file = e.target.files?.[0];
+  //   if (file) {
+  //     // Save the selected image to Redux store
+  //     dispatch(selectImage(URL.createObjectURL(file)));
+  //   }
+  // };
 
   return (
     <Layout>
