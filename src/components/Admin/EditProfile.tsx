@@ -1,11 +1,5 @@
 import React, { useEffect} from "react";
-
-interface EditProfileDTO {
-  top : number;
-  left : number;
-  openEditModal : () => void;
-  closeOptionsModalOpen : () => void;
-}
+import { EditProfileDTO } from "types/Admin";
 
 export const EditProfile = ({top,left,openEditModal, closeOptionsModalOpen } : EditProfileDTO ) => {
 

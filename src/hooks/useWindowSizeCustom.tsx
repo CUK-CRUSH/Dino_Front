@@ -12,7 +12,6 @@ const useWindowSizeCustom = () => {
   });
 
   useEffect(() => {
-    console.log(window.innerWidth)
     if (typeof window !== "undefined") {
       const handleResize = () => {
           setWindowSize({
