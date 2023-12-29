@@ -1,15 +1,15 @@
-import { AdminBackgroundImageDTO } from "types/Admin"
+import { UserBackgroundImageDTO } from "types/Admin"
 
-const AdminBackground = ({adminBackgroundImage} : AdminBackgroundImageDTO) => {
+const UserBackground = ({userBackgroundImage} : UserBackgroundImageDTO) => {
     
     return(
         
         <div
           className="h-1/4 bg-white"
         >
-          {adminBackgroundImage ? (
+          {userBackgroundImage ? (
             <img
-              src={adminBackgroundImage}
+              src={userBackgroundImage}
               alt="Selected"
               className="h-full w-full flex justify-center items-center"
             />
@@ -21,4 +21,4 @@ const AdminBackground = ({adminBackgroundImage} : AdminBackgroundImageDTO) => {
     )
 }
 
-export default AdminBackground
+export default UserBackground

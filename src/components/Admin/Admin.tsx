@@ -4,13 +4,15 @@ import { RootState } from "@store/index";
 import AdminEditModal from "@pages/Admin/AdminEditModal";
 import { AddPalyList } from "@components/Admin/AddPLayList";
 import { EditProfile } from "@components/Admin/EditProfile";
-import AdminBackground from "./AdminBackground";
+import AdminBackground from "./UserBackgroundImage";
 import OpenOption from "./OpenOption";
 import UserProfileImage from "./UserProfileImage";
 import UserProfileInfo from "./UserProfileInfo";
 
 const AdminPage: React.FC = () => {
-  const selectedImage = useSelector((state: RootState) => state.image.selectedImage);
+  
+  // 배경화면이미지
+  const userBackgroundImage = useSelector((state: RootState) => state.userProfile.userBackgroundImage);
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false); // Local state to manage the modal
 
@@ -38,11 +40,12 @@ const AdminPage: React.FC = () => {
   const closeOptionsModal = () => {
     setOptionsModalOpen(false);
   };
+
   // 옵션모달 열리는 창 위치
   const calculateOptionsModalPosition = (e: React.MouseEvent<EventTarget>) => {
     const button = e.target as HTMLElement; // Assuming you're dealing with an HTML element
     const rect = button.getBoundingClientRect();
-    console.log(rect);
+    
     setOptionsModalPosition({
       top: rect.top + rect.height,
       left: rect.left - 160 + rect.width,
@@ -52,7 +55,6 @@ const AdminPage: React.FC = () => {
   };
 
   useEffect(() => {
-    // Update the state with user profile data when it's available
     if (userProfile) {
       setUsername(userProfile.username);
       setIntroText(userProfile.introText);
@@ -63,7 +65,7 @@ const AdminPage: React.FC = () => {
   return (
       <div className=" h-full w-full relative bg-white">
 
-        <AdminBackground adminBackgroundImage={selectedImage}/>
+        <AdminBackground userBackgroundImage={userBackgroundImage}/>
 
         <div className="h-full w-full left-0 top-[167px] absolute bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px]" >
           {/* ... 설정창 */}

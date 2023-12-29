@@ -1,5 +1,5 @@
-export interface AdminBackgroundImageDTO{
-  adminBackgroundImage : string | null;
+export interface UserBackgroundImageDTO{
+  userBackgroundImage : string | null;
 }
 
 export interface OpenOptionDTO{
