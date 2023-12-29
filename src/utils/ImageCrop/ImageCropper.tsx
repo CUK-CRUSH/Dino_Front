@@ -15,6 +15,7 @@ const ImageCropper = ({ children, aspectRatio, onCrop }: PropsType) => {
 
   const handleChildrenClick = () => {
     if (inputRef.current) {
+      inputRef.current.value = "";
       inputRef.current.click();
     }
   };
@@ -44,19 +45,19 @@ const ImageCropper = ({ children, aspectRatio, onCrop }: PropsType) => {
       <input
         type="file"
         ref={inputRef}
-        className="hidden "
+        className="hidden"
         onChange={handleFileChange}
       />
       <span onClick={handleChildrenClick}>{children}</span>
       {image && (
-        <div className="fixed z-50 top-0 left-0 w-screen h-screen flex items-center justify-center bg-[rgba(0,0,0,0)] backdrop-blur-md">
-          <div className="relative text-black w-full h-full">
+        <div className="fixed z-50 top-0 left-0 w-full h-screen flex items-center justify-center bg-[rgba(0,0,0,0)] backdrop-blur-md">
+          <div className="relative text-black w-[390px] h-full">
             <div className="z-50 bg-[#ffffff] overflow-hidden flex flex-col max-w-[desired value] mx-auto"></div>
             <h3 className="text-[22px] text-white leading-5 px-[20px] py-[16px] m-0 font-semibold">
               이미지 편집하기
             </h3>
             <div className="flex-1 flex items-center justify-center bg-[#ffffff]">
-              <div className="h-full w-full rounded-b-3xl object-cover">
+              <div className="rounded-b-3xl object-cover">
                 <Cropper
                   ref={cropperRef}
                   aspectRatio={aspectRatio}

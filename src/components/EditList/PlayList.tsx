@@ -69,7 +69,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         <ImageCropper aspectRatio={1 / 1} onCrop={handleUploadImage}>
           {compressedImage ? (
             <img
-              className="h-full w-full rounded-b-3xl object-cover"
+              className=" h-full w-full rounded-b-3xl object-cover"
               src={compressedImage}
               alt="Img"
             />
@@ -97,11 +97,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         onEdit={handleEditClick}
       />
 
-      <div className="h-2/3 overflow-auto">
-        <div className="w-full my-10">
-          <MusicDataRow musicData={musicData} />
-        </div>
-      </div>
+      <MusicDataRow musicData={musicData} />
 
       {isEditing && (
         <div className="absolute right-1 bottom-1">

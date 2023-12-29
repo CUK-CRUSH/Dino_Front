@@ -6,6 +6,7 @@ const LogIn = loadable(() => import("@pages/LogIn/login"));
 const Admin = loadable(() => import("@pages/Admin/AdminPage"));
 const EditPlayList = loadable(() => import("@pages/Editlist/editPlaylist"));
 const Validation = loadable(() => import("@pages/Validation/validation"));
+const AddMusic = loadable(() => import("@pages/AddMusic/addMusic"));
 
 function App() {
   return (
@@ -16,6 +17,7 @@ function App() {
         <Route path="/admin" element={<Admin />} />
         <Route path="/admin/:id" element={<EditPlayList />} />
         <Route path="/login/validation" element={<Validation />} />
+        <Route path="/admin/:id/edit" element={<AddMusic />} />
       </Routes>
     </Layout>
   );
