@@ -8,6 +8,7 @@ import useWindowSizeCustom from "@hooks/useWindowSizeCustom";
 import '../../styles/Admin/style.css';
 import EditButton from "@components/AdminEdit/EditButton";
 import SetUserProfileBackground from "@components/AdminEdit/SetUserProfileBackground";
+import SetUserProfileImage from "@components/AdminEdit/SetUserProfileIage";
 
 
 interface AdminEditModalProps {
@@ -106,25 +107,7 @@ const AdminEditModal: React.FC<AdminEditModalProps> = ({ onClose }) => {
         <SetUserProfileBackground userBackgroundImage={userProfile.userBackgroundImage} handleUserProfileBackgroundImage={handleUserProfileBackgroundImage}/>
 
         {/* 프로필 사진 */}
-        {/* <label htmlFor="UserProfileImageInput" className="block w-16 h-16 rounded-full overflow-hidden mx-auto mb-2 bg-gradient-to-tr from-blue-500 via-green-500 to-yellow-500 relative cursor-pointer">
-          <div className="absolute inset-0 bg-black bg-opacity-70"></div>
-          <img
-            src={UserProfileImage || userProfileImage || "default-image-url.jpg"}
-            alt="User Profile"
-            className="w-full h-full object-cover object-center"
-          />
-          <img src={'camera'} alt="Overlay"
-            className="absolute top-0 left-[20px] w-[25px] h-full  opacity-50" />
-
-          <input
-            type="file"
-            id="UserProfileImageInput"
-            accept="image/*"
-            style={{ display: "none" }}
-            onChange={handleUserProfileImageChange}
-            className="absolute inset-0 w-full h-full cursor-pointer opacity-0"
-          />
-        </label> */}
+       <SetUserProfileImage userProfileImage={userProfile.userProfileImage} handleUserProfileImage={handleUserProfileImageChange}/>  
 
         {/* 유저 닉네임 */}
         <div className="ml-4 mb-2 text-sm">
