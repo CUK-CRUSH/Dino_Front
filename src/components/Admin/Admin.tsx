@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux"; // Import the useDispatch hook
 import { RootState } from "@store/index";
-import AdminEditModal from "./AdminEditModal";
+import AdminEditModal from "@pages/Admin/AdminEditModal";
 import Layout from "@components/Layout/layout";
 import { AddPalyList } from "@components/Admin/AddPLayList";
 import { EditProfile } from "@components/Admin/EditProfile";
+import AdminBackground from "./AdminBackground";
 
-interface AdminPageProps { }
-
-const AdminPage: React.FC<AdminPageProps> = () => {
-  const selectedImage = useSelector((state: RootState) => state.image.selectedImage);
+const AdminPage : React.FC = () => {
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false); // Local state to manage the modal
 
@@ -62,39 +60,12 @@ const AdminPage: React.FC<AdminPageProps> = () => {
     }
   }, [userProfile]);
 
-  useEffect(() => {
-    if (userProfile) {
-      setUsername(userProfile.username);
-      setIntroText(userProfile.introText);
-    }
-  }, [userProfile]);
-
-
-  // const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-  //   const file = e.target.files?.[0];
-  //   if (file) {
-  //     // Save the selected image to Redux store
-  //     dispatch(selectImage(URL.createObjectURL(file)));
-  //   }
-  // };
 
   return (
     <Layout>
       <div className=" h-full w-full relative bg-white">
-        <div
-          className="h-1/4 rounded-b-3xl bg-white"
-        >
-          {selectedImage ? (
-            <img
-              src={selectedImage}
-              alt="Selected"
-              className="h-full w-full rounded-b-3xl flex justify-center items-center"
-            />
-          ) : (
-            <>
-            </>
-          )}
-        </div>
+
+        <AdminBackground />
         {/* {isAddMusicModalOpen && (
         <AddMusic onClose={() => handleCloseAddMusicModal()} />
       )} */}
@@ -154,11 +125,6 @@ const AdminPage: React.FC<AdminPageProps> = () => {
   );
 };
 
-export default AdminPage;
-// function dispatch(arg0: {
-//   // Load user profile data from the Redux store on component mount
-//   payload: any; type: "image/selectImage";
-// }) {
-//   throw new Error("Function not implemented.");
-// }
+ 
 
+export default AdminPage
