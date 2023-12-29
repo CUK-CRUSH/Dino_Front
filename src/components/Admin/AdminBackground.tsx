@@ -1,18 +1,15 @@
-import { useSelector } from "react-redux"; 
-import { RootState } from "@store/index";
+import { AdminBackgroundImageDTO } from "types/Admin"
 
-const AdminBackground = () => {
+const AdminBackground = ({adminBackgroundImage} : AdminBackgroundImageDTO) => {
     
-    const selectedImage = useSelector((state: RootState) => state.image.selectedImage);
-
     return(
         
         <div
           className="h-1/4 bg-white"
         >
-          {selectedImage ? (
+          {adminBackgroundImage ? (
             <img
-              src={selectedImage}
+              src={adminBackgroundImage}
               alt="Selected"
               className="h-full w-full flex justify-center items-center"
             />

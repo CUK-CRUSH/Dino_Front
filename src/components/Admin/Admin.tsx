@@ -10,6 +10,7 @@ import OpenOption from "./OpenOption";
 import UserProfileImage from "./ProfileImage";
 
 const AdminPage: React.FC = () => {
+  const selectedImage = useSelector((state: RootState) => state.image.selectedImage);
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false); // Local state to manage the modal
 
@@ -62,7 +63,7 @@ const AdminPage: React.FC = () => {
   return (
       <div className=" h-full w-full relative bg-white">
 
-        <AdminBackground />
+        <AdminBackground adminBackgroundImage={selectedImage}/>
 
         <div className="h-full w-full left-0 top-[167px] absolute bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px]" >
           {/* ... 설정창 */}
