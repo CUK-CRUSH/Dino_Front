@@ -9,7 +9,8 @@
       "@store/*": ["./store/*"],
       "@assets/*": ["./assets/*"],
       "@utils/*": ["./utils/*"],
-      "@api/*": ["./api/*"]
+      "@api/*": ["./api/*"],
+      "@styles/*": ["./styles/*"]
     }
   }
 }
