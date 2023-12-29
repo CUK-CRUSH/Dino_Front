@@ -7,7 +7,7 @@ import useWindowSizeCustom from "@hooks/useWindowSizeCustom";
 import '../../styles/Admin/style.css';
 import EditButton from "@components/AdminEdit/EditButton";
 import SetUserProfileBackground from "@components/AdminEdit/SetUserProfileBackground";
-import SetUserProfileImage from "@components/AdminEdit/SetUserProfileIage";
+import SetUserProfileImage from "@components/AdminEdit/SetUserProfileImage";
 import SetUserProfileInfo from "@components/AdminEdit/SetUserProfileInfo";
 
 
