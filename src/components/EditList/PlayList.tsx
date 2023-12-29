@@ -1,10 +1,9 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { AiFillPlusCircle, AiOutlinePicture } from "react-icons/ai";
+import { AiOutlinePicture } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { updateArtist, updateTitle, updateURL } from "@reducer/musicadd";
 import { setIsEditing } from "@reducer/editPlayList/isEdit";
 import { RootState } from "@store/index";
-import { useNavigate } from "react-router-dom";
 import { EditPlsyListDTO } from "types/EditplayList";
 import { EditPlaylistControls } from "@components/EditList/EditPlaylistControl";
 import { MusicDataRow } from "@components/EditList/MusicDataRow";
@@ -12,6 +11,7 @@ import useImageCompress from "@hooks/useImageCompress";
 import { dataURItoFile } from "@utils/ImageCrop/common";
 import ImageCropper from "@utils/ImageCrop/ImageCropper";
 import LoadingPage from "@utils/loading";
+import { PlusButton } from "./PlusButton";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
   const isEditing = useSelector(
@@ -36,7 +36,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   }, [uploadImage, compressImage]);
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   const handleEditClick = () => {
     dispatch(setIsEditing(true));
@@ -51,10 +50,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     dispatch(updateArtist(""));
     dispatch(updateURL(""));
     dispatch(setIsEditing(false));
-  };
-
-  const handleAddMusicClick = () => {
-    navigate(`/admin/1/edit`);
   };
 
   useEffect(() => {
@@ -99,13 +94,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
 
       <MusicDataRow musicData={musicData} isEditing={isEditing} />
 
-      {isEditing && (
-        <div className="absolute right-1 bottom-1">
-          <button onClick={handleAddMusicClick}>
-            <AiFillPlusCircle size={56} className="text-white" />
-          </button>
-        </div>
-      )}
+      {isEditing && <PlusButton />}
     </div>
   );
 };
