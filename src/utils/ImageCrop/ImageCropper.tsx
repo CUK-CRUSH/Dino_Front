@@ -1,14 +1,9 @@
 import { useRef, useState } from "react";
 import { Cropper, ReactCropperElement } from "react-cropper";
 import "cropperjs/dist/cropper.css";
+import { ImageCropsDTO } from "types/ImageCrop/imagecrops";
 
-interface PropsType {
-  onCrop: (image: string) => void;
-  aspectRatio: number;
-  children: React.ReactNode;
-}
-
-const ImageCropper = ({ children, aspectRatio, onCrop }: PropsType) => {
+const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const cropperRef = useRef<ReactCropperElement>(null);
   const [image, setImage] = useState<null | string>(null);
