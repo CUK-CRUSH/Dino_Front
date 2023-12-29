@@ -1,4 +1,4 @@
-import { useSelector } from "react-redux"; // Import the useDispatch hook
+import { useSelector } from "react-redux"; 
 import { RootState } from "@store/index";
 
 const AdminBackground = () => {

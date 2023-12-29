@@ -7,16 +7,15 @@ import { AddPalyList } from "@components/Admin/AddPLayList";
 import { EditProfile } from "@components/Admin/EditProfile";
 import AdminBackground from "./AdminBackground";
 import OpenOption from "./OpenOption";
+import UserProfileImage from "./ProfileImage";
 
 const AdminPage: React.FC = () => {
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false); // Local state to manage the modal
 
-  // State for username and introductory text
   const [username, setUsername] = useState("");
   const [introText, setIntroText] = useState("");
 
-  // Load user profile data from the Redux store on component mount
   const userProfile = useSelector((state: RootState) => state.userProfile);
 
   const openEditModal = () => {
@@ -61,7 +60,6 @@ const AdminPage: React.FC = () => {
 
 
   return (
-    <Layout>
       <div className=" h-full w-full relative bg-white">
 
         <AdminBackground />
@@ -85,24 +83,17 @@ const AdminPage: React.FC = () => {
           {/* 프로필 이미지 */}
           <div className=" flex items-center flex-col z-40">
             {/* User Profile Icon and Username */}
-            <div className="w-[75px] h-[75px] mt-[-35px] rounded-full overflow-hidden ">
-              <img
-                src={userProfile?.userProfileImage ?? "default-image-url.jpg"}
-                alt="User Profile"
-                className="w-full h-full object-cover"
-              />
-            </div>
+            <UserProfileImage userProfileImage={userProfile.userProfileImage} />
 
             <div className="w-[250px] text-center text-white text-[25px] font-bold font-['Noto Sans'] leading-[18px] mt-[19px]">{username}</div>
             <div className="text-center  text-white text-[15px] font-medium font-['Noto Sans'] leading-[18px] mt-[19px]">{introText}</div>
           </div>
 
           <AddPalyList />
-          <AddPalyList />
+          
 
         </div>
       </div>
-    </Layout>
   );
 };
 
