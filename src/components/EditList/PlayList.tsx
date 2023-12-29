@@ -97,7 +97,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         onEdit={handleEditClick}
       />
 
-      <MusicDataRow musicData={musicData} />
+      <MusicDataRow musicData={musicData} isEditing={isEditing} />
 
       {isEditing && (
         <div className="absolute right-1 bottom-1">
