@@ -1,10 +1,11 @@
+// AddMusic.tsx
 import React from "react";
 import { updateArtist, updateTitle, updateURL } from "@reducer/musicadd";
 import { RootState } from "@store/index";
-import { IoInformationCircleOutline } from "react-icons/io5";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toggleShowInformation } from "@reducer/toggle/addMusicToggle";
+import { InputComponent } from "@components/Addmusic/AddMusicInput";
 
 const AddMusic: React.FC = () => {
   const dispatch = useDispatch();
@@ -40,52 +41,32 @@ const AddMusic: React.FC = () => {
         <h2 className="text-2xl font-bold mb-4">Add Music</h2>
       </div>
       <div className="space-y-8 mx-4">
-        <div>
-          <h3 className="text-[15px] leading-[18px] mb-3">Title</h3>
-          <input
-            type="text"
-            placeholder="Title"
-            className="w-full p-2 border bg-black border-white  rounded"
-            value={title}
-            required
-            onChange={handleTitleChange}
-          />
-        </div>
-        <div>
-          <h3 className="text-[15px] leading-[18px] mb-3">Artist</h3>
-          <input
-            type="text"
-            placeholder="Artist"
-            className="w-full p-2 border bg-black border-white  rounded"
-            value={artist}
-            required
-            onChange={handleArtistChange}
-          />
-        </div>
-        <div>
-          <div className="flex flex-row ">
-            <h3 className="text-[15px] leading-[18px] mb-3 mr-1 ">URL</h3>
-            <IoInformationCircleOutline
-              onClick={handleInformationToggle}
-              color="white"
-              className="cursor-pointer"
-            />
-          </div>
-          <input
-            type="url"
-            placeholder="https://www.youtube.com/"
-            className="w-full p-2 border bg-black border-white  rounded"
-            value={url}
-            required
-            onChange={handleURLChange}
-          />
-          {showInformation && (
-            <div className="p-2 mt-4 bg-[#3B3B3B] rounded-xl">
-              {/* 추가 정보 내용 */}
-              <p>Please add the youtube link as the url.</p>
-            </div>
-          )}
-        </div>
+        <InputComponent
+          label="Title"
+          placeholder="Title"
+          value={title}
+          required={true}
+          onChange={handleTitleChange}
+        />
+        <InputComponent
+          label="Artist"
+          placeholder="Artist"
+          value={artist}
+          required={true}
+          onChange={handleArtistChange}
+        />
+        <InputComponent
+          label="URL"
+          placeholder="https://www.youtube.com/"
+          value={url}
+          required={true}
+          onChange={handleURLChange}
+          infoButton={true}
+          infoText={
+            showInformation ? "Please add the youtube link as the url." : ""
+          }
+          infoToggleHandler={handleInformationToggle}
+        />
         <div className="flex justify-center">
           <button
             onClick={handleSave}
