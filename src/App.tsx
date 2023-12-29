@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import Layout from "@components/Layout/layout";
 const Home = loadable(() => import("@pages/Home/home"));
 const LogIn = loadable(() => import("@pages/LogIn/login"));
-const Admin = loadable(() => import("@pages/Admin/AdminPage"));
+const Admin = loadable(() => import("@pages/Admin/Admin"));
 const EditPlayList = loadable(() => import("@pages/Editlist/editPlaylist"));
 const Validation = loadable(() => import("@pages/Validation/validation"));
 const AddMusic = loadable(() => import("@pages/AddMusic/addMusic"));
