@@ -1,7 +1,7 @@
 import { MusicDataDTO } from "types/EditplayList";
 import "@styles/EditList/playList.css";
 import { FaChevronRight } from "react-icons/fa";
-
+import { useEffect, useRef, useState } from "react";
 // Admin에서 EditList는 기본적으로
 // Edit버튼을 누르기 전에 id, title, artist만을 보여준다..
 // Edit 버튼을 누르면 음악의 순서 이동이 가능하고
@@ -11,8 +11,25 @@ export const MusicDataRow: React.FC<MusicDataDTO & { isEditing: boolean }> = ({
   musicData,
   isEditing,
 }) => {
-  const TitleLength = musicData.title.length >= 17; // 텍스트 길이에 따라 애니메이션 적용 여부 결정
-  const ArtistLength = musicData.artist.length >= 6;
+  const [titleWidth, setTitleWidth] = useState(0);
+  const [artistWidth, setArtistWidth] = useState(0);
+  const titleRef = useRef<HTMLSpanElement>(null);
+  const artistRef = useRef<HTMLSpanElement>(null);
+
+  useEffect(() => {
+    if (titleRef.current && artistRef.current) {
+      const titleElement = titleRef.current;
+      const artistElement = artistRef.current;
+      const titleWidth = titleElement.getBoundingClientRect().width;
+      const artistWidth = artistElement.getBoundingClientRect().width;
+      setTitleWidth(titleWidth);
+      setArtistWidth(artistWidth);
+    }
+  }, []);
+
+  const TitleLength = titleWidth >= 205; // 텍스트 너비에 따라 애니메이션 적용 여부 결정
+  const ArtistLength = artistWidth >= 88;
+
   return (
     <div className="h-2/3 overflow-auto">
       <div className="w-full my-10">
@@ -22,6 +39,7 @@ export const MusicDataRow: React.FC<MusicDataDTO & { isEditing: boolean }> = ({
           </div>
           <div className="whitespace-nowrap w-7/12 overflow-hidden mr-2">
             <span
+              ref={titleRef}
               className={`inline-block truncate overflow-hidden ${
                 TitleLength ? "animate-marquee" : ""
               }`}
@@ -31,6 +49,7 @@ export const MusicDataRow: React.FC<MusicDataDTO & { isEditing: boolean }> = ({
           </div>
           <div className="whitespace-nowrap  w-3/12 overflow-hidden">
             <span
+              ref={artistRef}
               className={`inline-block truncate overflow-hidden ${
                 ArtistLength ? "animate-marquee" : ""
               }`}
