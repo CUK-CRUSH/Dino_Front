@@ -11,7 +11,7 @@ const SetUserProfileImage = ({userProfileImage, handleUserProfileImage} : SetUse
         alt="User Profile"
         className="w-full h-full object-cover object-center"
       />
-      <img src={'camera'} alt="Overlay"
+      <img src={camera} alt="Overlay"
         className="absolute top-0 left-[20px] w-[25px] h-full  opacity-50" />
 
       <input

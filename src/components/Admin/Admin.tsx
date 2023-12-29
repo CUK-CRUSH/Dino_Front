@@ -81,7 +81,7 @@ const AdminPage: React.FC = () => {
 
           {/* 프로필 수정 모달 펼치기 */}
           {isEditModalOpen && (
-            <AdminEditModal onClose={closeEditModal} />
+            <AdminEditModal  onClose={closeEditModal} />
           )}
 
           {/* 프로필 이미지 */}
