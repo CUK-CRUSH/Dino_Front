@@ -1,6 +1,7 @@
 import { MusicDataDTO } from "types/EditplayList";
 import "@styles/playList.css";
 
+
 export const MusicDataRow: React.FC<MusicDataDTO> = ({ musicData }) => {
   const TitleLength = musicData.title.length >= 15; // 텍스트 길이에 따라 애니메이션 적용 여부 결정
   const ArtistLength = musicData.artist.length >= 6;
