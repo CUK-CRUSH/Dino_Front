@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useSelector, useDispatch } from "react-redux"; // Import the useDispatch hook
+import { useSelector } from "react-redux"; // Import the useDispatch hook
 import { RootState } from "@store/index";
 import AdminEditModal from "./AdminEditModal";
 import Layout from "@components/Layout/layout";
