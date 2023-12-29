@@ -1,4 +1,3 @@
-
 export interface EditProfileDTO {
   top : number;
   left : number;

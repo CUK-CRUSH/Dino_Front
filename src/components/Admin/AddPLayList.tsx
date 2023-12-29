@@ -7,7 +7,6 @@ import useWindowSizeCustom from "../../hooks/useWindowSizeCustom";
 export const AddPalyList = () => {
   const windowSize = useWindowSizeCustom();
 
-  console.log(windowSize.width)
   const [customMargin,setCustomMargin] = useState<number>(0);
 
   useEffect(()=>{

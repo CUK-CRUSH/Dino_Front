@@ -7,6 +7,7 @@ import camera from "../../assets/Admin/camera.svg";
 import edit from "../../assets/Admin/editButton.svg";
 import useWindowSizeCustom from "@hooks/useWindowSizeCustom";
 import '../../styles/Admin/style.css';
+import EditButton from "@components/AdminEdit/EditButton";
 
 
 interface AdminEditModalProps {
@@ -22,7 +23,7 @@ const AdminEditModal: React.FC<AdminEditModalProps> = ({ onClose }) => {
   const [username, setUsername] = useState("Your Username");
   const [introText, setIntroText] = useState("Welcome to the Admin Page");
 
-  const handleSaveClick = () => {
+  const save = () => {
     // Save changes to Redux store
     dispatch(updateProfile({ username, introText }));
     if (newUserProfileImage) {
@@ -34,7 +35,7 @@ const AdminEditModal: React.FC<AdminEditModalProps> = ({ onClose }) => {
     onClose(); // Close the modal
   };
 
-  const handleCancelClick = () => {
+  const close = () => {
     onClose(); // Close the modal without saving changes
   };
 
@@ -87,11 +88,12 @@ const AdminEditModal: React.FC<AdminEditModalProps> = ({ onClose }) => {
   // 열고닫기
   const [isOpen, setIsOpen] = useState(true);
 
-  const handleToggleClick = () => {
+  const cancel = () => {
+    console.log(isOpen)
     setIsOpen(!isOpen);
   
     setTimeout(() => {
-      handleCancelClick();
+      close();
     }, 900);
   };
   
@@ -105,12 +107,7 @@ const AdminEditModal: React.FC<AdminEditModalProps> = ({ onClose }) => {
           
         {/* 상단 취소/저장 버튼 */}
         <div className="flex justify-between h-[50px]">
-        <button onClick={() => { handleToggleClick(); }} className="text-red-600 ml-[10px]">
-              Cancel
-          </button>
-          <button onClick={handleSaveClick} className="text-gray-800 mr-[10px]">
-            Save
-          </button>
+          <EditButton save={save} cancel={cancel} />
         </div>
 
         {/* 배경화면 */}
