@@ -34,7 +34,7 @@ const AdminEditModal: React.FC<AdminEditModalProps> = ({ onClose }) => {
     if (userProfile.userBackgroundImage) {
       dispatch(selectImage(userProfile.userBackgroundImage));
     }
-    onClose(); // Close the modal
+    cancel();
   };
 
   const close = () => {
@@ -82,7 +82,7 @@ const AdminEditModal: React.FC<AdminEditModalProps> = ({ onClose }) => {
   const [isOpen, setIsOpen] = useState(true);
 
   const cancel = () => {
-    console.log(isOpen)
+    
     setIsOpen(!isOpen);
   
     setTimeout(() => {
