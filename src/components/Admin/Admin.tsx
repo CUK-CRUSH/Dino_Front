@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux"; // Import the useDispatch hook
 import { RootState } from "@store/index";
 import AdminEditModal from "@pages/Admin/AdminEditModal";
-import Layout from "@components/Layout/layout";
 import { AddPalyList } from "@components/Admin/AddPLayList";
 import { EditProfile } from "@components/Admin/EditProfile";
 import AdminBackground from "./AdminBackground";
 import OpenOption from "./OpenOption";
-import UserProfileImage from "./ProfileImage";
+import UserProfileImage from "./UserProfileImage";
+import UserProfileInfo from "./UserProfileInfo";
 
 const AdminPage: React.FC = () => {
   const selectedImage = useSelector((state: RootState) => state.image.selectedImage);
@@ -83,11 +83,11 @@ const AdminPage: React.FC = () => {
 
           {/* 프로필 이미지 */}
           <div className=" flex items-center flex-col z-40">
-            {/* User Profile Icon and Username */}
+            
             <UserProfileImage userProfileImage={userProfile.userProfileImage} />
 
-            <div className="w-[250px] text-center text-white text-[25px] font-bold font-['Noto Sans'] leading-[18px] mt-[19px]">{username}</div>
-            <div className="text-center  text-white text-[15px] font-medium font-['Noto Sans'] leading-[18px] mt-[19px]">{introText}</div>
+            <UserProfileInfo username={username} introText={introText} />
+
           </div>
 
           <AddPalyList />
