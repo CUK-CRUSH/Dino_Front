@@ -110,11 +110,11 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
        <SetUserProfileImage userProfileImage={userProfile.userProfileImage} handleUserProfileImage={handleUserProfileImageChange}/>  
 
         {/* 유저 닉네임 */}
-        <SetUserProfileInfo context={username} func={setUsername} />
+        <SetUserProfileInfo placeholder='User Name' maxlength={999} context={username} func={setUsername} />
 
         {/* 한줄소개 */}
-
-        <SetUserProfileInfo context={introText} func={setIntroText} />
+        <SetUserProfileInfo placeholder='Comment' maxlength={50} context={introText} func={setIntroText} />
+        
       </div>
     </div>
 

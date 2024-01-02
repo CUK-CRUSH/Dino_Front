@@ -14,6 +14,8 @@ export interface SetUserProfileImageDTO {
 }
 
 export interface SetUserProfileInfoDTO {
+  placeholder : string;
+  maxlength : number;
   context : string;
   func : React.Dispatch<React.SetStateAction<string>>;
 }

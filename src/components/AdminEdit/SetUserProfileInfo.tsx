@@ -1,7 +1,7 @@
 import { SetUserProfileInfoDTO } from "types/AdminEdit";
 import edit from "../../assets/Admin/editButton.svg";
 
-const SetUserProfileInfo = ({ context, func }: SetUserProfileInfoDTO) => {
+const SetUserProfileInfo = ({ placeholder, maxlength, context, func }: SetUserProfileInfoDTO) => {
 
   return (
     <>
@@ -13,7 +13,8 @@ const SetUserProfileInfo = ({ context, func }: SetUserProfileInfoDTO) => {
         <input
           type="text"
           value={context}
-          placeholder="User Name"
+          placeholder={placeholder}
+          maxLength={maxlength}
           onChange={(e) => func(e.target.value)}
           className="w-11/12 p-2 border-b border-black focus:outline-none bg-white"
         />
