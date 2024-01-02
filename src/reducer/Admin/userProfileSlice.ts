@@ -14,14 +14,14 @@ const userProfileSlice = createSlice({
   initialState,
   reducers: {
     setUserBackgroundImage : (state, action) => {
-      state.userBackgroundImage = action.payload;
+      state.userBackgroundImage = action.payload.userBackgroundImage;
     },
     updateProfile: (state, action) => {
       state.username = action.payload.username;
       state.introText = action.payload.introText;
     },
     setUserProfileImage: (state, action) => {
-      state.userProfileImage = action.payload;
+      state.userProfileImage = action.payload.userProfileImage;
     },
   },
 });

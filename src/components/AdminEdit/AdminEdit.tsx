@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { selectImage } from "@reducer/imageSlice";
-import { updateProfile, setUserProfileImage } from "@reducer/userProfileSlice";
+import { setUserBackgroundImage, updateProfile, setUserProfileImage } from "@reducer/Admin/userProfileSlice";
 import { RootState } from "@store/index";
 import useWindowSizeCustom from "@hooks/useWindowSizeCustom";
 import '../../styles/Admin/style.css';
@@ -9,7 +8,6 @@ import EditButton from "@components/AdminEdit/EditButton";
 import SetUserProfileBackground from "@components/AdminEdit/SetUserProfileBackground";
 import SetUserProfileImage from "@components/AdminEdit/SetUserProfileImage";
 import SetUserProfileInfo from "@components/AdminEdit/SetUserProfileInfo";
-
 
 interface AdminEditModalProps {
   onClose: () => void; // A function to close the modal
@@ -32,7 +30,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
       dispatch(setUserProfileImage(userProfile.userProfileImage));
     }
     if (userProfile.userBackgroundImage) {
-      dispatch(selectImage(userProfile.userBackgroundImage));
+      dispatch(setUserBackgroundImage(userProfile.userBackgroundImage));
     }
     cancel();
   };
@@ -46,7 +44,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     const file = e.target.files?.[0];
     if (file) {
       const imageUrl = URL.createObjectURL(file);
-      dispatch(selectImage(imageUrl));
+      setUserBackgroundImage(imageUrl);
     }
   };
 
