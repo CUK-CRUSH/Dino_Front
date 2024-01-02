@@ -66,6 +66,7 @@ const AddMusic: React.FC = () => {
           }
           infoToggleHandler={handleInformationToggle}
         />
+        {/* URL은 "https://www.youtube.com/"를 무조건 포함해야 Add되도록 제한을 걸어놓는다. */}
         <div className="flex justify-center">
           <button
             onClick={handleSave}
