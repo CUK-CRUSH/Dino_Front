@@ -1,6 +1,7 @@
 import { MusicDataDTO } from "types/EditplayList";
 import "@styles/EditList/playList.css";
-import { FaChevronRight } from "react-icons/fa";
+
+import { FaAngleRight } from "react-icons/fa6";
 import { useEffect, useRef, useState } from "react";
 // Admin에서 EditList는 기본적으로
 // Edit버튼을 누르기 전에 id, title, artist만을 보여준다..
@@ -27,41 +28,45 @@ export const MusicDataRow: React.FC<MusicDataDTO & { isEditing: boolean }> = ({
     }
   }, []);
 
-  const TitleLength = titleWidth >= 205; // 텍스트 너비에 따라 애니메이션 적용 여부 결정
-  const ArtistLength = artistWidth >= 88;
+  const TitleLength = titleWidth >= 195; // 텍스트 너비에 따라 애니메이션 적용 여부 결정
+  const ArtistLength = artistWidth >= 80;
 
   return (
-    <div className="h-2/3 overflow-auto">
-      <div className="w-full my-10">
-        <div className="flex flex-row items-center pb-1 mx-5 text-base border-b border-white">
+    <div className="h-2/3 overflow-auto text-[15px] flex justify-center ">
+      <div className="w-[360px] my-10">
+        <div className="flex flex-row items-center pb-2 mx-[13px] border-b border-white">
           <div className="ml-2 w-1/12">
-            <span className="inline-block truncate">id</span>
+            <span>1</span>
           </div>
-          <div className="whitespace-nowrap w-7/12 overflow-hidden mr-2">
-            <span
-              ref={titleRef}
-              className={`inline-block truncate overflow-hidden ${
-                TitleLength ? "animate-marquee" : ""
-              }`}
-            >
-              {musicData.title}
-            </span>
+          <div className="w-7/12 overflow-hidden">
+            <div className="flex items-center">
+              <span
+                ref={titleRef}
+                className={`flex-shrink-0 ${
+                  TitleLength ? "animate-marquee" : ""
+                }`}
+              >
+                {musicData.title}
+              </span>
+            </div>
           </div>
-          <div className="whitespace-nowrap  w-3/12 overflow-hidden">
-            <span
-              ref={artistRef}
-              className={`inline-block truncate overflow-hidden ${
-                ArtistLength ? "animate-marquee" : ""
-              }`}
-            >
-              {musicData.artist}
-            </span>
+          <div className="text-[11px] w-3/12 overflow-hidden">
+            <div className="flex items-center">
+              <span
+                ref={artistRef}
+                className={`flex-shrink-0 ${
+                  ArtistLength ? "animate-marquee" : ""
+                }`}
+              >
+                {musicData.artist}
+              </span>
+            </div>
           </div>
           {isEditing && (
-            <div className="inline-block w-1/12">
+            <div className="w-1/12 pl-2">
               <button>
-                <span className="inline-block">
-                  <FaChevronRight color="white" />
+                <span>
+                  <FaAngleRight color="white" size={20} />
                 </span>
               </button>
             </div>

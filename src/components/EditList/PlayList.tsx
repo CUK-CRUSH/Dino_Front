@@ -59,7 +59,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   }, [uploadImage, handleCompressImage]);
 
   return (
-    <div className="z-30 h-full w-full flex flex-col bg-black text-white">
+    <div className="z-30 h-full w-full flex flex-col bg-black text-white font-medium leading-[18px]">
       <div className="h-1/3 rounded-b-3xl bg-white cursor-pointer">
         <ImageCropper aspectRatio={1 / 1} onCrop={handleUploadImage}>
           {compressedImage ? (
@@ -74,8 +74,8 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
                 <LoadingPage />
               ) : (
                 <div className="flex flex-col justify-center items-center h-full">
-                  <AiOutlinePicture size={32} className="text-gray-400" />
-                  <span className="text-center text-neutral-400 text-[15px] font-medium leading-[18px] pt-[6px]">
+                  <AiOutlinePicture size={29} className="text-gray-400" />
+                  <span className="text-center text-[#8E8E8E] text-[15px]  pt-[6px]">
                     Setting a representative image
                   </span>
                 </div>

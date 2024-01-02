@@ -1,4 +1,3 @@
-// InputComponent.tsx
 import { MusicInputDTO } from "@reducer/Addmusic/AddMusic";
 import React from "react";
 import { IoInformationCircleOutline } from "react-icons/io5";
@@ -17,13 +16,15 @@ export const InputComponent: React.FC<MusicInputDTO> = ({
     <div>
       <div className="flex flex-row ">
         <h3 className="text-[15px] leading-[18px] mb-3 mr-1">{label}</h3>
-        {infoButton && (
-          <IoInformationCircleOutline
-            onClick={infoToggleHandler}
-            color="white"
-            className="cursor-pointer"
-          />
-        )}
+        <div className="mt-[3px]">
+          {infoButton && (
+            <IoInformationCircleOutline
+              onClick={infoToggleHandler}
+              color="white"
+              className="cursor-pointer"
+            />
+          )}
+        </div>
       </div>
       <input
         type={infoButton ? "url" : "text"}

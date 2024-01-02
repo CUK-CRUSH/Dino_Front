@@ -1,4 +1,3 @@
-// AddMusic.tsx
 import React from "react";
 import { updateArtist, updateTitle, updateURL } from "@reducer/musicadd";
 import { RootState } from "@store/index";
@@ -36,9 +35,9 @@ const AddMusic: React.FC = () => {
     dispatch(updateURL(e.target.value));
   };
   return (
-    <div className="z-30 h-full w-full flex flex-col bg-black text-white py-10">
+    <div className="z-30 h-full w-full flex flex-col bg-black text-white py-10 text-[15px] leading-[18px]">
       <div className="text-center py-20">
-        <h2 className="text-2xl font-bold mb-4">Add Music</h2>
+        <h2 className="text-[25px] font-bold mb-4">Add Music</h2>
       </div>
       <div className="space-y-8 mx-4">
         <InputComponent
@@ -70,7 +69,7 @@ const AddMusic: React.FC = () => {
         <div className="flex justify-center">
           <button
             onClick={handleSave}
-            className="bg-white font-bold text-black w-full xl:mt-40 lg:mt-40 sm:mt-20 md:mt-20  rounded-3xl h-16"
+            className="bg-white font-bold text-black text-[17px] w-[360px] h-[58px] mt-[260px] rounded-3xl "
           >
             Add
           </button>
