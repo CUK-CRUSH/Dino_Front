@@ -59,8 +59,8 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   }, [uploadImage, handleCompressImage]);
 
   return (
-    <div className="z-30 h-full w-full flex flex-col bg-black text-white">
-      <div className="h-1/3 rounded-b-3xl bg-white cursor-pointer">
+    <div className="z-30 h-full w-full flex flex-col bg-black text-white font-medium leading-[18px]">
+      <div className="h-1/3 relative rounded-b-3xl bg-white cursor-pointer">
         <ImageCropper aspectRatio={1 / 1} onCrop={handleUploadImage}>
           {compressedImage ? (
             <img
@@ -73,11 +73,17 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
               {isCompressLoading ? (
                 <LoadingPage />
               ) : (
-                <div className="flex flex-col justify-center items-center h-full">
-                  <AiOutlinePicture size={32} className="text-gray-400" />
-                  <span className="text-center text-neutral-400 text-[15px] font-medium leading-[18px] pt-[6px]">
-                    Setting a representative image
-                  </span>
+                <div>
+                  <div className="flex flex-col justify-center items-center h-full">
+                    <AiOutlinePicture size={29} className="text-gray-400" />
+                    <span className="text-center text-[#8E8E8E] text-[15px]  pt-[6px]">
+                      Setting a representative image
+                    </span>
+                  </div>
+                  <div className="text-[30px] bottom-4 left-4 text-white shadow-black font-bold leading-5 absolute">
+                    {/* /admin에서 입력받은 title값을 갖고온다. */}
+                    <h2>Title</h2>
+                  </div>
                 </div>
               )}
             </div>

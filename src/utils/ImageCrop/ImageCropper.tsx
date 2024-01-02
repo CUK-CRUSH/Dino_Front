@@ -46,7 +46,7 @@ const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
       <span onClick={handleChildrenClick}>{children}</span>
       {image && (
         <div className="fixed z-50 top-0 left-0 w-full h-screen flex items-center justify-center bg-[rgba(0,0,0,0)] backdrop-blur-md">
-          <div className="relative text-black w-[390px] h-full">
+          <div className="relative text-black w-[390px] h-[800px]">
             <div className="z-50 bg-[#ffffff] overflow-hidden flex flex-col max-w-[desired value] mx-auto"></div>
             <h3 className="text-[22px] text-white leading-5 px-[20px] py-[16px] m-0 font-semibold">
               이미지 편집하기
