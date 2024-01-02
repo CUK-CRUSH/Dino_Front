@@ -7,9 +7,9 @@ export const PlusButton = () => {
     navigate(`/admin/1/edit`);
   };
   return (
-    <div className="absolute right-1 bottom-1">
+    <div className="absolute right-5 bottom-10">
       <button onClick={handleAddMusicClick}>
-        <AiFillPlusCircle size={56} className="text-white" />
+        <AiFillPlusCircle size={64} className="text-white" />
       </button>
     </div>
   );
