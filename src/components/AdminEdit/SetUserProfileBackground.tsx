@@ -2,7 +2,6 @@ import { SetUserProfileBackgroundDTO } from "types/AdminEdit";
 
 import camera from "../../assets/Admin/camera.svg";
 
-
 const SetUserProfileBackground = ({userProfileBackgroundImage , handleUserProfileBackgroundImage} : SetUserProfileBackgroundDTO) => {
     return(
         <label
