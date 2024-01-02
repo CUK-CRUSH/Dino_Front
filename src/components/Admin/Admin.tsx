@@ -64,7 +64,7 @@ const AdminPage: React.FC = () => {
   return (
       <div className=" h-full w-full relative bg-white">
 
-        <UserProfileBackground userBackgroundImage={userProfile.userBackgroundImage}/>
+        <UserProfileBackground userBackgroundImage={userProfile.userProfileBackgroundImage} />
 
         <div className="h-full w-full left-0 top-[167px] absolute bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px]" >
           {/* ... 설정창 */}
@@ -95,7 +95,6 @@ const AdminPage: React.FC = () => {
           
           {/* 내가 생성한 플레이리스트 뽑아주고 마지막에 플레이리스트 추가 컴포넌트 붙이기. */}
           <AddPalyList />
-          
 
         </div>
       </div>
