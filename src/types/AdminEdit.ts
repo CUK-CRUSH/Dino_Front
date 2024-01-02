@@ -4,7 +4,7 @@ export interface EditButtonDTO {
   }
 
 export interface SetUserProfileBackgroundDTO {
-  userBackgroundImage : string | null;
+  userProfileBackgroundImage : string | null;
   handleUserProfileBackgroundImage : (e: React.ChangeEvent<HTMLInputElement>) => void;
 }
 

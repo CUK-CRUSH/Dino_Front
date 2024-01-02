@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserBackgroundImage, updateProfile, setUserProfileImage } from "@reducer/Admin/userProfileSlice";
+import { setUserProfileBackgroundImage, updateProfile, setUserProfileImage } from "@reducer/Admin/userProfileSlice";
 import { RootState } from "@store/index";
 import useWindowSizeCustom from "@hooks/useWindowSizeCustom";
 import '../../styles/Admin/style.css';
@@ -17,21 +17,25 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   
   
   const dispatch = useDispatch();
+  const userProfile = useSelector((state: RootState) => state.userProfile);
 
   const [username, setUsername] = useState("Your Username");
   const [introText, setIntroText] = useState("Welcome to the Admin Page");
+  const [newUserProfileImage,setNewUserProfileImage] = useState<string | null>(userProfile.userProfileImage);
+  const [newUserProfileBackgroundImage,setNewUserProfileBackgroundImage] = useState<string | null>(userProfile.userProfileBackgroundImage);
 
-  const userProfile = useSelector((state: RootState) => state.userProfile);
 
   const save = () => {
     // Save changes to Redux store
     dispatch(updateProfile({ username, introText }));
-    if (userProfile.userProfileImage) {
-      dispatch(setUserProfileImage(userProfile.userProfileImage));
+
+    if (newUserProfileImage) {
+      dispatch(setUserProfileImage(newUserProfileImage));
     }
-    if (userProfile.userBackgroundImage) {
-      dispatch(setUserBackgroundImage(userProfile.userBackgroundImage));
+    if (newUserProfileBackgroundImage) {
+      dispatch(setUserProfileBackgroundImage(newUserProfileBackgroundImage));
     }
+
     cancel();
   };
 
@@ -41,10 +45,14 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
   // 배경화면
   const handleUserProfileBackgroundImage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const file = e.target.files?.[0];
+    const file = e.target?.files?.[0];
     if (file) {
-      const imageUrl = URL.createObjectURL(file);
-      setUserBackgroundImage(imageUrl);
+      const reader = new FileReader();
+      reader.onload = (e) => {
+        const imageData = e.target?.result as string;
+        setNewUserProfileBackgroundImage(imageData);
+      };
+      reader.readAsDataURL(file);
     }
   };
 
@@ -55,11 +63,23 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
       const reader = new FileReader();
       reader.onload = (e) => {
         const imageData = e.target?.result as string;
-        setUserProfileImage(imageData);
+        setNewUserProfileImage(imageData);
       };
       reader.readAsDataURL(file);
     }
   };
+
+  useEffect(() => {
+    if (newUserProfileImage) {
+      setNewUserProfileImage(newUserProfileImage)
+    }
+  }, [newUserProfileImage]);
+
+  useEffect(() => {
+    if (newUserProfileBackgroundImage) {
+      setNewUserProfileBackgroundImage(newUserProfileBackgroundImage)
+    }
+  }, [newUserProfileBackgroundImage]);
 
   const windowSize = useWindowSizeCustom();
   // 사이즈 390 보다 크면 모달창 크기 고정
@@ -80,7 +100,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   const [isOpen, setIsOpen] = useState(true);
 
   const cancel = () => {
-    
+    // dispatch 를 null 로 ...
     setIsOpen(!isOpen);
   
     setTimeout(() => {
@@ -102,10 +122,10 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
         </div>
 
         {/* 배경화면 */}
-        <SetUserProfileBackground userBackgroundImage={userProfile.userBackgroundImage} handleUserProfileBackgroundImage={handleUserProfileBackgroundImage}/>
+        <SetUserProfileBackground userProfileBackgroundImage={newUserProfileBackgroundImage} handleUserProfileBackgroundImage={handleUserProfileBackgroundImage}/>
 
         {/* 프로필 사진 */}
-       <SetUserProfileImage userProfileImage={userProfile.userProfileImage} handleUserProfileImage={handleUserProfileImageChange}/>  
+        <SetUserProfileImage userProfileImage={newUserProfileImage} handleUserProfileImage={handleUserProfileImageChange}/>  
 
         {/* 유저 닉네임 */}
         <SetUserProfileInfo placeholder='User Name' maxlength={999} context={username} func={setUsername} />

@@ -3,8 +3,7 @@ import { SetUserProfileBackgroundDTO } from "types/AdminEdit";
 import camera from "../../assets/Admin/camera.svg";
 
 
-const SetUserProfileBackground = ({userBackgroundImage , handleUserProfileBackgroundImage} : SetUserProfileBackgroundDTO) => {
-    console.log(userBackgroundImage)
+const SetUserProfileBackground = ({userProfileBackgroundImage , handleUserProfileBackgroundImage} : SetUserProfileBackgroundDTO) => {
     return(
         <label
           htmlFor="backgroundImageInput"
@@ -13,9 +12,9 @@ const SetUserProfileBackground = ({userBackgroundImage , handleUserProfileBackgr
           <div
             className="h-52 w-full flex justify-center items-center bg-black bg-opacity-70 mb-[-35px] "
           >
-            {userBackgroundImage ? (
+            {userProfileBackgroundImage ? (
               <img
-                src={userBackgroundImage}
+                src={userProfileBackgroundImage}
                 alt="Selected"
                 className="h-52 w-full object-cover"
               />

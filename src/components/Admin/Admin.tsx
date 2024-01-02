@@ -64,7 +64,7 @@ const AdminPage: React.FC = () => {
   return (
       <div className=" h-full w-full relative bg-white">
 
-        <UserProfileBackground userBackgroundImage={userProfile.userBackgroundImage}/>
+        <UserProfileBackground userBackgroundImage={userProfile.userProfileBackgroundImage} />
 
         <div className="h-full w-full left-0 top-[167px] absolute bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px]" >
           {/* ... 설정창 */}
