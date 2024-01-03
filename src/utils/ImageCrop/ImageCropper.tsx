@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { Cropper, ReactCropperElement } from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import { ImageCropsDTO } from "types/ImageCrop/imagecrops";
+import ImageControlButton from "@components/EditList/Image/ImageControlButton";
 
 const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -47,14 +48,10 @@ const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
       {image && (
         <div className="fixed z-50 top-0 left-0 w-full  flex items-center justify-center bg-black">
           <div className="relative text-black w-[390px] h-screen">
-            <div className="flex justify-between px-5 py-4  gap-3">
-              <button className="text-red-500 " onClick={() => setImage(null)}>
-                Cancle
-              </button>
-              <button className="text-white" onClick={getCropData}>
-                Save
-              </button>
-            </div>{" "}
+            <ImageControlButton
+              onCancel={() => setImage(null)}
+              onSave={getCropData}
+            />
             <div className="flex object-cover items-center justify-center ">
               <div>
                 <Cropper
