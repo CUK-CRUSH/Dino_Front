@@ -2,6 +2,7 @@ import { useRef, useState } from "react";
 import { Cropper, ReactCropperElement } from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import { ImageCropsDTO } from "types/ImageCrop/imagecrops";
+import ImageControlButton from "@components/EditList/Button/ImageControlButton";
 
 const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -45,42 +46,29 @@ const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
       />
       <span onClick={handleChildrenClick}>{children}</span>
       {image && (
-        <div className="fixed z-50 top-0 left-0 w-full h-screen flex items-center justify-center bg-[rgba(0,0,0,0)] backdrop-blur-md">
-          <div className="relative text-black w-[390px] h-[800px]">
-            <div className="z-50 bg-[#ffffff] overflow-hidden flex flex-col max-w-[desired value] mx-auto"></div>
-            <h3 className="text-[22px] text-white leading-5 px-[20px] py-[16px] m-0 font-semibold">
-              이미지 편집하기
-            </h3>
-            <div className="flex-1 flex items-center justify-center bg-[#ffffff]">
-              <div className="rounded-b-3xl object-cover">
+        <div className="fixed z-50 top-0 left-0 w-full  flex items-center justify-center bg-black">
+          <div className="relative text-black w-[390px] h-screen">
+            <ImageControlButton
+              onCancel={() => setImage(null)}
+              onSave={getCropData}
+            />
+            <div className="flex object-cover items-center justify-center ">
+              <div>
                 <Cropper
                   ref={cropperRef}
                   aspectRatio={aspectRatio}
                   src={image}
                   viewMode={1}
-                  width={500}
+                  width={300}
                   height={300}
                   background={false}
                   responsive
                   autoCropArea={1}
                   checkOrientation={false}
                   guides
+                  className="bg-white overflow-hidden absolute w-[360px] h-[300px] border-2 border-white rounded-2xl top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
                 />
               </div>
-            </div>
-            <div className="flex justify-end items-center px-[20px] py-[16px] bg-white gap-3">
-              <button
-                className="bg-white border-[1px] border-black p-2 rounded-xl"
-                onClick={() => setImage(null)}
-              >
-                취소
-              </button>
-              <button
-                className="bg-[#7b73df] border-[1px] border-black p-2 rounded-xl"
-                onClick={getCropData}
-              >
-                적용하기
-              </button>
             </div>
           </div>
         </div>
