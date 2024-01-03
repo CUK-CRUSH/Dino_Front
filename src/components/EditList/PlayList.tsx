@@ -5,13 +5,13 @@ import { updateArtist, updateTitle, updateURL } from "@reducer/musicadd";
 import { setIsEditing } from "@reducer/editPlayList/isEdit";
 import { RootState } from "@store/index";
 import { EditPlsyListDTO } from "types/EditplayList";
-import { EditPlaylistControls } from "@components/EditList/EditPlaylistControl";
+import { EditPlaylistControls } from "@components/EditList/Button/EditPlaylistControl";
 import { MusicDataRow } from "@components/EditList/MusicDataRow";
 import useImageCompress from "@hooks/useImageCompress";
 import { dataURItoFile } from "@utils/ImageCrop/common";
 import ImageCropper from "@utils/ImageCrop/ImageCropper";
 import LoadingPage from "@utils/loading";
-import { PlusButton } from "./PlusButton";
+import { PlusButton } from "./Button/PlusButton";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
   const isEditing = useSelector(

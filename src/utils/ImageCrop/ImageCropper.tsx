@@ -2,7 +2,7 @@ import { useRef, useState } from "react";
 import { Cropper, ReactCropperElement } from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import { ImageCropsDTO } from "types/ImageCrop/imagecrops";
-import ImageControlButton from "@components/EditList/Image/ImageControlButton";
+import ImageControlButton from "@components/EditList/Button/ImageControlButton";
 
 const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
   const inputRef = useRef<HTMLInputElement>(null);
