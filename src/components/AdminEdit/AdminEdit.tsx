@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { setUserProfileBackgroundImage, updateProfile, setUserProfileImage } from "@reducer/Admin/userProfileSlice";
+import {
+  setUserProfileBackgroundImage,
+  updateProfile,
+  setUserProfileImage,
+} from "@reducer/Admin/userProfileSlice";
 import { RootState } from "@store/index";
 import useWindowSizeCustom from "@hooks/useWindowSizeCustom";
-import '../../styles/Admin/style.css';
+import "../../styles/Admin/style.css";
 import EditButton from "@components/AdminEdit/EditButton";
 import SetUserProfileBackground from "@components/AdminEdit/SetUserProfileBackground";
 import SetUserProfileImage from "@components/AdminEdit/SetUserProfileImage";
@@ -14,16 +18,16 @@ interface AdminEditModalProps {
 }
 
 const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
-  
-  
   const dispatch = useDispatch();
   const userProfile = useSelector((state: RootState) => state.userProfile);
 
   const [username, setUsername] = useState("Your Username");
   const [introText, setIntroText] = useState("Welcome to the Admin Page");
-  const [newUserProfileImage,setNewUserProfileImage] = useState<string | null>(userProfile.userProfileImage);
-  const [newUserProfileBackgroundImage,setNewUserProfileBackgroundImage] = useState<string | null>(userProfile.userProfileBackgroundImage);
-
+  const [newUserProfileImage, setNewUserProfileImage] = useState<string | null>(
+    userProfile.userProfileImage
+  );
+  const [newUserProfileBackgroundImage, setNewUserProfileBackgroundImage] =
+    useState<string | null>(userProfile.userProfileBackgroundImage);
 
   const save = () => {
     // Save changes to Redux store
@@ -44,7 +48,9 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   };
 
   // 배경화면
-  const handleUserProfileBackgroundImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUserProfileBackgroundImage = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const file = e.target?.files?.[0];
     if (file) {
       const reader = new FileReader();
@@ -57,7 +63,9 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   };
 
   // 프로필사진
-  const handleUserProfileImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleUserProfileImageChange = (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
     const file = e.target?.files?.[0];
     if (file) {
       const reader = new FileReader();
@@ -71,13 +79,13 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
   useEffect(() => {
     if (newUserProfileImage) {
-      setNewUserProfileImage(newUserProfileImage)
+      setNewUserProfileImage(newUserProfileImage);
     }
   }, [newUserProfileImage]);
 
   useEffect(() => {
     if (newUserProfileBackgroundImage) {
-      setNewUserProfileBackgroundImage(newUserProfileBackgroundImage)
+      setNewUserProfileBackgroundImage(newUserProfileBackgroundImage);
     }
   }, [newUserProfileBackgroundImage]);
 
@@ -88,13 +96,10 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   useEffect(() => {
     if (windowSize.width > 390) {
       setSize(true);
-    }
-    else {
+    } else {
       setSize(false);
     }
-
-  }, [windowSize.width])
-
+  }, [windowSize.width]);
 
   // 열고닫기
   const [isOpen, setIsOpen] = useState(true);
@@ -102,40 +107,56 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   const cancel = () => {
     // dispatch 를 null 로 ...
     setIsOpen(!isOpen);
-  
+
     setTimeout(() => {
       close();
     }, 900);
   };
-  
+
   return (
     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50">
       {/* The following div creates a semi-transparent overlay background */}
       <div className="absolute inset-0 bg-gray-800 opacity-75 "></div>
-      <div 
-        className={`relative ${size ? "w-[390px]" : "w-full"} h-full mt-5 bg-white rounded-t-3xl shadow-lg
-        animate-slide-${isOpen ? 'in' : 'out'}`}>
-          
+      <div
+        className={`relative ${
+          size ? "w-[390px]" : "w-full"
+        } h-full mt-5 bg-white rounded-t-3xl shadow-lg
+        animate-slide-${isOpen ? "in" : "out"}`}
+      >
         {/* 상단 취소/저장 버튼 */}
         <div className="flex justify-between h-[50px]">
           <EditButton save={save} cancel={cancel} />
         </div>
 
         {/* 배경화면 */}
-        <SetUserProfileBackground userProfileBackgroundImage={newUserProfileBackgroundImage} handleUserProfileBackgroundImage={handleUserProfileBackgroundImage}/>
+        <SetUserProfileBackground
+          userProfileBackgroundImage={newUserProfileBackgroundImage}
+          handleUserProfileBackgroundImage={handleUserProfileBackgroundImage}
+        />
 
         {/* 프로필 사진 */}
-        <SetUserProfileImage userProfileImage={newUserProfileImage} handleUserProfileImage={handleUserProfileImageChange}/>  
+        <SetUserProfileImage
+          userProfileImage={newUserProfileImage}
+          handleUserProfileImage={handleUserProfileImageChange}
+        />
 
         {/* 유저 닉네임 */}
-        <SetUserProfileInfo placeholder='User Name' maxlength={999} context={username} func={setUsername} />
+        <SetUserProfileInfo
+          placeholder="User Name"
+          maxlength={999}
+          context={username}
+          func={setUsername}
+        />
 
         {/* 한줄소개 */}
-        <SetUserProfileInfo placeholder='Comment' maxlength={50} context={introText} func={setIntroText} />
-        
+        <SetUserProfileInfo
+          placeholder="Comment"
+          maxlength={50}
+          context={introText}
+          func={setIntroText}
+        />
       </div>
     </div>
-
   );
 };
 
