@@ -1,10 +1,7 @@
-import React, { ReactNode } from "react";
+import React from "react";
+import { LayoutDTO } from "types/layout";
 
-interface LayoutProps {
-  children: ReactNode;
-}
-
-const Layout: React.FC<LayoutProps> = ({ children }) => {
+const Layout: React.FC<LayoutDTO> = ({ children }) => {
   return (
     <div className="overflow-hidden bg-[#111111]">
       <div className="h-full w-full max-h-full flex justify-center">
