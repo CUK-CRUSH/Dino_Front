@@ -22,7 +22,12 @@ const ShowImage: React.FC<ShowImageDTO> = ({
         ) : (
           <div className="h-full flex items-center justify-center rounded-b-3xl text-center bg-white cursor-pointer">
             {isCompressLoading ? (
-              <LoadingPage />
+              <>
+                <LoadingPage />
+                <div className="text-[30px] bottom-4 left-4 text-white shadow-black font-bold leading-5 absolute">
+                  <h2>Title</h2>
+                </div>
+              </>
             ) : (
               <div>
                 <div className="flex flex-col justify-center items-center h-full">
@@ -32,7 +37,6 @@ const ShowImage: React.FC<ShowImageDTO> = ({
                   </span>
                 </div>
                 <div className="text-[30px] bottom-4 left-4 text-white shadow-black font-bold leading-5 absolute">
-                  {/* /admin에서 입력받은 title값을 갖고온다. */}
                   <h2>Title</h2>
                 </div>
               </div>

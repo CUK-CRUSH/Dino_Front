@@ -9,7 +9,7 @@ import { MusicDataRow } from "@components/EditList/MusicDataRow";
 import useImageCompress from "@hooks/useImageCompress";
 import { dataURItoFile } from "@utils/ImageCrop/common";
 import { PlusButton } from "./Button/PlusButton";
-import ShowImage from "./ShowImage";
+import ShowImage from "@components/EditList/ShowImage";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
   const isEditing = useSelector(
@@ -57,7 +57,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   }, [uploadImage, handleCompressImage]);
 
   return (
-    <div className="z-30 h-full w-full flex flex-col bg-black text-white font-medium leading-[18px]">
+    <div className=" h-full w-full flex flex-col bg-black text-white font-medium leading-[18px]">
       <ShowImage
         aspectRatio={1 / 1}
         onCrop={handleUploadImage}
