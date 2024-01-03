@@ -3,3 +3,8 @@ export interface ImageCropsDTO {
   aspectRatio: number;
   children: React.ReactNode;
 }
+
+export interface ImageControlButtonDTO {
+  onCancel: () => void;
+  onSave: () => void;
+}

@@ -37,7 +37,7 @@ export const MusicDataRow: React.FC<MusicDataDTO & { isEditing: boolean }> = ({
       <div className="w-[360px] my-10">
         <div className="flex flex-row items-center pb-2 mx-[13px] border-b border-white">
           {/* 1. 5개까지의 데이터만 불러온다.
-          2. 만약 데이터가 없으면 "No music yet Add music to fill your playlist!"를 보여줌. 
+          2. 만약 데이터가 없으면 "No music yetAdd music to fill your playlist!"를 보여줌. 
           3. 맨 마지막 번호(5번이 될지 추가가될지는 모르겠지만) 블럭은 border-b가 없다. 
           4. 총 노래의 갯수를 보여줘야한다.*/}
           <div className="ml-2 w-1/12">
