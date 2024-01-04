@@ -121,7 +121,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
         className={`relative ${
           size ? "w-[390px]" : "w-full"
         } h-full mt-5 bg-white rounded-t-3xl shadow-lg
-        animate-slide-${isOpen ? "in" : "out"}`}
+        animate-slide-edit-${isOpen ? "in" : "out"}`}
       >
         {/* 상단 취소/저장 버튼 */}
         <div className="flex justify-between h-[50px]">
