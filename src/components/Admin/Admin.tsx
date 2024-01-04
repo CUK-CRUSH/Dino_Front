@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux"; // Import the useDispatch hook
 import { RootState } from "@store/index";
 import AdminEditModal from "@pages/Admin/AdminEditModal";
-import { AddPalyList } from "@components/Admin/AddPLayList";
+import { AddPlayList } from "@components/Admin/AddPLayList";
 import { EditProfile } from "@components/Admin/EditProfile";
 import UserProfileBackground from "./UserProfileBackgroundImage";
 import OpenOption from "./OpenOption";
 import UserProfileImage from "./UserProfileImage";
 import UserProfileInfo from "./UserProfileInfo";
+import {PlayList} from "@components/Admin/PlayList";
+
 
 const AdminPage: React.FC = () => {
 
@@ -94,8 +96,12 @@ const AdminPage: React.FC = () => {
           </div>  
           
           {/* 내가 생성한 플레이리스트 뽑아주고 마지막에 플레이리스트 추가 컴포넌트 붙이기. */}
-          <AddPalyList />
-
+          
+          
+          <PlayList />
+          <PlayList />
+          <AddPlayList />
+          
         </div>
       </div>
   );
