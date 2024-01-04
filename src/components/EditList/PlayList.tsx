@@ -1,17 +1,16 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { AiOutlinePicture } from "react-icons/ai";
 import { useDispatch, useSelector } from "react-redux";
 import { updateArtist, updateTitle, updateURL } from "@reducer/musicadd";
 import { setIsEditing } from "@reducer/editPlayList/isEdit";
 import { RootState } from "@store/index";
 import { EditPlsyListDTO } from "types/EditplayList";
-import { EditPlaylistControls } from "@components/EditList/EditPlaylistControl";
+import { EditPlaylistControls } from "@components/EditList/Button/EditPlaylistControl";
 import { MusicDataRow } from "@components/EditList/MusicDataRow";
 import useImageCompress from "@hooks/useImageCompress";
 import { dataURItoFile } from "@utils/ImageCrop/common";
-import ImageCropper from "@utils/ImageCrop/ImageCropper";
-import LoadingPage from "@utils/loading";
-import { PlusButton } from "./PlusButton";
+import { PlusButton } from "./Button/PlusButton";
+import ShowImage from "@components/EditList/ShowImage";
+import EditSelectModal from "./Modal/EditSelectModal";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
   const isEditing = useSelector(
@@ -21,6 +20,14 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const [uploadImage, setUploadImage] = useState<string | null>(null);
   const [compressedImage, setCompressedImage] = useState<string | null>(null);
   const { isLoading: isCompressLoading, compressImage } = useImageCompress();
+
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const closeEditModal = () => {
+    setIsEditModalOpen(false);
+  };
+  const openEditModal = () => {
+    setIsEditModalOpen(true);
+  };
 
   const handleUploadImage = (image: string) => setUploadImage(image);
   const handleCompressImage = useCallback(async () => {
@@ -59,37 +66,13 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   }, [uploadImage, handleCompressImage]);
 
   return (
-    <div className="z-30 h-full w-full flex flex-col bg-black text-white font-medium leading-[18px]">
-      <div className="h-1/3 relative rounded-b-3xl bg-white cursor-pointer">
-        <ImageCropper aspectRatio={1 / 1} onCrop={handleUploadImage}>
-          {compressedImage ? (
-            <img
-              className=" h-full w-full rounded-b-3xl object-cover"
-              src={compressedImage}
-              alt="Img"
-            />
-          ) : (
-            <div className="h-full flex items-center justify-center rounded-b-3xl text-center bg-white cursor-pointer">
-              {isCompressLoading ? (
-                <LoadingPage />
-              ) : (
-                <div>
-                  <div className="flex flex-col justify-center items-center h-full">
-                    <AiOutlinePicture size={29} className="text-gray-400" />
-                    <span className="text-center text-[#8E8E8E] text-[15px]  pt-[6px]">
-                      Setting a representative image
-                    </span>
-                  </div>
-                  <div className="text-[30px] bottom-4 left-4 text-white shadow-black font-bold leading-5 absolute">
-                    {/* /admin에서 입력받은 title값을 갖고온다. */}
-                    <h2>Title</h2>
-                  </div>
-                </div>
-              )}
-            </div>
-          )}
-        </ImageCropper>
-      </div>
+    <div className=" h-full w-full flex flex-col bg-black text-white font-medium leading-[18px]">
+      <ShowImage
+        aspectRatio={1 / 1}
+        onCrop={handleUploadImage}
+        compressedImage={compressedImage}
+        isCompressLoading={isCompressLoading}
+      />
 
       <EditPlaylistControls
         isEditing={isEditing}
@@ -101,6 +84,8 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       <MusicDataRow musicData={musicData} isEditing={isEditing} />
 
       {isEditing && <PlusButton />}
+      <button onClick={openEditModal}>Modal</button>
+      {isEditModalOpen && <EditSelectModal onClose={closeEditModal} />}
     </div>
   );
 };
