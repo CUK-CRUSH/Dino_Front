@@ -1,25 +1,37 @@
+// @ts-ignore
+
 import { Link } from "react-router-dom";
 
 import mylist2 from "@assets/Mylist2.png";
 import googlelogo from "@assets/Google logo.png";
 import facebook from "@assets/facebook-3 logo.png";
 import { getLogin } from "@api/login/Login";
+import { auth } from "../../firebase";
+import { useState } from "react";
+import {GoogleAuthProvider, UserCredential, signInWithPopup} from "firebase/auth";
+
+
 
 const LoginComponents = () => {
-  // 1. login/google의 header에서 Location 값을 가져온다.
-  // 2. Location으로 get요청을 보내서 토큰 값들을 갖고온다.
-  // const [accessToken, setAccessToken] = useState<string | null>(null);
-  const handleLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
+  const [userData, setUserData] = useState(null);
 
-    const loginData = await getLogin();
-    if (loginData) {
-      // setAccessToken(loginData.accessToken);
-      console.log("로그인 성공 : ", loginData.accessToken);
-    } else {
-      console.log("로그인 실패");
-    }
-  };
+  function handleGoogleLogin() {
+    const provider = new GoogleAuthProvider(); // provider 구글 설정
+    signInWithPopup(auth, provider) // 팝업창 띄워서 로그인
+        .then((result) => {
+          // @ts-ignore
+          console.log('Success!!!') // user data 설정
+          console.log(result.providerId); // console에 UserCredentialImpl 출력
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+  }
+
+  function handleClick() {
+    handleGoogleLogin();
+  }
+
 
   return (
     <div className="w-full h-full relative bg-white">
@@ -77,7 +89,7 @@ const LoginComponents = () => {
           </div>
         </div>
         <div className={"flex flex-row justify-center"}>
-          <button onClick={handleLogin}>
+          <button onClick={handleClick}>
             <div className="w-full bg-white">
               <div className="w-[360px] h-[58px] flex flex-row items-center justify-center rounded-[30px] border border-zinc-300">
                 <img
@@ -87,7 +99,7 @@ const LoginComponents = () => {
                 />
                 <div className={"w-[20px]"}></div>
                 <div className="flex flex-col items-center text-[17px] font-semibold font-['Noto Sans']">
-                  <div>Continue with Google</div>
+                  <button>Sign in with Google</button>
                 </div>
               </div>
             </div>
@@ -113,7 +125,5 @@ const LoginComponents = () => {
         </div>
       </div>
     </div>
-  );
-};
-
+  );}
 export default LoginComponents;
