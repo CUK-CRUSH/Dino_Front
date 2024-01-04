@@ -20,8 +20,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const [compressedImage, setCompressedImage] = useState<string | null>(null);
   const { isLoading: isCompressLoading, compressImage } = useImageCompress();
 
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-
   const handleUploadImage = (image: string) => setUploadImage(image);
   const handleCompressImage = useCallback(async () => {
     if (!uploadImage) return;
