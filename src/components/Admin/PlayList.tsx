@@ -18,15 +18,17 @@ export const PlayList = () => {
   }, [windowSize.width, customMargin]);
 
   return (
-    <div style={{ marginLeft: `${customMargin}px` , marginRight: `${customMargin}px` }} 
-         className="inline-block h-[150px] mt-[42px]">
+    <div style={{ marginLeft: `${customMargin}px`, marginRight: `${customMargin}px` }}
+      className="inline-block h-[150px] mt-[42px] relative">
       <Link to="13">
         <button className="w-[150px] h-[150px] rounded-[13px] font-light text-zinc-300 text-4xl">
-                      
+
           <img className="mx-auto w-[150px] h-full " src={ex} alt='x' />
-          <div className="text-center text-zinc-300 text-[13px] font-medium font-['Noto Sans'] ">
-          
-            PlayList
+          <div className="w-full text-left text-zinc-300 font-medium font-['Noto Sans'] absolute -bottom-10 ">
+
+            <span className="text-[15px] align-top">Happy Mix</span>
+            <span className="text-[3px] align-super ml-1">●</span>
+            <span className="text-[10px] align-top">  10곡 </span>
           </div>
         </button>
       </Link>

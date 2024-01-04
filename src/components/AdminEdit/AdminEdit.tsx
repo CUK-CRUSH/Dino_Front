@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import {
   setUserProfileBackgroundImage,
@@ -12,6 +12,8 @@ import EditButton from "@components/AdminEdit/EditButton";
 import SetUserProfileBackground from "@components/AdminEdit/SetUserProfileBackground";
 import SetUserProfileImage from "@components/AdminEdit/SetUserProfileImage";
 import SetUserProfileInfo from "@components/AdminEdit/SetUserProfileInfo";
+import useImageCompress from "@hooks/useImageCompress";
+import { dataURItoFile } from "@utils/ImageCrop/common";
 
 interface AdminEditModalProps {
   onClose: () => void; // A function to close the modal
@@ -23,71 +25,79 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
   const [username, setUsername] = useState("Your Username");
   const [introText, setIntroText] = useState("Welcome to the Admin Page");
-  const [newUserProfileImage, setNewUserProfileImage] = useState<string | null>(
-    userProfile.userProfileImage
-  );
-  const [newUserProfileBackgroundImage, setNewUserProfileBackgroundImage] =
-    useState<string | null>(userProfile.userProfileBackgroundImage);
 
+  // 배경화면 
+  const [uploadUserProfileBackgroundImage, setUploadUserProfileBackgroundImage] = useState<string | null>(null);
+  const [compressedUserProfileBackgroundImage, setCompressedUserProfileBackgroundImage] = useState<string | null>(userProfile.userProfileBackgroundImage);
+  const { isLoading: isCompressUserProfileBackgroundLoading, compressImage : compressUserProfileBackgroundImage } = useImageCompress();
+  const { isLoading: isCompressUserProfileLoading, compressImage : compressUserProfileImage } = useImageCompress();
+
+  const handleUploadUserProfileBackgroundImage = (image: string) => setUploadUserProfileBackgroundImage(image);
+
+  const handleCompressUserProfileBackgroundImage = useCallback(async () => {
+    if (!uploadUserProfileBackgroundImage) return;
+
+    const imageFile = dataURItoFile(uploadUserProfileBackgroundImage);
+
+    const compressedUserProfileBackgroundImage = await compressUserProfileBackgroundImage(imageFile);
+
+    if (!compressedUserProfileBackgroundImage) return;
+    const imageUrl = URL.createObjectURL(compressedUserProfileBackgroundImage);
+    setCompressedUserProfileBackgroundImage(imageUrl);
+  }, [uploadUserProfileBackgroundImage, compressUserProfileBackgroundImage]);
+
+  useEffect(() => {
+    if (uploadUserProfileBackgroundImage) {
+      handleCompressUserProfileBackgroundImage();
+    }
+  }, [uploadUserProfileBackgroundImage, handleCompressUserProfileBackgroundImage]);
+
+  // 프로필사진
+  const [uploadUserProfileImage, setUploadUserProfileImage] = useState<string | null>(null);
+  const [compressedUserProfileImage, setCompressedUserProfileImage] = useState<string | null>(userProfile.userProfileImage);
+  
+
+  const handleUploadUserProfileImage = (image: string) => setUploadUserProfileImage(image);
+
+  const handleCompressUserProfileImage = useCallback(async () => {
+    if (!uploadUserProfileImage) return;
+
+    const imageFile = dataURItoFile(uploadUserProfileImage);
+
+    const compressedUserProfileImage = await compressUserProfileImage(imageFile);
+
+    if (!compressedUserProfileImage) return;
+    const imageUrl = URL.createObjectURL(compressedUserProfileImage);
+    setCompressedUserProfileImage(imageUrl);
+  }, [uploadUserProfileImage, compressUserProfileImage]);
+
+  useEffect(() => {
+    if (uploadUserProfileImage) {
+      handleCompressUserProfileImage();
+    }
+  }, [uploadUserProfileImage, handleCompressUserProfileImage]);
+
+
+  // redux에 저장.  
   const save = () => {
     // Save changes to Redux store
     dispatch(updateProfile({ username, introText }));
 
-    if (newUserProfileImage) {
-      dispatch(setUserProfileImage(newUserProfileImage));
+    if (compressedUserProfileImage) {
+      dispatch(setUserProfileImage(compressedUserProfileImage));
     }
-    if (newUserProfileBackgroundImage) {
-      dispatch(setUserProfileBackgroundImage(newUserProfileBackgroundImage));
+    if (uploadUserProfileBackgroundImage) {
+      dispatch(setUserProfileBackgroundImage(compressedUserProfileBackgroundImage));
     }
 
     cancel();
   };
 
+  // 모달닫기
   const close = () => {
     onClose(); // Close the modal without saving changes
   };
 
-  // 배경화면
-  const handleUserProfileBackgroundImage = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const file = e.target?.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const imageData = e.target?.result as string;
-        setNewUserProfileBackgroundImage(imageData);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  // 프로필사진
-  const handleUserProfileImageChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
-    const file = e.target?.files?.[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onload = (e) => {
-        const imageData = e.target?.result as string;
-        setNewUserProfileImage(imageData);
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  useEffect(() => {
-    if (newUserProfileImage) {
-      setNewUserProfileImage(newUserProfileImage);
-    }
-  }, [newUserProfileImage]);
-
-  useEffect(() => {
-    if (newUserProfileBackgroundImage) {
-      setNewUserProfileBackgroundImage(newUserProfileBackgroundImage);
-    }
-  }, [newUserProfileBackgroundImage]);
 
   const windowSize = useWindowSizeCustom();
   // 사이즈 390 보다 크면 모달창 크기 고정
@@ -105,9 +115,8 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   const [isOpen, setIsOpen] = useState(true);
 
   const cancel = () => {
-    // dispatch 를 null 로 ...
     setIsOpen(!isOpen);
-
+    // 애니메이션 용 타이머
     setTimeout(() => {
       close();
     }, 900);
@@ -121,7 +130,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
         className={`relative ${
           size ? "w-[390px]" : "w-full"
         } h-full mt-5 bg-white rounded-t-3xl shadow-lg
-        animate-slide-${isOpen ? "in" : "out"}`}
+        animate-slide-edit-${isOpen ? "in" : "out"}`}
       >
         {/* 상단 취소/저장 버튼 */}
         <div className="flex justify-between h-[50px]">
@@ -130,16 +139,20 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
         {/* 배경화면 */}
         <SetUserProfileBackground
-          userProfileBackgroundImage={newUserProfileBackgroundImage}
-          handleUserProfileBackgroundImage={handleUserProfileBackgroundImage}
+          aspectRatio={1/1}
+          onCrop={handleUploadUserProfileBackgroundImage}
+          compressedImage={compressedUserProfileBackgroundImage}
+          isCompressLoading={isCompressUserProfileBackgroundLoading}
         />
 
         {/* 프로필 사진 */}
         <SetUserProfileImage
-          userProfileImage={newUserProfileImage}
-          handleUserProfileImage={handleUserProfileImageChange}
+          aspectRatio={1/1}
+          onCrop={handleUploadUserProfileImage}
+          compressedImage={compressedUserProfileImage}
+          isCompressLoading={isCompressUserProfileLoading}
         />
-
+      
         {/* 유저 닉네임 */}
         <SetUserProfileInfo
           placeholder="User Name"
