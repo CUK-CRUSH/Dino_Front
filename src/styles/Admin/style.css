@@ -1,4 +1,4 @@
-@keyframes slideIn {
+@keyframes editIn {
     0% {
       transform: translateY(735px);
     }
@@ -7,7 +7,7 @@
     }
   }
   
-  @keyframes slideOut {
+  @keyframes editOut {
     0% {
       transform: translateY(0);
     }
@@ -16,10 +16,10 @@
     }
   }
   
-  .animate-slide-in {
-    animation: slideIn 1s ease-in-out; /* Adjust the duration and easing function as needed */
+  .animate-slide-edit-in {
+    animation: editIn 1s ease-in-out; /* Adjust the duration and easing function as needed */
   }
   
-  .animate-slide-out {
-    animation: slideOut 1s ease-in-out; /* Adjust the duration and easing function as needed */
+  .animate-slide-edit-out {
+    animation: editOut 1s ease-in-out; /* Adjust the duration and easing function as needed */
   }
