@@ -26,9 +26,9 @@ export const PlayList = () => {
           <img className="mx-auto w-[150px] h-full " src={ex} alt='x' />
           <div className="w-full text-left text-zinc-300 font-medium font-['Noto Sans'] absolute -bottom-10 ">
 
-            <span className="text-[15px] align-top">Happy Mix</span>
-            <span className="text-[3px] align-super ml-1">●</span>
-            <span className="text-[10px] align-top">  10곡 </span>
+            <span className="text-[15px] text-white align-top">Happy Mix</span>
+            <span className="text-[3px] text-white align-super ml-1">●</span>
+            <span className="text-[10px] text-white align-top">  10곡 </span>
           </div>
         </button>
       </Link>

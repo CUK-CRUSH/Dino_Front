@@ -6,7 +6,7 @@ const SetUserProfileInfo = ({ placeholder, maxlength, context, func }: SetUserPr
   return (
     <>
       <div className="ml-4 mb-2 text-sm">
-        {placeholder}
+        <span>{placeholder}</span>
       </div>
 
       <div className="mb-4 flex flex-col items-center relative">

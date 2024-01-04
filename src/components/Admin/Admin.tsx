@@ -68,7 +68,7 @@ const AdminPage: React.FC = () => {
 
         <UserProfileBackground userBackgroundImage={userProfile.userProfileBackgroundImage} />
 
-        <div className="h-full w-full left-0 top-[167px] absolute bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px]" >
+        <div className="h-full w-full left-0 top-[165px] absolute bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px]" >
           {/* ... 설정창 */}
           <OpenOption calculateOptionsModalPosition={calculateOptionsModalPosition} />
 
