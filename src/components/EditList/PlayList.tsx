@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { updateArtist, updateTitle, updateURL } from "@reducer/musicadd";
 import { setIsEditing } from "@reducer/editPlayList/isEdit";
@@ -10,8 +10,6 @@ import useImageCompress from "@hooks/useImageCompress";
 import { dataURItoFile } from "@utils/ImageCrop/common";
 import { PlusButton } from "./Button/PlusButton";
 import ShowImage from "@components/EditList/ShowImage";
-import EditSelectModal from "./Modal/EditSelectModal";
-import { useHref } from "react-router-dom";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
   const isEditing = useSelector(
@@ -60,12 +58,19 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     dispatch(setIsEditing(false));
   };
 
+  useEffect(() => {
+    if (uploadImage) {
+      handleCompressImage();
+    }
+  }, [uploadImage, handleCompressImage]);
+
   return (
     <div className=" h-full w-full flex flex-col bg-black text-white font-medium leading-[18px]">
       <ShowImage
+        aspectRatio={1 / 1}
+        onCrop={handleUploadImage}
         compressedImage={compressedImage}
         isCompressLoading={isCompressLoading}
-        openEditModal={openEditModal}
       />
 
       <EditPlaylistControls
@@ -78,9 +83,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       <MusicDataRow musicData={musicData} isEditing={isEditing} />
 
       {isEditing && <PlusButton />}
-      {isEditModalOpen && (
-        <EditSelectModal onCrop={handleUploadImage} onClose={closeEditModal} />
-      )}
     </div>
   );
 };
