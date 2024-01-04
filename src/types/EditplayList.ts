@@ -18,12 +18,12 @@ export interface MusicDataDTO {
 export interface EditPlsyListDTO {}
 
 export interface ShowImageDTO {
-  aspectRatio: number;
-  onCrop: (image: string) => void;
   compressedImage: string | null;
   isCompressLoading: boolean;
+  openEditModal: () => void;
 }
 
 export interface EditModalDTO {
   onClose: () => void;
+  onCrop: (image: string) => void;
 }

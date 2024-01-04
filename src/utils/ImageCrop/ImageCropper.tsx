@@ -46,7 +46,7 @@ const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
       />
       <span onClick={handleChildrenClick}>{children}</span>
       {image && (
-        <div className="fixed z-50 top-0 left-0 w-full  flex items-center justify-center bg-black">
+        <div className="z-50 top-0 left-0 w-full h-screen flex items-center-center bg-black">
           <div className="relative text-black w-[390px] h-screen">
             <ImageControlButton
               onCancel={() => setImage(null)}
