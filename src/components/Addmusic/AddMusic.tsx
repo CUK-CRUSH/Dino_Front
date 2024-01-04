@@ -71,7 +71,7 @@ const AddMusic: React.FC = () => {
         <div className="flex justify-center">
           <button
             onClick={handleSave}
-            className="bg-white font-bold text-black text-[17px] w-[360px] h-[58px] mt-[260px] rounded-3xl"
+            className="bg-white font-bold text-black text-[17px] w-[360px] h-[58px] mt-20 rounded-3xl"
           >
             Add
           </button>
