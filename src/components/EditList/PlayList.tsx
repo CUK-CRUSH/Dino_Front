@@ -10,7 +10,6 @@ import useImageCompress from "@hooks/useImageCompress";
 import { dataURItoFile } from "@utils/ImageCrop/common";
 import { PlusButton } from "./Button/PlusButton";
 import ShowImage from "@components/EditList/ShowImage";
-import EditSelectModal from "./Modal/EditSelectModal";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
   const isEditing = useSelector(
@@ -20,14 +19,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const [uploadImage, setUploadImage] = useState<string | null>(null);
   const [compressedImage, setCompressedImage] = useState<string | null>(null);
   const { isLoading: isCompressLoading, compressImage } = useImageCompress();
-
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const closeEditModal = () => {
-    setIsEditModalOpen(false);
-  };
-  const openEditModal = () => {
-    setIsEditModalOpen(true);
-  };
 
   const handleUploadImage = (image: string) => setUploadImage(image);
   const handleCompressImage = useCallback(async () => {
@@ -84,8 +75,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       <MusicDataRow musicData={musicData} isEditing={isEditing} />
 
       {isEditing && <PlusButton />}
-      <button onClick={openEditModal}>Modal</button>
-      {isEditModalOpen && <EditSelectModal onClose={closeEditModal} />}
     </div>
   );
 };
