@@ -4,13 +4,18 @@ export interface EditButtonDTO {
   }
 
 export interface SetUserProfileBackgroundDTO {
-  userProfileBackgroundImage : string | null;
-  handleUserProfileBackgroundImage : (e: React.ChangeEvent<HTMLInputElement>) => void;
+  aspectRatio: number;
+  onCrop: (image: string) => void;
+  compressedImage: string | null;
+  isCompressLoading: boolean;
 }
 
 export interface SetUserProfileImageDTO {
-  userProfileImage : string | null;
-  handleUserProfileImage : (e: React.ChangeEvent<HTMLInputElement>) => void;
+  aspectRatio: number;
+  onCrop: (image: string) => void;
+  compressedImage: string | null;
+  isCompressLoading: boolean;
+
 }
 
 export interface SetUserProfileInfoDTO {
