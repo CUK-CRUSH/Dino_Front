@@ -5,15 +5,13 @@ import { Link } from "react-router-dom";
 import mylist2 from "@assets/Mylist2.png";
 import googlelogo from "@assets/Google logo.png";
 import facebook from "@assets/facebook-3 logo.png";
-import { getLogin } from "@api/login/Login";
 import { auth } from "../../firebase";
 import { useState } from "react";
-import {GoogleAuthProvider, UserCredential, signInWithPopup} from "firebase/auth";
+import {GoogleAuthProvider, signInWithPopup} from "firebase/auth";
 
 
 
 const LoginComponents = () => {
-  const [userData, setUserData] = useState(null);
 
   function handleGoogleLogin() {
     const provider = new GoogleAuthProvider(); // provider 구글 설정
