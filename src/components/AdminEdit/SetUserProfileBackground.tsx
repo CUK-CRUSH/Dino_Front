@@ -4,45 +4,37 @@ import { SetUserProfileBackgroundDTO } from "types/AdminEdit";
 
 import ImageCropper from "@utils/ImageCrop/ImageCropper";
 import LoadingPage from "@utils/loading";
-import { AiOutlinePicture } from "react-icons/ai";
+import camera from "../../assets/Admin/camera.svg";
 
-const SetUserProfileBackground = ({aspectRatio,onCrop,compressedImage,isCompressLoading} : SetUserProfileBackgroundDTO) => {
-    return(
-      <div className="h-1/3 relative rounded-b-3xl bg-white cursor-pointer">
-      <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
+const SetUserProfileBackground = ({ aspectRatio, onCrop, compressedImage, isCompressLoading }: SetUserProfileBackgroundDTO) => {
+  return (      <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
+
+    <div className="h-52 bg-black bg-opacity-70 mb-[-35px] relative">
         {compressedImage ? (
-          <img
-            className="h-full w-full rounded-b-3xl object-cover"
-            src={compressedImage}
-            alt="Img"
-          />
+          // 사진있으면
+          <div className="relative">
+            <img
+              className="h-52 w-full object-cover"
+              src={compressedImage}
+              alt="Img"
+            />
+            <img className="absolute bottom-2 right-2 z-10" src={camera} alt='x' />
+
+          </div>
         ) : (
-          <div className="h-full flex items-center justify-center rounded-b-3xl text-center bg-white cursor-pointer">
+          <div className="h-full flex items-center justify-center text-center  cursor-pointer ">
             {isCompressLoading ? (
-              <>
-                <LoadingPage />
-                <div className="text-[30px] bottom-4 left-4 text-white shadow-black font-bold leading-5 absolute">
-                  <h2>Title</h2>
-                </div>
-              </>
+              <LoadingPage />
             ) : (
-              <div>
-                <div className="flex flex-col justify-center items-center h-full">
-                  <AiOutlinePicture size={29} className="text-gray-400" />
-                  <span className="text-center text-[#8E8E8E] text-[15px] pt-[6px]">
-                    Setting a representative image
-                  </span>
-                </div>
-                <div className="text-[30px] bottom-4 left-4 text-white shadow-black font-bold leading-5 absolute">
-                  <h2>Title</h2>
-                </div>
-              </div>
+              <img className="absolute bottom-2 right-2" src={camera} alt='x' />
+
             )}
           </div>
         )}
-      </ImageCropper>
     </div>
-    )
+    </ImageCropper>
+
+  )
 }
 
 export default SetUserProfileBackground
