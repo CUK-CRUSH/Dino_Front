@@ -18,7 +18,6 @@ const SetUserProfileBackground = ({ aspectRatio, onCrop, compressedImage, isComp
               src={compressedImage}
               alt="Img"
             />
-            <img className="absolute bottom-2 right-2 z-10" src={camera} alt='x' />
 
           </div>
         ) : (

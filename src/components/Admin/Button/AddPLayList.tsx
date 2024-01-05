@@ -1,21 +1,24 @@
 import { useEffect, useState } from "react";
-import plus from "../../assets/Admin/plus.svg";
+import plus from "../../../assets/Admin/plus.svg";
 import { Link } from "react-router-dom";
-import useWindowSizeCustom from "../../hooks/useWindowSizeCustom";
+import useWindowSizeCustom from "../../../hooks/useWindowSizeCustom";
 
 export const AddPlayList = () => {
-  const windowSize = useWindowSizeCustom();
+  const {windowSize, isMobile} = useWindowSizeCustom();
 
-  console.log(windowSize.width);
   const [customMargin, setCustomMargin] = useState<number>(0);
 
+
   useEffect(() => {
-    if (window.innerWidth <= 390) {
-      setCustomMargin((windowSize.width / 2 - 150) / 2);
-    } else {
-      setCustomMargin((372 / 2 - 150) / 2);
+    if(!isMobile){
+      setCustomMargin((371 / 2 - 150) / 2);
     }
-  }, [windowSize.width, customMargin]);
+    else if(isMobile){
+      if(windowSize.width >= 390 ) {setCustomMargin((390/2 - 150) /2)}
+      else {setCustomMargin((windowSize.width / 2 - 150) / 2)};
+    }
+
+  }, [windowSize.width, customMargin,isMobile]);
 
   return (
     <div style={{ marginLeft: `${customMargin}px`, marginRight: `${customMargin}px` }} className="inline-block h-[150px] mt-[42px] relative">

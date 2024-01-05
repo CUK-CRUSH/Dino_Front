@@ -1,7 +1,11 @@
 import React, { useEffect} from "react";
 import { EditProfileDTO } from "types/Admin";
+import { useLocation } from "react-router-dom";
+import { handleCopyClipBoard } from "@utils/CopyLink/handelCopyClipBoard";
+import "../../../styles/Admin/style.css";
 
 export const EditProfile = ({top,left,openEditModal, closeOptionsModalOpen } : EditProfileDTO ) => {
+  const location = useLocation();
 
   // 스크롤 방지이벤트
   useEffect(() => {
@@ -17,16 +21,20 @@ export const EditProfile = ({top,left,openEditModal, closeOptionsModalOpen } : E
     };
   }, []);
 
+  // 앞 주소 ex) https://localhost3000
+  const baseUrl = window.location.origin;
+  
+ // 열고닫기
+//  const [isOpen, setIsOpen] = useState(true);
   return (
     <div 
       onClick={closeOptionsModalOpen}
-      className="fixed top-0 right-0 bottom-0 left-0 bg-black bg-opacity-0 z-50">
+      className="fixed top-0 right-0 bottom-0 left-0 bg-white bg-opacity-0 z-50">
       <div
         className="fixed"
         style={{ top: top, left: left }}
       >
-        <div className="absolute inset-0 bg-gray-800 opacity-75"></div>
-        <div className="relative w-40 p-0 bg-white rounded-[10px] shadow-lg">
+        <div className={`relative w-40 p-0 bg-white rounded-[10px] shadow-lg `}>
 
           <div className="p-1">
             <div
@@ -37,7 +45,11 @@ export const EditProfile = ({top,left,openEditModal, closeOptionsModalOpen } : E
             </div>
             <div className="w-11/12 border-b border-gray-300 mx-auto"></div>
 
-            <button className="block text-black hover:bg-gray-300 p-2 w-full text-center">Copy link</button>
+            <button 
+              className="block text-black hover:bg-gray-300 p-2 w-full text-center"
+              onClick={() => handleCopyClipBoard(`${baseUrl}${location.pathname}`)}>
+              Copy Link
+            </button>
           </div>
         </div>
       </div>

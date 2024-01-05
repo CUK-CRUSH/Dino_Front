@@ -1,15 +1,20 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateArtist, updateTitle, updateURL } from "@reducer/musicadd";
+import {
+  updateArtist,
+  updateTitle,
+  updateURL,
+  updateImage,
+} from "@reducer/musicadd";
 import { setIsEditing } from "@reducer/editPlayList/isEdit";
 import { RootState } from "@store/index";
 import { EditPlsyListDTO } from "types/EditplayList";
 import { EditPlaylistControls } from "@components/EditList/Button/EditPlaylistControl";
-import { MusicDataRow } from "@components/EditList/MusicDataRow";
+import { MusicDataRow } from "@components/EditList/MusicList/MusicDataRow";
 import useImageCompress from "@hooks/useImageCompress";
 import { dataURItoFile } from "@utils/ImageCrop/common";
 import { PlusButton } from "./Button/PlusButton";
-import ShowImage from "@components/EditList/ShowImage";
+import ShowImage from "@components/EditList/EditImage/ShowImage";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
   const isEditing = useSelector(
@@ -41,12 +46,14 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
 
   const handleSaveClick = () => {
     dispatch(setIsEditing(false));
+    dispatch(updateImage(compressedImage));
   };
 
   const handleCancelClick = () => {
     dispatch(updateTitle(""));
     dispatch(updateArtist(""));
     dispatch(updateURL(""));
+    dispatch(updateImage(null));
     dispatch(setIsEditing(false));
   };
 
@@ -63,6 +70,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         onCrop={handleUploadImage}
         compressedImage={compressedImage}
         isCompressLoading={isCompressLoading}
+        isEditing={isEditing}
       />
 
       <EditPlaylistControls

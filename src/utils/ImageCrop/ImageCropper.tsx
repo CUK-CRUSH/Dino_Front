@@ -3,6 +3,7 @@ import { Cropper, ReactCropperElement } from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import { ImageCropsDTO } from "types/ImageCrop/imagecrops";
 import ImageControlButton from "@components/EditList/Button/ImageControlButton";
+import Swal from "sweetalert2";
 
 const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -23,6 +24,20 @@ const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
 
     if (!files || files.length === 0) return;
 
+    const file = files.item(0);
+    if (!file) return;
+
+    const fileType = file.type;
+
+    if (fileType !== "image/jpeg" && fileType !== "image/png") {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "You can only upload jpg, png files!",
+      });
+      return;
+    }
+
     const reader = new FileReader();
     reader.onload = () => {
       setImage(reader.result as string);
@@ -41,6 +56,7 @@ const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
       <input
         type="file"
         ref={inputRef}
+        accept=".jpg, .jpeg, .png"
         className="hidden"
         onChange={handleFileChange}
       />
@@ -66,7 +82,7 @@ const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
                   autoCropArea={1}
                   checkOrientation={false}
                   guides
-                  className="bg-white overflow-hidden absolute w-[360px] h-[300px] border-2 border-white rounded-2xl top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                  className="bg-white overflow-hidden absolute w-[360px] h-[300px] border-2 border-white rounded-2xl top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 smartPhone:-translate-y-2/3 tablet:-translate-y-2/3"
                 />
               </div>
             </div>
