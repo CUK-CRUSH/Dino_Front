@@ -1,7 +1,8 @@
-import React, { useEffect} from "react";
+import React, { useEffect, useState} from "react";
 import { EditProfileDTO } from "types/Admin";
 import { useLocation } from "react-router-dom";
 import { handleCopyClipBoard } from "@utils/CopyLink/handelCopyClipBoard";
+import "../../../styles/Admin/style.css";
 
 export const EditProfile = ({top,left,openEditModal, closeOptionsModalOpen } : EditProfileDTO ) => {
   const location = useLocation();
@@ -22,7 +23,9 @@ export const EditProfile = ({top,left,openEditModal, closeOptionsModalOpen } : E
 
   // 앞 주소 ex) https://localhost3000
   const baseUrl = window.location.origin;
-
+  
+ // 열고닫기
+ const [isOpen, setIsOpen] = useState(true);
   return (
     <div 
       onClick={closeOptionsModalOpen}
@@ -31,7 +34,7 @@ export const EditProfile = ({top,left,openEditModal, closeOptionsModalOpen } : E
         className="fixed"
         style={{ top: top, left: left }}
       >
-        <div className="relative w-40 p-0 bg-white rounded-[10px] shadow-lg">
+        <div className={`relative w-40 p-0 bg-white rounded-[10px] shadow-lg `}>
 
           <div className="p-1">
             <div
