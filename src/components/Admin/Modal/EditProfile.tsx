@@ -1,4 +1,4 @@
-import React, { useEffect, useState} from "react";
+import React, { useEffect} from "react";
 import { EditProfileDTO } from "types/Admin";
 import { useLocation } from "react-router-dom";
 import { handleCopyClipBoard } from "@utils/CopyLink/handelCopyClipBoard";
