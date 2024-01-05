@@ -6,7 +6,7 @@
     "@apollo/client": "^3.8.2",
     "@craco/craco": "^7.1.0",
     "@loadable/component": "^5.15.3",
-    "@react-oauth/google": "^0.11.1",
+    "@react-oauth/google": "^0.12.1",
     "@reduxjs/toolkit": "^1.9.5",
     "@testing-library/jest-dom": "^5.16.5",
     "@testing-library/react": "^13.4.0",

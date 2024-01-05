@@ -1,33 +1,34 @@
 // @ts-ignore
 
-import { Link } from "react-router-dom";
-
+import { Link, useNavigate } from "react-router-dom";
 import mylist2 from "@assets/Mylist2.png";
 import googlelogo from "@assets/Google logo.png";
 import facebook from "@assets/facebook-3 logo.png";
-import { auth } from "../../firebase";
-import {GoogleAuthProvider, signInWithPopup} from "firebase/auth";
+import {useGoogleLogin} from "@react-oauth/google";
+import axios from "axios";
 
 
 
+// 로그인 컴포넌트
 const LoginComponents = () => {
 
-  function handleGoogleLogin() {
-    const provider = new GoogleAuthProvider(); // provider 구글 설정
-    signInWithPopup(auth, provider) // 팝업창 띄워서 로그인
-        .then((result) => {
-          // @ts-ignore
-          console.log('Success!!!') // user data 설정
-          console.log(result.providerId); // console에 UserCredentialImpl 출력
+  const backendUrl = "http://34.22.100.187:8080";
+  const navigate = useNavigate();
+  const sendTokenToServer = (token : any) => {
+    axios.get(`${backendUrl}/login/oauth2/code/google`, { params: { token } })
+        .then((response) => {
+          const user = response.data;
+          console.log(user);
+          navigate("/admin");
         })
-        .catch((err) => {
-          console.log(err);
+        .catch((error) => {
+          console.error(error);
         });
-  }
+  };
 
-  function handleClick() {
-    handleGoogleLogin();
-  }
+  const handleGoogleLogin = () => {
+    window.location.href = `${backendUrl}/oauth2/authorization/google`;
+  };
 
 
   return (
@@ -86,7 +87,7 @@ const LoginComponents = () => {
           </div>
         </div>
         <div className={"flex flex-row justify-center"}>
-          <button onClick={handleClick}>
+          <button onClick={() => handleGoogleLogin()}>
             <div className="w-full bg-white">
               <div className="w-[360px] h-[58px] flex flex-row items-center justify-center rounded-[30px] border border-zinc-300">
                 <img
@@ -96,7 +97,7 @@ const LoginComponents = () => {
                 />
                 <div className={"w-[20px]"}></div>
                 <div className="flex flex-col items-center text-[17px] font-semibold font-['Noto Sans']">
-                  <button>Sign in with Google</button>
+                  Sign in with Google
                 </div>
               </div>
             </div>
