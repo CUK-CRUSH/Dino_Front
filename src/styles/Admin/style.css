@@ -1,25 +1,43 @@
 @keyframes editIn {
-    0% {
-      transform: translateY(735px);
-    }
-    100% {
-      transform: translateY(0);
-    }
+  0% {
+    transform: translateY(735px);
   }
-  
-  @keyframes editOut {
-    0% {
-      transform: translateY(0);
-    }
-    100% {
-      transform: translateY(735px);
-    }
+
+  100% {
+    transform: translateY(0);
   }
-  
-  .animate-slide-edit-in {
-    animation: editIn 1s ease-in-out; /* Adjust the duration and easing function as needed */
+}
+
+@keyframes editOut {
+  0% {
+    transform: translateY(0);
   }
-  
-  .animate-slide-edit-out {
-    animation: editOut 1s ease-in-out; /* Adjust the duration and easing function as needed */
+
+  100% {
+    transform: translateY(735px);
   }
+}
+
+.animate-slide-edit-in {
+  animation: editIn 1s ease-in-out;
+  /* Adjust the duration and easing function as needed */
+}
+
+.animate-slide-edit-out {
+  animation: editOut 1s ease-in-out;
+  /* Adjust the duration and easing function as needed */
+}
+
+@keyframes revealAnimation {
+  0% {
+    width: 0px;
+  }
+  100% {
+    width : 160px;
+  }
+}
+
+.animated-div {
+  width: 160px; /* Set the width of your div */
+  animation: revealAnimation 1s ease-in-out; /* Set the duration and easing function */
+}

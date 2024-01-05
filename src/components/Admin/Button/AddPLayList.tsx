@@ -18,7 +18,7 @@ export const AddPlayList = () => {
       else {setCustomMargin((windowSize.width / 2 - 150) / 2)};
     }
 
-  }, [windowSize.width, customMargin]);
+  }, [windowSize.width, customMargin,isMobile]);
 
   return (
     <div style={{ marginLeft: `${customMargin}px`, marginRight: `${customMargin}px` }} className="inline-block h-[150px] mt-[42px] relative">
