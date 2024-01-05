@@ -99,7 +99,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   };
 
 
-  const windowSize = useWindowSizeCustom();
+  const {windowSize} = useWindowSizeCustom();
   // 사이즈 390 보다 크면 모달창 크기 고정
   const [size, setSize] = useState<boolean>(false);
 

@@ -4,20 +4,23 @@ import { Link } from "react-router-dom";
 import useWindowSizeCustom from "../../../hooks/useWindowSizeCustom";
 
 export const PlayList = () => {
-  const windowSize = useWindowSizeCustom();
+  const {windowSize, isMobile} = useWindowSizeCustom();
 
-  console.log(windowSize.width);
+  console.log(windowSize,isMobile);
   const [customMargin, setCustomMargin] = useState<number>(0);
 
   useEffect(() => {
-    if (window.innerWidth <= 390) {
-      setCustomMargin((windowSize.width / 2 - 150) / 2);
-    } else {
-      setCustomMargin((372 / 2 - 150) / 2);
+    if(!isMobile){
+      setCustomMargin((371 / 2 - 150) / 2);
     }
+    else if(isMobile){
+      if(windowSize.width >= 390 ) {setCustomMargin((390/2 - 150) /2)}
+      else {setCustomMargin((windowSize.width / 2 - 150) / 2)};
+    }
+
   }, [windowSize.width, customMargin]);
 
-  return (
+    return (
     <div style={{ marginLeft: `${customMargin}px`, marginRight: `${customMargin}px` }}
       className="inline-block h-[150px] mt-[42px] relative">
       <Link to="13">

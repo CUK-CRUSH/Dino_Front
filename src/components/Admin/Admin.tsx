@@ -16,6 +16,11 @@ const AdminPage: React.FC = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const [token,setToken] = useState<boolean>(true);
+  
+  useEffect(()=>{
+    setToken(true);
+  },[])
+
   // 유저네임 , 한줄소게
   const [username, setUsername] = useState("");
   const [introText, setIntroText] = useState("");
