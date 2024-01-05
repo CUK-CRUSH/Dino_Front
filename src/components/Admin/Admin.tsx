@@ -15,6 +15,7 @@ const AdminPage: React.FC = () => {
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
+  const [token,setToken] = useState<boolean>(true);
   // 유저네임 , 한줄소게
   const [username, setUsername] = useState("");
   const [introText, setIntroText] = useState("");
@@ -70,7 +71,8 @@ const AdminPage: React.FC = () => {
 
         <div className="h-full w-full left-0 top-[165px] absolute bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px]" >
           {/* ... 설정창 */}
-          <OpenOption calculateOptionsModalPosition={calculateOptionsModalPosition} />
+          {token && <OpenOption calculateOptionsModalPosition={calculateOptionsModalPosition} />}
+          
 
           {/* ...설정창 펼치기 */}
           {isOptionsModalOpen && (
@@ -100,7 +102,7 @@ const AdminPage: React.FC = () => {
           
           <PlayList />
           <PlayList />
-          <AddPlayList />
+          {token && <AddPlayList /> }
           
         </div>
       </div>
