@@ -6,6 +6,8 @@ interface WindowSizeProps {
 }
 
 const useWindowSizeCustom = () => {
+  const [isMobile, setMobile] = useState<boolean>(false);
+
   const [windowSize, setWindowSize] = useState<WindowSizeProps>({
     width: 0,
     height: 0,
@@ -20,6 +22,10 @@ const useWindowSizeCustom = () => {
           });
       };
 
+      const userAgent = window.navigator.userAgent;
+      const mobile = /iPhone|iPad|iPod|Android/i.test(userAgent);
+      setMobile(mobile);
+
       window.addEventListener("resize", handleResize);
 
       handleResize();
@@ -33,7 +39,7 @@ const useWindowSizeCustom = () => {
     }
   }, [windowSize.width]); // Run when the width of windowSize changes
 
-  return windowSize;
+  return {windowSize, isMobile};
 };
 
 export default useWindowSizeCustom;

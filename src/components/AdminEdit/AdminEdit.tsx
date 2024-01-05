@@ -8,12 +8,13 @@ import {
 import { RootState } from "@store/index";
 import useWindowSizeCustom from "@hooks/useWindowSizeCustom";
 import "../../styles/Admin/style.css";
-import EditButton from "@components/AdminEdit/EditButton";
+import EditButton from "@components/AdminEdit/Button/EditButton";
 import SetUserProfileBackground from "@components/AdminEdit/SetUserProfileBackground";
 import SetUserProfileImage from "@components/AdminEdit/SetUserProfileImage";
 import SetUserProfileInfo from "@components/AdminEdit/SetUserProfileInfo";
 import useImageCompress from "@hooks/useImageCompress";
 import { dataURItoFile } from "@utils/ImageCrop/common";
+import { ValidateSpace } from "@utils/Validation/ValidateSpace";
 
 interface AdminEditModalProps {
   onClose: () => void; // A function to close the modal
@@ -77,19 +78,21 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     }
   }, [uploadUserProfileImage, handleCompressUserProfileImage]);
 
-
   // redux에 저장.  
   const save = () => {
-    // Save changes to Redux store
+    if (ValidateSpace(username)) {
+      return;
+    }
+  
     dispatch(updateProfile({ username, introText }));
-
+  
     if (compressedUserProfileImage) {
       dispatch(setUserProfileImage(compressedUserProfileImage));
     }
     if (uploadUserProfileBackgroundImage) {
       dispatch(setUserProfileBackgroundImage(compressedUserProfileBackgroundImage));
     }
-
+  
     cancel();
   };
 
@@ -99,7 +102,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   };
 
 
-  const windowSize = useWindowSizeCustom();
+  const {windowSize} = useWindowSizeCustom();
   // 사이즈 390 보다 크면 모달창 크기 고정
   const [size, setSize] = useState<boolean>(false);
 

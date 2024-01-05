@@ -4,7 +4,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
   userProfileBackgroundImage : null,
-  username: "Your Username",
+  username: "Username",
   introText: "Welcome to the Admin Page!",
   userProfileImage: null,
 };
