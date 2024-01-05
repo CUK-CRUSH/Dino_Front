@@ -14,6 +14,7 @@ import SetUserProfileImage from "@components/AdminEdit/SetUserProfileImage";
 import SetUserProfileInfo from "@components/AdminEdit/SetUserProfileInfo";
 import useImageCompress from "@hooks/useImageCompress";
 import { dataURItoFile } from "@utils/ImageCrop/common";
+import { ValidateSpace } from "@utils/Validation/ValidateSpace";
 
 interface AdminEditModalProps {
   onClose: () => void; // A function to close the modal
@@ -80,16 +81,19 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
   // redux에 저장.  
   const save = () => {
-    // Save changes to Redux store
+    if (ValidateSpace(username)) {
+      return;
+    }
+  
     dispatch(updateProfile({ username, introText }));
-
+  
     if (compressedUserProfileImage) {
       dispatch(setUserProfileImage(compressedUserProfileImage));
     }
     if (uploadUserProfileBackgroundImage) {
       dispatch(setUserProfileBackgroundImage(compressedUserProfileBackgroundImage));
     }
-
+  
     cancel();
   };
 
