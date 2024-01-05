@@ -5,7 +5,7 @@ const ImageControlButton: React.FC<ImageControlButtonDTO> = ({
   onSave,
 }) => {
   return (
-    <div className="flex justify-between m-5 text-[15px] text-white">
+    <div className="flex justify-between m-5 text-[17px] text-white">
       <div>
         <button className="text-red-500" onClick={onCancel}>
           Cancel

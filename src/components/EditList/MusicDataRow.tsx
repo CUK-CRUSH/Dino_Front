@@ -32,7 +32,7 @@ export const MusicDataRow: React.FC<MusicDataDTO & { isEditing: boolean }> = ({
   const ArtistLength = artistWidth >= 80;
 
   return (
-    <div className="h-2/3 overflow-auto text-[15px] flex justify-center ">
+    <div className="h-2/3 overflow-auto text-[17px] flex justify-center ">
       {/* 박스를 클릭하면 URL로 이동하도록 한다.(수정할때 X) */}
       <div className="w-[360px] my-10">
         <div className="flex flex-row items-center pb-2 mx-[13px] border-b border-white">
@@ -55,7 +55,7 @@ export const MusicDataRow: React.FC<MusicDataDTO & { isEditing: boolean }> = ({
               </span>
             </div>
           </div>
-          <div className="text-[11px] w-3/12 overflow-hidden">
+          <div className="text-[13px] w-3/12 overflow-hidden">
             <div className="flex items-center">
               <span
                 ref={artistRef}

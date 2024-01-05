@@ -20,7 +20,7 @@ const ShowImage: React.FC<ShowImageDTO> = ({
               src={compressedImage}
               alt="Img"
             />
-            <div className="text-[30px] text-shadow-sm shadow-black bottom-4 left-4 font-bold leading-5 absolute">
+            <div className="text-[32px] text-shadow-sm shadow-black bottom-4 left-4 font-bold leading-5 absolute">
               <h2>Title</h2>
             </div>
           </>
@@ -32,11 +32,11 @@ const ShowImage: React.FC<ShowImageDTO> = ({
               <div>
                 <div className="flex flex-col justify-center items-center h-full">
                   <AiOutlinePicture size={29} className="text-gray-400" />
-                  <span className="text-center  text-[#8E8E8E] text-[15px] pt-[6px]">
+                  <span className="text-center  text-[#8E8E8E] text-[17px] pt-[6px]">
                     Setting a representative image
                   </span>
                 </div>
-                <h2 className="text-[30px] text-shadow-sm shadow-black bottom-4 left-4 font-bold leading-5 absolute  ">
+                <h2 className="text-[32px] text-shadow-sm shadow-black bottom-4 left-4 font-bold leading-5 absolute  ">
                   Title
                 </h2>
               </div>
