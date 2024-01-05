@@ -11,7 +11,7 @@ const ShowImage: React.FC<ShowImageDTO> = ({
   isCompressLoading,
 }) => {
   return (
-    <div className="h-1/3 relative rounded-b-3xl bg-white cursor-pointer">
+    <div className="h-1/3 smartPhone:h-[28%] tablet:h-[25%] relative rounded-b-3xl bg-white cursor-pointer">
       <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
         {compressedImage ? (
           <img
