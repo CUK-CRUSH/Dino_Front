@@ -25,7 +25,7 @@ export const EditProfile = ({top,left,openEditModal, closeOptionsModalOpen } : E
   const baseUrl = window.location.origin;
   
  // 열고닫기
- const [isOpen, setIsOpen] = useState(true);
+//  const [isOpen, setIsOpen] = useState(true);
   return (
     <div 
       onClick={closeOptionsModalOpen}
