@@ -34,7 +34,7 @@ export const EditProfile = ({top,left,openEditModal, closeOptionsModalOpen } : E
         className="fixed"
         style={{ top: top, left: left }}
       >
-        <div className={`relative w-40 p-0 bg-white rounded-[10px] shadow-lg animated-div`}>
+        <div className={`relative w-40 p-0 bg-white rounded-[10px] shadow-lg `}>
 
           <div className="p-1">
             <div
