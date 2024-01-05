@@ -2,18 +2,24 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux"; // Import the useDispatch hook
 import { RootState } from "@store/index";
 import AdminEditModal from "@pages/Admin/AdminEditModal";
-import { AddPlayList } from "@components/Admin/AddPLayList";
-import { EditProfile } from "@components/Admin/EditProfile";
+import { AddPlayList } from "@components/Admin/Button/AddPLayList";
+import { EditProfile } from "@components/Admin/Modal/EditProfile";
 import UserProfileBackground from "./UserProfileBackgroundImage";
-import OpenOption from "./OpenOption";
+import OpenOption from "./Button/OpenOption";
 import UserProfileImage from "./UserProfileImage";
 import UserProfileInfo from "./UserProfileInfo";
-import {PlayList} from "@components/Admin/PlayList";
+import {PlayList} from "@components/Admin/Button/PlayList";
 
 
 const AdminPage: React.FC = () => {
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
+  const [token,setToken] = useState<boolean>(true);
+
+  useEffect(()=>{
+    setToken(true);
+  },[])
 
   // 유저네임 , 한줄소게
   const [username, setUsername] = useState("");
@@ -68,9 +74,10 @@ const AdminPage: React.FC = () => {
 
         <UserProfileBackground userBackgroundImage={userProfile.userProfileBackgroundImage} />
 
-        <div className="h-full w-full left-0 top-[167px] absolute bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px]" >
+        <div className="h-full w-full left-0 top-[165px] absolute bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px]" >
           {/* ... 설정창 */}
-          <OpenOption calculateOptionsModalPosition={calculateOptionsModalPosition} />
+          {token && <OpenOption calculateOptionsModalPosition={calculateOptionsModalPosition} />}
+          
 
           {/* ...설정창 펼치기 */}
           {isOptionsModalOpen && (
@@ -87,7 +94,7 @@ const AdminPage: React.FC = () => {
           )}
 
           {/* 프로필 이미지 */}
-          <div className=" flex items-center flex-col z-40">
+          <div className=" flex items-center flex-col z-10">
             
             <UserProfileImage userProfileImage={userProfile.userProfileImage} />
 
@@ -100,7 +107,9 @@ const AdminPage: React.FC = () => {
           
           <PlayList />
           <PlayList />
-          <AddPlayList />
+          <PlayList />
+          <PlayList />
+          {token && <AddPlayList /> }
           
         </div>
       </div>
