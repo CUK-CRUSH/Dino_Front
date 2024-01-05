@@ -14,31 +14,31 @@ const ShowImage: React.FC<ShowImageDTO> = ({
     <div className="h-1/3 smartPhone:h-[28%] tablet:h-[25%] relative rounded-b-3xl bg-white cursor-pointer">
       <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
         {compressedImage ? (
-          <img
-            className="h-full w-full rounded-b-3xl object-cover"
-            src={compressedImage}
-            alt="Img"
-          />
+          <>
+            <img
+              className="h-full w-full rounded-b-3xl object-cover"
+              src={compressedImage}
+              alt="Img"
+            />
+            <div className="text-[30px] text-shadow-sm shadow-black bottom-4 left-4 font-bold leading-5 absolute">
+              <h2>Title</h2>
+            </div>
+          </>
         ) : (
           <div className="h-full flex items-center justify-center rounded-b-3xl text-center bg-white cursor-pointer">
             {isCompressLoading ? (
-              <>
-                <LoadingPage />
-                <div className="text-[30px] bottom-4 left-4 text-white shadow-black font-bold leading-5 absolute">
-                  <h2>Title</h2>
-                </div>
-              </>
+              <LoadingPage />
             ) : (
               <div>
                 <div className="flex flex-col justify-center items-center h-full">
                   <AiOutlinePicture size={29} className="text-gray-400" />
-                  <span className="text-center text-[#8E8E8E] text-[15px] pt-[6px]">
+                  <span className="text-center  text-[#8E8E8E] text-[15px] pt-[6px]">
                     Setting a representative image
                   </span>
                 </div>
-                <div className="text-[30px] bottom-4 left-4 text-white shadow-black font-bold leading-5 absolute">
-                  <h2>Title</h2>
-                </div>
+                <h2 className="text-[30px] text-shadow-sm shadow-black bottom-4 left-4 font-bold leading-5 absolute  ">
+                  Title
+                </h2>
               </div>
             )}
           </div>
