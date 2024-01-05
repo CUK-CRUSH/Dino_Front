@@ -14,7 +14,7 @@ import { MusicDataRow } from "@components/EditList/MusicDataRow";
 import useImageCompress from "@hooks/useImageCompress";
 import { dataURItoFile } from "@utils/ImageCrop/common";
 import { PlusButton } from "./Button/PlusButton";
-import ShowImage from "@components/EditList/ShowImage";
+import ShowImage from "@components/EditList/EditImage/ShowImage";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
   const isEditing = useSelector(

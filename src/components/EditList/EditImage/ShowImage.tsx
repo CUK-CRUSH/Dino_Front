@@ -1,7 +1,7 @@
 import React from "react";
 import ImageCropper from "@utils/ImageCrop/ImageCropper";
 import { ShowImageDTO } from "types/EditplayList";
-import ImageDisplay from "@components/EditList/ImageDisplay";
+import ImageDisplay from "@components/EditList/EditImage/ImageDisplay";
 
 const ShowImage: React.FC<ShowImageDTO> = ({
   aspectRatio,
