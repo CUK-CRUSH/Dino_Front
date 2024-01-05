@@ -47,7 +47,7 @@ const AddMusic: React.FC = () => {
       Swal.fire({
         icon: "warning",
         title: `You can't use "${url}"`,
-        text: "You have to include " + '"https://www.youtube.com/"',
+        text: "You have to include https://www.youtube.com/",
       });
       return;
     }

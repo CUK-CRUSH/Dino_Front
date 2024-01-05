@@ -16,10 +16,19 @@ export interface MusicDataDTO {
   musicData: MusicData;
 }
 
-export interface ATO {
+export interface MusicContentDTO {
   title: string;
   artist: string;
   url: string;
+}
+
+export interface MusicDataRowContentProps {
+  titleRef: React.RefObject<HTMLSpanElement>;
+  artistRef: React.RefObject<HTMLSpanElement>;
+  TitleLength: boolean;
+  ArtistLength: boolean;
+  musicData: MusicContentDTO;
+  isEditing: boolean;
 }
 
 export interface EditPlsyListDTO {}

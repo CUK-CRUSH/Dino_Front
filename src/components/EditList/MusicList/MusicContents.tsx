@@ -1,13 +1,5 @@
-import { ATO } from "types/EditplayList";
+import { MusicDataRowContentProps } from "types/EditplayList";
 import { FaAngleRight } from "react-icons/fa6";
-interface MusicDataRowContentProps {
-  titleRef: React.RefObject<HTMLSpanElement>;
-  artistRef: React.RefObject<HTMLSpanElement>;
-  TitleLength: boolean;
-  ArtistLength: boolean;
-  musicData: ATO;
-  isEditing: boolean;
-}
 
 export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   titleRef,
