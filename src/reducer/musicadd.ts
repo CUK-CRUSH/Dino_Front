@@ -4,6 +4,7 @@ const initialState = {
   title: "",
   artist: "",
   url: "",
+  image: null,
 };
 
 const musicAddSlice = createSlice({
@@ -19,8 +20,12 @@ const musicAddSlice = createSlice({
     updateURL: (state, action) => {
       state.url = action.payload;
     },
+    updateImage: (state, action) => {
+      state.image = action.payload;
+    },
   },
 });
 
-export const { updateTitle, updateArtist, updateURL } = musicAddSlice.actions;
+export const { updateTitle, updateArtist, updateURL, updateImage } =
+  musicAddSlice.actions;
 export default musicAddSlice.reducer;

@@ -1,6 +1,11 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { updateArtist, updateTitle, updateURL } from "@reducer/musicadd";
+import {
+  updateArtist,
+  updateTitle,
+  updateURL,
+  updateImage,
+} from "@reducer/musicadd";
 import { setIsEditing } from "@reducer/editPlayList/isEdit";
 import { RootState } from "@store/index";
 import { EditPlsyListDTO } from "types/EditplayList";
@@ -41,12 +46,14 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
 
   const handleSaveClick = () => {
     dispatch(setIsEditing(false));
+    dispatch(updateImage(compressedImage));
   };
 
   const handleCancelClick = () => {
     dispatch(updateTitle(""));
     dispatch(updateArtist(""));
     dispatch(updateURL(""));
+    dispatch(updateImage(null));
     dispatch(setIsEditing(false));
   };
 

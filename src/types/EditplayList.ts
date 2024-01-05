@@ -28,3 +28,8 @@ export interface ShowImageDTO {
 export interface EditModalDTO {
   onClose: () => void;
 }
+
+export interface ImageDisplayDTO {
+  compressedImage: string | null;
+  isCompressLoading: boolean;
+}
