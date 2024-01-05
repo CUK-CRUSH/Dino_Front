@@ -78,7 +78,6 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     }
   }, [uploadUserProfileImage, handleCompressUserProfileImage]);
 
-
   // redux에 저장.  
   const save = () => {
     if (ValidateSpace(username)) {
