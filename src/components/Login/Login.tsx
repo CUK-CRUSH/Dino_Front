@@ -4,10 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import mylist2 from "@assets/Mylist2.png";
 import googlelogo from "@assets/Google logo.png";
 import facebook from "@assets/facebook-3 logo.png";
-import {useGoogleLogin} from "@react-oauth/google";
 import axios from "axios";
-
-
 
 // 로그인 컴포넌트
 const LoginComponents = () => {
