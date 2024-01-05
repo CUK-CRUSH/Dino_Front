@@ -26,12 +26,11 @@ export const EditProfile = ({top,left,openEditModal, closeOptionsModalOpen } : E
   return (
     <div 
       onClick={closeOptionsModalOpen}
-      className="fixed top-0 right-0 bottom-0 left-0 bg-black bg-opacity-0 z-50">
+      className="fixed top-0 right-0 bottom-0 left-0 bg-white bg-opacity-0 z-50">
       <div
         className="fixed"
         style={{ top: top, left: left }}
       >
-        <div className="absolute inset-0 bg-gray-800 opacity-75"></div>
         <div className="relative w-40 p-0 bg-white rounded-[10px] shadow-lg">
 
           <div className="p-1">

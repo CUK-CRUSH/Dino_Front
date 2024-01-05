@@ -22,7 +22,6 @@ const useWindowSizeCustom = () => {
           });
       };
 
-      // 디바이스 구분
       const userAgent = window.navigator.userAgent;
       const mobile = /iPhone|iPad|iPod|Android/i.test(userAgent);
       setMobile(mobile);

@@ -7,7 +7,7 @@ const UserProfileImage = ({ userProfileImage }: UserProfileImageDTO) => {
       <img
         src={userProfileImage ?? "default-image-url.jpg"}
         alt="User Profile"
-        className="w-full h-full object-cover"
+        className="w-full object-cover"
       />
     </div>
   )

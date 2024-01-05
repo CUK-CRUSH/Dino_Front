@@ -94,7 +94,7 @@ const AdminPage: React.FC = () => {
           )}
 
           {/* 프로필 이미지 */}
-          <div className=" flex items-center flex-col z-40">
+          <div className=" flex items-center flex-col z-10">
             
             <UserProfileImage userProfileImage={userProfile.userProfileImage} />
 
