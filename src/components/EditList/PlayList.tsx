@@ -10,7 +10,7 @@ import { setIsEditing } from "@reducer/editPlayList/isEdit";
 import { RootState } from "@store/index";
 import { EditPlsyListDTO } from "types/EditplayList";
 import { EditPlaylistControls } from "@components/EditList/Button/EditPlaylistControl";
-import { MusicDataRow } from "@components/EditList/MusicDataRow";
+import { MusicDataRow } from "@components/EditList/MusicList/MusicDataRow";
 import useImageCompress from "@hooks/useImageCompress";
 import { dataURItoFile } from "@utils/ImageCrop/common";
 import { PlusButton } from "./Button/PlusButton";

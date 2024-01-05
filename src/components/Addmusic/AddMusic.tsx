@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toggleShowInformation } from "@reducer/toggle/addMusicToggle";
 import { InputComponent } from "@components/Addmusic/AddMusicInput";
+import Swal from "sweetalert2";
 
 const AddMusic: React.FC = () => {
   const dispatch = useDispatch();
@@ -42,8 +43,16 @@ const AddMusic: React.FC = () => {
   }, [dispatch]);
 
   const handleSave = useCallback(() => {
+    if (!url.includes("https://www.youtube.com/")) {
+      Swal.fire({
+        icon: "warning",
+        title: `You can't use "${url}"`,
+        text: "You have to include " + '"https://www.youtube.com/"',
+      });
+      return;
+    }
     navigate(`/admin/1`); // 나중에 리다이렉트 주소 수정
-  }, [navigate]);
+  }, [navigate, url]);
 
   return (
     <div className="z-30 h-full w-full flex flex-col bg-black text-white py-10 text-[17px] leading-[18px]">

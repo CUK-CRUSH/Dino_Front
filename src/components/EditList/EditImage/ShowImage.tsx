@@ -17,12 +17,14 @@ const ShowImage: React.FC<ShowImageDTO> = ({
           <ImageDisplay
             compressedImage={compressedImage}
             isCompressLoading={isCompressLoading}
+            cursor="pointer"
           />
         </ImageCropper>
       ) : (
         <ImageDisplay
           compressedImage={compressedImage}
           isCompressLoading={isCompressLoading}
+          cursor="default"
         />
       )}
     </div>
