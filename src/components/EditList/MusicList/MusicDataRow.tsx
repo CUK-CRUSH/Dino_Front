@@ -54,7 +54,7 @@ export const MusicDataRow: React.FC<MusicDataDTO & { isEditing: boolean }> = ({
             TitleLength={TitleLength}
             ArtistLength={ArtistLength}
             musicData={musicData}
-            isEditing
+            isEditing={isEditing}
           />
         )}
       </div>
