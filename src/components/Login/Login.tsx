@@ -7,7 +7,6 @@ import facebook from "@assets/facebook-3 logo.png";
 import axios from "axios";
 
 const backendUrl = "http://34.22.100.187:8080";
-const navigate = useNavigate();
 
 
 // 로그인 컴포넌트
