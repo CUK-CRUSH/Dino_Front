@@ -2,13 +2,13 @@ import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux"; // Import the useDispatch hook
 import { RootState } from "@store/index";
 import AdminEditModal from "@pages/Admin/AdminEditModal";
-import { AddPlayList } from "@components/Admin/AddPLayList";
-import { EditProfile } from "@components/Admin/EditProfile";
+import { AddPlayList } from "@components/Admin/Button/AddPLayList";
+import { EditProfile } from "@components/Admin/Modal/EditProfile";
 import UserProfileBackground from "./UserProfileBackgroundImage";
-import OpenOption from "./OpenOption";
+import OpenOption from "./Button/OpenOption";
 import UserProfileImage from "./UserProfileImage";
 import UserProfileInfo from "./UserProfileInfo";
-import {PlayList} from "@components/Admin/PlayList";
+import {PlayList} from "@components/Admin/Button/PlayList";
 
 
 const AdminPage: React.FC = () => {

@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
-import ex from "../../assets/Admin/ex.svg"
+import ex from "../../../assets/Admin/ex.svg"
 import { Link } from "react-router-dom";
-import useWindowSizeCustom from "../../hooks/useWindowSizeCustom";
+import useWindowSizeCustom from "../../../hooks/useWindowSizeCustom";
 
 export const PlayList = () => {
   const windowSize = useWindowSizeCustom();

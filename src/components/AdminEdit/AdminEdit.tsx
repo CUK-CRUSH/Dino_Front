@@ -8,7 +8,7 @@ import {
 import { RootState } from "@store/index";
 import useWindowSizeCustom from "@hooks/useWindowSizeCustom";
 import "../../styles/Admin/style.css";
-import EditButton from "@components/AdminEdit/EditButton";
+import EditButton from "@components/AdminEdit/Button/EditButton";
 import SetUserProfileBackground from "@components/AdminEdit/SetUserProfileBackground";
 import SetUserProfileImage from "@components/AdminEdit/SetUserProfileImage";
 import SetUserProfileInfo from "@components/AdminEdit/SetUserProfileInfo";
