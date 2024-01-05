@@ -16,7 +16,7 @@ const AdminPage: React.FC = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const [token,setToken] = useState<boolean>(true);
-  
+
   useEffect(()=>{
     setToken(true);
   },[])
@@ -105,6 +105,8 @@ const AdminPage: React.FC = () => {
           {/* 내가 생성한 플레이리스트 뽑아주고 마지막에 플레이리스트 추가 컴포넌트 붙이기. */}
           
           
+          <PlayList />
+          <PlayList />
           <PlayList />
           <PlayList />
           {token && <AddPlayList /> }

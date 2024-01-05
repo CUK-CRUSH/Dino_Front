@@ -6,7 +6,6 @@ import useWindowSizeCustom from "../../../hooks/useWindowSizeCustom";
 export const PlayList = () => {
   const {windowSize, isMobile} = useWindowSizeCustom();
 
-  console.log(windowSize,isMobile);
   const [customMargin, setCustomMargin] = useState<number>(0);
 
   useEffect(() => {
