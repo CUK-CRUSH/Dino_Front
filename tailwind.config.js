@@ -34,6 +34,7 @@ module.exports = {
       lg: { min: "1081px", max: "1440px" },
       xl: { min: "1441px", max: "1920px" },
       xxl: { min: "1921px" },
+      smartPhoneXs: { min: "320px", max: "399px" },
       smartPhone: { min: "400px", max: "430px" },
       tablet: { min: "768px", max: "1030px" },
     },

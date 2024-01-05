@@ -1,6 +1,5 @@
 import { MusicDataDTO } from "types/EditplayList";
 import "@styles/EditList/playList.css";
-
 import { FaAngleRight } from "react-icons/fa6";
 import { useEffect, useRef, useState } from "react";
 // Admin에서 EditList는 기본적으로
@@ -67,18 +66,16 @@ export const MusicDataRow: React.FC<MusicDataDTO & { isEditing: boolean }> = ({
               </span>
             </div>
           </div>
-
           {/* 1.isEditing일때 FaAngleRight를 클릭하면 개별 수정이 가능하다. 
           2. isEdinting일때 drag&drop으로 박스의 순서를 바꿀 수 있도록 한다.*/}
-          {isEditing && (
-            <div className="w-1/12 pl-2">
-              <button>
-                <span>
-                  <FaAngleRight color="white" size={20} />
-                </span>
-              </button>
-            </div>
-          )}
+
+          <div className={`w-1/12 pl-2 ${isEditing ? "" : "hidden"}`}>
+            <button>
+              <span>
+                <FaAngleRight color="white" size={20} />
+              </span>
+            </button>
+          </div>
           {/*  */}
         </div>
       </div>

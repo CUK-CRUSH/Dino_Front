@@ -22,6 +22,7 @@ export interface ShowImageDTO {
   onCrop: (image: string) => void;
   compressedImage: string | null;
   isCompressLoading: boolean;
+  isEditing: boolean;
 }
 
 export interface EditModalDTO {

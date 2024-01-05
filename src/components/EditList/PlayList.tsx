@@ -63,6 +63,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         onCrop={handleUploadImage}
         compressedImage={compressedImage}
         isCompressLoading={isCompressLoading}
+        isEditing={isEditing}
       />
 
       <EditPlaylistControls

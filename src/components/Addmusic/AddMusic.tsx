@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useCallback } from "react";
 import { updateArtist, updateTitle, updateURL } from "@reducer/musicadd";
 import { RootState } from "@store/index";
 import { useSelector, useDispatch } from "react-redux";
@@ -10,13 +10,6 @@ const AddMusic: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const handleInformationToggle = () => {
-    dispatch(toggleShowInformation());
-  };
-
-  const handleSave = () => {
-    navigate(`/admin/1`);
-  };
   const { title, artist, url } = useSelector(
     (state: RootState) => state.musicAdd
   );
@@ -24,16 +17,33 @@ const AddMusic: React.FC = () => {
   const { showInformation } = useSelector(
     (state: RootState) => state.addMusicInformationToggle
   );
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(updateTitle(e.target.value));
-  };
+  const handleTitleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      dispatch(updateTitle(e.target.value));
+    },
+    [dispatch]
+  );
 
-  const handleArtistChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(updateArtist(e.target.value));
-  };
-  const handleURLChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(updateURL(e.target.value));
-  };
+  const handleArtistChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      dispatch(updateArtist(e.target.value));
+    },
+    [dispatch]
+  );
+  const handleURLChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      dispatch(updateURL(e.target.value));
+    },
+    [dispatch]
+  );
+
+  const handleInformationToggle = useCallback(() => {
+    dispatch(toggleShowInformation());
+  }, [dispatch]);
+
+  const handleSave = useCallback(() => {
+    navigate(`/admin/1`); // 나중에 리다이렉트 주소 수정
+  }, [navigate]);
 
   return (
     <div className="z-30 h-full w-full flex flex-col bg-black text-white py-10 text-[17px] leading-[18px]">
@@ -71,7 +81,7 @@ const AddMusic: React.FC = () => {
         <div className="flex justify-center">
           <button
             onClick={handleSave}
-            className="bg-white font-bold text-black text-[19px] w-[360px] h-[58px] mt-20 rounded-3xl"
+            className="bg-white font-bold text-black text-[19px] w-[360px] h-[58px] smartPhoneXs:mt-10 smartPhone:mt-20 tablet:mt-32 mt-40 rounded-3xl"
           >
             Add
           </button>

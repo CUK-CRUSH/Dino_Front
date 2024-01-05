@@ -82,7 +82,7 @@ const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
                   autoCropArea={1}
                   checkOrientation={false}
                   guides
-                  className="bg-white overflow-hidden absolute w-[360px] h-[300px] border-2 border-white rounded-2xl top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2"
+                  className="bg-white overflow-hidden absolute w-[360px] h-[300px] border-2 border-white rounded-2xl top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 smartPhone:-translate-y-2/3 tablet:-translate-y-2/3"
                 />
               </div>
             </div>
