@@ -1,4 +1,4 @@
-import { MusicInputDTO } from "@reducer/Addmusic/AddMusic";
+import { MusicInputDTO } from "types/Addmusic/AddMusic";
 import React from "react";
 import { IoInformationCircleOutline } from "react-icons/io5";
 
@@ -15,7 +15,7 @@ export const InputComponent: React.FC<MusicInputDTO> = ({
   return (
     <div>
       <div className="flex flex-row ">
-        <h3 className="text-[15px] leading-[18px] mb-3 mr-1">{label}</h3>
+        <h3 className="text-[17px] leading-[18px] mb-3 mr-1">{label}</h3>
         <div className="mt-[3px]">
           {infoButton && (
             <IoInformationCircleOutline
