@@ -3,6 +3,7 @@ import { Cropper, ReactCropperElement } from "react-cropper";
 import "cropperjs/dist/cropper.css";
 import { ImageCropsDTO } from "types/ImageCrop/imagecrops";
 import ImageControlButton from "@components/EditList/Button/ImageControlButton";
+import Swal from "sweetalert2";
 
 const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -23,6 +24,20 @@ const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
 
     if (!files || files.length === 0) return;
 
+    const file = files.item(0);
+    if (!file) return;
+
+    const fileType = file.type;
+
+    if (fileType !== "image/jpeg" && fileType !== "image/png") {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "You can only upload jpg, png files!",
+      });
+      return;
+    }
+
     const reader = new FileReader();
     reader.onload = () => {
       setImage(reader.result as string);
@@ -41,6 +56,7 @@ const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
       <input
         type="file"
         ref={inputRef}
+        accept=".jpg, .jpeg, .png"
         className="hidden"
         onChange={handleFileChange}
       />
