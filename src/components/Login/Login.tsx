@@ -1,11 +1,9 @@
 // @ts-ignore
 
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import mylist2 from "@assets/Mylist2.png";
 import googlelogo from "@assets/Google logo.png";
 import facebook from "@assets/facebook-3 logo.png";
-import axios from "axios";
-
 const backendUrl = "http://34.22.100.187:8080";
 
 
