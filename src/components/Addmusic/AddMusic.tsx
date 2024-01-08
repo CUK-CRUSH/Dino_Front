@@ -43,16 +43,25 @@ const AddMusic: React.FC = () => {
   }, [dispatch]);
 
   const handleSave = useCallback(() => {
-    if (!url.includes("https://www.youtube.com/")) {
+    if (
+      !url.startsWith("https://www.youtube.com/") &&
+      !url.startsWith("https://youtu.be/")
+    ) {
       Swal.fire({
         icon: "warning",
         title: `You can't use "${url}"`,
-        text: "You have to include https://www.youtube.com/",
+        text: "You have to include https://www.youtube.com/ or https://www.youtu.be/",
       });
+      dispatch(updateTitle(""));
+      dispatch(updateArtist(""));
+      dispatch(updateURL(""));
       return;
     }
+    dispatch(updateTitle(""));
+    dispatch(updateArtist(""));
+    dispatch(updateURL(""));
     navigate(`/admin/1`); // 나중에 리다이렉트 주소 수정
-  }, [navigate, url]);
+  }, [navigate, url, dispatch]);
 
   return (
     <div className="z-30 h-full w-full flex flex-col bg-black text-white py-10 text-[17px] leading-[18px]">
@@ -76,7 +85,7 @@ const AddMusic: React.FC = () => {
         />
         <InputComponent
           label="URL"
-          placeholder="https://www.youtube.com/"
+          placeholder="https://youtu.be"
           value={url}
           required={true}
           onChange={handleURLChange}
