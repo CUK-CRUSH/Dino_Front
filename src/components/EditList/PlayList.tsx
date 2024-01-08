@@ -64,20 +64,20 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   }, [uploadImage, handleCompressImage]);
 
   return (
-    <div className=" h-full w-full flex flex-col bg-black text-white font-medium leading-[18px]">
+    <div className="h-full w-full flex flex-col bg-black text-white font-medium leading-[18px]">
+      <EditPlaylistControls
+        isEditing={isEditing}
+        onSave={handleSaveClick}
+        onCancel={handleCancelClick}
+        onEdit={handleEditClick}
+      />
+
       <ShowImage
         aspectRatio={1 / 1}
         onCrop={handleUploadImage}
         compressedImage={compressedImage}
         isCompressLoading={isCompressLoading}
         isEditing={isEditing}
-      />
-
-      <EditPlaylistControls
-        isEditing={isEditing}
-        onSave={handleSaveClick}
-        onCancel={handleCancelClick}
-        onEdit={handleEditClick}
       />
 
       <MusicDataRow musicData={musicData} isEditing={isEditing} />
