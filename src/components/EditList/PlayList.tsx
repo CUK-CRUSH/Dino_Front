@@ -15,6 +15,7 @@ import useImageCompress from "@hooks/useImageCompress";
 import { dataURItoFile } from "@utils/ImageCrop/common";
 import { PlusButton } from "./Button/PlusButton";
 import ShowImage from "@components/EditList/EditImage/ShowImage";
+import { MainEditButton } from "@components/EditList/Button/MainEditButton";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
   const isEditing = useSelector(
@@ -65,12 +66,13 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
 
   return (
     <div className="h-full w-full flex flex-col bg-black text-white font-medium leading-[18px]">
-      <EditPlaylistControls
+      <MainEditButton />
+      {/* <EditPlaylistControls
         isEditing={isEditing}
         onSave={handleSaveClick}
         onCancel={handleCancelClick}
         onEdit={handleEditClick}
-      />
+      /> */}
 
       <ShowImage
         aspectRatio={1 / 1}

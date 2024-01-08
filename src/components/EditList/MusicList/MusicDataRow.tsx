@@ -1,6 +1,5 @@
 import { MusicDataDTO } from "types/EditplayList";
 import "@styles/EditList/playList.css";
-
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { MusicDataRowContent } from "./MusicContents";
