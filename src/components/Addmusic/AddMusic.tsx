@@ -11,31 +11,24 @@ const AddMusic: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const { title, artist, url } = useSelector(
-    (state: RootState) => state.musicAdd
-  );
+  const [title, setTitle] = React.useState<string>("");
+  const [artist, setArtist] = React.useState<string>("");
+  const [url, setURL] = React.useState<string>("");
+
+  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setTitle(e.target.value);
+  };
+
+  const handleArtistChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setArtist(e.target.value);
+  };
+
+  const handleURLChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setURL(e.target.value);
+  };
 
   const { showInformation } = useSelector(
     (state: RootState) => state.addMusicInformationToggle
-  );
-  const handleTitleChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      dispatch(updateTitle(e.target.value));
-    },
-    [dispatch]
-  );
-
-  const handleArtistChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      dispatch(updateArtist(e.target.value));
-    },
-    [dispatch]
-  );
-  const handleURLChange = useCallback(
-    (e: React.ChangeEvent<HTMLInputElement>) => {
-      dispatch(updateURL(e.target.value));
-    },
-    [dispatch]
   );
 
   const handleInformationToggle = useCallback(() => {
@@ -52,16 +45,19 @@ const AddMusic: React.FC = () => {
         title: `You can't use "${url}"`,
         text: "You have to include https://www.youtube.com/ or https://www.youtu.be/",
       });
-      dispatch(updateTitle(""));
-      dispatch(updateArtist(""));
-      dispatch(updateURL(""));
+      setTitle("");
+      setArtist("");
+      setURL("");
       return;
     }
-    dispatch(updateTitle(""));
-    dispatch(updateArtist(""));
-    dispatch(updateURL(""));
+    dispatch(updateTitle(title));
+    dispatch(updateArtist(artist));
+    dispatch(updateURL(url));
+    setTitle("");
+    setArtist("");
+    setURL("");
     navigate(`/admin/1`); // 나중에 리다이렉트 주소 수정
-  }, [navigate, url, dispatch]);
+  }, [navigate, url, dispatch, artist, title]);
 
   return (
     <div className="z-30 h-full w-full flex flex-col bg-black text-white py-10 text-[17px] leading-[18px]">
