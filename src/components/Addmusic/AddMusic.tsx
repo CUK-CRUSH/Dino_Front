@@ -61,8 +61,8 @@ const AddMusic: React.FC = () => {
 
   return (
     <div className="z-30 h-full w-full flex flex-col bg-black text-white py-10 text-[17px] leading-[18px]">
-      <div className="text-center py-20">
-        <h2 className="text-[27px] font-bold mb-4 ">Add Music</h2>
+      <div className="text-center pt-14 pb-10">
+        <h2 className="text-[27px] font-bold mb-4">Add Music</h2>
       </div>
       <div className="space-y-8 mx-4">
         <InputComponent
@@ -95,7 +95,7 @@ const AddMusic: React.FC = () => {
         <div className="flex justify-center">
           <button
             onClick={handleSave}
-            className="bg-white font-bold text-black text-[19px] w-[360px] h-[58px] smartPhoneXs:mt-10 smartPhone:mt-20 tablet:mt-32 mt-40 rounded-3xl"
+            className="bg-white font-bold text-black text-[19px] w-11/12 h-[58px] smartPhoneXs:mt-10 smartPhone:mt-20 tablet:mt-32 mt-40 rounded-3xl"
           >
             Add
           </button>
