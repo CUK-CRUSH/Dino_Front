@@ -1,12 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  updateArtist,
-  updateTitle,
-  updateURL,
-  updateImage,
-} from "@reducer/musicadd";
-import { setIsEditing } from "@reducer/editPlayList/isEdit";
+import { useSelector } from "react-redux";
+import { UsePlayListEditor } from "@hooks/UsePlayListEditor";
 import { RootState } from "@store/index";
 import { EditPlsyListDTO } from "types/EditplayList";
 import { EditPlaylistControls } from "@components/EditList/Button/EditPlaylistControl";
@@ -39,24 +33,8 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     setCompressedImage(imageUrl);
   }, [uploadImage, compressImage]);
 
-  const dispatch = useDispatch();
-
-  const handleEditClick = () => {
-    dispatch(setIsEditing(true));
-  };
-
-  const handleSaveClick = () => {
-    dispatch(setIsEditing(false));
-    dispatch(updateImage(compressedImage));
-  };
-
-  const handleCancelClick = () => {
-    dispatch(updateTitle(""));
-    dispatch(updateArtist(""));
-    dispatch(updateURL(""));
-    dispatch(updateImage(null));
-    dispatch(setIsEditing(false));
-  };
+  const { handleEditClick, handleSaveClick, handleCancelClick } =
+    UsePlayListEditor();
 
   useEffect(() => {
     if (uploadImage) {
@@ -66,13 +44,16 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
 
   return (
     <div className="h-full w-full flex flex-col bg-black text-white font-medium leading-[18px]">
-      <MainEditButton />
-      {/* <EditPlaylistControls
-        isEditing={isEditing}
-        onSave={handleSaveClick}
-        onCancel={handleCancelClick}
-        onEdit={handleEditClick}
-      /> */}
+      {!isEditing && <MainEditButton />}
+
+      {isEditing && (
+        <EditPlaylistControls
+          isEditing={isEditing}
+          onSave={() => handleSaveClick(compressedImage)}
+          onCancel={handleCancelClick}
+          onEdit={handleEditClick}
+        />
+      )}
 
       <ShowImage
         aspectRatio={1 / 1}

@@ -4,6 +4,7 @@ import { FaAngleLeft, FaEllipsisVertical } from "react-icons/fa6";
 
 export const MainEditButton: React.FC = () => {
   const [modalOpen, setModalOpen] = useState(false);
+  const [compressedImage, setCompressedImage] = useState<string | null>(null);
   return (
     <div className="flex  h-[5.666666%] items-center justify-between m-3 text-[19px]">
       <div>
@@ -19,6 +20,7 @@ export const MainEditButton: React.FC = () => {
       <CustomModal
         isOpen={modalOpen}
         onRequestClose={() => setModalOpen(false)}
+        compressedImage={compressedImage}
       />
     </div>
   );
