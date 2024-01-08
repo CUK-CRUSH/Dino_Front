@@ -1,15 +1,9 @@
-// Import the functions you need from the SDKs you need
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
-import {getAnalytics} from "firebase/analytics";
+import firebase, {initializeApp} from "firebase/app";
+import {getAuth} from "firebase/auth";
 import {getFirestore} from "firebase/firestore";
+import {getAnalytics, isSupported} from "firebase/analytics";
 import * as process from "process";
 
-// TODO: Add SDKs for Firebase products that you want to use
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
     apiKey: process.env.REACT_APP_FB_API_KEY,
     authDomain: process.env.REACT_APP_FB_AUTH_DOMAIN,
@@ -21,10 +15,15 @@ const firebaseConfig = {
 };
 
 const firebaseApp = initializeApp(firebaseConfig);
-getAnalytics(firebaseApp);
 
 const auth = getAuth();
 const db = getFirestore();
 
+// Check if Firebase Analytics is supported
+isSupported().then((isSupported) => {
+    if (isSupported) {
+        getAnalytics();
+    }
+});
 
 export { db, auth };

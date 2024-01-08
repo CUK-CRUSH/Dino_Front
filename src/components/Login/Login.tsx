@@ -10,18 +10,6 @@ const backendUrl = "http://34.22.100.187:8080";
 // 로그인 컴포넌트
 const LoginComponents = () => {
 
-// const sendTokenToServer = (token : any) => {
-//   axios.get(`${backendUrl}/login/oauth2/code/google`, { params: { token } })
-//       .then((response) => {
-//         const user = response.data;
-//         console.log(user);
-//         navigate("/admin");
-//       })
-//       .catch((error) => {
-//         console.error(error);
-//       });
-// };
-
   const handleGoogleLogin = () => {
     window.location.href = `${backendUrl}/oauth2/authorization/google`;
   };
