@@ -4,8 +4,11 @@ import { RootState } from "@store/index";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { toggleShowInformation } from "@reducer/toggle/addMusicToggle";
-import { InputComponent } from "@components/Addmusic/AddMusicInput";
+import { AddMusicInput } from "@components/Addmusic/AddMusicInput";
 import Swal from "sweetalert2";
+import AddButton from "@components/Addmusic/Button/AddButton";
+import AddMusicTitle from "@components/Addmusic/Title/AddMusicTitle";
+import AddBackButton from "@components/Addmusic/Button/AddBackButton";
 
 const AddMusic: React.FC = () => {
   const dispatch = useDispatch();
@@ -59,27 +62,30 @@ const AddMusic: React.FC = () => {
     navigate(`/admin/1`); // 나중에 리다이렉트 주소 수정
   }, [navigate, url, dispatch, artist, title]);
 
+  const handleBack = useCallback(() => {
+    navigate(`/admin/1`);
+  }, [navigate]);
+
   return (
-    <div className="z-30 h-full w-full flex flex-col bg-black text-white py-10 text-[17px] leading-[18px]">
-      <div className="text-center pt-14 pb-10">
-        <h2 className="text-[27px] font-bold mb-4">Add Music</h2>
-      </div>
+    <div className="relative z-30 h-full w-full flex flex-col bg-black text-white py-10 text-[17px] leading-[18px]">
+      <AddBackButton handleBack={handleBack} />
+      <AddMusicTitle />
       <div className="space-y-8 mx-4">
-        <InputComponent
+        <AddMusicInput
           label="Title"
           placeholder="Title"
           value={title}
           required={true}
           onChange={handleTitleChange}
         />
-        <InputComponent
+        <AddMusicInput
           label="Artist"
           placeholder="Artist"
           value={artist}
           required={true}
           onChange={handleArtistChange}
         />
-        <InputComponent
+        <AddMusicInput
           label="URL"
           placeholder="https://youtu.be"
           value={url}
@@ -91,15 +97,8 @@ const AddMusic: React.FC = () => {
           }
           infoToggleHandler={handleInformationToggle}
         />
-        {/* URL은 "https://www.youtube.com/"를 무조건 포함해야 Add되도록 제한을 걸어놓는다. */}
-        <div className="flex justify-center">
-          <button
-            onClick={handleSave}
-            className="bg-white font-bold text-black text-[19px] w-11/12 h-[58px] smartPhoneXs:mt-10 smartPhone:mt-20 tablet:mt-32 mt-40 rounded-3xl"
-          >
-            Add
-          </button>
-        </div>
+
+        <AddButton handleSave={handleSave} />
       </div>
     </div>
   );

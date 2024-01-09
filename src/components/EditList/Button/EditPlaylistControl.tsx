@@ -20,9 +20,14 @@ export const EditPlaylistControls: React.FC<EditPlayListControlsDTO> = ({
           </div>
         </>
       ) : (
-        <div className="ml-auto text-sm">
-          <button onClick={onEdit}>List Edit</button>
-          <button>Delete List</button>
+        <div className="ml-auto text-[14px]">
+          <button
+            className="w-full border-b-[2px] border-black"
+            onClick={onEdit}
+          >
+            List Edit
+          </button>
+          <button className="w-full">Delete List</button>
         </div>
       )}
     </div>

@@ -10,7 +10,7 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   isEditing,
 }) => {
   return (
-    <div className="flex flex-row items-center pb-2 mx-[13px] border-b border-white">
+    <div className="flex flex-row items-center p-3 mx-[7px] rounded-[15px] bg-[#2E2E2E]">
       <div className="ml-2 w-1/12">
         <span>1</span> {/* 이 부분은 실제 데이터로 변경하셔야 합니다. */}
       </div>

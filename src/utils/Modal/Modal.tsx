@@ -10,8 +10,8 @@ const customModalStyles: ReactModal.Styles = {
     backgroundColor: "rgba(0, 0, 0, 0)",
     height: "100%",
     zIndex: "10",
-    width: "390px",
-    position: "inherit",
+    // width: "390px",
+    position: "fixed",
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
@@ -26,7 +26,7 @@ const customModalStyles: ReactModal.Styles = {
     left: "58%",
     borderRadius: "10px",
     backgroundColor: "rgba(255, 255, 255, 0.5)",
-    overflow: "auto",
+    overflow: "hidden",
   },
 };
 
@@ -48,7 +48,7 @@ export default function CustomModal({
       onRequestClose={onRequestClose}
       style={customModalStyles}
       ariaHideApp={false}
-      shouldCloseOnOverlayClick={false}
+      shouldCloseOnOverlayClick={true}
     >
       <EditPlaylistControls
         isEditing={isEditing}
