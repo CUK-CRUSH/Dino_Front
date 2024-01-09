@@ -7,27 +7,27 @@ import { CustomModalDTO } from "types/Modal/modal";
 
 const customModalStyles: ReactModal.Styles = {
   overlay: {
-    backgroundColor: "rgba(0, 0, 0, 0.4)",
-    width: "100%",
-    height: "100vh",
+    backgroundColor: "rgba(0, 0, 0, 0)",
+    height: "100%",
     zIndex: "10",
+    // width: "390px",
     position: "fixed",
-    top: "0px",
-    left: "0",
-  },
-  content: {
-    width: "132px",
-    height: "66px",
-    zIndex: "150",
     display: "flex",
-    flexDirection: "column",
     justifyContent: "center",
     alignItems: "center",
-    top: "48px",
-    left: "420px",
+  },
+  content: {
+    width: "150px",
+    height: "80px",
+    zIndex: "150",
+    display: "flex",
+    padding: "0px",
+    justifyContent: "center",
+    alignItems: "center",
+    left: "58%",
     borderRadius: "10px",
     backgroundColor: "rgba(255, 255, 255, 0.5)",
-    overflow: "auto",
+    overflow: "hidden",
   },
 };
 
@@ -49,7 +49,7 @@ export default function CustomModal({
       onRequestClose={onRequestClose}
       style={customModalStyles}
       ariaHideApp={false}
-      shouldCloseOnOverlayClick={false}
+      shouldCloseOnOverlayClick={true}
     >
       <EditPlaylistControls
         isEditing={isEditing}

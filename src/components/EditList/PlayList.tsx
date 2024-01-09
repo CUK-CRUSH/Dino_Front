@@ -10,6 +10,7 @@ import { dataURItoFile } from "@utils/ImageCrop/common";
 import { PlusButton } from "./Button/PlusButton";
 import ShowImage from "@components/EditList/EditImage/ShowImage";
 import { MainEditButton } from "@components/EditList/Button/MainEditButton";
+import { MusicTitle } from "@components/EditList/MusicList/MusicTitle";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
   const isEditing = useSelector(
@@ -56,12 +57,13 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       )}
 
       <ShowImage
-        aspectRatio={1 / 1}
+        aspectRatio={1}
         onCrop={handleUploadImage}
         compressedImage={compressedImage}
         isCompressLoading={isCompressLoading}
         isEditing={isEditing}
       />
+      <MusicTitle />
 
       <MusicDataRow musicData={musicData} isEditing={isEditing} />
 
