@@ -2,6 +2,7 @@
   "name": "typesetting",
   "version": "0.1.0",
   "private": true,
+  "proxy": "http://34.22.100.187:8080",
   "dependencies": {
     "@apollo/client": "^3.8.2",
     "@craco/craco": "^7.1.0",
