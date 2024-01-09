@@ -7,7 +7,6 @@ import facebook from "@assets/facebook-3 logo.png";
 const backendUrl = "http://34.22.100.187:8080";
 
 
-// 로그인 컴포넌트
 const LoginComponents = () => {
 
   const handleGoogleLogin = () => {

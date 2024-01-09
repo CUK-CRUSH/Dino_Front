@@ -91,7 +91,7 @@ const Redirect = () => {
     }, [location]);
 
     return (
-        <h2>로그인중입니다...</h2>
+        <h2>로그인중입니다....</h2>
     );
 };
 
