@@ -9,18 +9,7 @@ const Redirect = () => {
     const location = useLocation();
 
     // 이미 가입한 유저일 시 : 메인 페이지로 이동
-    const handleHome = () => {
-        console.log('Navigating to home');
-        navigate("/admin");
-        window.location.reload();
-    };
 
-    // 처음 가입한 유저일 시 : 닉네임 설정 페이지로 이동
-    const handleNickName = () => {
-        console.log('Navigating to validation');
-        navigate("/login/validation");
-        window.location.reload();
-    };
 
     // 현재 url에서 code 부분 추출
     const params = new URLSearchParams(window.location.search);
@@ -33,6 +22,19 @@ const Redirect = () => {
     const prompt = params.get("prompt");
 
     useEffect(() => {
+
+        const handleHome = () => {
+            console.log('Navigating to home');
+            navigate("/admin");
+            window.location.reload();
+        };
+
+        // 처음 가입한 유저일 시 : 닉네임 설정 페이지로 이동
+        const handleNickName = () => {
+            console.log('Navigating to validation');
+            navigate("/login/validation");
+            window.location.reload();
+        };
     const handleLoginPost = async (code: any, state: any) => {
         const data = {
             code: code,
