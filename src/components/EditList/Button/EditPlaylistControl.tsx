@@ -7,7 +7,7 @@ export const EditPlaylistControls: React.FC<EditPlayListControlsDTO> = ({
   onEdit,
 }) => {
   return (
-    <div className="flex  h-[5.666666%] items-center justify-between m-3 text-[19px]">
+    <div className="flex h-[5%] smartPhoneXs:h-[3.5%] smartPhone:h-[3.5%] tabletMini:h-[3%] tablet:h-[3%] items-center justify-between m-3 text-[19px]">
       {isEditing ? (
         <>
           <div>
@@ -20,14 +20,14 @@ export const EditPlaylistControls: React.FC<EditPlayListControlsDTO> = ({
           </div>
         </>
       ) : (
-        <div className="ml-auto text-[14px]">
+        <div className="ml-auto text-[15px]">
           <button
-            className="w-full border-b-[2px] border-black"
+            className="w-full border-b-[1px] border-[#D9D9D9]"
             onClick={onEdit}
           >
             List Edit
           </button>
-          <button className="w-full">Delete List</button>
+          <button className="w-full">Delete Music</button>
         </div>
       )}
     </div>

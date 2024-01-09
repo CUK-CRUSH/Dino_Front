@@ -10,15 +10,15 @@ export const MainEditButton: React.FC = () => {
     navigate(`/admin`);
   }, [navigate]);
   return (
-    <div className="flex  h-[5.666666%] items-center justify-between m-3 text-[19px]">
+    <div className="flex h-[5%] smartPhoneXs:h-[3.5%] smartPhone:h-[3.5%] tabletMini:h-[3%] tablet:h-[3%] items-center justify-between m-3 text-[19px]">
       <div>
         <button onClick={handleBack} className="text-red-500">
-          <FaAngleLeft color="white" size={20} />
+          <FaAngleLeft color="white" size={24} />
         </button>
       </div>
       <div>
         <button onClick={() => setModalOpen(true)}>
-          <FaEllipsisVertical color="white" size={20} />
+          <FaEllipsisVertical color="white" size={24} />
         </button>
       </div>
       <CustomModal

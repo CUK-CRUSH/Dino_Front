@@ -28,13 +28,13 @@ export const MusicDataRow: React.FC<MusicDataDTO & { isEditing: boolean }> = ({
     }
   }, []);
 
-  const TitleLength = titleWidth >= 195; // 텍스트 너비에 따라 애니메이션 적용 여부 결정
+  const TitleLength = titleWidth >= 185; // 텍스트 너비에 따라 애니메이션 적용 여부 결정
   const ArtistLength = artistWidth >= 80;
 
   return (
     <div className="h-[60%] overflow-auto text-[17px] flex justify-center ">
       {/* 박스를 클릭하면 URL로 이동하도록 한다.(수정할때 X) */}
-      <div className="w-[360px] my-10">
+      <div className="w-full mx-2 my-10">
         {!isEditing ? (
           <Link to={musicData.url}>
             <MusicDataRowContent
