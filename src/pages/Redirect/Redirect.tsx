@@ -84,7 +84,7 @@ const Redirect = () => {
         } else {
             console.log("로그인 재시도하세요.");
         }
-    }, [code, state, navigate]);
+    }, [code, state, navigate, authuser, prompt, scope]);
 
 
     // Listen for changes in the route
