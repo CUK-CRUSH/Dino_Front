@@ -13,7 +13,7 @@ export const InputComponent: React.FC<MusicInputDTO> = ({
   infoToggleHandler = () => {},
 }) => {
   return (
-    <div>
+    <div className="relative">
       <div className="flex flex-row ">
         <h3 className="text-[17px] leading-[18px] mb-3 mr-1">{label}</h3>
         <div className="mt-[3px]">
@@ -29,13 +29,13 @@ export const InputComponent: React.FC<MusicInputDTO> = ({
       <input
         type={infoButton ? "url" : "text"}
         placeholder={placeholder}
-        className="w-full p-2 border bg-black border-white rounded"
+        className="w-full px-2 py-3 border bg-black border-white rounded-[3px]"
         value={value}
         required={required}
         onChange={onChange}
       />
       {infoButton && infoText && (
-        <div className="p-2 mt-4 bg-[#3B3B3B] rounded-xl">
+        <div className="absolute -bottom-16 w-full px-2 py-3 bg-[#3B3B3B] rounded-xl">
           <p>{infoText}</p>
         </div>
       )}
