@@ -35,9 +35,6 @@ const ImageDisplay: React.FC<ImageDisplayDTO> = ({
                   Setting a representative image
                 </span>
               </div>
-              <h2 className="text-[32px] text-shadow-title bottom-4 left-4 font-bold leading-5 absolute  ">
-                Title
-              </h2>
             </div>
           )}
         </div>
