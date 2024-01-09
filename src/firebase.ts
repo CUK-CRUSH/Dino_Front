@@ -1,4 +1,4 @@
-import firebase, {initializeApp} from "firebase/app";
+import {initializeApp} from "firebase/app";
 import {getAuth} from "firebase/auth";
 import {getFirestore} from "firebase/firestore";
 import {getAnalytics, isSupported} from "firebase/analytics";
@@ -13,8 +13,6 @@ const firebaseConfig = {
     appId: process.env.REACT_APP_FB_API_ID,
     measurementId: process.env.REACT_APP_FB_MEASUREMENT_ID
 };
-
-const firebaseApp = initializeApp(firebaseConfig);
 
 const auth = getAuth();
 const db = getFirestore();

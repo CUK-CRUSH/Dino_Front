@@ -32,6 +32,7 @@ const Redirect = () => {
     const authuser = params.get("authuser");
     const prompt = params.get("prompt");
 
+    useEffect(() => {
     const handleLoginPost = async (code: any, state: any) => {
         const data = {
             code: code,
@@ -76,14 +77,13 @@ const Redirect = () => {
             console.log(error);
         }
     };
-
-    useEffect(() => {
         if (code) {
             handleLoginPost(code, state);
         } else {
             console.log("로그인 재시도하세요.");
         }
     }, [code, state, navigate]);
+
 
     // Listen for changes in the route
     useEffect(() => {
