@@ -62,7 +62,7 @@ const AddMusic: React.FC = () => {
     setArtist("");
     setURL("");
     navigate(`/admin/1`); // 나중에 리다이렉트 주소 수정
-  }, [navigate, url, dispatch, artist, title]);
+  }, [navigate, url, dispatch, artist, title, t]);
 
   const handleBack = useCallback(() => {
     navigate(`/admin/1`);
