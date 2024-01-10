@@ -9,8 +9,10 @@ import Swal from "sweetalert2";
 import AddButton from "@components/Addmusic/Button/AddButton";
 import AddMusicTitle from "@components/Addmusic/Title/AddMusicTitle";
 import AddBackButton from "@components/Addmusic/Button/AddBackButton";
+import { useTranslation } from "react-i18next";
 
 const AddMusic: React.FC = () => {
+  const { t } = useTranslation("AddMusic");
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -46,7 +48,7 @@ const AddMusic: React.FC = () => {
       Swal.fire({
         icon: "warning",
         title: `You can't use "${url}"`,
-        text: "You have to include https://www.youtube.com/ or https://www.youtu.be/",
+        text: `${t("urlWarning")}`,
       });
       setTitle("");
       setArtist("");
@@ -69,18 +71,18 @@ const AddMusic: React.FC = () => {
   return (
     <div className="relative z-30 h-full w-full flex flex-col bg-black text-white py-10 text-[17px] leading-[18px]">
       <AddBackButton handleBack={handleBack} />
-      <AddMusicTitle />
+      <AddMusicTitle title={t("musicTitle")} />
       <div className="space-y-8 mx-4">
         <AddMusicInput
-          label="Title"
-          placeholder="Title"
+          label={t("title")}
+          placeholder={t("title")}
           value={title}
           required={true}
           onChange={handleTitleChange}
         />
         <AddMusicInput
-          label="Artist"
-          placeholder="Artist"
+          label={t("artist")}
+          placeholder={t("artist")}
           value={artist}
           required={true}
           onChange={handleArtistChange}
@@ -92,13 +94,11 @@ const AddMusic: React.FC = () => {
           required={true}
           onChange={handleURLChange}
           infoButton={true}
-          infoText={
-            showInformation ? "Please add the youtube link as the url." : ""
-          }
+          infoText={showInformation ? t("toggle") : ""}
           infoToggleHandler={handleInformationToggle}
         />
 
-        <AddButton handleSave={handleSave} />
+        <AddButton handleSave={handleSave} plus={t("plus")} />
       </div>
     </div>
   );
