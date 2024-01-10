@@ -11,6 +11,7 @@ export interface MusicInputDTO {
 
 export interface AddButtonDTO {
   handleSave: () => void;
+  plus: string;
 }
 
 export interface AddMusicBackButtonDTO {
