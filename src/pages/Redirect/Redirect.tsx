@@ -2,7 +2,7 @@ import React, { useEffect } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 
-const backendUrl = "http://34.22.100.187:8080";
+const backendUrl = "https://crush-mylist.kro.kr:8080";
 
 const Redirect = () => {
     const navigate = useNavigate();
@@ -36,32 +36,38 @@ const Redirect = () => {
             window.location.reload();
         };
     const handleLoginPost = async (code: any, state: any) => {
-        const data = {
+
+        const value = {
             code: code,
             state: state,
             scope: scope,
             authuser: authuser,
             prompt: prompt
         };
+
+        console.log('State value from URL:', state);
         try {
             axios.get(`${backendUrl}/login/oauth2/code/google`, {
-                params: data
+                params: value
             })
                 .then(response => {
                     // handle the response here
                     console.log(response.data);
 
                     // Save data to local storage
-                    localStorage.setItem("authData", JSON.stringify(data));
+                    localStorage.setItem("authData", JSON.stringify(value));
+
+                    console.log('State value before sending to server:', state);
 
                     // Check the status code of the response
-                    if (response.data.status === "200 OK") {
+                    if (response.data.status == 200) {
                         // 로그인 성공
                         // 토큰 localstorage에 저장
                         const accessToken = response.data.data.access_token;
                         const refreshToken = response.data.data.refresh_token;
                         localStorage.setItem("accessToken", accessToken);
                         localStorage.setItem("refreshToken", refreshToken);
+                        console.log("로그인 성공");
 
                         // 신규/기존 회원 여부에 따라 페이지 이동
                         if (response.data.isExistingMember) {
@@ -75,10 +81,29 @@ const Redirect = () => {
                         console.log("로그인 실패");
                     }
                 })
+                .catch(error => {
+                    if (error.response) {
+                        // The request was made and the server responded with a status code
+                        // that falls out of the range of 2xx
+                        console.log(error.response.data);
+                        console.log(error.response.status);
+                        console.log(error.response.headers);
+                    } else if (error.request) {
+                        // The request was made but no response was received
+                        // `error.request` is an instance of XMLHttpRequest in the browser and an instance of
+                        // http.ClientRequest in node.js
+                        console.log(error.request);
+                    } else {
+                        // Something happened in setting up the request that triggered an Error
+                        console.log('Error', error.message);
+                    }
+                    console.log(error.config);
+                });
         } catch (error) {
-            console.log(error);
+            console.error(error);
         }
     };
+
         if (code) {
             handleLoginPost(code, state);
         } else {
@@ -93,7 +118,7 @@ const Redirect = () => {
     }, [location]);
 
     return (
-        <h2>로그인중입니다....</h2>
+        <h2 className={"text-white"}>로그인중입니다....</h2>
     );
 };
 

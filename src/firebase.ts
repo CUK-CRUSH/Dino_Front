@@ -27,4 +27,4 @@ isSupported().then((isSupported) => {
   }
 });
 
-export { db, auth };
+export { db, auth }
