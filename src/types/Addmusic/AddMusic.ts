@@ -8,3 +8,12 @@ export interface MusicInputDTO {
   infoText?: string;
   infoToggleHandler?: () => void;
 }
+
+export interface AddButtonDTO {
+  handleSave: () => void;
+  plus: string;
+}
+
+export interface AddMusicBackButtonDTO {
+  handleBack: () => void;
+}

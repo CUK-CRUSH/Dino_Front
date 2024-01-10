@@ -2,7 +2,7 @@ import { MusicInputDTO } from "types/Addmusic/AddMusic";
 import React from "react";
 import { IoInformationCircleOutline } from "react-icons/io5";
 
-export const InputComponent: React.FC<MusicInputDTO> = ({
+export const AddMusicInput: React.FC<MusicInputDTO> = ({
   label,
   placeholder,
   value,
