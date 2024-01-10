@@ -60,7 +60,7 @@ const Redirect = () => {
                     console.log('State value before sending to server:', state);
 
                     // Check the status code of the response
-                    if (response.data.status == 200) {
+                    if (response.data.status === 200) {
                         // 로그인 성공
                         // 토큰 localstorage에 저장
                         const accessToken = response.data.data.access_token;
