@@ -1,4 +1,5 @@
 // userProfileImageReducer.ts
+// 필요없는 파일로 생각...
 
 import { createSlice } from "@reduxjs/toolkit";
 
