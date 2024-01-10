@@ -18,60 +18,60 @@ const Redirect = () => {
     const authuser = params.get("authuser");
     const prompt = params.get("prompt");
 
-    const handleLoginPost = async (code: any, state: any) => {
-        const handleNickName = () => {
-            console.log('Navigating to validation');
-            navigate("/login/validation");
-            window.location.reload();
-        };
-
-        const value = {
-            code: code,
-            state: state,
-            scope: scope,
-            authuser: authuser,
-            prompt: prompt
-        };
-
-        try {
-            await axios.get(`${backendUrl}/login/oauth2/code/google`,{params:value},)
-                .then(response => {
-                    if (response.data) {
-                        console.log('Response data:', response.status);
-                        const accessToken = response.data.access_token;
-                        const refreshToken = response.data.refresh_token;
-                        console.log('Access Token:', accessToken);
-                        console.log('Refresh Token:', refreshToken);
-                        localStorage.setItem("accessToken", accessToken);
-                        localStorage.setItem("refreshToken", refreshToken);
-                        console.log("로그인 성공");
-
-                        handleNickName();
-
-                    } else {
-                        console.log("No response data received from the API");
-                    }
-                })
-                .catch(error => {
-                    console.log('Error:', error.message);
-                    if (error.response) {
-                        console.log(error.response.data);
-                        console.log(error.response.status);
-                        console.log(error.response.headers);
-                    } else if (error.request) {
-                        console.log(error.request);
-                    } else {
-                        console.log('Error', error.message);
-                    }
-                    console.log(error.config);
-                });
-        } catch (error) {
-            console.error(error);
-        }
-    };
-
     useEffect(() => {
         if (code) {
+            const handleLoginPost = async (code: any, state: any) => {
+                const handleNickName = () => {
+                    console.log('Navigating to validation');
+                    navigate("/login/validation");
+                    window.location.reload();
+                };
+
+                const value = {
+                    code: code,
+                    state: state,
+                    scope: scope,
+                    authuser: authuser,
+                    prompt: prompt
+                };
+
+                try {
+                    await axios.get(`${backendUrl}/login/oauth2/code/google`, { params: value })
+                        .then(response => {
+                            if (response.data) {
+                                console.log('Response status:', response.status);
+                                const accessToken = response.data.access_token;
+                                const refreshToken = response.data.refresh_token;
+                                console.log('Access Token:', accessToken);
+                                console.log('Refresh Token:', refreshToken);
+                                localStorage.setItem("accessToken", accessToken);
+                                localStorage.setItem("refreshToken", refreshToken);
+                                console.log("로그인 성공");
+
+                                handleNickName();
+
+                            } else {
+                                console.log("No response data received from the API");
+                            }
+                        })
+                        .catch(error => {
+                            console.log('Error:', error.message);
+                            if (error.response) {
+                                console.log(error.response.data);
+                                console.log(error.response.status);
+                                console.log(error.response.headers);
+                            } else if (error.request) {
+                                console.log(error.request);
+                            } else {
+                                console.log('Error', error.message);
+                            }
+                            console.log(error.config);
+                        });
+                } catch (error) {
+                    console.error(error);
+                }
+            };
+
             handleLoginPost(code, state);
         } else {
             console.log("로그인 재시도하세요.");
