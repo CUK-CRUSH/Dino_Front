@@ -1,4 +1,4 @@
-import { axiosInstance, axiosInstanceWithToken } from "@api/axiosInstance";
+import { axiosInstance } from "@api/axiosInstance";
 
 export const getMusicList = async (playlistId: string) => {
   try {
@@ -16,18 +16,24 @@ export const postMusicList = async (
   playlistId: string,
   title: string,
   artist: string,
-  url: string
+  url: string,
+  cookies?: string
 ) => {
   if (!playlistId || !title || !artist || !url) {
     throw new Error("모든 항목을 입력해주세요.");
   }
   try {
-    const response = await axiosInstanceWithToken.post(
+    const response = await axiosInstance.post(
       `/api/v1/playlist/${playlistId}/music/add`,
       {
         title,
         artist,
         url,
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${cookies}`,
+        },
       }
     );
     return response.data;
@@ -37,10 +43,19 @@ export const postMusicList = async (
   }
 };
 
-export const deleteMusicList = async (playlistId: string, musicId: string) => {
+export const deleteMusicList = async (
+  playlistId: string,
+  musicId: string,
+  cookies?: string
+) => {
   try {
-    const response = await axiosInstanceWithToken.delete(
-      `/api/v1/playlist/${playlistId}/music/${musicId}`
+    const response = await axiosInstance.delete(
+      `/api/v1/playlist/${playlistId}/music/${musicId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${cookies}`,
+        },
+      }
     );
     return response.data;
   } catch (error) {
