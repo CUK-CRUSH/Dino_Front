@@ -5,14 +5,11 @@ import mylist2 from "@assets/Mylist2.png";
 import googlelogo from "@assets/Google logo.png";
 import facebook from "@assets/facebook-3 logo.png";
 
-
 // 로그인 컴포넌트
 const LoginComponents = () => {
-
   const handleGoogleLogin = () => {
     window.location.href = `${process.env.REACT_APP_SERVER}/oauth2/authorization/google`;
   };
-
 
   return (
     <div className="w-full h-full relative bg-white">
@@ -106,5 +103,6 @@ const LoginComponents = () => {
         </div>
       </div>
     </div>
-  );}
+  );
+};
 export default LoginComponents;
