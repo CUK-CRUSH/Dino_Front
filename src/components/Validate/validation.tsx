@@ -6,8 +6,6 @@ const ValidationProps = () => {
   }, 500);
 
 
-  console.log(localStorage.getItem("accessToken"));
-  console.log(localStorage.getItem("refreshToken"));
   return (
     <div className="w-full h-full relative bg-white flex flex-col justify-center align-middle items-center">
       <div className="text-center text-black text-xl font-semibold font-['Noto Sans']">
