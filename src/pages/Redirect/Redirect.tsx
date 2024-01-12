@@ -16,7 +16,7 @@ const fetchData = async (setCookie:any) => {
 
 const Redirect = () => {
     const navigate = useNavigate();
-    const [cookies, setCookie] = useCookies(["accessToken"]); // Initialize cookie
+    const [setCookie] = useCookies(["accessToken"]); // Initialize cookie
 
     useEffect(() => {
         const redirectAfterFetch = async () => {
