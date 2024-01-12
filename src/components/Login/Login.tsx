@@ -4,14 +4,13 @@ import { Link } from "react-router-dom";
 import mylist2 from "@assets/Mylist2.png";
 import googlelogo from "@assets/Google logo.png";
 import facebook from "@assets/facebook-3 logo.png";
-const backendUrl = "https://crush-mylist.kro.kr:8080";
 
 
 // 로그인 컴포넌트
 const LoginComponents = () => {
 
   const handleGoogleLogin = () => {
-    window.location.href = `${backendUrl}/oauth2/authorization/google`;
+    window.location.href = `${process.env.REACT_APP_SERVER}/oauth2/authorization/google`;
   };
 
 
