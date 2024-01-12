@@ -6,9 +6,12 @@ const fetchData = async (setCookie:any) => {
     const params = new URLSearchParams(window.location.search);
     const accessToken = params.get("access_token"); // This will be stored in cookies
     const refreshToken = params.get("refresh_token"); // This will be stored in local storage
+
     if (accessToken && refreshToken) {
         setCookie("accessToken", accessToken, { path: "/" }); // Set accessToken in cookies
         localStorage.setItem("refreshToken", refreshToken); // Set refreshToken in local storage
+
+        // Log the stored tokens
         return true; // tokens are successfully set
     }
     return false; // tokens are not set
@@ -16,7 +19,7 @@ const fetchData = async (setCookie:any) => {
 
 const Redirect = () => {
     const navigate = useNavigate();
-    const [setCookie] = useCookies(["accessToken"]); // Initialize cookie
+    const [, setCookie] = useCookies(["accessToken"]); // Initialize cookie
 
     useEffect(() => {
         const redirectAfterFetch = async () => {
@@ -24,7 +27,7 @@ const Redirect = () => {
             if (success) {
                 navigate("/admin"); // Then navigate
             } else {
-                navigate("/main"); // If tokens are not set, navigate to main
+                navigate("/"); // If tokens are not set, navigate to main
             }
         };
 
