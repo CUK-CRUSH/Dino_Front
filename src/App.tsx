@@ -1,6 +1,7 @@
 import loadable from "@loadable/component";
 import { Route, Routes } from "react-router-dom";
 import Layout from "@components/Layout/layout";
+import { Test } from "@components/test";
 const Home = loadable(() => import("@pages/Home/home"));
 const LogIn = loadable(() => import("@pages/LogIn/login"));
 const Admin = loadable(() => import("@pages/Admin/Admin"));
@@ -23,6 +24,7 @@ function App() {
           element={<AddMusic />}
         />
         <Route path="/redirect" element={<Redirect />} />
+        <Route path="/test/:username" element={<Test />} />
       </Routes>
     </Layout>
   );
