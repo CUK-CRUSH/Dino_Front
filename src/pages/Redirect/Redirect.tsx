@@ -25,7 +25,7 @@ const Redirect = () => {
         const redirectAfterFetch = async () => {
             const success = await fetchData(setCookie); // Pass setCookie function to fetchData
             if (success) {
-                navigate("/admin"); // Then navigate
+                navigate("/validtaion"); // Then navigate
             } else {
                 navigate("/"); // If tokens are not set, navigate to main
             }
