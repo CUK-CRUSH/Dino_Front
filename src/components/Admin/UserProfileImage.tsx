@@ -5,7 +5,7 @@ const UserProfileImage = ({ userProfileImage }: UserProfileImageDTO) => {
     <div className="w-[75px] h-[75px] mt-[-35px] rounded-full overflow-hidden ">
       {/* null 이면 디폴트 사진 */}
       <img
-        src={userProfileImage ?? "default-image-url.jpg"}
+        src={userProfileImage ?? "../default-image-url.jpg"}
         alt="User Profile"
         className="w-full object-cover"
       />
