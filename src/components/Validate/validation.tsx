@@ -1,14 +1,32 @@
 import { debounce } from "lodash";
 import Fanfare from "../../assets/Validation/Fanfare.svg";
 import Check from "../../assets/Validation/Check.svg";
+import not from "../../assets/Validation/not.svg";
 
 import { BsFillExclamationCircleFill } from "react-icons/bs";
+import { useState } from "react";
 
 const ValidationProps = () => {
   const onChange = debounce((e) => {
     console.log(e.target.value);
+    if(isNicknameValid(e.target.value)){
+      setNicknameValidation(true)
+    }
+    else {
+      setNicknameValidation(false)
+    }
   }, 500);
 
+  // 유효상태
+  const [nicknameValidation, setNicknameValidation] = useState<boolean>(false);
+
+  // 닉네임 체크
+  const isNicknameValid = (nickname : string) => {
+    // 한글숫자영어 _ . 허용
+    const nicknameRegex = /^[a-zA-Z0-9._가-힣]+$/;
+    return nicknameRegex.test(nickname);
+  };
+  
 
   return (
     <div className="w-full h-full relative bg-white flex flex-col align-middle items-center">
@@ -31,7 +49,7 @@ const ValidationProps = () => {
           className=" w-11/12 p-2 pr-12 border 1px bg-white rounded-3xl text-center border-slate-200	focus:outline-none "
         />
         <div className="absolute right-10 top-3">
-          <img src={Check} alt="Edit" className="w-4 h-4 cursor-pointer" />
+          {nicknameValidation ? <img src={Check} alt="Edit" className="w-4 h-4 cursor-pointer" /> : <img src={not} alt="Edit" className="w-4 h-4 cursor-pointer" /> }
         </div>
       </div>
       <div className="fixed w-full h-[70px] mx-auto bottom-0 pt-6 text-center text-white bg-black">
