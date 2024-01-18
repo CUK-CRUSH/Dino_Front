@@ -1,6 +1,6 @@
 
 // only Eng
-export const BadWordFilter = (text : string) => {
+export const checkBadWord = (text : string) => {
     var Filter = require('bad-words'),
     filter = new Filter();
 

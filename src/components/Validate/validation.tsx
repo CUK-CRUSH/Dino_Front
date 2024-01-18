@@ -5,7 +5,7 @@ import not from "../../assets/Validation/not.svg";
 
 import { BsFillExclamationCircleFill } from "react-icons/bs";
 import { useState } from "react";
-import { checkNickname } from "@utils/CheckNickname/checkNickname";
+import { checkNickname } from "@utils/checkNickname/checkNickname";
 
 const ValidationProps = () => {
 
