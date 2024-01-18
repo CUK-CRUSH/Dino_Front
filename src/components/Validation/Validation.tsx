@@ -70,7 +70,7 @@ const ValidationProps = () => {
         <br />
         <span className="text-slate-400 inline-flex items-center text-xs font-semibold leading-4 tracking-normal text-center my-1">
           <BsFillExclamationCircleFill className="mr-1" />
-          닉네임은 2~n 자의 영문,숫자만 사용가능합니다.
+          닉네임은 3~30 자의 영문,숫자만 사용가능합니다.
         </span>
       </div>
       <div className="w-11/12 mb-4 flex flex-col items-center relative focus:border-slate-300">
