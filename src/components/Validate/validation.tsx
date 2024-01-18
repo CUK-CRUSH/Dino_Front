@@ -6,21 +6,41 @@ import not from "../../assets/Validation/not.svg";
 import { BsFillExclamationCircleFill } from "react-icons/bs";
 import { useState } from "react";
 import { checkNickname } from "@utils/checkNickname/checkNickname";
+import { useCookies } from "react-cookie";
+import { putUsername } from "@api/member-controller/memberController";
 
 const ValidationProps = () => {
 
   // 유효상태
   const [nicknameValidation, setNicknameValidation] = useState<boolean>(false);
 
+  // 유저네임
+  const [username, setUsername] = useState<string>('');
+
+  // 쿠키
+  const [cookies,] = useCookies(["accessToken"]);
+
   const onChange = debounce((e) => {
-    console.log(e.target.value);
-    if(checkNickname(e.target.value) ){
+    console.log(e.target.value)
+    setUsername(e.target.value);
+    console.log(username)
+
+    if(checkNickname(username) ){
       setNicknameValidation(true)
     }
-    else if(!checkNickname(e.target.value)) {
+
+    else if(!checkNickname(username)) {
       setNicknameValidation(false)
     }
   }, 500);
+
+  console.log(cookies)
+  const handleUsername = (username : string,cookies :string) => {
+    console.log(username,cookies)
+
+    putUsername(username,cookies);
+  }
+
 
   return (
     <div className="w-full h-full relative bg-white flex flex-col align-middle items-center">
@@ -46,7 +66,9 @@ const ValidationProps = () => {
           {nicknameValidation ? <img src={Check} alt="Edit" className="w-4 h-4 cursor-pointer" /> : <img src={not} alt="Edit" className="w-4 h-4 cursor-pointer" /> }
         </div>
       </div>
-      <div className="fixed w-full h-[70px] mx-auto bottom-0 pt-6 text-center text-white bg-black">
+      <div 
+        className="fixed w-full h-[70px] mx-auto bottom-0 pt-6 text-center text-white bg-black"
+        onClick={() => handleUsername(username, cookies.accessToken)}>
         계속하기
       </div>
     </div>

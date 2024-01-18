@@ -1,7 +1,28 @@
 import { axiosInstance } from "@api/axiosInstance";
 
+// 회원 닉네임 변경
+export const putUsername = async (
+  username: string,
+  cookies?: string
+) => {
+  try {
+    const response = await axiosInstance.put(
+      `/api/v1/member/nickname/${username}`,
+      {
+        headers: {
+          Authorization: `Bearer ${cookies}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
 // 특정 회원 정보 조회
-export const getMember = async (id : number , cookies?: string) => {
+export const getMember = async (id: number, cookies?: string) => {
   try {
     const response = await axiosInstance.get(
       `/api/v1/member/${id}`,
@@ -19,10 +40,15 @@ export const getMember = async (id : number , cookies?: string) => {
 };
 
 // 회원 닉네임 중복 검사
-export const getNicknameAvailable = async (username : string) => {
+export const getNicknameAvailable = async (username: string, cookies?: string) => {
   try {
     const response = await axiosInstance.get(
-      `/api/v1/member/nickname/available/${username}`
+      `/api/v1/member/nickname/available/${username}`,
+      {
+        headers: {
+          Authorization: `Bearer ${cookies}`,
+        },
+      }
     );
     return response.data;
   } catch (error) {
@@ -32,10 +58,15 @@ export const getNicknameAvailable = async (username : string) => {
 };
 
 // 내 정보 조회
-export const getMemberMe = async () => {
+export const getMemberMe = async (cookies?: string) => {
   try {
     const response = await axiosInstance.get(
-      `/api/v1/member/me`
+      `/api/v1/member/me`,
+      {
+        headers: {
+          Authorization: `Bearer ${cookies}`,
+        },
+      }
     );
     return response.data;
   } catch (error) {

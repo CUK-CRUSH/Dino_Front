@@ -30,7 +30,8 @@ const Redirect = () => {
 
       // 특정 유저 정보 조회
       const getUserData = await getMember(decodedToken.sub, cookies.accessToken);
-
+      console.log(getUserData);
+      
       if (success && !getUserData.data.username) {
         try {
           
