@@ -22,6 +22,7 @@
     "@types/react-redux": "^7.1.25",
     "@types/react-router-dom": "^5.3.3",
     "axios": "^1.4.0",
+    "bad-words": "^3.0.4",
     "browser-image-compression": "^2.0.2",
     "daisyui": "^3.7.3",
     "firebase": "^10.7.1",
