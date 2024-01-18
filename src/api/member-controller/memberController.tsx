@@ -8,6 +8,7 @@ export const putUsername = async (
   try {
     const response = await axiosInstance.put(
       `/api/v1/member/nickname/${username}`,
+      null,
       {
         headers: {
           Authorization: `Bearer ${cookies}`,
