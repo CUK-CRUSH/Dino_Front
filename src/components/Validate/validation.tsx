@@ -24,7 +24,7 @@ const ValidationProps = () => {
   // 닉네임 체크
   const isNicknameValid = (nickname : string) => {
     // 한글숫자영어 _ . 허용
-    const nicknameRegex = /^[a-zA-Z0-9._가-힣]{3,30}$/;
+    const nicknameRegex = /^[a-zA-Z0-9._]{3,30}$/;
     return nicknameRegex.test(nickname);
   };
 
