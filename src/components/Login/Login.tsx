@@ -1,6 +1,5 @@
 // @ts-ignore
 
-import { Link } from "react-router-dom";
 import mylist2 from "@assets/Mylist2.png";
 import googlelogo from "@assets/Google logo.png";
 import facebook from "@assets/facebook-3 logo.png";
