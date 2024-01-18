@@ -7,7 +7,24 @@ import { BsFillExclamationCircleFill } from "react-icons/bs";
 import { useState } from "react";
 import { useCookies } from "react-cookie";
 import { putUsername } from "@api/member-controller/memberController";
-import { checkNickname } from "@utils/checkNickname/checkNickname";
+import { checkBadWord } from "@utils/checkBadWord/checkBadWord";
+  
+  // 닉네임 체크
+  export const checkNickname = (nickname : string) => {
+    // 한글숫자영어 _ . 허용
+    const nicknameRegex = /^[a-zA-Z0-9._]{3,30}$/;
+    if(nicknameRegex.test(nickname)){
+      if(!checkBadWord(nickname)){
+        return true
+      }
+    }
+    else if(!nicknameRegex.test(nickname)){
+      
+        return false
+      
+    }
+  };
+// import { checkNickname } from "@utils/checkNickname/checkNickname";
 
 const ValidationProps = () => {
 
@@ -25,11 +42,11 @@ const ValidationProps = () => {
     setUsername(e.target.value);
     console.log(username)
 
-    if(checkNickname(username) ){
+    if(checkNickname(e.target.value) ){
       setNicknameValidation(true)
     }
 
-    else if(!checkNickname(username)) {
+    else if(!checkNickname(e.target.value)) {
       setNicknameValidation(false)
     }
   }, 500);
