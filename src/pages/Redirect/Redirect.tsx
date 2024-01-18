@@ -1,43 +1,51 @@
-import React, { useEffect } from "react";
+import React, { useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import useDecodedJWT from "@hooks/useDecodedJWT";
+import { getMember } from "@api/member-controller/memberController";
 
-const fetchData = async (setCookie: any) => {
+const fetchData = async (setCookie : any) => {
   const params = new URLSearchParams(window.location.search);
-  const accessToken = params.get("access_token"); // This will be stored in cookies
-  const refreshToken = params.get("refresh_token"); // This will be stored in local storage
+  const accessToken = params.get("access_token");
+  const refreshToken = params.get("refresh_token");
 
   if (accessToken && refreshToken) {
-    setCookie("accessToken", accessToken, { path: "/" }); // Set accessToken in cookies
-    localStorage.setItem("refreshToken", refreshToken); // Set refreshToken in local storage
-
-    // Log the stored tokens
-    return true; // tokens are successfully set
+    setCookie("accessToken", accessToken, { path: "/" });
+    localStorage.setItem("refreshToken", refreshToken);
+    return true;
   }
-  return false; // tokens are not set
+  return false;
 };
 
 const Redirect = () => {
   const navigate = useNavigate();
-  const [cookies, setCookie] = useCookies(["accessToken"]); // Initialize cookie
+  const [cookies, setCookie] = useCookies(["accessToken"]);
 
-  // 토큰 id 값
-  const sub = useDecodedJWT(cookies.accessToken)
+  const decodedToken = useDecodedJWT(cookies.accessToken);
+
 
   useEffect(() => {
-    
     const redirectAfterFetch = async () => {
-      const success = await fetchData(setCookie); // Pass setCookie function to fetchData
-      if (success && cookies.accessToken) {
-        navigate("/login/validation"); // Then navigate
+      const success = await fetchData(setCookie);
+
+      // 특정 유저 정보 조회
+      const getUserData = await getMember(decodedToken.sub, cookies.accessToken);
+
+      if (success && !getUserData.data.username) {
+        try {
+          
+        } catch (error) {
+          console.error('Error fetching member:', error);
+        }
+        
+        navigate("/login/validation");
       } else {
-        navigate("/"); // If tokens are not set, navigate to main
+        navigate("/");
       }
     };
 
     redirectAfterFetch();
-  }, [navigate, setCookie]); // Add setCookie to the dependency array
+  }, [navigate, setCookie, decodedToken, cookies.accessToken]);
 
   return (
     <h2 className={"text-white"}>로그인중입니다....</h2>

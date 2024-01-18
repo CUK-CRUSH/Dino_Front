@@ -1,10 +1,15 @@
 import { axiosInstance } from "@api/axiosInstance";
 
 // 특정 회원 정보 조회
-export const getMember = async (id : string) => {
+export const getMember = async (id : number , cookies?: string) => {
   try {
     const response = await axiosInstance.get(
-      `/api/v1/member/${id}`
+      `/api/v1/member/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${cookies}`,
+        },
+      }
     );
     return response.data;
   } catch (error) {
