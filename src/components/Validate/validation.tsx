@@ -5,9 +5,9 @@ import not from "../../assets/Validation/not.svg";
 
 import { BsFillExclamationCircleFill } from "react-icons/bs";
 import { useState } from "react";
-import { checkNickname } from "@utils/checkNickname/checkNickname";
 import { useCookies } from "react-cookie";
 import { putUsername } from "@api/member-controller/memberController";
+import { checkNickname } from "@utils/checkNickname/checkNickname";
 
 const ValidationProps = () => {
 
@@ -34,7 +34,8 @@ const ValidationProps = () => {
     }
   }, 500);
 
-  console.log(cookies)
+  console.log(cookies);
+
   const handleUsername = (username : string,cookies :string) => {
     console.log(username,cookies)
 
