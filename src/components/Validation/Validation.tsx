@@ -8,6 +8,8 @@ import { useState } from "react";
 import { useCookies } from "react-cookie";
 import { getNicknameAvailable, putUsername } from "@api/member-controller/memberController";
 import { checkBadWord } from "@utils/checkBadWord/checkBadWord";
+import { useNavigate } from "react-router-dom";
+import useDecodedJWT from "@hooks/useDecodedJWT";
   
   // 닉네임 체크
   export const checkNickname = (nickname : string) => {
@@ -28,6 +30,7 @@ import { checkBadWord } from "@utils/checkBadWord/checkBadWord";
 // import { checkNickname } from "@utils/checkNickname/checkNickname";
 
 const ValidationProps = () => {
+  const navigate = useNavigate();
 
   // 유효상태
   const [nicknameValidation, setNicknameValidation] = useState<boolean>(false);
@@ -37,6 +40,10 @@ const ValidationProps = () => {
 
   // 쿠키
   const [cookies,] = useCookies(["accessToken"]);
+  // 액세스 토큰 
+  const token = cookies.accessToken;
+
+  const decodedToken = useDecodedJWT(token);
 
   const onChange = debounce(async (e) => {
     setUsername(e.target.value);
@@ -44,7 +51,7 @@ const ValidationProps = () => {
     
     if(e.target.value){
       // Backend 닉네임 체크
-      const checkNicknameBack = await getNicknameAvailable(e.target.value,cookies.accessToken);
+      const checkNicknameBack = await getNicknameAvailable(e.target.value,token);
       console.log(checkNicknameBack)
 
       if(checkNickname(e.target.value) && checkNicknameBack.status === 200 ){
@@ -64,10 +71,14 @@ const ValidationProps = () => {
 
   console.log(cookies);
 
-  const handleUsername = (username : string,cookies :string) => {
+  const handleUsername = async (username : string,cookies :string) => {
     console.log(username,cookies)
 
-    putUsername(username,cookies);
+    const putUsernameState = await putUsername(username,cookies);
+    console.log(putUsernameState)
+    if(putUsernameState.status === 200) {
+      navigate(`/${decodedToken.sub}/admin`);
+    }
   }
 
   return (
