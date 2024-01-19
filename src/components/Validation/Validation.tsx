@@ -13,15 +13,16 @@ import { checkBadWord } from "@utils/checkBadWord/checkBadWord";
   export const checkNickname = (nickname : string) => {
     // 한글숫자영어 _ . 허용
     const nicknameRegex = /^[a-zA-Z0-9._]{3,30}$/;
+    console.log(nickname)
     if(nicknameRegex.test(nickname)){
       if(!checkBadWord(nickname)){
         return true
       }
     }
     else if(!nicknameRegex.test(nickname)){
-      
+      if(checkBadWord(nickname)){
         return false
-      
+      }
     }
   };
 // import { checkNickname } from "@utils/checkNickname/checkNickname";
@@ -47,13 +48,17 @@ const ValidationProps = () => {
       console.log(checkNicknameBack)
 
       if(checkNickname(e.target.value) && checkNicknameBack.status === 200 ){
-      setNicknameValidation(true)
-
+        setNicknameValidation(true);
       }
 
       else if(!checkNickname(e.target.value) && checkNicknameBack.status !== 200) {
-        setNicknameValidation(false)
+        setNicknameValidation(false);
       }
+      else {
+        setNicknameValidation(false);
+      }
+    } else {
+        setNicknameValidation(false);
     }
   }, 500);
 

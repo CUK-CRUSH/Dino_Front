@@ -7,7 +7,8 @@ export const checkBadWord = (text : string) => {
 
     const checkBadWord = filter.clean(text).includes('*');
     const b = filter.list.includes(text);
-    console.log(b)
+    console.log(filter.clean(text))
+    
     console.log(checkBadWord)
     return checkBadWord;
 
