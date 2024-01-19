@@ -9,12 +9,12 @@ const fetchData = async (setCookie : any) => {
   const accessToken = params.get("access_token");
   const refreshToken = params.get("refresh_token");
 
-  if (accessToken && refreshToken) {
-    setCookie("accessToken", accessToken, { path: "/" });
-    localStorage.setItem("refreshToken", refreshToken);
-    return true;
-  }
-  return false;
+    if (accessToken && refreshToken) {
+        setCookie("accessToken", accessToken, { path: "/" }); // Set accessToken in cookies
+        localStorage.setItem("refreshToken", refreshToken); // Set refreshToken in local storage
+        return true; // tokens are successfully set
+    }
+    return false; // tokens are not set
 };
 
 const Redirect = () => {
