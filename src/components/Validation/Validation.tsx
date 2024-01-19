@@ -6,7 +6,7 @@ import not from "../../assets/Validation/not.svg";
 import { BsFillExclamationCircleFill } from "react-icons/bs";
 import { useState } from "react";
 import { useCookies } from "react-cookie";
-import { putUsername } from "@api/member-controller/memberController";
+import { getNicknameAvailable, putUsername } from "@api/member-controller/memberController";
 import { checkBadWord } from "@utils/checkBadWord/checkBadWord";
   
   // 닉네임 체크
@@ -37,17 +37,23 @@ const ValidationProps = () => {
   // 쿠키
   const [cookies,] = useCookies(["accessToken"]);
 
-  const onChange = debounce((e) => {
-    console.log(e.target.value)
+  const onChange = debounce(async (e) => {
     setUsername(e.target.value);
-    console.log(username)
+    
+    
+    if(e.target.value){
+      // Backend 닉네임 체크
+      const checkNicknameBack = await getNicknameAvailable(e.target.value,cookies.accessToken);
+      console.log(checkNicknameBack)
 
-    if(checkNickname(e.target.value) ){
+      if(checkNickname(e.target.value) && checkNicknameBack.status === 200 ){
       setNicknameValidation(true)
-    }
 
-    else if(!checkNickname(e.target.value)) {
-      setNicknameValidation(false)
+      }
+
+      else if(!checkNickname(e.target.value) && checkNicknameBack.status !== 200) {
+        setNicknameValidation(false)
+      }
     }
   }, 500);
 
@@ -58,7 +64,6 @@ const ValidationProps = () => {
 
     putUsername(username,cookies);
   }
-
 
   return (
     <div className="w-full h-full relative bg-white flex flex-col align-middle items-center">
