@@ -1,10 +1,6 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import {
-  setUserProfileBackgroundImage,
-  updateProfile,
-  setUserProfileImage,
-} from "@reducer/Admin/userProfileSlice";
+import {  useSelector } from "react-redux";
+
 import { RootState } from "@store/index";
 import useWindowSizeCustom from "@hooks/useWindowSizeCustom";
 import "../../styles/Admin/style.css";
@@ -14,7 +10,6 @@ import SetUserProfileImage from "@components/AdminEdit/SetUserProfileImage";
 import SetUserProfileInfo from "@components/AdminEdit/SetUserProfileInfo";
 import useImageCompress from "@hooks/useImageCompress";
 import { dataURItoFile } from "@utils/ImageCrop/common";
-import { ValidateSpace } from "@utils/Validation/ValidateSpace";
 import { getMemberDTO } from "types/Member/Member";
 import { useCookies } from "react-cookie";
 import { getMemberMe, updateMember } from "@api/member-controller/memberController";
@@ -24,7 +19,6 @@ interface AdminEditModalProps {
 }
 
 const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
-  const dispatch = useDispatch();
   const userProfile = useSelector((state: RootState) => state.userProfile);
 
   const [username, setUsername] = useState("Your Username");
@@ -81,23 +75,23 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     }
   }, [uploadUserProfileImage, handleCompressUserProfileImage]);
 
-  // redux에 저장.  
-  const save = () => {
-    if (ValidateSpace(username)) {
-      return;
-    }
+  // // redux에 저장.  
+  // const save = () => {
+  //   if (ValidateSpace(username)) {
+  //     return;
+  //   }
   
-    dispatch(updateProfile({ username, introText }));
+  //   dispatch(updateProfile({ username, introText }));
   
-    if (compressedUserProfileImage) {
-      dispatch(setUserProfileImage(compressedUserProfileImage));
-    }
-    if (uploadUserProfileBackgroundImage) {
-      dispatch(setUserProfileBackgroundImage(compressedUserProfileBackgroundImage));
-    }
+  //   if (compressedUserProfileImage) {
+  //     dispatch(setUserProfileImage(compressedUserProfileImage));
+  //   }
+  //   if (uploadUserProfileBackgroundImage) {
+  //     dispatch(setUserProfileBackgroundImage(compressedUserProfileBackgroundImage));
+  //   }
   
-    cancel();
-  };
+  //   cancel();
+  // };
 
   // 모달닫기
   const close = () => {
@@ -148,7 +142,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   
     // Call the asynchronous function inside useEffect
     fetchData();
-  }, [, cookies.accessToken]); 
+  }, [userData, cookies.accessToken]); 
 
   const handleMember = (username: string,
     introduction: string,
