@@ -11,7 +11,7 @@ import { checkBadWord } from "@utils/checkBadWord/checkBadWord";
   
   // 닉네임 체크
   export const checkNickname = (nickname : string) => {
-    // 한글숫자영어 _ . 허용
+    // 숫자영어 _ . 허용
     const nicknameRegex = /^[a-zA-Z0-9._]{3,30}$/;
     console.log(nickname)
     if(nicknameRegex.test(nickname)){
@@ -20,9 +20,9 @@ import { checkBadWord } from "@utils/checkBadWord/checkBadWord";
       }
     }
     else if(!nicknameRegex.test(nickname)){
-      if(checkBadWord(nickname)){
+      
         return false
-      }
+      
     }
   };
 // import { checkNickname } from "@utils/checkNickname/checkNickname";
