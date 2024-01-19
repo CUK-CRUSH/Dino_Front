@@ -41,7 +41,7 @@ const AdminPage: React.FC = () => {
   
     // Call the asynchronous function inside useEffect
     fetchData();
-  }, [decodedToken.sub, cookies.accessToken]); // Add dependencies to the dependency array if needed
+  }, [decodedToken.sub, cookies.accessToken]); 
   
 
 

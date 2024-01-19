@@ -78,30 +78,40 @@ export const getMemberMe = async (cookies?: string) => {
 
 // 정보수정
 export const updateMember = async (
-  username : string,
-  introduction : string,
-  profileImage? : File,
-  backgroundImage? : File,
-  cookies? : string,
+  username: string,
+  introduction: string,
+  profileImage?: File,
+  backgroundImage?: File,
+  cookies?: string,
 ) => {
-  
   try {
-    const response = await axiosInstance.post(
-      `/api/v1/member`,
-      {
-        username,
-        introduction,
-        
-      },
+    const formData = new FormData();
+
+    formData.append('username', username);
+    formData.append('introduction', introduction);
+
+    if (profileImage) {
+      formData.append('profileImage', profileImage);
+    }
+
+    if (backgroundImage) {
+      formData.append('backgroundImage', backgroundImage);
+    }
+
+    const response = await axiosInstance.patch(
+      '/api/v1/member',
+      formData,
       {
         headers: {
+          'Content-Type': 'multipart/form-data',
           Authorization: `Bearer ${cookies}`,
         },
       }
     );
+
     return response.data;
   } catch (error) {
-    console.log(error);
+    console.error('Error updating member information:', error);
     throw error;
   }
 };
