@@ -41,7 +41,7 @@ const Redirect = () => {
         
         navigate("/login/validation");
       } else {
-        navigate("/");
+        navigate(`/${getUserData.data.username}/admin`);
       }
     };
 
