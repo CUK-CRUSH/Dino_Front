@@ -41,13 +41,8 @@ const AdminPage: React.FC = () => {
   
     // Call the asynchronous function inside useEffect
     fetchData();
-  }, [decodedToken.sub, cookies.accessToken]); 
+  }, [decodedToken.sub, cookies.accessToken,userData]); 
   
-
-
-  // 유저네임 , 한줄소게
-  // const [username, setUsername] = useState("");
-  // const [introText, setIntroText] = useState("");
 
   // 유저 프로필 불러오기
   const userProfile = useSelector((state: RootState) => state.userProfile);
@@ -85,13 +80,6 @@ const AdminPage: React.FC = () => {
   
     openOptionsModal();
   };
-
-  useEffect(() => {
-    if (userProfile) {
-      // setUsername(userProfile.username);
-      // setIntroText(userProfile.introText);
-    }
-  }, [userProfile]);
 
   return (
       <div className=" h-full w-full relative bg-white">

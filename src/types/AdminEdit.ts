@@ -1,5 +1,9 @@
 export interface EditButtonDTO {
-    save : () => void;
+    save : (  username: string,
+      introduction: string,
+      profileImage?: File,
+      backgroundImage?: File,
+      cookies?: string,) => void;
     cancel : () => void;
   }
 

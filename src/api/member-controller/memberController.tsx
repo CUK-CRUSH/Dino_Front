@@ -108,7 +108,11 @@ export const updateMember = async (
         },
       }
     );
-
+    // 폼 객체 key 와 value 값을 순회.
+    let entries = formData.entries();
+    for (const pair of entries) {
+      console.log(pair[0] + ', ' + pair[1]);
+    }
     return response.data;
   } catch (error) {
     console.error('Error updating member information:', error);
