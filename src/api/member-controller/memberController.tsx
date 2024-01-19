@@ -76,54 +76,46 @@ export const getMemberMe = async (cookies?: string) => {
   }
 };
 
-// export const postMusicList = async (
-//   playlistId: string,
-//   title: string,
-//   artist: string,
-//   url: string,
-//   cookies?: string
-// ) => {
-//   if (!playlistId || !title || !artist || !url) {
-//     throw new Error("모든 항목을 입력해주세요.");
-//   }
-//   try {
-//     const response = await axiosInstance.post(
-//       `/api/v1/playlist/${playlistId}/music/add`,
-//       {
-//         title,
-//         artist,
-//         url,
-//       },
-//       {
-//         headers: {
-//           Authorization: `Bearer ${cookies}`,
-//         },
-//       }
-//     );
-//     return response.data;
-//   } catch (error) {
-//     console.log(error);
-//     throw error;
-//   }
-// };
+// 정보수정
+export const updateMember = async (
+  username: string,
+  introduction: string,
+  profileImage?: File,
+  backgroundImage?: File,
+  cookies?: string,
+) => {
+  try {
+    const formData = new FormData();
 
-// export const deleteMusicList = async (
-//   playlistId: string,
-//   musicId: string,
-//   cookies?: string
-// ) => {
-//   try {
-//     const response = await axiosInstance.delete(
-//       `/api/v1/playlist/${playlistId}/music/${musicId}`,
-//       {
-//         headers: {
-//           Authorization: `Bearer ${cookies}`,
-//         },
-//       }
-//     );
-//     return response.data;
-//   } catch (error) {
-//     console.log(error);
-//     throw error;
-//   }
-// };
+    formData.append('username', username);
+    formData.append('introduction', introduction);
+
+    if (profileImage) {
+      formData.append('profileImage', profileImage);
+    }
+
+    if (backgroundImage) {
+      formData.append('backgroundImage', backgroundImage);
+    }
+
+    const response = await axiosInstance.patch(
+      '/api/v1/member',
+      formData,
+      {
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${cookies}`,
+        },
+      }
+    );
+    // 폼 객체 key 와 value 값을 순회.
+    let entries = formData.entries();
+    for (const pair of entries) {
+      console.log(pair[0] + ', ' + pair[1]);
+    }
+    return response.data;
+  } catch (error) {
+    console.error('Error updating member information:', error);
+    throw error;
+  }
+};

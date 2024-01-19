@@ -9,21 +9,40 @@ import OpenOption from "./Button/OpenOption";
 import UserProfileImage from "./UserProfileImage";
 import UserProfileInfo from "./UserProfileInfo";
 import {PlayList} from "@components/Admin/Button/PlayList";
-
+import { getMember } from "@api/member-controller/memberController";
+import { useCookies } from "react-cookie";
+import useDecodedJWT from "@hooks/useDecodedJWT";
+import { getMemberDTO } from "types/Member/Member";
 
 const AdminPage: React.FC = () => {
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  const [token,setToken] = useState<boolean>(true);
+  const [cookies,] = useCookies();
+  // 액세스 토큰 
+  const token = cookies.accessToken;
 
-  useEffect(()=>{
-    setToken(true);
-  },[])
+  const decodedToken = useDecodedJWT(token);
 
-  // 유저네임 , 한줄소게
-  const [username, setUsername] = useState("");
-  const [introText, setIntroText] = useState("");
+  const [userData,setUserdata] = useState<getMemberDTO>();
+
+  // 정보불러오기
+  useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Call the asynchronous function and await its result
+        const userDataResult = await getMember(decodedToken.sub, cookies.accessToken);
+        setUserdata(userDataResult.data);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+        // Handle errors appropriately
+      }
+    };
+  
+    // Call the asynchronous function inside useEffect
+    fetchData();
+  }, [decodedToken.sub, cookies.accessToken,userData]); 
+  
 
   // 유저 프로필 불러오기
   const userProfile = useSelector((state: RootState) => state.userProfile);
@@ -62,13 +81,6 @@ const AdminPage: React.FC = () => {
     openOptionsModal();
   };
 
-  useEffect(() => {
-    if (userProfile) {
-      setUsername(userProfile.username);
-      setIntroText(userProfile.introText);
-    }
-  }, [userProfile]);
-
   return (
       <div className=" h-full w-full relative bg-white">
 
@@ -76,7 +88,7 @@ const AdminPage: React.FC = () => {
 
         <div className="h-full w-full left-0 top-[165px] absolute bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px]" >
           {/* ... 설정창 */}
-          {token && <OpenOption calculateOptionsModalPosition={calculateOptionsModalPosition} />}
+          { <OpenOption calculateOptionsModalPosition={calculateOptionsModalPosition} />}
           
 
           {/* ...설정창 펼치기 */}
@@ -98,18 +110,16 @@ const AdminPage: React.FC = () => {
             
             <UserProfileImage userProfileImage={userProfile.userProfileImage} />
 
-            <UserProfileInfo username={username} introText={introText} />
+            <UserProfileInfo username={userData?.username} introText={userData?.introduction} />
 
           </div>  
           
           {/* 내가 생성한 플레이리스트 뽑아주고 마지막에 플레이리스트 추가 컴포넌트 붙이기. */}
           
           
+          { <AddPlayList /> }
+
           <PlayList />
-          <PlayList />
-          <PlayList />
-          <PlayList />
-          {token && <AddPlayList /> }
           
         </div>
       </div>

@@ -1,5 +1,9 @@
 export interface EditButtonDTO {
-    save : () => void;
+    save : (  username: string,
+      introduction: string,
+      profileImage?: File,
+      backgroundImage?: File,
+      cookies?: string,) => void;
     cancel : () => void;
   }
 
@@ -21,6 +25,6 @@ export interface SetUserProfileImageDTO {
 export interface SetUserProfileInfoDTO {
   placeholder : string;
   maxlength : number;
-  context : string;
+  context : string | undefined;
   func : React.Dispatch<React.SetStateAction<string>>;
 }
