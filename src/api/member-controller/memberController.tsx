@@ -75,3 +75,33 @@ export const getMemberMe = async (cookies?: string) => {
     throw error;
   }
 };
+
+// 정보수정
+export const updateMember = async (
+  username : string,
+  introduction : string,
+  profileImage? : File,
+  backgroundImage? : File,
+  cookies? : string,
+) => {
+  
+  try {
+    const response = await axiosInstance.post(
+      `/api/v1/member`,
+      {
+        username,
+        introduction,
+        
+      },
+      {
+        headers: {
+          Authorization: `Bearer ${cookies}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

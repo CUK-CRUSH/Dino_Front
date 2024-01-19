@@ -26,14 +26,13 @@ const AdminPage: React.FC = () => {
 
   const [userData,setUserdata] = useState<getMemberDTO>();
 
+  // 정보불러오기
   useEffect(() => {
     const fetchData = async () => {
       try {
         // Call the asynchronous function and await its result
         const userDataResult = await getMember(decodedToken.sub, cookies.accessToken);
-        console.log(userDataResult);
         setUserdata(userDataResult.data);
-        console.log(userData)
       } catch (error) {
         console.error('Error fetching user data:', error);
         // Handle errors appropriately
@@ -47,8 +46,8 @@ const AdminPage: React.FC = () => {
 
 
   // 유저네임 , 한줄소게
-  const [username, setUsername] = useState("");
-  const [introText, setIntroText] = useState("");
+  // const [username, setUsername] = useState("");
+  // const [introText, setIntroText] = useState("");
 
   // 유저 프로필 불러오기
   const userProfile = useSelector((state: RootState) => state.userProfile);
@@ -89,8 +88,8 @@ const AdminPage: React.FC = () => {
 
   useEffect(() => {
     if (userProfile) {
-      setUsername(userProfile.username);
-      setIntroText(userProfile.introText);
+      // setUsername(userProfile.username);
+      // setIntroText(userProfile.introText);
     }
   }, [userProfile]);
 
