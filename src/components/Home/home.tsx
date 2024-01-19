@@ -1,6 +1,8 @@
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from 'swiper/react';
-
+import 'swiper/css';
+import 'swiper/css/navigation';
+import 'swiper/css/pagination';
 const HomeComponent = () => {
 
   return (
@@ -8,7 +10,8 @@ const HomeComponent = () => {
         <div className={"h-[30px]"}></div>
         <div className={"flex flex-row items-center align-middle"}>
           <div className="w-[91px] h-[34px] ml-1 bg-neutral-700 rounded-[9px] flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 23 23" fill="none" className={"ml-1"}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 23 23" fill="none"
+                 className={"ml-1"}>
               <g clip-path="url(#clip0_1_10)">
                 <path
                     d="M1.91667 11.5C1.91667 16.7929 6.20713 21.0833 11.5 21.0833C16.7929 21.0833 21.0833 16.7929 21.0833 11.5C21.0833 6.20712 16.7929 1.91666 11.5 1.91666C6.20713 1.91666 1.91667 6.20712 1.91667 11.5Z"
@@ -29,7 +32,9 @@ const HomeComponent = () => {
           <div className={"grow"}></div>
           <div
               className="flex flex-row w-[100px] h-[35px] bg-neutral-200 rounded-[30px] justify-center items-center">
-              <Link to={"/login"}><div className="text-[15px] font-normal font-['Pretendard']">로그인</div></Link>
+            <Link to={"/login"}>
+              <div className="text-[15px] font-normal font-['Pretendard']">로그인</div>
+            </Link>
           </div>
         </div>
 
@@ -83,8 +88,13 @@ const HomeComponent = () => {
           <div className="w-[234px] h-[52px] bg-violet-400 rounded-[15px] flex justify-center items-center">
             <div>내 리스트 만들기</div>
           </div>
-          <div>
+        </div>
+
+        <div className={"h-[70px]"}></div>
+
+        <div className={"carousels"}>
           <Swiper
+              className="mySwiper"
               spaceBetween={50}
               slidesPerView={1}
               navigation
@@ -93,14 +103,33 @@ const HomeComponent = () => {
               onSwiper={(swiper:any) => console.log(swiper)}
               onSlideChange={() => console.log('slide change')}
           >
-            <SwiperSlide>Slide 1</SwiperSlide>
-            <SwiperSlide>Slide 2</SwiperSlide>
-            <SwiperSlide>Slide 3</SwiperSlide>
-            <SwiperSlide>Slide 4</SwiperSlide>
-            {/* Add as many slides as you want */}
-          </Swiper></div>
+            <SwiperSlide>
+              <div className="bg-red-500 w-64 h-64 flex justify-center items-center">
+                <p className="text-white">Slide 1</p>
+              </div>
+            </SwiperSlide>
+            <SwiperSlide>
+              <div className="bg-blue-500 w-64 h-64 flex justify-center items-center">
+                <p className="text-white">Slide 2</p>
+              </div>
+            </SwiperSlide>
+            <SwiperSlide>
+              <div className="bg-green-500 w-64 h-64 flex justify-center items-center">
+                <p className="text-white">Slide 3</p>
+              </div>
+            </SwiperSlide>
+            <SwiperSlide>
+              <div className="bg-yellow-500 w-64 h-64 flex justify-center items-center">
+                <p className="text-white">Slide 4</p>
+              </div>
+            </SwiperSlide>
+            <SwiperSlide>
+              <div className="bg-purple-500 w-64 h-64 flex justify-center items-center">
+                <p className="text-white">Slide 5</p>
+              </div>
+            </SwiperSlide>
+          </Swiper>
         </div>
-
       </div>
   );
 };
