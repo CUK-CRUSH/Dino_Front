@@ -15,6 +15,9 @@ import SetUserProfileInfo from "@components/AdminEdit/SetUserProfileInfo";
 import useImageCompress from "@hooks/useImageCompress";
 import { dataURItoFile } from "@utils/ImageCrop/common";
 import { ValidateSpace } from "@utils/Validation/ValidateSpace";
+import { getMemberDTO } from "types/Member/Member";
+import { useCookies } from "react-cookie";
+import { getMemberMe, updateMember } from "@api/member-controller/memberController";
 
 interface AdminEditModalProps {
   onClose: () => void; // A function to close the modal
@@ -125,6 +128,36 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     }, 900);
   };
 
+  const [cookies,] = useCookies();
+  const token = cookies.accessToken;
+
+  const [userData,setUserdata] = useState<getMemberDTO>();
+
+   // 정보불러오기
+   useEffect(() => {
+    const fetchData = async () => {
+      try {
+        // Call the asynchronous function and await its result
+        const userDataResult = await getMemberMe(cookies.accessToken);
+        setUserdata(userDataResult.data);
+      } catch (error) {
+        console.error('Error fetching user data:', error);
+        // Handle errors appropriately
+      }
+    };
+  
+    // Call the asynchronous function inside useEffect
+    fetchData();
+  }, [, cookies.accessToken]); 
+
+  const handleMember = (username: string,
+    introduction: string,
+    profileImage?: any,
+    backgroundImage?: any,
+    cookies?: string) => {
+    updateMember(username,introduction,profileImage,backgroundImage,cookies);
+  }
+
   return (
     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50">
       {/* The following div creates a semi-transparent overlay background */}
@@ -137,7 +170,8 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
       >
         {/* 상단 취소/저장 버튼 */}
         <div className="flex justify-between h-[50px]">
-          <EditButton save={save} cancel={cancel} />
+          <EditButton save={() => handleMember(username, introText, compressUserProfileImage, compressedUserProfileBackgroundImage, token)}
+                      cancel={cancel}  />
         </div>
 
         {/* 배경화면 */}
@@ -160,7 +194,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
         <SetUserProfileInfo
           placeholder="User Name"
           maxlength={999}
-          context={username}
+          context={userData?.username}
           func={setUsername}
         />
 
@@ -168,7 +202,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
         <SetUserProfileInfo
           placeholder="Comment"
           maxlength={50}
-          context={introText}
+          context={userData?.introduction}
           func={setIntroText}
         />
       </div>
