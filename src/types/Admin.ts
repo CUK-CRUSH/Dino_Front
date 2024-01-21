@@ -18,6 +18,6 @@ export interface UserProfileImageDTO{
 }
 
 export interface UserProfileInfoDTO{
-  username : string;
-  introText : string;
+  username : string | undefined;
+  introText : string | undefined;
 }

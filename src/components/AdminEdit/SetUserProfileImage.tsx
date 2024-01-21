@@ -25,7 +25,7 @@ const SetUserProfileImage = ({ aspectRatio, onCrop, compressedImage, isCompressL
               <>
                 <div className="absolute inset-0 bg-black bg-opacity-70" />
                 <img
-                  src={"default-image-url.jpg"}
+                  src={"../default-image-url.jpg"}
                   alt="User Profile"
                   className="w-full h-full object-cover object-center"
                 />
