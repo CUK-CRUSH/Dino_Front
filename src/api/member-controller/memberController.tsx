@@ -98,24 +98,16 @@ export const updateMember = async ({
     }
 
     if (profileImage) {
-
-      const blob = new Blob([JSON.stringify(profileImage)], {
-        // type에 JSON 타입 지정
-        type: 'application/json',
-      });
-
-      formData.append('profileImage', blob);
-      console.log(blob)
+      const binaryData = Uint8Array.from(atob(profileImage.split(',')[1]), c => c.charCodeAt(0));
+      
+      formData.append("profileImage", new Blob([binaryData], { type: "image/png" }), "image.png");
+      
     }
 
     if (backgroundImage) {
-
-      const blob = new Blob([JSON.stringify(profileImage)], {
-        // type에 JSON 타입 지정
-        type: 'application/json',
-      });    
-
-      formData.append('backgroundImage',blob);
+      const binaryData = Uint8Array.from(atob(backgroundImage.split(',')[1]), c => c.charCodeAt(0));
+      
+      formData.append("backgroundImage", new Blob([binaryData], { type: "image/png" }), "image.png");
     }
 
     const response = await axiosInstance.patch('/api/v1/member', formData, {

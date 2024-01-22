@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { ChangeEvent, useCallback, useEffect, useState } from "react";
 
 import useWindowSizeCustom from "@hooks/useWindowSizeCustom";
 import "../../styles/Admin/style.css";
@@ -12,6 +12,7 @@ import { getMemberDTO } from "types/Member/Member";
 import { useCookies } from "react-cookie";
 import { getMemberMe, updateMember } from "@api/member-controller/memberController";
 import { UpdateMemberParams } from "types/AdminEdit";
+import { debounce } from "lodash";
 
 interface AdminEditModalProps {
   onClose: () => void; // A function to close the modal
@@ -38,8 +39,23 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     fetchData();
   }, []); 
 
-  const [username, setUsername] = useState("Your Username");
-  const [introText, setIntroText] = useState("Welcome to the Admin Page");
+    const [input, setInput] = useState({
+      username: '',
+      introduction: '',
+    })
+
+    const onChangeInput = (e: { target: { name: any; value: any; }; }) => {
+      const {name, value} = e.target // destructuring
+      setInput({
+          ...input,
+          [name]:value
+      })
+
+      setUpdateMemberData({
+        ...updateMemberData,
+        [name]: value,
+      });
+  }
 
   // 배경화면 
   const [uploadUserProfileBackgroundImage, setUploadUserProfileBackgroundImage] = useState<string | null>(null);
@@ -52,16 +68,16 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     if (!uploadUserProfileBackgroundImage) return;
 
     const imageFile = dataURItoFile(uploadUserProfileBackgroundImage);
-
     const compressedUserProfileBackgroundImage = await compressUserProfileBackgroundImage(imageFile);
 
     if (!compressedUserProfileBackgroundImage) return;
     const imageUrl = URL.createObjectURL(compressedUserProfileBackgroundImage);
+
     setCompressedUserProfileBackgroundImage(imageUrl);
 
     setUpdateMemberData((prevData) => ({
       ...prevData,
-      backgroundImage: imageUrl,
+      backgroundImage: uploadUserProfileBackgroundImage,
     }));  
 
   }, [uploadUserProfileBackgroundImage, compressUserProfileBackgroundImage]);
@@ -92,7 +108,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
     setUpdateMemberData((prevData) => ({
       ...prevData,
-      profileImage: imageUrl,
+      profileImage: uploadUserProfileImage,
     }));  
 
   }, [uploadUserProfileImage, compressUserProfileImage]);
@@ -144,7 +160,6 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   const handleMember = (data: UpdateMemberParams) => {
     // Handle member data
     console.log('Saving data:', data);
-    console.log(token)
     updateMember(data);
     cancel();
   };
@@ -172,6 +187,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
           onCrop={handleUploadUserProfileBackgroundImage}
           compressedImage={compressedUserProfileBackgroundImage}
           isCompressLoading={isCompressUserProfileBackgroundLoading}
+          earlyImage={userData?.backgroundImageUrl}
         />
 
         {/* 프로필 사진 */}
@@ -180,22 +196,26 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
           onCrop={handleUploadUserProfileImage}
           compressedImage={compressedUserProfileImage}
           isCompressLoading={isCompressUserProfileLoading}
+          earlyImage={userData?.profileImageUrl}
+
         />
       
         {/* 유저 닉네임 */}
         <SetUserProfileInfo
           placeholder="User Name"
           maxlength={999}
-          context={userData?.username}
-          func={setUsername}
+          name='username'
+          value={userData?.username}
+          onChange={onChangeInput}
         />
 
         {/* 한줄소개 */}
         <SetUserProfileInfo
-          placeholder="Comment"
+          placeholder="Introduction"
           maxlength={50}
-          context={userData?.introduction}
-          func={setIntroText}
+          name='introduction'
+          value={userData?.introduction}
+          onChange={onChangeInput}
         />
       </div>
     </div>
