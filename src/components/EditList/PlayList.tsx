@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { UsePlayListEditor } from "@hooks/UsePlayListEditor";
-import { AppDispatch, RootState } from "@store/index";
+import { RootState } from "@store/index";
 import { EditPlsyListDTO } from "types/EditplayList";
 import { EditPlaylistControls } from "@components/EditList/Button/EditPlaylistControl";
 import { MusicDataRow } from "@components/EditList/MusicList/MusicDataRow";
@@ -11,13 +11,12 @@ import { PlusButton } from "@components/EditList/Button/PlusButton";
 import ShowImage from "@components/EditList/EditImage/ShowImage";
 import { MainEditButton } from "@components/EditList/Button/MainEditButton";
 import { MusicTitle } from "@components/EditList/MusicList/MusicTitle";
-import { useDispatch } from "react-redux";
-import { fetchPlaylist } from "@reducer/editPlayList/setPlaylist";
 import { useCookies } from "react-cookie";
 import useDecodedJWT from "@hooks/useDecodedJWT";
+import { getMember } from "@api/member-controller/memberController";
+import { getPlayList } from "@api/playlist-controller/playlistControl";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
-  const dispatch = useDispatch<AppDispatch>();
   const isEditing = useSelector(
     (state: RootState) => state.editPlaylistToggle.isEditing
   );
@@ -47,17 +46,23 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const token = cookies.accessToken;
   const decodedToken = useDecodedJWT(token);
   const id = decodedToken.sub;
-  // console.log(id);
   //
+
+  const [playlists, setPlaylists] = useState<any[]>([]);
 
   useEffect(() => {
     if (uploadImage) {
       handleCompressImage();
     }
+    const fetchPlaylist = async (id: number) => {
+      const member = await getMember(id);
+      const playlist = await getPlayList(member.data.username);
+      setPlaylists(playlist.data);
+    };
     if (id !== undefined) {
-      dispatch(fetchPlaylist(id));
+      fetchPlaylist(id);
     }
-  }, [uploadImage, handleCompressImage, id, dispatch]);
+  }, [uploadImage, handleCompressImage, id]);
 
   return (
     <div className="h-full w-full flex flex-col bg-black text-white font-medium leading-[18px]">
@@ -79,7 +84,8 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         isCompressLoading={isCompressLoading}
         isEditing={isEditing}
       />
-      <MusicTitle />
+
+      <MusicTitle playlists={playlists[0]} />
 
       <MusicDataRow musicData={musicData} isEditing={isEditing} />
 

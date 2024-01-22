@@ -1,12 +1,11 @@
-import { useSelector } from "react-redux";
-import { RootState } from "@store/index";
+interface MusicTitleProps {
+  playlists: any;
+}
 
-export const MusicTitle: React.FC = () => {
-  const playlist = useSelector((state: RootState) => state.playlist.playlist);
-
+export const MusicTitle: React.FC<MusicTitleProps> = ({ playlists }) => {
   return (
     <h2 className="mt-5 ml-5 text-[25px] text-shadow-title font-bold leading-5">
-      {playlist?.playlistName ?? "Loading..."}
+      {playlists?.playlistName ?? "Loading..."}
     </h2>
   );
 };

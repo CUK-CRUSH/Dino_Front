@@ -27,7 +27,7 @@ const initialState: InitialState = {
 
 export const fetchPlaylist = createAsyncThunk(
   "playlist/fetchPlaylist",
-  async (id: number, thunkAPI) => {
+  async (id: number) => {
     const member = await getMember(id);
     const playlist = await getPlayList(member.username);
     return { member, playlist };
