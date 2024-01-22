@@ -1,14 +1,18 @@
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from 'swiper/react';
-
+import 'swiper/css';
+import 'swiper/css/effect-coverflow';
+import 'swiper/css/pagination';
+import {EffectCoverflow, Mousewheel, Navigation} from 'swiper/modules';
 const HomeComponent = () => {
 
   return (
-      <div className="w-full h-full absolute">
+      <div className="w-full h-full">
         <div className={"h-[30px]"}></div>
         <div className={"flex flex-row items-center align-middle"}>
           <div className="w-[91px] h-[34px] ml-1 bg-neutral-700 rounded-[9px] flex items-center">
-            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 23 23" fill="none" className={"ml-1"}>
+            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 23 23" fill="none"
+                 className={"ml-1"}>
               <g clip-path="url(#clip0_1_10)">
                 <path
                     d="M1.91667 11.5C1.91667 16.7929 6.20713 21.0833 11.5 21.0833C16.7929 21.0833 21.0833 16.7929 21.0833 11.5C21.0833 6.20712 16.7929 1.91666 11.5 1.91666C6.20713 1.91666 1.91667 6.20712 1.91667 11.5Z"
@@ -29,7 +33,9 @@ const HomeComponent = () => {
           <div className={"grow"}></div>
           <div
               className="flex flex-row w-[100px] h-[35px] bg-neutral-200 rounded-[30px] justify-center items-center">
-              <Link to={"/login"}><div className="text-[15px] font-normal font-['Pretendard']">로그인</div></Link>
+            <Link to={"/login"}>
+              <div className="text-[15px] font-normal font-['Pretendard']">로그인</div>
+            </Link>
           </div>
         </div>
 
@@ -83,24 +89,48 @@ const HomeComponent = () => {
           <div className="w-[234px] h-[52px] bg-violet-400 rounded-[15px] flex justify-center items-center">
             <div>내 리스트 만들기</div>
           </div>
-          <div>
-          <Swiper
-              spaceBetween={50}
-              slidesPerView={1}
-              navigation
-              pagination={{ clickable: true }}
-              scrollbar={{ draggable: true }}
-              onSwiper={(swiper:any) => console.log(swiper)}
-              onSlideChange={() => console.log('slide change')}
-          >
-            <SwiperSlide>Slide 1</SwiperSlide>
-            <SwiperSlide>Slide 2</SwiperSlide>
-            <SwiperSlide>Slide 3</SwiperSlide>
-            <SwiperSlide>Slide 4</SwiperSlide>
-            {/* Add as many slides as you want */}
-          </Swiper></div>
-        </div>
 
+          <div className={"h-[50px]"}></div>
+
+          <div>
+            <Swiper
+                style={{marginLeft: '75px', marginRight: '75px'}}
+                effect={'coverflow'}
+                grabCursor={true}
+                centeredSlides={true} // 'true'로 변경
+                slidesPerView={'auto'}
+                initialSlide={0}
+                spaceBetween={-190} // 0 이상의 값으로 변경
+                coverflowEffect={{
+                  rotate: 20,
+                  stretch: 0,
+                  depth: 200,
+                  modifier: 3,
+                  slideShadows: true,
+                }}
+                navigation={true}
+                mousewheel={true}
+                modules={[EffectCoverflow, Navigation, Mousewheel]}
+                className="mySwiper w-full max-w-screen-md h-auto pt-12 pb-12 mx-auto flex items-center justify-center"
+            >
+              <SwiperSlide style={{width: '300px'}} className="flex items-center justify-center w-1/4">
+                <img className="block w-1/2" src="https://swiperjs.com/demos/images/nature-1.jpg" alt={"1"}/>
+              </SwiperSlide>
+              <SwiperSlide style={{width: '300px'}} className="flex items-center justify-center w-1/4">
+                <img className="block w-1/2" src="https://swiperjs.com/demos/images/nature-2.jpg" alt={"2"}/>
+              </SwiperSlide>
+              <SwiperSlide style={{width: '300px'}} className="flex items-center justify-center w-1/4">
+                <img className="block w-1/2" src="https://swiperjs.com/demos/images/nature-3.jpg" alt={"3"}/>
+              </SwiperSlide>
+              <SwiperSlide style={{width: '300px'}} className="flex items-center justify-center w-1/4">
+                <img className="block w-1/2" src="https://swiperjs.com/demos/images/nature-4.jpg" alt={"4"}/>
+              </SwiperSlide>
+              <SwiperSlide style={{width: '300px'}} className="flex items-center justify-center w-1/4">
+                <img className="block w-1/2" src="https://swiperjs.com/demos/images/nature-6.jpg" alt={"5"}/>
+              </SwiperSlide>
+            </Swiper>
+          </div>
+        </div>
       </div>
   );
 };
