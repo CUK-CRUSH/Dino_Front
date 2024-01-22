@@ -84,7 +84,7 @@ const AdminPage: React.FC = () => {
   return (
       <div className=" h-full w-full relative bg-white">
 
-        <UserProfileBackground userBackgroundImage={userProfile.userProfileBackgroundImage} />
+        <UserProfileBackground userBackgroundImage={userData?.backgroundImageUrl} />
 
         <div className="h-full w-full left-0 top-[165px] absolute bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px]" >
           {/* ... 설정창 */}
@@ -108,7 +108,7 @@ const AdminPage: React.FC = () => {
           {/* 프로필 이미지 */}
           <div className=" flex items-center flex-col z-10">
             
-            <UserProfileImage userProfileImage={userProfile.userProfileImage} />
+            <UserProfileImage userProfileImage={userData?.profileImageUrl} />
 
             <UserProfileInfo username={userData?.username} introText={userData?.introduction} />
 

@@ -7,6 +7,7 @@ import LoadingPage from "@utils/loading";
 import camera from "../../assets/Admin/camera.svg";
 
 const SetUserProfileBackground = ({ aspectRatio, onCrop, compressedImage, isCompressLoading }: SetUserProfileBackgroundDTO) => {
+
   return (      <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
 
     <div className="h-52 bg-black bg-opacity-70 mb-[-35px] relative">

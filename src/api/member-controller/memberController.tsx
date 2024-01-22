@@ -1,4 +1,5 @@
 import { axiosInstance } from "@api/axiosInstance";
+import { UpdateMemberParams } from "types/AdminEdit";
 
 // 회원 닉네임 변경
 export const putUsername = async (
@@ -77,42 +78,54 @@ export const getMemberMe = async (cookies?: string) => {
 };
 
 // 정보수정
-export const updateMember = async (
-  username: string,
-  introduction: string,
-  profileImage?: File,
-  backgroundImage?: File,
-  cookies?: string,
-) => {
+
+export const updateMember = async ({
+  username,
+  introduction,
+  profileImage,
+  backgroundImage,
+  cookies,
+}: UpdateMemberParams) => {
   try {
     const formData = new FormData();
 
-    formData.append('username', username);
-    formData.append('introduction', introduction);
+    if (username) {
+      formData.append('username', username);
+    }
+
+    if (introduction) {
+      formData.append('introduction', introduction);
+    }
 
     if (profileImage) {
-      formData.append('profileImage', profileImage);
+
+      const blob = new Blob([JSON.stringify(profileImage)], {
+        // type에 JSON 타입 지정
+        type: 'application/json',
+      });
+
+      formData.append('profileImage', blob);
+      console.log(blob)
     }
 
     if (backgroundImage) {
-      formData.append('backgroundImage', backgroundImage);
+
+      const blob = new Blob([JSON.stringify(profileImage)], {
+        // type에 JSON 타입 지정
+        type: 'application/json',
+      });    
+
+      formData.append('backgroundImage',blob);
     }
 
-    const response = await axiosInstance.patch(
-      '/api/v1/member',
-      formData,
-      {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${cookies}`,
-        },
-      }
-    );
-    // 폼 객체 key 와 value 값을 순회.
-    let entries = formData.entries();
-    for (const pair of entries) {
-      console.log(pair[0] + ', ' + pair[1]);
-    }
+    const response = await axiosInstance.patch('/api/v1/member', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${cookies}`,
+      },
+    });
+
+    console.log(response);
     return response.data;
   } catch (error) {
     console.error('Error updating member information:', error);

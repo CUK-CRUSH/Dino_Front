@@ -1,7 +1,5 @@
 import React, { useCallback, useEffect, useState } from "react";
-import {  useSelector } from "react-redux";
 
-import { RootState } from "@store/index";
 import useWindowSizeCustom from "@hooks/useWindowSizeCustom";
 import "../../styles/Admin/style.css";
 import EditButton from "@components/AdminEdit/Button/EditButton";
@@ -13,22 +11,40 @@ import { dataURItoFile } from "@utils/ImageCrop/common";
 import { getMemberDTO } from "types/Member/Member";
 import { useCookies } from "react-cookie";
 import { getMemberMe, updateMember } from "@api/member-controller/memberController";
+import { UpdateMemberParams } from "types/AdminEdit";
 
 interface AdminEditModalProps {
   onClose: () => void; // A function to close the modal
 }
 
 const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
-  const userProfile = useSelector((state: RootState) => state.userProfile);
+  const [cookies,] = useCookies();
+  const token = cookies.accessToken;
+
+  const [userData,setUserdata] = useState<getMemberDTO>();
+
+   // 정보불러오기
+  useEffect(() => {
+  const fetchData = async () => {
+    try {
+      // Call the asynchronous function and await its result
+      const userDataResult = await getMemberMe(cookies.accessToken);
+      setUserdata(userDataResult.data);
+    } catch (error) {
+      console.error('Error fetching user data:', error);
+      // Handle errors appropriately
+    }
+  };
+    fetchData();
+  }, []); 
 
   const [username, setUsername] = useState("Your Username");
   const [introText, setIntroText] = useState("Welcome to the Admin Page");
 
   // 배경화면 
   const [uploadUserProfileBackgroundImage, setUploadUserProfileBackgroundImage] = useState<string | null>(null);
-  const [compressedUserProfileBackgroundImage, setCompressedUserProfileBackgroundImage] = useState<string | null>(userProfile.userProfileBackgroundImage);
+  const [compressedUserProfileBackgroundImage, setCompressedUserProfileBackgroundImage] = useState<string | undefined | null>(userData?.backgroundImageUrl);
   const { isLoading: isCompressUserProfileBackgroundLoading, compressImage : compressUserProfileBackgroundImage } = useImageCompress();
-  const { isLoading: isCompressUserProfileLoading, compressImage : compressUserProfileImage } = useImageCompress();
 
   const handleUploadUserProfileBackgroundImage = (image: string) => setUploadUserProfileBackgroundImage(image);
 
@@ -42,6 +58,12 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     if (!compressedUserProfileBackgroundImage) return;
     const imageUrl = URL.createObjectURL(compressedUserProfileBackgroundImage);
     setCompressedUserProfileBackgroundImage(imageUrl);
+
+    setUpdateMemberData((prevData) => ({
+      ...prevData,
+      backgroundImage: imageUrl,
+    }));  
+
   }, [uploadUserProfileBackgroundImage, compressUserProfileBackgroundImage]);
 
   useEffect(() => {
@@ -52,8 +74,8 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
   // 프로필사진
   const [uploadUserProfileImage, setUploadUserProfileImage] = useState<string | null>(null);
-  const [compressedUserProfileImage, setCompressedUserProfileImage] = useState<string | null>(userProfile.userProfileImage);
-  
+  const [compressedUserProfileImage, setCompressedUserProfileImage] = useState<string | undefined | null>(userData?.profileImageUrl);
+  const { isLoading: isCompressUserProfileLoading, compressImage : compressUserProfileImage } = useImageCompress();
 
   const handleUploadUserProfileImage = (image: string) => setUploadUserProfileImage(image);
 
@@ -61,12 +83,18 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     if (!uploadUserProfileImage) return;
 
     const imageFile = dataURItoFile(uploadUserProfileImage);
-
+    
     const compressedUserProfileImage = await compressUserProfileImage(imageFile);
 
     if (!compressedUserProfileImage) return;
     const imageUrl = URL.createObjectURL(compressedUserProfileImage);
     setCompressedUserProfileImage(imageUrl);
+
+    setUpdateMemberData((prevData) => ({
+      ...prevData,
+      profileImage: imageUrl,
+    }));  
+
   }, [uploadUserProfileImage, compressUserProfileImage]);
 
   useEffect(() => {
@@ -74,24 +102,6 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
       handleCompressUserProfileImage();
     }
   }, [uploadUserProfileImage, handleCompressUserProfileImage]);
-
-  // // redux에 저장.  
-  // const save = () => {
-  //   if (ValidateSpace(username)) {
-  //     return;
-  //   }
-  
-  //   dispatch(updateProfile({ username, introText }));
-  
-  //   if (compressedUserProfileImage) {
-  //     dispatch(setUserProfileImage(compressedUserProfileImage));
-  //   }
-  //   if (uploadUserProfileBackgroundImage) {
-  //     dispatch(setUserProfileBackgroundImage(compressedUserProfileBackgroundImage));
-  //   }
-  
-  //   cancel();
-  // };
 
   // 모달닫기
   const close = () => {
@@ -122,37 +132,24 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     }, 900);
   };
 
-  const [cookies,] = useCookies();
-  const token = cookies.accessToken;
-
-  const [userData,setUserdata] = useState<getMemberDTO>();
-
-   // 정보불러오기
-   useEffect(() => {
-    const fetchData = async () => {
-      try {
-        // Call the asynchronous function and await its result
-        const userDataResult = await getMemberMe(cookies.accessToken);
-        setUserdata(userDataResult.data);
-      } catch (error) {
-        console.error('Error fetching user data:', error);
-        // Handle errors appropriately
-      }
-    };
+  const [updateMemberData,setUpdateMemberData] = useState<UpdateMemberParams>({
+    username: userData?.username,
+    introduction: userData?.introduction,
+    profileImage : userData?.profileImageUrl,
+    backgroundImage : userData?.backgroundImageUrl,
+    cookies : token,
   
-    // Call the asynchronous function inside useEffect
-    fetchData();
-  }, [userData, cookies.accessToken]); 
+  });
+  
+  const handleMember = (data: UpdateMemberParams) => {
+    // Handle member data
+    console.log('Saving data:', data);
+    console.log(token)
+    updateMember(data);
+    cancel();
+  };
 
-  const handleMember = (username: string,
-    introduction: string,
-    profileImage?: any,
-    backgroundImage?: any,
-    cookies?: string) => {
-    updateMember(username,introduction,profileImage,backgroundImage,cookies);
-  }
-
-  return (
+    return (
     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50">
       {/* The following div creates a semi-transparent overlay background */}
       <div className="absolute inset-0 bg-gray-800 opacity-75 "></div>
@@ -164,8 +161,9 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
       >
         {/* 상단 취소/저장 버튼 */}
         <div className="flex justify-between h-[50px]">
-          <EditButton save={() => handleMember(username, introText, compressUserProfileImage, compressedUserProfileBackgroundImage, token)}
-                      cancel={cancel}  />
+          <EditButton save={handleMember}
+                      cancel={cancel}
+                      updateMemberData={updateMemberData}  />
         </div>
 
         {/* 배경화면 */}
