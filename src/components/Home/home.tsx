@@ -3,7 +3,7 @@ import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
-import {EffectCoverflow, Mousewheel, Navigation, Pagination} from 'swiper/modules';
+import {EffectCoverflow, Mousewheel, Navigation} from 'swiper/modules';
 const HomeComponent = () => {
 
   return (
@@ -114,19 +114,19 @@ const HomeComponent = () => {
                 className="mySwiper w-full max-w-screen-md h-auto pt-12 pb-12 mx-auto flex items-center justify-center"
             >
               <SwiperSlide style={{width: '300px'}} className="flex items-center justify-center w-1/4">
-                <img className="block w-1/2" src="https://swiperjs.com/demos/images/nature-1.jpg"/>
+                <img className="block w-1/2" src="https://swiperjs.com/demos/images/nature-1.jpg" alt={"1"}/>
               </SwiperSlide>
               <SwiperSlide style={{width: '300px'}} className="flex items-center justify-center w-1/4">
-                <img className="block w-1/2" src="https://swiperjs.com/demos/images/nature-2.jpg"/>
+                <img className="block w-1/2" src="https://swiperjs.com/demos/images/nature-2.jpg" alt={"2"}/>
               </SwiperSlide>
               <SwiperSlide style={{width: '300px'}} className="flex items-center justify-center w-1/4">
-                <img className="block w-1/2" src="https://swiperjs.com/demos/images/nature-3.jpg"/>
+                <img className="block w-1/2" src="https://swiperjs.com/demos/images/nature-3.jpg" alt={"3"}/>
               </SwiperSlide>
               <SwiperSlide style={{width: '300px'}} className="flex items-center justify-center w-1/4">
-                <img className="block w-1/2" src="https://swiperjs.com/demos/images/nature-4.jpg"/>
+                <img className="block w-1/2" src="https://swiperjs.com/demos/images/nature-4.jpg" alt={"4"}/>
               </SwiperSlide>
               <SwiperSlide style={{width: '300px'}} className="flex items-center justify-center w-1/4">
-                <img className="block w-1/2" src="https://swiperjs.com/demos/images/nature-6.jpg"/>
+                <img className="block w-1/2" src="https://swiperjs.com/demos/images/nature-6.jpg" alt={"5"}/>
               </SwiperSlide>
             </Swiper>
           </div>
