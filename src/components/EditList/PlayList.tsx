@@ -1,18 +1,21 @@
 import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { UsePlayListEditor } from "@hooks/UsePlayListEditor";
-import { RootState } from "@store/index";
+import { AppDispatch, RootState } from "@store/index";
 import { EditPlsyListDTO } from "types/EditplayList";
 import { EditPlaylistControls } from "@components/EditList/Button/EditPlaylistControl";
 import { MusicDataRow } from "@components/EditList/MusicList/MusicDataRow";
 import useImageCompress from "@hooks/useImageCompress";
 import { dataURItoFile } from "@utils/ImageCrop/common";
-import { PlusButton } from "./Button/PlusButton";
+import { PlusButton } from "@components/EditList/Button/PlusButton";
 import ShowImage from "@components/EditList/EditImage/ShowImage";
 import { MainEditButton } from "@components/EditList/Button/MainEditButton";
 import { MusicTitle } from "@components/EditList/MusicList/MusicTitle";
+import { useDispatch } from "react-redux";
+import { fetchPlaylist } from "@reducer/editPlayList/setPlaylist";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
+  const dispatch = useDispatch<AppDispatch>();
   const isEditing = useSelector(
     (state: RootState) => state.editPlaylistToggle.isEditing
   );
@@ -41,7 +44,12 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     if (uploadImage) {
       handleCompressImage();
     }
-  }, [uploadImage, handleCompressImage]);
+    const idString = window.location.pathname.split("/").pop();
+    const id = idString ? parseInt(idString) : undefined;
+    if (id !== undefined) {
+      dispatch(fetchPlaylist(id));
+    }
+  }, [uploadImage, handleCompressImage, dispatch]);
 
   return (
     <div className="h-full w-full flex flex-col bg-black text-white font-medium leading-[18px]">

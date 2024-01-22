@@ -6,6 +6,7 @@ import musicadd from "@reducer/musicadd";
 import userProfileReducer from "@reducer/Admin/userProfileSlice";
 import isEdit from "@reducer/editPlayList/isEdit";
 import addMusicInformationToggle from "@reducer/toggle/addMusicToggle";
+import playlistReducer from "@reducer/editPlayList/setPlaylist";
 
 export const store = configureStore({
   reducer: {
@@ -16,6 +17,7 @@ export const store = configureStore({
     userProfile: userProfileReducer,
     editPlaylistToggle: isEdit,
     addMusicInformationToggle: addMusicInformationToggle,
+    playlist: playlistReducer,
   },
 });
 
