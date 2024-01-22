@@ -8,7 +8,7 @@ interface Member {
 }
 
 interface Playlist {
-  playListName: string;
+  playlistName: string;
 }
 
 interface InitialState {

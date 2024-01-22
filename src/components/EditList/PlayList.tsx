@@ -13,6 +13,8 @@ import { MainEditButton } from "@components/EditList/Button/MainEditButton";
 import { MusicTitle } from "@components/EditList/MusicList/MusicTitle";
 import { useDispatch } from "react-redux";
 import { fetchPlaylist } from "@reducer/editPlayList/setPlaylist";
+import { useCookies } from "react-cookie";
+import useDecodedJWT from "@hooks/useDecodedJWT";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -40,16 +42,22 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const { handleEditClick, handleSaveClick, handleCancelClick } =
     UsePlayListEditor();
 
+  // 쿠키에서 유저 id 가져오기
+  const [cookies] = useCookies(["accessToken"]);
+  const token = cookies.accessToken;
+  const decodedToken = useDecodedJWT(token);
+  const id = decodedToken.sub;
+  // console.log(id);
+  //
+
   useEffect(() => {
     if (uploadImage) {
       handleCompressImage();
     }
-    const idString = window.location.pathname.split("/").pop();
-    const id = idString ? parseInt(idString) : undefined;
     if (id !== undefined) {
       dispatch(fetchPlaylist(id));
     }
-  }, [uploadImage, handleCompressImage, dispatch]);
+  }, [uploadImage, handleCompressImage, id, dispatch]);
 
   return (
     <div className="h-full w-full flex flex-col bg-black text-white font-medium leading-[18px]">
