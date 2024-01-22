@@ -12,7 +12,6 @@ import { getMemberDTO } from "types/Member/Member";
 import { useCookies } from "react-cookie";
 import { getMemberMe, updateMember } from "@api/member-controller/memberController";
 import { UpdateMemberParams } from "types/AdminEdit";
-import { debounce } from "lodash";
 
 interface AdminEditModalProps {
   onClose: () => void; // A function to close the modal
