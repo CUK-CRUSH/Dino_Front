@@ -6,7 +6,7 @@ export interface EditProfileDTO {
 }
 
 export interface UserBackgroundImageDTO{
-  userBackgroundImage : string | null;
+  userBackgroundImage : string | undefined |null;
 }
 
 export interface OpenOptionDTO{
@@ -14,7 +14,7 @@ export interface OpenOptionDTO{
 }
 
 export interface UserProfileImageDTO{
-  userProfileImage : string | null;
+  userProfileImage : string | undefined |null;
 }
 
 export interface UserProfileInfoDTO{
