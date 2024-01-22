@@ -1,12 +1,13 @@
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
-import 'swiper/css/navigation';
+import 'swiper/css/effect-coverflow';
 import 'swiper/css/pagination';
+import {EffectCoverflow, Mousewheel, Navigation, Pagination} from 'swiper/modules';
 const HomeComponent = () => {
 
   return (
-      <div className="w-full h-full absolute">
+      <div className="w-full h-full">
         <div className={"h-[30px]"}></div>
         <div className={"flex flex-row items-center align-middle"}>
           <div className="w-[91px] h-[34px] ml-1 bg-neutral-700 rounded-[9px] flex items-center">
@@ -88,47 +89,47 @@ const HomeComponent = () => {
           <div className="w-[234px] h-[52px] bg-violet-400 rounded-[15px] flex justify-center items-center">
             <div>내 리스트 만들기</div>
           </div>
-        </div>
 
-        <div className={"h-[70px]"}></div>
+          <div className={"h-[50px]"}></div>
 
-        <div className={"carousels"}>
-          <Swiper
-              className="mySwiper"
-              spaceBetween={50}
-              slidesPerView={1}
-              navigation
-              pagination={{ clickable: true }}
-              scrollbar={{ draggable: true }}
-              onSwiper={(swiper:any) => console.log(swiper)}
-              onSlideChange={() => console.log('slide change')}
-          >
-            <SwiperSlide>
-              <div className="bg-red-500 w-64 h-64 flex justify-center items-center">
-                <p className="text-white">Slide 1</p>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="bg-blue-500 w-64 h-64 flex justify-center items-center">
-                <p className="text-white">Slide 2</p>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="bg-green-500 w-64 h-64 flex justify-center items-center">
-                <p className="text-white">Slide 3</p>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="bg-yellow-500 w-64 h-64 flex justify-center items-center">
-                <p className="text-white">Slide 4</p>
-              </div>
-            </SwiperSlide>
-            <SwiperSlide>
-              <div className="bg-purple-500 w-64 h-64 flex justify-center items-center">
-                <p className="text-white">Slide 5</p>
-              </div>
-            </SwiperSlide>
-          </Swiper>
+          <div>
+            <Swiper
+                style={{marginLeft: '75px', marginRight: '75px'}}
+                effect={'coverflow'}
+                grabCursor={true}
+                centeredSlides={true} // 'true'로 변경
+                slidesPerView={'auto'}
+                initialSlide={0}
+                spaceBetween={-190} // 0 이상의 값으로 변경
+                coverflowEffect={{
+                  rotate: 20,
+                  stretch: 0,
+                  depth: 200,
+                  modifier: 3,
+                  slideShadows: true,
+                }}
+                navigation={true}
+                mousewheel={true}
+                modules={[EffectCoverflow, Navigation, Mousewheel]}
+                className="mySwiper w-full max-w-screen-md h-auto pt-12 pb-12 mx-auto flex items-center justify-center"
+            >
+              <SwiperSlide style={{width: '300px'}} className="flex items-center justify-center w-1/4">
+                <img className="block w-1/2" src="https://swiperjs.com/demos/images/nature-1.jpg"/>
+              </SwiperSlide>
+              <SwiperSlide style={{width: '300px'}} className="flex items-center justify-center w-1/4">
+                <img className="block w-1/2" src="https://swiperjs.com/demos/images/nature-2.jpg"/>
+              </SwiperSlide>
+              <SwiperSlide style={{width: '300px'}} className="flex items-center justify-center w-1/4">
+                <img className="block w-1/2" src="https://swiperjs.com/demos/images/nature-3.jpg"/>
+              </SwiperSlide>
+              <SwiperSlide style={{width: '300px'}} className="flex items-center justify-center w-1/4">
+                <img className="block w-1/2" src="https://swiperjs.com/demos/images/nature-4.jpg"/>
+              </SwiperSlide>
+              <SwiperSlide style={{width: '300px'}} className="flex items-center justify-center w-1/4">
+                <img className="block w-1/2" src="https://swiperjs.com/demos/images/nature-6.jpg"/>
+              </SwiperSlide>
+            </Swiper>
+          </div>
         </div>
       </div>
   );
