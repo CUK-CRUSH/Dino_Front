@@ -7,10 +7,14 @@ import { EditPlaylistControls } from "@components/EditList/Button/EditPlaylistCo
 import { MusicDataRow } from "@components/EditList/MusicList/MusicDataRow";
 import useImageCompress from "@hooks/useImageCompress";
 import { dataURItoFile } from "@utils/ImageCrop/common";
-import { PlusButton } from "./Button/PlusButton";
+import { PlusButton } from "@components/EditList/Button/PlusButton";
 import ShowImage from "@components/EditList/EditImage/ShowImage";
 import { MainEditButton } from "@components/EditList/Button/MainEditButton";
 import { MusicTitle } from "@components/EditList/MusicList/MusicTitle";
+import { useCookies } from "react-cookie";
+import useDecodedJWT from "@hooks/useDecodedJWT";
+import { getMember } from "@api/member-controller/memberController";
+import { getPlayList } from "@api/playlist-controller/playlistControl";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
   const isEditing = useSelector(
@@ -37,11 +41,28 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const { handleEditClick, handleSaveClick, handleCancelClick } =
     UsePlayListEditor();
 
+  // 쿠키에서 유저 id 가져오기
+  const [cookies] = useCookies(["accessToken"]);
+  const token = cookies.accessToken;
+  const decodedToken = useDecodedJWT(token);
+  const id = decodedToken.sub;
+  //
+
+  const [playlists, setPlaylists] = useState<any[]>([]);
+
   useEffect(() => {
     if (uploadImage) {
       handleCompressImage();
     }
-  }, [uploadImage, handleCompressImage]);
+    const fetchPlaylist = async (id: number) => {
+      const member = await getMember(id);
+      const playlist = await getPlayList(member.data.username);
+      setPlaylists(playlist.data);
+    };
+    if (id !== undefined) {
+      fetchPlaylist(id);
+    }
+  }, [uploadImage, handleCompressImage, id]);
 
   return (
     <div className="h-full w-full flex flex-col bg-black text-white font-medium leading-[18px]">
@@ -63,7 +84,8 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         isCompressLoading={isCompressLoading}
         isEditing={isEditing}
       />
-      <MusicTitle />
+
+      <MusicTitle playlists={playlists[0]} />
 
       <MusicDataRow musicData={musicData} isEditing={isEditing} />
 

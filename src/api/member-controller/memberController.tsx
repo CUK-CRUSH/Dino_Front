@@ -28,11 +28,11 @@ export const getMember = async (id: number, cookies?: string) => {
   try {
     const response = await axiosInstance.get(
       `/api/v1/member/${id}`,
-      {
-        headers: {
-          Authorization: `Bearer ${cookies}`,
-        },
-      }
+//       {
+//         headers: {
+//           Authorization: `Bearer ${cookies}`,
+//         },
+//       }
     );
     return response.data;
   } catch (error) {
