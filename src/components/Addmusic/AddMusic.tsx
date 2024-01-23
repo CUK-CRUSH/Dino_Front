@@ -1,4 +1,4 @@
-import React, { useCallback } from "react";
+import React, { useCallback, useEffect } from "react";
 import { updateArtist, updateTitle, updateURL } from "@reducer/musicadd";
 import { RootState } from "@store/index";
 import { useSelector, useDispatch } from "react-redux";
@@ -10,8 +10,11 @@ import AddButton from "@components/Addmusic/Button/AddButton";
 import AddMusicTitle from "@components/Addmusic/Title/AddMusicTitle";
 import AddBackButton from "@components/Addmusic/Button/AddBackButton";
 import { useTranslation } from "react-i18next";
-import useDecodedJWT from "@hooks/useDecodedJWT";
 import { useCookies } from "react-cookie";
+import useDecodedJWT from "@hooks/useDecodedJWT";
+import { getMember } from "@api/member-controller/memberController";
+import { getPlayList } from "@api/playlist-controller/playlistControl";
+import { postMusicList } from "@api/music-controller/musicControl";
 
 const AddMusic: React.FC = () => {
   const { t } = useTranslation("AddMusic");
@@ -21,7 +24,10 @@ const AddMusic: React.FC = () => {
   // 쿠키에서 유저 id 가져오기
   const [cookies] = useCookies(["accessToken"]);
   const token = cookies.accessToken;
+  const decodedToken = useDecodedJWT(token);
+  const id = decodedToken.sub;
   //
+  const [playlistId, setPlaylistId] = React.useState<number>(0);
 
   const [title, setTitle] = React.useState<string>("");
   const [artist, setArtist] = React.useState<string>("");
@@ -47,7 +53,8 @@ const AddMusic: React.FC = () => {
     dispatch(toggleShowInformation());
   }, [dispatch]);
 
-  const handleSave = useCallback(() => {
+  const handleSave = useCallback(async () => {
+    // async 키워드 추가
     if (
       !url.startsWith("https://www.youtube.com/") &&
       !url.startsWith("https://youtu.be/")
@@ -62,18 +69,40 @@ const AddMusic: React.FC = () => {
       setURL("");
       return;
     }
-    dispatch(updateTitle(title));
-    dispatch(updateArtist(artist));
-    dispatch(updateURL(url));
-    setTitle("");
-    setArtist("");
-    setURL("");
-    navigate(-1);
-  }, [navigate, url, dispatch, artist, title, t]);
+
+    try {
+      await postMusicList(playlistId, title, artist, url, token);
+
+      dispatch(updateTitle(title));
+      dispatch(updateArtist(artist));
+      dispatch(updateURL(url));
+      setTitle("");
+      setArtist("");
+      setURL("");
+      navigate(-1);
+    } catch (error) {
+      Swal.fire({
+        icon: "error",
+        title: "Oops...",
+        text: "Something went wrong!",
+      });
+    }
+  }, [navigate, url, dispatch, artist, title, t, playlistId, token]); // 의존성 배열에 playlistId와 token 추가
 
   const handleBack = useCallback(() => {
     navigate(-1);
   }, [navigate]);
+
+  useEffect(() => {
+    const fetchPlaylist = async (id: number) => {
+      const member = await getMember(id, token);
+      const playlist = await getPlayList(member.data.username);
+      setPlaylistId(playlist.data[0].id);
+    };
+    if (id !== undefined) {
+      fetchPlaylist(id);
+    }
+  }, [id, token]);
 
   return (
     <div className="relative z-30 h-full w-full flex flex-col bg-black text-white py-10 text-[17px] leading-[18px]">
