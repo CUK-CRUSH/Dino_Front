@@ -6,14 +6,13 @@ import UserProfileBackground from "./UserProfileBackgroundImage";
 import OpenOption from "./Button/OpenOption";
 import UserProfileImage from "./UserProfileImage";
 import UserProfileInfo from "./UserProfileInfo";
-// import { PlayList } from "@components/Admin/Button/PlayList";
+import { PlayList } from "@components/Admin/Button/PlayList";
 import { getMember } from "@api/member-controller/memberController";
 import { useCookies } from "react-cookie";
 import useDecodedJWT from "@hooks/useDecodedJWT";
 import { getMemberDTO, getPlaylistDTO } from "types/Admin";
 import { getPlayList } from "@api/playlist-controller/playlistControl";
 import { useParams } from "react-router-dom";
-import { PlayList } from "./Button/PlayList";
 
 const AdminPage: React.FC = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
