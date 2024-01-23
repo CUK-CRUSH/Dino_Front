@@ -2,10 +2,7 @@ import { axiosInstance } from "@api/axiosInstance";
 import { UpdateMemberParams } from "types/AdminEdit";
 
 // 회원 닉네임 변경
-export const putUsername = async (
-  username: string,
-  cookies?: string
-) => {
+export const putUsername = async (username: string, cookies?: string) => {
   try {
     const response = await axiosInstance.put(
       `/api/v1/member/nickname/${username}`,
@@ -26,6 +23,21 @@ export const putUsername = async (
 // 특정 회원 정보 조회
 export const getMember = async (id: number, cookies?: string) => {
   try {
+    const response = await axiosInstance.get(`/api/v1/member/id/${id}`, {
+      headers: {
+        Authorization: `Bearer ${cookies}`,
+      },
+    });
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+// 특정 회원 정보 조회
+export const getMemberUsername = async (id: number, cookies?: string) => {
+  try {
     const response = await axiosInstance.get(
       `/api/v1/member/id/${id}`,
       {
@@ -41,26 +53,11 @@ export const getMember = async (id: number, cookies?: string) => {
   }
 };
 
-// 특정 회원 정보 조회
-export const getMemberUsername = async (id: number, cookies?: string) => {
-  try {
-    const response = await axiosInstance.get(
-      `/api/v1/member/${id}`,
-//       {
-//         headers: {
-//           Authorization: `Bearer ${cookies}`,
-//         },
-//       }
-    );
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-};
-
 // 회원 닉네임 중복 검사
-export const getNicknameAvailable = async (username: string, cookies?: string) => {
+export const getNicknameAvailable = async (
+  username: string,
+  cookies?: string
+) => {
   try {
     const response = await axiosInstance.get(
       `/api/v1/member/nickname/available/${username}`,
@@ -80,14 +77,11 @@ export const getNicknameAvailable = async (username: string, cookies?: string) =
 // 내 정보 조회
 export const getMemberMe = async (cookies?: string) => {
   try {
-    const response = await axiosInstance.get(
-      `/api/v1/member/me`,
-      {
-        headers: {
-          Authorization: `Bearer ${cookies}`,
-        },
-      }
-    );
+    const response = await axiosInstance.get(`/api/v1/member/me`, {
+      headers: {
+        Authorization: `Bearer ${cookies}`,
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
@@ -108,29 +102,42 @@ export const updateMember = async ({
     const formData = new FormData();
 
     if (username) {
-      formData.append('username', username);
+      formData.append("username", username);
     }
 
     if (introduction) {
-      formData.append('introduction', introduction);
+      formData.append("introduction", introduction);
     }
 
     if (profileImage) {
-      const binaryData = Uint8Array.from(atob(profileImage.split(',')[1]), c => c.charCodeAt(0));
-      
-      formData.append("profileImage", new Blob([binaryData], { type: "image/png" }), "image.png");
-      
+      const binaryData = Uint8Array.from(
+        atob(profileImage.split(",")[1]),
+        (c) => c.charCodeAt(0)
+      );
+
+      formData.append(
+        "profileImage",
+        new Blob([binaryData], { type: "image/png" }),
+        "image.png"
+      );
     }
 
     if (backgroundImage) {
-      const binaryData = Uint8Array.from(atob(backgroundImage.split(',')[1]), c => c.charCodeAt(0));
-      
-      formData.append("backgroundImage", new Blob([binaryData], { type: "image/png" }), "image.png");
+      const binaryData = Uint8Array.from(
+        atob(backgroundImage.split(",")[1]),
+        (c) => c.charCodeAt(0)
+      );
+
+      formData.append(
+        "backgroundImage",
+        new Blob([binaryData], { type: "image/png" }),
+        "image.png"
+      );
     }
 
-    const response = await axiosInstance.patch('/api/v1/member', formData, {
+    const response = await axiosInstance.patch("/api/v1/member", formData, {
       headers: {
-        'Content-Type': 'multipart/form-data',
+        "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${cookies}`,
       },
     });
@@ -138,7 +145,7 @@ export const updateMember = async ({
     console.log(response);
     return response.data;
   } catch (error) {
-    console.error('Error updating member information:', error);
+    console.error("Error updating member information:", error);
     throw error;
   }
 };
