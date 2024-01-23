@@ -125,6 +125,9 @@ const AdminPage: React.FC = () => {
         {<AddPlayList />}
 
         <PlayList />
+        <PlayList />
+        <PlayList />
+
       </div>
     </div>
   );
