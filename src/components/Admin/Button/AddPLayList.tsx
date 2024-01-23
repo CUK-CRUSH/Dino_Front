@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import plus from "../../../assets/Admin/plus.svg";
-import { Link } from "react-router-dom";
 import useWindowSizeCustom from "../../../hooks/useWindowSizeCustom";
+import { postPlayList } from "@api/playlist-controller/playlistControl";
+import { useCookies } from "react-cookie";
 
 export const AddPlayList = () => {
   const {windowSize, isMobile} = useWindowSizeCustom();
@@ -20,10 +21,13 @@ export const AddPlayList = () => {
 
   }, [windowSize.width, customMargin,isMobile]);
 
+  const [cookie] = useCookies();
+  let token = cookie.accessToken;
+  const [title] = useState(null);
+  const [titleImage] = useState(null); 
   return (
     <div style={{ marginLeft: `${customMargin}px`, marginRight: `${customMargin}px` }} className="inline-block h-[150px] mt-[42px] relative">
-  <Link to="13" style={{ textDecoration: 'none' }}>
-    <button className="w-[150px] h-[150px] rounded-[13px] border-2 border-zinc-300 font-light text-zinc-300 text-4xl ">
+    <button onClick={() => postPlayList(title,titleImage,token)} style={{background : '#2E2E2E'}} className="w-[150px] h-[150px] rounded-[13px] border-2 border-zinc-300 font-light text-zinc-300 text-4xl ">
 
       <img className="mx-auto mt-[0px] w-[33px] h-full" src={plus} alt="Plus Icon" />
 
@@ -31,7 +35,6 @@ export const AddPlayList = () => {
         새로운 플레이리스트
       </div>
     </button>
-  </Link>
 </div>
   );
 };

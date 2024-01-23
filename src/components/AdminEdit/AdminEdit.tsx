@@ -8,7 +8,7 @@ import SetUserProfileImage from "@components/AdminEdit/SetUserProfileImage";
 import SetUserProfileInfo from "@components/AdminEdit/SetUserProfileInfo";
 import useImageCompress from "@hooks/useImageCompress";
 import { dataURItoFile } from "@utils/ImageCrop/common";
-import { getMemberDTO } from "types/Member/Member";
+import { getMemberDTO } from "types/Admin";
 import { useCookies } from "react-cookie";
 import {
   getMemberMe,

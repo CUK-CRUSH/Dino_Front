@@ -1,10 +1,11 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useWindowSizeCustom from "../../../hooks/useWindowSizeCustom";
+import { getPlaylistDTO } from "types/Admin";
 
 // 플레이리스트 조회하고 사진은 src="ex" 에 넣으면 됨
 
-export const PlayList = () => {
+export const PlayList = ({ playlist }: { playlist: getPlaylistDTO }) => {
   const {windowSize, isMobile} = useWindowSizeCustom();
 
   const [customMargin, setCustomMargin] = useState<number>(0);
@@ -26,12 +27,16 @@ export const PlayList = () => {
       <Link to="13">
         <button className="w-[150px] h-[150px] rounded-[13px] font-light text-zinc-300 text-4xl">
 
-          <img className="mx-auto w-[150px] h-full " src={"ex"} alt='x' />
+        {playlist.thumbnailUrl ?
+         <img className="mx-auto w-[150px] h-full rounded-[13px]" src={playlist.thumbnailUrl ?? "default-image-url"} alt='x' />
+         :
+         <div style={{background : '#2E2E2E'}} className="mx-auto w-[150px] h-full rounded-[13px]"  />
+        }
           <div className="w-full text-left text-zinc-300 font-medium font-['Noto Sans'] absolute -bottom-10 ">
 
-            <span className="text-[15px] text-white align-top">Happy Mix</span>
+            <span className="text-[15px] text-white align-top">{playlist.playlistName}</span>
             <span className="text-[3px] text-white align-super ml-1">●</span>
-            <span className="text-[10px] text-white align-top">  10곡 </span>
+            <span className="text-[10px] text-white align-top">  {playlist.numberOfMusics} </span>
           </div>
         </button>
       </Link>

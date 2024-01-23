@@ -6,11 +6,13 @@ import UserProfileBackground from "./UserProfileBackgroundImage";
 import OpenOption from "./Button/OpenOption";
 import UserProfileImage from "./UserProfileImage";
 import UserProfileInfo from "./UserProfileInfo";
-// import { PlayList } from "@components/Admin/Button/PlayList";
+import { PlayList } from "@components/Admin/Button/PlayList";
 import { getMember } from "@api/member-controller/memberController";
 import { useCookies } from "react-cookie";
 import useDecodedJWT from "@hooks/useDecodedJWT";
-import { getMemberDTO } from "types/Member/Member";
+import { getMemberDTO, getPlaylistDTO } from "types/Admin";
+import { getPlayList } from "@api/playlist-controller/playlistControl";
+import { useParams } from "react-router-dom";
 
 const AdminPage: React.FC = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -21,18 +23,29 @@ const AdminPage: React.FC = () => {
 
   const decodedToken = useDecodedJWT(token);
 
+  // 유저데이터
   const [userData, setUserdata] = useState<getMemberDTO>();
 
+  // 플레이리스트 데이터
+  const [playlistData, setPlaylistdata] = useState<getPlaylistDTO[]>([]);
+
+  const {username} = useParams<{username : string | undefined}>();
   // 정보불러오기
   useEffect(() => {
     const fetchData = async () => {
       try {
-        // Call the asynchronous function and await its result
+        // 유저 정보 조회
         const userDataResult = await getMember(
           decodedToken.sub,
           cookies.accessToken
         );
         setUserdata(userDataResult.data);
+
+        // 유저 - 플레이리스트 조회
+        const playlistDataResult = await getPlayList(
+          username
+        );
+        setPlaylistdata(playlistDataResult.data);
       } catch (error) {
         console.error("Error fetching user data:", error);
         // Handle errors appropriately
@@ -123,10 +136,10 @@ const AdminPage: React.FC = () => {
         {/* 내가 생성한 플레이리스트 뽑아주고 마지막에 플레이리스트 추가 컴포넌트 붙이기. */}
 
         {<AddPlayList />}
-
-        {/* <PlayList />
-        <PlayList />
-        <PlayList /> */}
+        {playlistData && playlistData.map((playlist : getPlaylistDTO, index : number) => (
+            <PlayList 
+              playlist={playlist}/>
+        ))}       
 
       </div>
     </div>
