@@ -18,7 +18,7 @@ const SetUserProfileBackground = ({ aspectRatio, onCrop, compressedImage, isComp
     <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
 
       <div className="h-52 bg-black bg-opacity-70 mb-[-35px] relative">
-        {!isChange ? (    // If earlyImage is available
+        {!isChange && earlyImage ? (    // If earlyImage is available
           <div className="relative">
             <img
               className="h-52 w-full object-cover"

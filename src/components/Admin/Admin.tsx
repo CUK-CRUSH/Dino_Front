@@ -6,7 +6,7 @@ import UserProfileBackground from "./UserProfileBackgroundImage";
 import OpenOption from "./Button/OpenOption";
 import UserProfileImage from "./UserProfileImage";
 import UserProfileInfo from "./UserProfileInfo";
-import { PlayList } from "@components/Admin/Button/PlayList";
+// import { PlayList } from "@components/Admin/Button/PlayList";
 import { getMember } from "@api/member-controller/memberController";
 import { useCookies } from "react-cookie";
 import useDecodedJWT from "@hooks/useDecodedJWT";
@@ -124,7 +124,10 @@ const AdminPage: React.FC = () => {
 
         {<AddPlayList />}
 
+        {/* <PlayList />
         <PlayList />
+        <PlayList /> */}
+
       </div>
     </div>
   );
