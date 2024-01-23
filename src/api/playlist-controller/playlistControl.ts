@@ -76,7 +76,7 @@ export const deletePlayList = async (playlistId: string, cookies?: string) => {
 export const putPlayList = async (
   playlistId: string,
   playlistName: string,
-  image?: string,
+  titleImage?: string,
   cookies?: string
 ) => {
   try {
@@ -85,13 +85,13 @@ export const putPlayList = async (
       formData.append("playlistName", playlistName);
     }
 
-    if (image) {
-      const binaryData = Uint8Array.from(atob(image.split(",")[1]), (c) =>
+    if (titleImage) {
+      const binaryData = Uint8Array.from(atob(titleImage.split(",")[1]), (c) =>
         c.charCodeAt(0)
       );
 
       formData.append(
-        "image",
+        "titleImage",
         new Blob([binaryData], { type: "image/jpg" || "image/png" }),
         "image.jpg, image/png"
       );
