@@ -11,9 +11,16 @@ export const AddMusicInput: React.FC<MusicInputDTO> = ({
   infoButton = false,
   infoText = "",
   infoToggleHandler = () => {},
+  suggestions = [],
+  onSuggestionClick = () => {},
 }) => {
   return (
     <div className="relative">
+      {suggestions.map((suggestion, index) => (
+        <div key={index} onClick={() => onSuggestionClick(suggestion)}>
+          {suggestion}
+        </div>
+      ))}
       <div className="flex flex-row ">
         <h3 className="text-[17px] leading-[18px] mb-3 mr-1">{label}</h3>
         <div className="mt-[3px]">

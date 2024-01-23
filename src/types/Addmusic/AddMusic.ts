@@ -7,6 +7,8 @@ export interface MusicInputDTO {
   infoButton?: boolean;
   infoText?: string;
   infoToggleHandler?: () => void;
+  suggestions?: string[]; // 추가
+  onSuggestionClick?: (suggestion: string) => void;
 }
 
 export interface AddButtonDTO {

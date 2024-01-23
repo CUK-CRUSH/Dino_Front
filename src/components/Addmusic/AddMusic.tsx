@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { updateArtist, updateTitle, updateURL } from "@reducer/musicadd";
 import { RootState } from "@store/index";
 import { useSelector, useDispatch } from "react-redux";
@@ -15,6 +15,8 @@ import useDecodedJWT from "@hooks/useDecodedJWT";
 import { getMember } from "@api/member-controller/memberController";
 import { getPlayList } from "@api/playlist-controller/playlistControl";
 import { postMusicList } from "@api/music-controller/musicControl";
+import { playAutoComplete } from "@api/AutoComplete/AutocompleteControl";
+import { set } from "lodash";
 
 const AddMusic: React.FC = () => {
   const { t } = useTranslation("AddMusic");
@@ -28,6 +30,7 @@ const AddMusic: React.FC = () => {
   const id = decodedToken.sub;
   //
   const [playlistId, setPlaylistId] = React.useState<number>(0);
+  const [suggestions, setSuggestions] = useState<string[]>([]);
 
   const [title, setTitle] = React.useState<string>("");
   const [artist, setArtist] = React.useState<string>("");
@@ -102,7 +105,16 @@ const AddMusic: React.FC = () => {
     if (id !== undefined) {
       fetchPlaylist(id);
     }
-  }, [id, token]);
+    if (title.length > 1) {
+      const fetchAutoComplete = async () => {
+        const fechedSuggestions = await playAutoComplete("ko", title);
+        setSuggestions(fechedSuggestions.data);
+      };
+      fetchAutoComplete();
+    } else {
+      setSuggestions([]);
+    }
+  }, [id, token, title]);
 
   return (
     <div className="relative z-30 h-full w-full flex flex-col bg-black text-white py-10 text-[17px] leading-[18px]">
@@ -115,6 +127,8 @@ const AddMusic: React.FC = () => {
           value={title}
           required={true}
           onChange={handleTitleChange}
+          suggestions={suggestions}
+          onSuggestionClick={setTitle}
         />
         <AddMusicInput
           label={t("artist")}
