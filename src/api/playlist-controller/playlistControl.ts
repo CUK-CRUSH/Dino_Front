@@ -64,16 +64,27 @@ export const deletePlayList = async (playlistId: string, cookies?: string) => {
 export const putPlayList = async (
   playlistId: string,
   playlistName: string,
-  image?: File,
+  image?: string,
   cookies?: string
 ) => {
   try {
     let formData = new FormData();
-    formData.append("playlistName", playlistName);
-    if (image) {
-      formData.append("image", image);
+    if (playlistName) {
+      formData.append("playlistName", playlistName);
     }
-    const response = await axiosInstance.put(
+
+    if (image) {
+      const binaryData = Uint8Array.from(atob(image.split(",")[1]), (c) =>
+        c.charCodeAt(0)
+      );
+
+      formData.append(
+        "image",
+        new Blob([binaryData], { type: "image/png" }),
+        "image.png"
+      );
+    }
+    const response = await axiosInstance.patch(
       `/api/v1/playlist/${playlistId}`,
       formData,
       {

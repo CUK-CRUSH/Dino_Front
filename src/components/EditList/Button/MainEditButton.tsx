@@ -3,7 +3,10 @@ import { useCallback, useState } from "react";
 import { FaAngleLeft, FaEllipsisVertical } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
 
-export const MainEditButton: React.FC = () => {
+export const MainEditButton: React.FC<{ playlists: any[]; token: string }> = ({
+  playlists,
+  token,
+}) => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const handleBack = useCallback(() => {
@@ -25,6 +28,8 @@ export const MainEditButton: React.FC = () => {
         isOpen={modalOpen}
         onRequestClose={() => setModalOpen(false)}
         compressedImage={null}
+        playlists={playlists}
+        token={token}
       />
     </div>
   );
