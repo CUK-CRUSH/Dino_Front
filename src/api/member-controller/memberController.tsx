@@ -53,14 +53,6 @@ export const getMemberUsername = async (id: number, cookies?: string) => {
   }
 };
 
-    );
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-};
-
 // 회원 닉네임 중복 검사
 export const getNicknameAvailable = async (
   username: string,
