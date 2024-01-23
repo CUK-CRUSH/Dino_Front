@@ -54,7 +54,7 @@ const AdminPage: React.FC = () => {
 
     // Call the asynchronous function inside useEffect
     fetchData();
-  }, [decodedToken.sub, cookies.accessToken, userData]);
+  }, [decodedToken.sub, cookies.accessToken, userData, username]);
 
   // 유저 프로필 불러오기
   // const userProfile = useSelector((state: RootState) => state.userProfile);
