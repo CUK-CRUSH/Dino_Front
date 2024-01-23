@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
-import ex from "../../../assets/Admin/ex.svg"
 import { Link } from "react-router-dom";
 import useWindowSizeCustom from "../../../hooks/useWindowSizeCustom";
+
+// 플레이리스트 조회하고 사진은 src="ex" 에 넣으면 됨
 
 export const PlayList = () => {
   const {windowSize, isMobile} = useWindowSizeCustom();
@@ -25,7 +26,7 @@ export const PlayList = () => {
       <Link to="13">
         <button className="w-[150px] h-[150px] rounded-[13px] font-light text-zinc-300 text-4xl">
 
-          <img className="mx-auto w-[150px] h-full " src={ex} alt='x' />
+          <img className="mx-auto w-[150px] h-full " src={"ex"} alt='x' />
           <div className="w-full text-left text-zinc-300 font-medium font-['Noto Sans'] absolute -bottom-10 ">
 
             <span className="text-[15px] text-white align-top">Happy Mix</span>
