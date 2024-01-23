@@ -11,7 +11,6 @@ import {
 } from "@api/member-controller/memberController";
 import { checkBadWord } from "@utils/checkBadWord/checkBadWord";
 import { useNavigate } from "react-router-dom";
-import useDecodedJWT from "@hooks/useDecodedJWT";
 
 // 닉네임 체크
 export const checkNickname = (nickname: string) => {
@@ -41,8 +40,6 @@ const ValidationProps = () => {
   const [cookies] = useCookies(["accessToken"]);
   // 액세스 토큰
   const token = cookies.accessToken;
-
-  const decodedToken = useDecodedJWT(token);
 
   const onChange = debounce(async (e) => {
     setUsername(e.target.value);
