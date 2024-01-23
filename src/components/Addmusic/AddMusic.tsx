@@ -16,7 +16,6 @@ import { getMember } from "@api/member-controller/memberController";
 import { getPlayList } from "@api/playlist-controller/playlistControl";
 import { postMusicList } from "@api/music-controller/musicControl";
 import { playAutoComplete } from "@api/AutoComplete/AutocompleteControl";
-import { set } from "lodash";
 
 const AddMusic: React.FC = () => {
   const { t } = useTranslation("AddMusic");
