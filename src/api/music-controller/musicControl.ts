@@ -1,5 +1,6 @@
 import { axiosInstance } from "@api/axiosInstance";
 
+// 음악 조회하기
 export const getMusicList = async (playlistId: string) => {
   try {
     const response = await axiosInstance.get(
@@ -12,6 +13,7 @@ export const getMusicList = async (playlistId: string) => {
   }
 };
 
+// 음악 추가하기
 export const postMusicList = async (
   playlistId: string,
   title: string,
@@ -43,6 +45,7 @@ export const postMusicList = async (
   }
 };
 
+// 음악 삭제하기
 export const deleteMusicList = async (
   playlistId: string,
   musicId: string,

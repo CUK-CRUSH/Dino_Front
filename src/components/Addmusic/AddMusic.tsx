@@ -10,11 +10,18 @@ import AddButton from "@components/Addmusic/Button/AddButton";
 import AddMusicTitle from "@components/Addmusic/Title/AddMusicTitle";
 import AddBackButton from "@components/Addmusic/Button/AddBackButton";
 import { useTranslation } from "react-i18next";
+import useDecodedJWT from "@hooks/useDecodedJWT";
+import { useCookies } from "react-cookie";
 
 const AddMusic: React.FC = () => {
   const { t } = useTranslation("AddMusic");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  // 쿠키에서 유저 id 가져오기
+  const [cookies] = useCookies(["accessToken"]);
+  const token = cookies.accessToken;
+  //
 
   const [title, setTitle] = React.useState<string>("");
   const [artist, setArtist] = React.useState<string>("");
@@ -61,11 +68,11 @@ const AddMusic: React.FC = () => {
     setTitle("");
     setArtist("");
     setURL("");
-    navigate(`/admin/1`); // 나중에 리다이렉트 주소 수정
+    navigate(-1);
   }, [navigate, url, dispatch, artist, title, t]);
 
   const handleBack = useCallback(() => {
-    navigate(`/admin/1`);
+    navigate(-1);
   }, [navigate]);
 
   return (
@@ -98,7 +105,7 @@ const AddMusic: React.FC = () => {
           infoToggleHandler={handleInformationToggle}
         />
 
-        <AddButton handleSave={handleSave} plus={t("plus")} />
+        <AddButton handleSave={handleSave} plusText={t("plus")} />
       </div>
     </div>
   );
