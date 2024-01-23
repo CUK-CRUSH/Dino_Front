@@ -2,7 +2,7 @@ import React, { useEffect} from "react";
 import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import useDecodedJWT from "@hooks/useDecodedJWT";
-import { getMember } from "@api/member-controller/memberController";
+import {  getMember } from "@api/member-controller/memberController";
 
 const fetchData = async (setCookie : any) => {
   const params = new URLSearchParams(window.location.search);

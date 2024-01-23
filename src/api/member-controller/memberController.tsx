@@ -27,6 +27,24 @@ export const putUsername = async (
 export const getMember = async (id: number, cookies?: string) => {
   try {
     const response = await axiosInstance.get(
+      `/api/v1/member/id/${id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${cookies}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+// 특정 회원 정보 조회
+export const getMemberUsername = async (id: number, cookies?: string) => {
+  try {
+    const response = await axiosInstance.get(
       `/api/v1/member/${id}`,
 //       {
 //         headers: {

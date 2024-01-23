@@ -16,14 +16,17 @@ export const getPlayList = async (username: string) => {
 // 유저 플레이리스트 생성하기
 export const postPlayList = async (
   playlistName: string,
-  image?: File,
+  image?: string,
   cookies?: string
 ) => {
   try {
     let formData = new FormData();
     formData.append("playlistName", playlistName);
     if (image) {
-      formData.append("image", image);
+      const binaryData = Uint8Array.from(atob(image.split(',')[1]), c => c.charCodeAt(0));
+      
+      formData.append("image", new Blob([binaryData], { type: "image/png" }), "image.png");
+      
     }
     const response = await axiosInstance.post(
       `/api/v1/playlist/add`,
