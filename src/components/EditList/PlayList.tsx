@@ -24,6 +24,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const [uploadImage, setUploadImage] = useState<string | null>(null);
   const [compressedImage, setCompressedImage] = useState<string | null>(null);
   const { isLoading: isCompressLoading, compressImage } = useImageCompress();
+  const [playlists, setPlaylists] = useState<any[]>([]);
 
   const handleUploadImage = (image: string) => setUploadImage(image);
   const handleCompressImage = useCallback(async () => {
@@ -38,17 +39,14 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     setCompressedImage(imageUrl);
   }, [uploadImage, compressImage]);
 
-  const { handleEditClick, handleSaveClick, handleCancelClick } =
-    UsePlayListEditor();
-
   // 쿠키에서 유저 id 가져오기
   const [cookies] = useCookies(["accessToken"]);
   const token = cookies.accessToken;
   const decodedToken = useDecodedJWT(token);
   const id = decodedToken.sub;
   //
-
-  const [playlists, setPlaylists] = useState<any[]>([]);
+  const { handleEditClick, handleSaveClick, handleCancelClick } =
+    UsePlayListEditor(playlists, token);
 
   useEffect(() => {
     if (uploadImage) {
@@ -66,7 +64,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
 
   return (
     <div className="h-full w-full flex flex-col bg-black text-white font-medium leading-[18px]">
-      {!isEditing && <MainEditButton />}
+      {!isEditing && <MainEditButton playlists={playlists} token={token} />}
 
       {isEditing && (
         <EditPlaylistControls
