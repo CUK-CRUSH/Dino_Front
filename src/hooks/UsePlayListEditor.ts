@@ -8,7 +8,11 @@ import {
 import { setIsEditing } from "@reducer/editPlayList/isEdit";
 import { putPlayList } from "@api/playlist-controller/playlistControl";
 
-export const UsePlayListEditor = (playlists: any[], token: string) => {
+export const UsePlayListEditor = (
+  playlists: any[],
+  uploadImage: string | null,
+  token: string
+) => {
   const dispatch = useDispatch();
 
   const handleEditClick = () => {
@@ -16,10 +20,10 @@ export const UsePlayListEditor = (playlists: any[], token: string) => {
   };
 
   const handleSaveClick = async (compressedImage: string | null) => {
-    if (playlists.length > 0 && compressedImage) {
+    if (playlists.length > 0 && uploadImage) {
       const { id, playlistName } = playlists[0];
-      console.log(compressedImage);
-      await putPlayList(id, playlistName, compressedImage, token);
+      console.log(uploadImage);
+      await putPlayList(id, playlistName, uploadImage, token);
     }
     dispatch(setIsEditing(false));
     if (compressedImage) {

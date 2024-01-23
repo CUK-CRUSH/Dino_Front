@@ -36,6 +36,7 @@ export default function CustomModal({
   onRequestClose,
   compressedImage,
   playlists,
+  uploadImage,
   token,
 }: Readonly<CustomModalDTO>) {
   const isEditing = useSelector(
@@ -43,7 +44,7 @@ export default function CustomModal({
   );
 
   const { handleEditClick, handleSaveClick, handleCancelClick } =
-    UsePlayListEditor(playlists, token);
+    UsePlayListEditor(playlists, uploadImage, token);
 
   return (
     <ReactModal
