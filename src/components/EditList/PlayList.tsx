@@ -85,7 +85,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         isEditing={isEditing}
       />
 
-      <MusicTitle playlists={playlists[0]} />
+      <MusicTitle playlists={playlists} />
 
       <MusicDataRow musicData={musicData} isEditing={isEditing} />
 

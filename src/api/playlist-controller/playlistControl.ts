@@ -73,7 +73,7 @@ export const putPlayList = async (
     if (image) {
       formData.append("image", image);
     }
-    const response = await axiosInstance.put(
+    const response = await axiosInstance.patch(
       `/api/v1/playlist/${playlistId}`,
       formData,
       {
