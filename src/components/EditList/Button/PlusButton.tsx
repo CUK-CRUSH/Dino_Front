@@ -2,10 +2,16 @@ import { useNavigate } from "react-router-dom";
 import { FaCirclePlus } from "react-icons/fa6";
 import { useTranslation } from "react-i18next";
 
-export const PlusButton = () => {
+export const PlusButton: React.FC<{
+  playlists: any[];
+  username: string | null;
+}> = ({ playlists, username }) => {
   const navigate = useNavigate();
   const handleAddMusicClick = () => {
-    navigate(`/admin/1/edit`);
+    const { id } = playlists[0];
+    // 플레이리스트 보다 하나 많은 id로 이동하여 데이터를 추가한다.
+    // Save시 원래 id인 페이지로 이동
+    navigate(`/${username}/admin/${id}/edit`);
   };
   const { t } = useTranslation("Edit");
   return (

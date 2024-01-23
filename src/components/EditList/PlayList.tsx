@@ -25,6 +25,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const [compressedImage, setCompressedImage] = useState<string | null>(null);
   const { isLoading: isCompressLoading, compressImage } = useImageCompress();
   const [playlists, setPlaylists] = useState<any[]>([]);
+  const [username, setUsername] = useState<string | null>(null);
 
   const handleUploadImage = (image: string) => setUploadImage(image);
   const handleCompressImage = useCallback(async () => {
@@ -46,25 +47,32 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const id = decodedToken.sub;
   //
   const { handleEditClick, handleSaveClick, handleCancelClick } =
-    UsePlayListEditor(playlists, token);
+    UsePlayListEditor(playlists, uploadImage, token);
 
   useEffect(() => {
     if (uploadImage) {
       handleCompressImage();
     }
     const fetchPlaylist = async (id: number) => {
-      const member = await getMember(id);
+      const member = await getMember(id, token);
       const playlist = await getPlayList(member.data.username);
+      setUsername(member.data.username);
       setPlaylists(playlist.data);
     };
     if (id !== undefined) {
       fetchPlaylist(id);
     }
-  }, [uploadImage, handleCompressImage, id]);
+  }, [uploadImage, handleCompressImage, id, token]);
 
   return (
     <div className="h-full w-full flex flex-col bg-black text-white font-medium leading-[18px]">
-      {!isEditing && <MainEditButton playlists={playlists} token={token} />}
+      {!isEditing && (
+        <MainEditButton
+          playlists={playlists}
+          uploadImage={uploadImage}
+          token={token}
+        />
+      )}
 
       {isEditing && (
         <EditPlaylistControls
@@ -87,7 +95,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
 
       <MusicDataRow musicData={musicData} isEditing={isEditing} />
 
-      {isEditing && <PlusButton />}
+      {isEditing && <PlusButton playlists={playlists} username={username} />}
     </div>
   );
 };

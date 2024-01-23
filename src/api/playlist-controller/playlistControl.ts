@@ -23,10 +23,15 @@ export const postPlayList = async (
     let formData = new FormData();
     formData.append("playlistName", playlistName);
     if (image) {
-      const binaryData = Uint8Array.from(atob(image.split(',')[1]), c => c.charCodeAt(0));
-      
-      formData.append("image", new Blob([binaryData], { type: "image/png" }), "image.png");
-      
+      const binaryData = Uint8Array.from(atob(image.split(",")[1]), (c) =>
+        c.charCodeAt(0)
+      );
+
+      formData.append(
+        "image",
+        new Blob([binaryData], { type: "image/png" }),
+        "image.png"
+      );
     }
     const response = await axiosInstance.post(
       `/api/v1/playlist/add`,
@@ -83,8 +88,8 @@ export const putPlayList = async (
 
       formData.append(
         "image",
-        new Blob([binaryData], { type: "image/png" }),
-        "image.png"
+        new Blob([binaryData], { type: "image/jpg" || "image/png" }),
+        "image.jpg, image/png"
       );
     }
     const response = await axiosInstance.patch(
@@ -97,6 +102,7 @@ export const putPlayList = async (
         },
       }
     );
+    console.log(response);
     return response.data;
   } catch (error) {
     console.log(error);
