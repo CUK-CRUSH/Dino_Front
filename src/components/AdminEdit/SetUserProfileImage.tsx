@@ -17,7 +17,7 @@ const SetUserProfileImage = ({ aspectRatio, onCrop, compressedImage, isCompressL
   return (
     <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
       <div className="block w-16 h-16 rounded-full overflow-hidden mx-auto mb-2 relative cursor-pointer">
-        {!isChange ? (
+        {!isChange && earlyImage? (
           // When there is an earlyImage
           <img
             src={earlyImage}
