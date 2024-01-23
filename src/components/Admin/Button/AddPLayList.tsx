@@ -23,7 +23,7 @@ export const AddPlayList = () => {
   return (
     <div style={{ marginLeft: `${customMargin}px`, marginRight: `${customMargin}px` }} className="inline-block h-[150px] mt-[42px] relative">
   <Link to="13" style={{ textDecoration: 'none' }}>
-    <button className="w-[150px] h-[150px] rounded-[13px] border-2 border-zinc-300 font-light text-zinc-300 text-4xl ">
+    <button style={{background : '#2E2E2E'}} className="w-[150px] h-[150px] rounded-[13px] border-2 border-zinc-300 font-light text-zinc-300 text-4xl ">
 
       <img className="mx-auto mt-[0px] w-[33px] h-full" src={plus} alt="Plus Icon" />
 

@@ -1,7 +1,7 @@
 import { axiosInstance } from "@api/axiosInstance";
 
 // 유저의 플레이리스트 조회하기
-export const getPlayList = async (username: string) => {
+export const getPlayList = async (username: string | undefined) => {
   try {
     const response = await axiosInstance.get(
       `/api/v1/playlist/user/${username}`
