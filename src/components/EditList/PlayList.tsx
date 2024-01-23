@@ -62,7 +62,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     if (id !== undefined) {
       fetchPlaylist(id);
     }
-  }, [uploadImage, handleCompressImage, id]);
+  }, [uploadImage, handleCompressImage, id, token]);
 
   return (
     <div className="h-full w-full flex flex-col bg-black text-white font-medium leading-[18px]">
