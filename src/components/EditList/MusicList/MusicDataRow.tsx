@@ -30,10 +30,10 @@ export const MusicDataRow: React.FC<MusicDataDTO> = ({
   return (
     <div className="h-[60%] overflow-auto text-[17px] flex justify-center ">
       <div className="w-full mx-2 my-10">
-        {musicList.data &&
-          musicList.data.map((musicItem: any, index: number) =>
+        {musicList?.data &&
+          musicList.data.map((musicItem: any) =>
             !isEditing ? (
-              <Link to={musicItem.url} key={index}>
+              <Link to={musicItem.url} key={musicItem.id}>
                 <MusicDataRowContent
                   titleRef={titleRef}
                   artistRef={artistRef}
@@ -45,6 +45,7 @@ export const MusicDataRow: React.FC<MusicDataDTO> = ({
               </Link>
             ) : (
               <MusicDataRowContent
+                key={musicItem.id}
                 titleRef={titleRef}
                 artistRef={artistRef}
                 TitleLength={TitleLength}
