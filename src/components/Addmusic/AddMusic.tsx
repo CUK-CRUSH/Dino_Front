@@ -17,8 +17,23 @@ const AddMusic: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [suggestions, setSuggestions] = useState<string[]>([]);
-
+  const [suggestions, setSuggestions] = useState<{ [key: string]: string[] }>(
+    {}
+  );
+  const fetchAutoComplete = useCallback(
+    async (field: string, value: string) => {
+      if (value.length > 1) {
+        const fetchedSuggestions = await playAutoComplete("ko", value);
+        setSuggestions((prev) => ({
+          ...prev,
+          [field]: fetchedSuggestions.data,
+        }));
+      } else {
+        setSuggestions((prev) => ({ ...prev, [field]: [] }));
+      }
+    },
+    []
+  );
   const musicAdd = useSelector((state: RootState) => state.musicAdd);
   const { title, artist, url } = musicAdd;
 
@@ -76,16 +91,9 @@ const AddMusic: React.FC = () => {
   }, [navigate]);
 
   useEffect(() => {
-    if (title.length > 1) {
-      const fetchAutoComplete = async () => {
-        const fechedSuggestions = await playAutoComplete("ko", title);
-        setSuggestions(fechedSuggestions.data);
-      };
-      fetchAutoComplete();
-    } else {
-      setSuggestions([]);
-    }
-  }, [title]);
+    fetchAutoComplete("title", title);
+    fetchAutoComplete("artist", artist);
+  }, [title, artist, fetchAutoComplete]);
 
   return (
     <div className="relative z-30 h-full w-full flex flex-col bg-black text-white py-10 text-[17px] leading-[18px]">
@@ -98,7 +106,7 @@ const AddMusic: React.FC = () => {
           value={title}
           required={true}
           onChange={handleTitleChange}
-          suggestions={suggestions}
+          suggestions={suggestions["title"]}
           onSuggestionClick={(suggestion) => dispatch(updateTitle(suggestion))}
         />
         <AddMusicInput
@@ -107,6 +115,8 @@ const AddMusic: React.FC = () => {
           value={artist}
           required={true}
           onChange={handleArtistChange}
+          suggestions={suggestions["artist"]}
+          onSuggestionClick={(suggestion) => dispatch(updateArtist(suggestion))}
         />
         <AddMusicInput
           label="URL"
