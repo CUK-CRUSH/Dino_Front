@@ -2,6 +2,7 @@
 import { useParams } from "react-router-dom";
 import Progerss from "./Progress";
 import Skip from "./Skip";
+import Text from "./Text";
 
 export const SetProfilePage = () => {
   // 프로필 설정 단계
@@ -13,7 +14,7 @@ export const SetProfilePage = () => {
     <div className="w-full h-full relative bg-white flex flex-col align-middle items-center">
       <Skip />
       <Progerss step={parsedStep} />
-      {/* <Text step={parsedStep} /> */}
+      <Text step={parsedStep} />
     </div>
 
   )
