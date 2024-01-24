@@ -26,10 +26,10 @@ export const UsePlayListEditor = (
     if (playlists.length > 0) {
       const { id } = playlists[0];
       if (uploadImage) {
-        await putPlayList(id, null, uploadImage, token); // 이미지만 업데이트
+        await putPlayList(id, null, uploadImage, token);
       }
       if (playlistName) {
-        await putPlayList(id, playlistName, null, token); // playlistName만 업데이트
+        await putPlayList(id, playlistName, null, token);
       }
       if (musicData && musicData.title && musicData.artist && musicData.url) {
         await postMusicList(
@@ -39,6 +39,9 @@ export const UsePlayListEditor = (
           musicData.url,
           token
         );
+        dispatch(updateTitle(""));
+        dispatch(updateArtist(""));
+        dispatch(updateURL(""));
       }
     }
     dispatch(setIsEditing(false));
