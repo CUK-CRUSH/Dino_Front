@@ -76,6 +76,14 @@ const AddMusic: React.FC = () => {
   }, [navigate]);
 
   useEffect(() => {
+    const fetchPlaylist = async (id: number) => {
+      const member = await getMember(id);
+      const playlist = await getPlayList(member.data.username);
+      setPlaylistId(playlist.data[0].id);
+    };
+    if (id !== undefined) {
+      fetchPlaylist(id);
+    }
     if (title.length > 1) {
       const fetchAutoComplete = async () => {
         const fechedSuggestions = await playAutoComplete("ko", title);
