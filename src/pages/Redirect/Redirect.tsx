@@ -29,7 +29,7 @@ const Redirect = () => {
       const success = await fetchData(setCookie);
 
       // 특정 유저 정보 조회
-      const getUserData = await getMember(decodedToken.sub, cookies.accessToken);
+      const getUserData = await getMember(decodedToken.sub);
       console.log(getUserData);
 
       if (success && !getUserData.data.username) {
@@ -46,7 +46,7 @@ const Redirect = () => {
     };
 
     redirectAfterFetch();
-  }, [navigate, setCookie, decodedToken, cookies.accessToken]);
+  }, [navigate, setCookie, decodedToken]);
 
   return (
     <h2 className={"text-white"}>로그인중입니다....</h2>
