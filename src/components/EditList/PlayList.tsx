@@ -15,6 +15,7 @@ import { useCookies } from "react-cookie";
 import useDecodedJWT from "@hooks/useDecodedJWT";
 import { getMember } from "@api/member-controller/memberController";
 import { getPlayList } from "@api/playlist-controller/playlistControl";
+import { getMusicList } from "@api/music-controller/musicControl";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
   const isEditing = useSelector(
@@ -27,6 +28,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const [playlists, setPlaylists] = useState<any[]>([]);
   const [username, setUsername] = useState<string | null>(null);
   const [playlistName, setPlaylistName] = useState("");
+  const [musicList, setMusicList] = useState<any[]>([]);
 
   const handleUploadImage = (image: string) => setUploadImage(image);
   const handleCompressImage = useCallback(async () => {
@@ -54,13 +56,16 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     const fetchPlaylist = async (id: number) => {
       const member = await getMember(id);
       const playlist = await getPlayList(member.data.username);
+      const playlistId = playlist.data[0].id;
+      const musicAPIData = await getMusicList(playlistId);
       setUsername(member.data.username);
       setPlaylists(playlist.data);
+      setMusicList(musicAPIData);
     };
     if (id !== undefined) {
       fetchPlaylist(id);
     }
-  }, []);
+  }, [musicList]);
 
   return (
     <div className="h-full w-full flex flex-col bg-black text-white font-medium leading-[18px]">
@@ -99,7 +104,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         isEditing={isEditing}
       />
 
-      <MusicDataRow musicData={musicData} isEditing={isEditing} />
+      <MusicDataRow isEditing={isEditing} musicList={musicList} />
 
       {isEditing && <PlusButton playlists={playlists} username={username} />}
     </div>
