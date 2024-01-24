@@ -31,7 +31,7 @@ export const UsePlayListEditor = (
       if (playlistName) {
         await putPlayList(id, playlistName, null, token); // playlistName만 업데이트
       }
-      if (musicData.title & musicData.artist & musicData.url) {
+      if (musicData && musicData.title && musicData.artist && musicData.url) {
         await postMusicList(
           id,
           musicData.title,
