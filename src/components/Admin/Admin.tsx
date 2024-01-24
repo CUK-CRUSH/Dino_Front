@@ -37,7 +37,6 @@ const AdminPage: React.FC = () => {
         // 유저 정보 조회
         const userDataResult = await getMemberUsername(
           username,
-          cookies.accessToken
         );
         setUserdata(userDataResult.data);
 

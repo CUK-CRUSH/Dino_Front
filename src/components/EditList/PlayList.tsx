@@ -54,7 +54,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       handleCompressImage();
     }
     const fetchPlaylist = async (id: number) => {
-      const member = await getMember(id, token);
+      const member = await getMember(id);
       const playlist = await getPlayList(member.data.username);
       setUsername(member.data.username);
       setPlaylists(playlist.data);
@@ -62,7 +62,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     if (id !== undefined) {
       fetchPlaylist(id);
     }
-  }, [uploadImage, handleCompressImage, id, token]);
+  }, [uploadImage, handleCompressImage, id]);
 
   return (
     <div className="h-full w-full flex flex-col bg-black text-white font-medium leading-[18px]">

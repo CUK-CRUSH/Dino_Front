@@ -1,6 +1,6 @@
 import { SetUserProfileImageDTO } from "types/AdminEdit";
 
-import camera from "../../assets/Admin/camera.svg";
+import camera from "@assets/Admin/camera.svg";
 import ImageCropper from "@utils/ImageCrop/ImageCropper";
 import LoadingPage from "@utils/loading";
 import { useEffect, useState } from "react";
