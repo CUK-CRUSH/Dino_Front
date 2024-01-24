@@ -8,7 +8,7 @@ import useImageCompress from "@hooks/useImageCompress";
 import SetProfileImage from "./Setter/SetProfileImage";
 import SetProfileBackgroundImage from "./Setter/SetProfileBackgroundImage";
 import SetProfileIntroduction from "./Setter/SetProfileIntroduction";
-import { setProfileBackgroundImage, setProfileImage } from "@reducer/setProfile/setProfile";
+import { setProfileBackgroundImage, setProfileImage, setProfileIntroduction } from "@reducer/setProfile/setProfile";
 import { useDispatch } from "react-redux";
 
 export const SetProfilePage = () => {
@@ -96,7 +96,20 @@ export const SetProfilePage = () => {
     handleCompressUserProfileBackgroundImage,
   ]);
 
+  // 한줄소개
+  const [input, setInput] = useState({
+    introduction: "",
+  });
 
+  const onChangeInput = (e: { target: { name: any; value: any } }) => {
+    const { name, value } = e.target; // destructuring
+    setInput({
+      ...input,
+      [name]: value,
+    });
+
+    dispatch(setProfileIntroduction(value));
+  };
 
   return (
     <div className="w-full h-full relative bg-white flex flex-col align-middle items-center">
@@ -115,7 +128,12 @@ export const SetProfilePage = () => {
         compressedImage={compressedUserProfileBackgroundImage}
         isCompressLoading={isCompressUserProfileBackgroundLoading} 
         earlyImage={undefined} />}
-      {parsedStep === 3 && <SetProfileIntroduction />}
+      {parsedStep === 3 && <SetProfileIntroduction 
+          placeholder="한 줄 소개"
+          maxlength={999}
+          name="introduction"
+          value={''}
+          onChange={onChangeInput}/>}
 
     </div>
   );
