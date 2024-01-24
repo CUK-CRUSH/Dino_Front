@@ -6,7 +6,7 @@ import ImageDisplay from "@components/EditList/EditImage/ImageDisplay";
 const ShowImage: React.FC<ShowImageDTO> = ({
   aspectRatio,
   onCrop,
-  compressedImage,
+  uploadImage,
   isCompressLoading,
   isEditing,
 }) => {
@@ -15,14 +15,14 @@ const ShowImage: React.FC<ShowImageDTO> = ({
       {isEditing ? (
         <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
           <ImageDisplay
-            compressedImage={compressedImage}
+            compressedImage={uploadImage}
             isCompressLoading={isCompressLoading}
             cursor="pointer"
           />
         </ImageCropper>
       ) : (
         <ImageDisplay
-          compressedImage={compressedImage}
+          compressedImage={uploadImage}
           isCompressLoading={isCompressLoading}
           cursor="default"
         />

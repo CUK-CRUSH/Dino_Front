@@ -63,6 +63,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       fetchPlaylist(id);
     }
   }, [uploadImage, handleCompressImage, id, token]);
+  // console.log(playlists[0].thumbnailUrl);
 
   return (
     <div className="h-full w-full flex flex-col bg-black text-white font-medium leading-[18px]">
@@ -77,7 +78,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       {isEditing && (
         <EditPlaylistControls
           isEditing={isEditing}
-          onSave={() => handleSaveClick(compressedImage)}
+          onSave={() => handleSaveClick(uploadImage)}
           onCancel={handleCancelClick}
           onEdit={handleEditClick}
         />
@@ -86,7 +87,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       <ShowImage
         aspectRatio={1}
         onCrop={handleUploadImage}
-        compressedImage={compressedImage}
+        uploadImage={playlists.length > 0 ? playlists[0].thumbnailUrl : null}
         isCompressLoading={isCompressLoading}
         isEditing={isEditing}
       />
