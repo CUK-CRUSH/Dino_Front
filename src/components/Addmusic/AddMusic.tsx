@@ -97,7 +97,7 @@ const AddMusic: React.FC = () => {
 
   useEffect(() => {
     const fetchPlaylist = async (id: number) => {
-      const member = await getMember(id, token);
+      const member = await getMember(id);
       const playlist = await getPlayList(member.data.username);
       setPlaylistId(playlist.data[0].id);
     };
@@ -113,7 +113,7 @@ const AddMusic: React.FC = () => {
     } else {
       setSuggestions([]);
     }
-  }, [id, token, title]);
+  }, [id, title]);
 
   return (
     <div className="relative z-30 h-full w-full flex flex-col bg-black text-white py-10 text-[17px] leading-[18px]">

@@ -7,7 +7,7 @@ import OpenOption from "./Button/OpenOption";
 import UserProfileImage from "./UserProfileImage";
 import UserProfileInfo from "./UserProfileInfo";
 import { PlayList } from "@components/Admin/Button/PlayList";
-import { getMember } from "@api/member-controller/memberController";
+import {  getMemberUsername } from "@api/member-controller/memberController";
 import { useCookies } from "react-cookie";
 import useDecodedJWT from "@hooks/useDecodedJWT";
 import { getMemberDTO, getPlaylistDTO } from "types/Admin";
@@ -35,9 +35,8 @@ const AdminPage: React.FC = () => {
     const fetchData = async () => {
       try {
         // 유저 정보 조회
-        const userDataResult = await getMember(
-          decodedToken.sub,
-          cookies.accessToken
+        const userDataResult = await getMemberUsername(
+          username,
         );
         setUserdata(userDataResult.data);
 
