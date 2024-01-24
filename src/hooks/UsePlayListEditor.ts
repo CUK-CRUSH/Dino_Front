@@ -7,12 +7,14 @@ import {
 } from "@reducer/musicadd";
 import { setIsEditing } from "@reducer/editPlayList/isEdit";
 import { putPlayList } from "@api/playlist-controller/playlistControl";
+import { postMusicList } from "@api/music-controller/musicControl";
 
 export const UsePlayListEditor = (
   playlists: any[],
   uploadImage: string | null,
   token: string,
-  playlistName: string
+  playlistName: string,
+  musicData: any
 ) => {
   const dispatch = useDispatch();
 
@@ -28,6 +30,15 @@ export const UsePlayListEditor = (
       }
       if (playlistName) {
         await putPlayList(id, playlistName, null, token); // playlistName만 업데이트
+      }
+      if (musicData.title & musicData.artist & musicData.url) {
+        await postMusicList(
+          id,
+          musicData.title,
+          musicData.artist,
+          musicData.url,
+          token
+        );
       }
     }
     dispatch(setIsEditing(false));

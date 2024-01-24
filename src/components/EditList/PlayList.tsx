@@ -45,7 +45,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const id = decodedToken.sub;
   //
   const { handleEditClick, handleSaveClick, handleCancelClick } =
-    UsePlayListEditor(playlists, uploadImage, token, playlistName);
+    UsePlayListEditor(playlists, uploadImage, token, playlistName, musicData);
 
   useEffect(() => {
     if (uploadImage) {
@@ -61,6 +61,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       fetchPlaylist(id);
     }
   }, [uploadImage, handleCompressImage, id]);
+  // console.log(musicData.title);
 
   return (
     <div className="h-full w-full flex flex-col bg-black text-white font-medium leading-[18px]">
