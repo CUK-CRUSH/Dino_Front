@@ -26,6 +26,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const { isLoading: isCompressLoading, compressImage } = useImageCompress();
   const [playlists, setPlaylists] = useState<any[]>([]);
   const [username, setUsername] = useState<string | null>(null);
+  const [playlistName, setPlaylistName] = useState("");
 
   const handleUploadImage = (image: string) => setUploadImage(image);
   const handleCompressImage = useCallback(async () => {
@@ -46,14 +47,14 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const id = decodedToken.sub;
   //
   const { handleEditClick, handleSaveClick, handleCancelClick } =
-    UsePlayListEditor(playlists, uploadImage, token);
+    UsePlayListEditor(playlists, uploadImage, token, playlistName);
 
   useEffect(() => {
     if (uploadImage) {
       handleCompressImage();
     }
     const fetchPlaylist = async (id: number) => {
-      const member = await getMember(id, token);
+      const member = await getMember(id);
       const playlist = await getPlayList(member.data.username);
       setUsername(member.data.username);
       setPlaylists(playlist.data);
@@ -61,7 +62,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     if (id !== undefined) {
       fetchPlaylist(id);
     }
-  }, [uploadImage, handleCompressImage, id, token]);
+  }, [uploadImage, handleCompressImage, id]);
 
   return (
     <div className="h-full w-full flex flex-col bg-black text-white font-medium leading-[18px]">
@@ -70,6 +71,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
           playlists={playlists}
           uploadImage={uploadImage}
           token={token}
+          playlistName={playlistName}
         />
       )}
 
@@ -90,7 +92,13 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         isEditing={isEditing}
       />
 
-      <MusicTitle playlists={playlists} />
+      <MusicTitle
+        playlists={playlists}
+        titlechange={(newTitle) => {
+          setPlaylistName(newTitle);
+        }}
+        isEditing={isEditing}
+      />
 
       <MusicDataRow musicData={musicData} isEditing={isEditing} />
 
