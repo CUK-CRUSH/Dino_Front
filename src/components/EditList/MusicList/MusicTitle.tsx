@@ -27,7 +27,7 @@ export const MusicTitle: React.FC<MusicTitleProps> = ({
       {isEditing ? (
         <input
           type="text"
-          value={title}
+          defaultValue={playlist?.playlistName}
           onChange={handleTitleChange}
           className="text-black"
         />
