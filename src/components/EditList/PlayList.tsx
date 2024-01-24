@@ -71,6 +71,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
           uploadImage={uploadImage}
           token={token}
           playlistName={playlistName}
+          musicData={musicData}
         />
       )}
 
