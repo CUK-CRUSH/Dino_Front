@@ -7,7 +7,8 @@ export const MainEditButton: React.FC<{
   playlists: any[];
   uploadImage: string | null;
   token: string;
-}> = ({ playlists, uploadImage, token }) => {
+  playlistName: string;
+}> = ({ playlists, uploadImage, token, playlistName }) => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const handleBack = useCallback(() => {
@@ -32,6 +33,7 @@ export const MainEditButton: React.FC<{
         playlists={playlists}
         uploadImage={uploadImage}
         token={token}
+        playlistName={playlistName}
       />
     </div>
   );

@@ -13,16 +13,11 @@ const ImageDisplay: React.FC<ImageDisplayDTO> = ({
   return (
     <>
       {compressedImage ? (
-        <>
-          <img
-            className="h-full w-full rounded-b-3xl object-cover"
-            src={compressedImage}
-            alt="Img"
-          />
-          <div className="text-[32px] text-shadow-title bottom-4 left-4 font-bold leading-5 absolute">
-            <h2>Title</h2>
-          </div>
-        </>
+        <img
+          className="h-full w-full rounded-b-3xl object-cover"
+          src={compressedImage}
+          alt="Img"
+        />
       ) : (
         <div
           className={`h-full flex items-center justify-center rounded-b-3xl text-center bg-white cursor-${cursor}`}

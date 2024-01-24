@@ -7,11 +7,13 @@ export interface MusicInputDTO {
   infoButton?: boolean;
   infoText?: string;
   infoToggleHandler?: () => void;
+  suggestions?: string[]; // 추가
+  onSuggestionClick?: (suggestion: string) => void;
 }
 
 export interface AddButtonDTO {
   handleSave: () => void;
-  plus: string;
+  plusText: string;
 }
 
 export interface AddMusicBackButtonDTO {

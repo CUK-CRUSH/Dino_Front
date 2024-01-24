@@ -22,10 +22,11 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   );
   const musicData = useSelector((state: RootState) => state.musicAdd);
   const [uploadImage, setUploadImage] = useState<string | null>(null);
-  const [compressedImage, setCompressedImage] = useState<string | null>(null);
+
   const { isLoading: isCompressLoading, compressImage } = useImageCompress();
   const [playlists, setPlaylists] = useState<any[]>([]);
   const [username, setUsername] = useState<string | null>(null);
+  const [playlistName, setPlaylistName] = useState("");
 
   const handleUploadImage = (image: string) => setUploadImage(image);
   const handleCompressImage = useCallback(async () => {
@@ -33,13 +34,10 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
 
     const imageFile = dataURItoFile(uploadImage);
 
-    const compressedImage = await compressImage(imageFile);
+    const result = await compressImage(imageFile);
 
-    if (!compressedImage) return;
-    const imageUrl = URL.createObjectURL(compressedImage);
-    setCompressedImage(imageUrl);
+    if (!result) return;
   }, [uploadImage, compressImage]);
-
   // 쿠키에서 유저 id 가져오기
   const [cookies] = useCookies(["accessToken"]);
   const token = cookies.accessToken;
@@ -47,7 +45,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const id = decodedToken.sub;
   //
   const { handleEditClick, handleSaveClick, handleCancelClick } =
-    UsePlayListEditor(playlists, uploadImage, token);
+    UsePlayListEditor(playlists, uploadImage, token, playlistName);
 
   useEffect(() => {
     if (uploadImage) {
@@ -71,13 +69,14 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
           playlists={playlists}
           uploadImage={uploadImage}
           token={token}
+          playlistName={playlistName}
         />
       )}
 
       {isEditing && (
         <EditPlaylistControls
           isEditing={isEditing}
-          onSave={() => handleSaveClick(compressedImage)}
+          onSave={() => handleSaveClick(uploadImage)}
           onCancel={handleCancelClick}
           onEdit={handleEditClick}
         />
@@ -86,12 +85,18 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       <ShowImage
         aspectRatio={1}
         onCrop={handleUploadImage}
-        compressedImage={compressedImage}
+        playlists={playlists}
         isCompressLoading={isCompressLoading}
         isEditing={isEditing}
       />
 
-      <MusicTitle playlists={playlists} />
+      <MusicTitle
+        playlists={playlists}
+        titlechange={(newTitle) => {
+          setPlaylistName(newTitle);
+        }}
+        isEditing={isEditing}
+      />
 
       <MusicDataRow musicData={musicData} isEditing={isEditing} />
 

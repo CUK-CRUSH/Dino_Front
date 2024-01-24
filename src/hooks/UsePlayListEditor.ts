@@ -11,7 +11,8 @@ import { putPlayList } from "@api/playlist-controller/playlistControl";
 export const UsePlayListEditor = (
   playlists: any[],
   uploadImage: string | null,
-  token: string
+  token: string,
+  playlistName: string
 ) => {
   const dispatch = useDispatch();
 
@@ -20,10 +21,14 @@ export const UsePlayListEditor = (
   };
 
   const handleSaveClick = async (compressedImage: string | null) => {
-    if (playlists.length > 0 && uploadImage) {
-      const { id, playlistName } = playlists[0];
-      console.log(uploadImage);
-      await putPlayList(id, playlistName, uploadImage, token);
+    if (playlists.length > 0) {
+      const { id } = playlists[0];
+      if (uploadImage) {
+        await putPlayList(id, null, uploadImage, token); // 이미지만 업데이트
+      }
+      if (playlistName) {
+        await putPlayList(id, playlistName, null, token); // playlistName만 업데이트
+      }
     }
     dispatch(setIsEditing(false));
     if (compressedImage) {

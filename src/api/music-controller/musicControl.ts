@@ -1,10 +1,9 @@
 import { axiosInstance } from "@api/axiosInstance";
 
-export const getMusicList = async (playlistId: string) => {
+// 음악 조회하기
+export const getMusicList = async (playlistId: number) => {
   try {
-    const response = await axiosInstance.get(
-      `/api/v1/playlist/${playlistId}/music`
-    );
+    const response = await axiosInstance.get(`/api/v1/music/${playlistId}`);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -12,8 +11,9 @@ export const getMusicList = async (playlistId: string) => {
   }
 };
 
+// 음악 추가하기
 export const postMusicList = async (
-  playlistId: string,
+  playlistId: number,
   title: string,
   artist: string,
   url: string,
@@ -24,7 +24,7 @@ export const postMusicList = async (
   }
   try {
     const response = await axiosInstance.post(
-      `/api/v1/playlist/${playlistId}/music/add`,
+      `/api/v1/music/${playlistId}`,
       {
         title,
         artist,
@@ -43,20 +43,18 @@ export const postMusicList = async (
   }
 };
 
+// 음악 삭제하기
 export const deleteMusicList = async (
-  playlistId: string,
+  playlistId: number,
   musicId: string,
   cookies?: string
 ) => {
   try {
-    const response = await axiosInstance.delete(
-      `/api/v1/playlist/${playlistId}/music/${musicId}`,
-      {
-        headers: {
-          Authorization: `Bearer ${cookies}`,
-        },
-      }
-    );
+    const response = await axiosInstance.delete(`/api/v1/music`, {
+      headers: {
+        Authorization: `Bearer ${cookies}`,
+      },
+    });
     return response.data;
   } catch (error) {
     console.log(error);
