@@ -33,13 +33,12 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
 
     const imageFile = dataURItoFile(uploadImage);
 
-    const compressedImage = await compressImage(imageFile);
+    const result = await compressImage(imageFile);
 
-    if (!compressedImage) return;
-    const imageUrl = URL.createObjectURL(compressedImage);
+    if (!result) return;
+    const imageUrl = URL.createObjectURL(result);
     setCompressedImage(imageUrl);
   }, [uploadImage, compressImage]);
-
   // 쿠키에서 유저 id 가져오기
   const [cookies] = useCookies(["accessToken"]);
   const token = cookies.accessToken;
@@ -63,7 +62,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       fetchPlaylist(id);
     }
   }, [uploadImage, handleCompressImage, id, token]);
-  // console.log(playlists[0].thumbnailUrl);
 
   return (
     <div className="h-full w-full flex flex-col bg-black text-white font-medium leading-[18px]">
@@ -87,7 +85,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       <ShowImage
         aspectRatio={1}
         onCrop={handleUploadImage}
-        uploadImage={playlists.length > 0 ? playlists[0].thumbnailUrl : null}
+        playlists={playlists}
         isCompressLoading={isCompressLoading}
         isEditing={isEditing}
       />

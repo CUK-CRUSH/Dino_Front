@@ -36,7 +36,7 @@ export interface EditPlsyListDTO {}
 export interface ShowImageDTO {
   aspectRatio: number;
   onCrop: (image: string) => void;
-  uploadImage: string | null;
+  playlists: any;
   isCompressLoading: boolean;
   isEditing: boolean;
 }
