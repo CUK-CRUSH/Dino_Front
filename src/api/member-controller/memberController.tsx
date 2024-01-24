@@ -36,13 +36,16 @@ export const getMember = async (id: number) => {
 };
 
 // 특정 회원 정보 조회
-export const getMemberUsername = async (username : string | undefined) => {
+export const getMemberUsername = async (username: string | undefined) => {
   try {
-    const response = await axiosInstance.get(`/api/v1/member/nickname/${username}`, {
-      // headers: {
-      //   Authorization: `Bearer ${cookies}`,
-      // },
-    });
+    const response = await axiosInstance.get(
+      `/api/v1/member/nickname/${username}`,
+      {
+        // headers: {
+        //   Authorization: `Bearer ${cookies}`,
+        // },
+      }
+    );
     return response.data;
   } catch (error) {
     console.log(error);

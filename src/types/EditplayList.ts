@@ -5,18 +5,13 @@ export interface EditPlayListControlsDTO {
   onEdit: () => void;
 }
 
-interface MusicData {
-  // id: number;
-  title: string;
-  artist: string;
-  url: string;
-}
-
 export interface MusicDataDTO {
-  musicData: MusicData;
+  isEditing: boolean;
+  musicList: any;
 }
 
 export interface MusicContentDTO {
+  id: number;
   title: string;
   artist: string;
   url: string;

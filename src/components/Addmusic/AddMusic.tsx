@@ -10,11 +10,6 @@ import AddButton from "@components/Addmusic/Button/AddButton";
 import AddMusicTitle from "@components/Addmusic/Title/AddMusicTitle";
 import AddBackButton from "@components/Addmusic/Button/AddBackButton";
 import { useTranslation } from "react-i18next";
-import { useCookies } from "react-cookie";
-import useDecodedJWT from "@hooks/useDecodedJWT";
-import { getMember } from "@api/member-controller/memberController";
-import { getPlayList } from "@api/playlist-controller/playlistControl";
-import { postMusicList } from "@api/music-controller/musicControl";
 import { playAutoComplete } from "@api/AutoComplete/AutocompleteControl";
 
 const AddMusic: React.FC = () => {
@@ -22,29 +17,21 @@ const AddMusic: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  // 쿠키에서 유저 id 가져오기
-  const [cookies] = useCookies(["accessToken"]);
-  const token = cookies.accessToken;
-  const decodedToken = useDecodedJWT(token);
-  const id = decodedToken.sub;
-  //
-  const [playlistId, setPlaylistId] = React.useState<number>(0);
   const [suggestions, setSuggestions] = useState<string[]>([]);
 
-  const [title, setTitle] = React.useState<string>("");
-  const [artist, setArtist] = React.useState<string>("");
-  const [url, setURL] = React.useState<string>("");
+  const musicAdd = useSelector((state: RootState) => state.musicAdd);
+  const { title, artist, url } = musicAdd;
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
+    dispatch(updateTitle(e.target.value));
   };
 
   const handleArtistChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setArtist(e.target.value);
+    dispatch(updateArtist(e.target.value));
   };
 
   const handleURLChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setURL(e.target.value);
+    dispatch(updateURL(e.target.value));
   };
 
   const { showInformation } = useSelector(
@@ -66,21 +53,14 @@ const AddMusic: React.FC = () => {
         title: `You can't use "${url}"`,
         text: `${t("urlWarning")}`,
       });
-      setTitle("");
-      setArtist("");
-      setURL("");
+
       return;
     }
 
     try {
-      await postMusicList(playlistId, title, artist, url, token);
-
       dispatch(updateTitle(title));
       dispatch(updateArtist(artist));
       dispatch(updateURL(url));
-      setTitle("");
-      setArtist("");
-      setURL("");
       navigate(-1);
     } catch (error) {
       Swal.fire({
@@ -89,21 +69,13 @@ const AddMusic: React.FC = () => {
         text: "Something went wrong!",
       });
     }
-  }, [navigate, url, dispatch, artist, title, t, playlistId, token]); // 의존성 배열에 playlistId와 token 추가
+  }, [navigate, url, dispatch, artist, title, t]); // 의존성 배열에 playlistId와 token 추가
 
   const handleBack = useCallback(() => {
     navigate(-1);
   }, [navigate]);
 
   useEffect(() => {
-    const fetchPlaylist = async (id: number) => {
-      const member = await getMember(id);
-      const playlist = await getPlayList(member.data.username);
-      setPlaylistId(playlist.data[0].id);
-    };
-    if (id !== undefined) {
-      fetchPlaylist(id);
-    }
     if (title.length > 1) {
       const fetchAutoComplete = async () => {
         const fechedSuggestions = await playAutoComplete("ko", title);
@@ -113,7 +85,7 @@ const AddMusic: React.FC = () => {
     } else {
       setSuggestions([]);
     }
-  }, [id, title]);
+  }, [title]);
 
   return (
     <div className="relative z-30 h-full w-full flex flex-col bg-black text-white py-10 text-[17px] leading-[18px]">
@@ -127,7 +99,7 @@ const AddMusic: React.FC = () => {
           required={true}
           onChange={handleTitleChange}
           suggestions={suggestions}
-          onSuggestionClick={setTitle}
+          onSuggestionClick={(suggestion) => dispatch(updateTitle(suggestion))}
         />
         <AddMusicInput
           label={t("artist")}
