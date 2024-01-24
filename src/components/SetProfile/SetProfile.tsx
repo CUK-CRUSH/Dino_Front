@@ -8,7 +8,7 @@ import useImageCompress from "@hooks/useImageCompress";
 import SetProfileImage from "./Setter/SetProfileImage";
 import SetProfileBackgroundImage from "./Setter/SetProfileBackgroundImage";
 import SetProfileIntroduction from "./Setter/SetProfileIntroduction";
-import  { setProfileBackgroundImage, setProfileImage } from "@reducer/setProfile/setProfile";
+import { setProfileBackgroundImage, setProfileImage } from "@reducer/setProfile/setProfile";
 import { useDispatch } from "react-redux";
 
 export const SetProfilePage = () => {
@@ -107,8 +107,14 @@ export const SetProfilePage = () => {
         aspectRatio={1 / 1}
         onCrop={handleUploadUserProfileImage}
         compressedImage={compressedUserProfileImage}
-        isCompressLoading={isCompressUserProfileLoading} earlyImage={undefined} />}
-      {parsedStep === 2 && <SetProfileBackgroundImage />}
+        isCompressLoading={isCompressUserProfileLoading} 
+        earlyImage={undefined} />}
+      {parsedStep === 2 && <SetProfileBackgroundImage 
+        aspectRatio={1 / 1}
+        onCrop={handleUploadUserProfileBackgroundImage}
+        compressedImage={compressedUserProfileBackgroundImage}
+        isCompressLoading={isCompressUserProfileBackgroundLoading} 
+        earlyImage={undefined} />}
       {parsedStep === 3 && <SetProfileIntroduction />}
 
     </div>
