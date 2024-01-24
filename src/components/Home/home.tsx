@@ -28,7 +28,7 @@ const HomeComponent = () => {
               </defs>
             </svg>
             <div className={"w-[4px]"}></div>
-            <div><p className={"text-amber-50"}>한국어</p></div>
+            <div><p className={"text-ambeㅞㅡr-50"}>한국어</p></div>
           </div>
           <div className={"grow"}></div>
           <div
@@ -130,6 +130,8 @@ const HomeComponent = () => {
               </SwiperSlide>
             </Swiper>
           </div>
+
+          <div className={"h-[38px]"}></div>
         </div>
       </div>
   );
