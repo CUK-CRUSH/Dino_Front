@@ -2,7 +2,7 @@ import { axiosInstance } from "@api/axiosInstance";
 import { UpdateMemberParams } from "types/AdminEdit";
 
 // 회원 닉네임 변경
-export const putUsername = async (username: string | undefined, cookies?: string) => {
+export const putUsername = async (username: string, cookies?: string) => {
   try {
     const response = await axiosInstance.put(
       `/api/v1/member/nickname/${username}`,
@@ -24,7 +24,9 @@ export const putUsername = async (username: string | undefined, cookies?: string
 export const getMember = async (id: number) => {
   try {
     const response = await axiosInstance.get(`/api/v1/member/id/${id}`, {
-     
+      // headers: {
+      //   Authorization: `Bearer ${cookies}`,
+      // },
     });
     return response.data;
   } catch (error) {
@@ -36,10 +38,11 @@ export const getMember = async (id: number) => {
 // 특정 회원 정보 조회
 export const getMemberUsername = async (username : string | undefined) => {
   try {
-    const response = await axiosInstance.get(
-      `/api/v1/member/nickname/${username}`,
-      
-    );
+    const response = await axiosInstance.get(`/api/v1/member/nickname/${username}`, {
+      // headers: {
+      //   Authorization: `Bearer ${cookies}`,
+      // },
+    });
     return response.data;
   } catch (error) {
     console.log(error);

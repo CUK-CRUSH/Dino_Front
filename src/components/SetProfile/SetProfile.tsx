@@ -13,7 +13,7 @@ export const SetProfilePage = () => {
     <div className="w-full h-full relative bg-white flex flex-col align-middle items-center">
       <Skip />
       <Progerss step={parsedStep} />
-
+      {/* <Text step={parsedStep} /> */}
     </div>
 
   )
