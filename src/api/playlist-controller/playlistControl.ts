@@ -21,7 +21,7 @@ export const postPlayList = async (
 ) => {
   try {
     let formData = new FormData();
-    if(playlistName){
+    if (playlistName) {
       formData.append("playlistName", playlistName);
     }
 
@@ -36,17 +36,13 @@ export const postPlayList = async (
         "image.png"
       );
     }
-    const response = await axiosInstance.post(
-      `/api/v1/playlist`,
-      formData,
-      {
-        headers: {
-          "Content-Type": "multipart/form-data",
-          Authorization: `Bearer ${cookies}`,
-        },
-      }
-    );
-    console.log(response)
+    const response = await axiosInstance.post(`/api/v1/playlist`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+        Authorization: `Bearer ${cookies}`,
+      },
+    });
+    console.log(response);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -75,8 +71,8 @@ export const deletePlayList = async (playlistId: string, cookies?: string) => {
 // 유저 플레이리스트 변경하기
 export const putPlayList = async (
   playlistId: string,
-  playlistName: string,
-  titleImage?: string,
+  playlistName: string | null,
+  titleImage?: string | null,
   cookies?: string
 ) => {
   try {
