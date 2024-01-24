@@ -1,4 +1,3 @@
-import { useState } from "react";
 import { useParams } from "react-router-dom";
 
 interface MusicTitleProps {
@@ -17,9 +16,7 @@ export const MusicTitle: React.FC<MusicTitleProps> = ({
     (playlist: any) => playlist?.id === Number(playlistId)
   );
 
-  const [title, setTitle] = useState(playlist ? playlist.playlistName : "");
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setTitle(e.target.value);
     titlechange(e.target.value);
   };
   return (

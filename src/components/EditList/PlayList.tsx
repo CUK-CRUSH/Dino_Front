@@ -22,7 +22,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   );
   const musicData = useSelector((state: RootState) => state.musicAdd);
   const [uploadImage, setUploadImage] = useState<string | null>(null);
-  const [compressedImage, setCompressedImage] = useState<string | null>(null);
+
   const { isLoading: isCompressLoading, compressImage } = useImageCompress();
   const [playlists, setPlaylists] = useState<any[]>([]);
   const [username, setUsername] = useState<string | null>(null);
@@ -37,8 +37,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     const result = await compressImage(imageFile);
 
     if (!result) return;
-    const imageUrl = URL.createObjectURL(result);
-    setCompressedImage(imageUrl);
   }, [uploadImage, compressImage]);
   // 쿠키에서 유저 id 가져오기
   const [cookies] = useCookies(["accessToken"]);
