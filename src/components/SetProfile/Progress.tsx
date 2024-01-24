@@ -11,7 +11,7 @@ import dot from "@assets/SetProfile/dot.svg";
 const Progerss = ({ step }: ProgressDTO) => {
 
   return (
-    <div>
+    <div className="absolute top-24 p-4 ">
       {step === 1 && (
         <div className={"flex"}>
           <img src={fill_1} alt={`x`} />
