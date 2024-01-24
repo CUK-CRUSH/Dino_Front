@@ -65,7 +65,8 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     if (id !== undefined) {
       fetchPlaylist(id);
     }
-  }, [musicList]);
+  }, [handleCompressImage, id, uploadImage, musicList]);
+  // 일단 의존성때문에 넣을건데 musicList빼고 나중에 다 지워도 될ㄷ스.
 
   return (
     <div className="h-full w-full flex flex-col bg-black text-white font-medium leading-[18px]">

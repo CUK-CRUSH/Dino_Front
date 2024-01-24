@@ -26,7 +26,7 @@ export const MusicDataRow: React.FC<MusicDataDTO> = ({
 
   const TitleLength = titleWidth >= 185; // 텍스트 너비에 따라 애니메이션 적용 여부 결정
   const ArtistLength = artistWidth >= 80;
-  console.log(musicList.data);
+
   return (
     <div className="h-[60%] overflow-auto text-[17px] flex justify-center ">
       <div className="w-full mx-2 my-10">
