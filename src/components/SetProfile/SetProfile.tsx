@@ -121,13 +121,13 @@ export const SetProfilePage = () => {
         onCrop={handleUploadUserProfileImage}
         compressedImage={compressedUserProfileImage}
         isCompressLoading={isCompressUserProfileLoading} 
-        earlyImage={undefined} />}
+        />}
       {parsedStep === 2 && <SetProfileBackgroundImage 
         aspectRatio={1 / 1}
         onCrop={handleUploadUserProfileBackgroundImage}
         compressedImage={compressedUserProfileBackgroundImage}
         isCompressLoading={isCompressUserProfileBackgroundLoading} 
-        earlyImage={undefined} />}
+        />}
       {parsedStep === 3 && <SetProfileIntroduction 
           placeholder="한 줄 소개"
           maxlength={999}

@@ -1,8 +1,8 @@
 import file from "@assets/SetProfile/file.svg";
 import ImageCropper from "@utils/ImageCrop/ImageCropper";
-import { SetUserProfileImageDTO } from "types/AdminEdit";
+import { SetProfileImageDTO } from "types/SetProfile/setProfile";
 
-const SetProfileBackgroundImage = ({ aspectRatio, onCrop, compressedImage, isCompressLoading }: SetUserProfileImageDTO) => {
+const SetProfileBackgroundImage = ({ aspectRatio, onCrop, compressedImage, isCompressLoading }: SetProfileImageDTO) => {
   return (
 
     <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
