@@ -1,9 +1,9 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  profileImage: null,
-  backgroundImage: null,
-  introduction: '',
+  profileImage: undefined,
+  profileBackgroundImage: undefined,
+  profileIntroduction: undefined,
 };
 
 const setProfile = createSlice({
@@ -14,10 +14,10 @@ const setProfile = createSlice({
       state.profileImage = action.payload
     },
     setProfileBackgroundImage: (state, action) => {
-      state.backgroundImage = action.payload
+      state.profileBackgroundImage = action.payload
     },
     setProfileIntroduction: (state, action) => {
-      state.introduction = action.payload
+      state.profileIntroduction = action.payload
     },
   }
 })

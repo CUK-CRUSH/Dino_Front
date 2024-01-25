@@ -1,32 +1,40 @@
 import { updateMember } from "@api/member-controller/memberController";
+import { RootState } from "@store/index";
 import {  useState } from "react";
 import { useCookies } from "react-cookie";
+import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { UpdateMemberParams } from "types/AdminEdit";
 import { NextDTO } from "types/SetProfile/setProfile";
 
-const Next = ({ step,username,profileImage,profileBackgroundImage,profileIntroduction}: NextDTO) => {
-
+const Next = ({ step,username}: NextDTO) => {
   const navigate = useNavigate();
 
   const [cookie] = useCookies();
   const token = cookie.accessToken;
 
-  const [updateMemberData] = useState<UpdateMemberParams>({
-    username: username,
+  const { profileImage, profileBackgroundImage, profileIntroduction } = useSelector(
+    (state: RootState) => state.setProfile
+  );  
+  const updateMemberData: UpdateMemberParams = {
+    username: undefined,
     introduction: profileIntroduction,
     profileImage: profileImage,
     backgroundImage: profileBackgroundImage,
     cookies: token,
-  });
-
-  const handleMember = (data: UpdateMemberParams) => {
+    }
+    
+  const handleMember = async (data: UpdateMemberParams) => {
     // Handle member data
     console.log("Saving data:", data);
 
     if(step === 3) { 
       updateMember(data); 
-      navigate(`/${username}/admin`)
+      const code = await updateMember(data);
+      if(code.status === 200) {
+        console.log(code)
+        navigate(`/${code.data.username}/admin`)
+      }
     }
   
   };

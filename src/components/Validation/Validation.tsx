@@ -43,7 +43,7 @@ const ValidationProps = () => {
 
   const onChange = debounce(async (e) => {
     setUsername(e.target.value);
-
+    console.log(token)
     if (e.target.value) {
       // Backend 닉네임 체크
       const checkNicknameBack = await getNicknameAvailable(

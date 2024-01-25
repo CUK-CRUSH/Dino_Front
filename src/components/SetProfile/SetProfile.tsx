@@ -100,7 +100,7 @@ export const SetProfilePage = () => {
 
   // 한줄소개
   const [input, setInput] = useState({
-    introduction: "",
+    introduction: undefined,
   });
 
   const onChangeInput = (e: { target: { name: any; value: any } }) => {
@@ -143,9 +143,7 @@ export const SetProfilePage = () => {
         <Next 
           step={parsedStep}
           username={username}
-          profileImage={uploadUserProfileImage}
-          profileBackgroundImage={uploadUserProfileBackgroundImage}
-          profileIntroduction={input.introduction}        
+            
           />
     </div>
   );

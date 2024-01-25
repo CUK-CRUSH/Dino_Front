@@ -1,7 +1,11 @@
+import { RootState } from "@store/index";
+import { useSelector } from "react-redux";
 import { UserBackgroundImageDTO } from "types/Admin"
 
 const UserProfileBackground = ({userBackgroundImage} : UserBackgroundImageDTO) => {
-    
+  const { profileBackgroundImage } = useSelector(
+    (state: RootState) => state.setProfile
+  );  
     return(
         
         <div
@@ -9,7 +13,7 @@ const UserProfileBackground = ({userBackgroundImage} : UserBackgroundImageDTO) =
         >
           {userBackgroundImage && (
             <img
-              src={userBackgroundImage}
+              src={userBackgroundImage || profileBackgroundImage}
               alt="Selected"
               className="h-full w-full object-cover"
             />
