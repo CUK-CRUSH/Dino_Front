@@ -7,4 +7,5 @@ export interface CustomModalDTO {
   token: string;
   playlistName: string;
   musicData: any;
+  playlistId: string | undefined;
 }

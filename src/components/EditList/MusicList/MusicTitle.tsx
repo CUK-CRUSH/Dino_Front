@@ -1,17 +1,16 @@
-import { useParams } from "react-router-dom";
-
 interface MusicTitleProps {
   playlists: any;
   titlechange: (title: string) => void;
   isEditing?: boolean;
+  playlistId?: string | undefined;
 }
 
 export const MusicTitle: React.FC<MusicTitleProps> = ({
   playlists,
   titlechange,
   isEditing,
+  playlistId,
 }) => {
-  const { playlistId } = useParams<{ playlistId: string }>();
   const playlist = playlists.find(
     (playlist: any) => playlist?.id === Number(playlistId)
   );

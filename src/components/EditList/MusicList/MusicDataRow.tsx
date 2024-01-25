@@ -12,6 +12,7 @@ export const MusicDataRow: React.FC<MusicDataDTO> = ({
   const [artistWidth, setArtistWidth] = useState(0);
   const titleRef = useRef<HTMLSpanElement>(null);
   const artistRef = useRef<HTMLSpanElement>(null);
+  // console.log(musicList);
 
   useEffect(() => {
     if (titleRef.current && artistRef.current) {
@@ -31,7 +32,7 @@ export const MusicDataRow: React.FC<MusicDataDTO> = ({
     <div className="h-[60%] overflow-auto text-[17px] flex justify-center ">
       <div className="w-full mx-2 my-10">
         {musicList?.data &&
-          musicList.data.map((musicItem: any) =>
+          musicList.data.map((musicItem: any, index: number) =>
             !isEditing ? (
               <Link to={musicItem.url} key={musicItem.id}>
                 <MusicDataRowContent
@@ -41,6 +42,7 @@ export const MusicDataRow: React.FC<MusicDataDTO> = ({
                   ArtistLength={ArtistLength}
                   musicData={musicItem}
                   isEditing={isEditing}
+                  order={index + 1}
                 />
               </Link>
             ) : (
@@ -52,6 +54,7 @@ export const MusicDataRow: React.FC<MusicDataDTO> = ({
                 ArtistLength={ArtistLength}
                 musicData={musicItem}
                 isEditing={isEditing}
+                order={index + 1}
               />
             )
           )}
