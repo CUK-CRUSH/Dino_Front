@@ -70,12 +70,11 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       setUsername(member.data.username);
       setPlaylists(playlist.data);
       setMusicList(musicAPIData);
-      console.log(musicAPIData);
     };
     if (id !== undefined) {
       fetchPlaylist(id);
     }
-  }, [musicList, id, uploadImage, handleCompressImage]);
+  }, [musicList, id, uploadImage, handleCompressImage, playlistId]);
   // 일단 의존성때문에 넣을건데 musicList빼고 나중에 다 지워도 될ㄷ스.
 
   return (
