@@ -30,6 +30,8 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const [playlistName, setPlaylistName] = useState("");
   const [musicList, setMusicList] = useState<any[]>([]);
 
+  console.log(playlists);
+
   const handleUploadImage = (image: string) => setUploadImage(image);
   const handleCompressImage = useCallback(async () => {
     if (!uploadImage) return;
@@ -57,6 +59,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       const member = await getMember(id);
       const playlist = await getPlayList(member.data.username);
       const playlistId = playlist.data[0].id;
+
       const musicAPIData = await getMusicList(playlistId);
       setUsername(member.data.username);
       setPlaylists(playlist.data);
@@ -105,7 +108,11 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         isEditing={isEditing}
       />
 
-      <MusicDataRow isEditing={isEditing} musicList={musicList} />
+      <MusicDataRow
+        isEditing={isEditing}
+        musicList={musicList}
+        // fetchMoreData={fetchMoreData}
+      />
 
       {isEditing && <PlusButton playlists={playlists} username={username} />}
     </div>
