@@ -1,5 +1,5 @@
 import { updateMember } from "@api/member-controller/memberController";
-import { useEffect, useState } from "react";
+import {  useState } from "react";
 import { useCookies } from "react-cookie";
 import { Link, useNavigate } from "react-router-dom";
 import { UpdateMemberParams } from "types/AdminEdit";
@@ -24,7 +24,7 @@ const Next = ({ step,username,profileImage,profileBackgroundImage,profileIntrodu
     // Handle member data
     console.log("Saving data:", data);
 
-    if(step ==3) { 
+    if(step === 3) { 
       updateMember(data); 
       navigate(`/${username}/admin`)
     }

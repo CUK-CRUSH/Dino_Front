@@ -11,7 +11,7 @@ const Skip = ({ step,username }: SkipDTO) => {
 
   useEffect(() => {
     if (step >= 4) { navigate(`/${username}/admin`); }
-  }, [step])
+  }, [step,navigate,username])
 
   const handleClick = () => {
     if(step === 1) {dispatch(setProfileImage(null))}
