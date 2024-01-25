@@ -3,6 +3,7 @@ export interface EditPlayListControlsDTO {
   onSave: () => void;
   onCancel: () => void;
   onEdit: () => void;
+  onDelete: () => void;
 }
 
 export interface MusicDataDTO {

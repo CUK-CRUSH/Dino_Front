@@ -64,9 +64,14 @@ export const UsePlayListEditor = (
     dispatch(setIsEditing(false));
   };
 
+  const handleDeleteClick = () => {
+    dispatch(updateTitle(""));
+  };
+
   return {
     handleEditClick,
     handleSaveClick,
     handleCancelClick,
+    handleDeleteClick,
   };
 };

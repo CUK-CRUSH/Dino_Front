@@ -48,15 +48,19 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const decodedToken = useDecodedJWT(token);
   const id = decodedToken.sub;
   //
-  const { handleEditClick, handleSaveClick, handleCancelClick } =
-    UsePlayListEditor(
-      playlists,
-      uploadImage,
-      token,
-      playlistName,
-      musicData,
-      playlistId
-    );
+  const {
+    handleEditClick,
+    handleSaveClick,
+    handleCancelClick,
+    handleDeleteClick,
+  } = UsePlayListEditor(
+    playlists,
+    uploadImage,
+    token,
+    playlistName,
+    musicData,
+    playlistId
+  );
 
   useEffect(() => {
     if (uploadImage) {
@@ -96,6 +100,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
           onSave={() => handleSaveClick(uploadImage)}
           onCancel={handleCancelClick}
           onEdit={handleEditClick}
+          onDelete={handleDeleteClick}
         />
       )}
 

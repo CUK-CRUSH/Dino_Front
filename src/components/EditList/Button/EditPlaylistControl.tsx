@@ -6,6 +6,7 @@ export const EditPlaylistControls: React.FC<EditPlayListControlsDTO> = ({
   onSave,
   onCancel,
   onEdit,
+  onDelete,
 }) => {
   const { t } = useTranslation("Edit");
   return (
@@ -30,7 +31,9 @@ export const EditPlaylistControls: React.FC<EditPlayListControlsDTO> = ({
           >
             {t("list_edit")}
           </button>
-          <button className="w-full">{t("delete_music")}</button>
+          <button className="w-full" onClick={onDelete}>
+            {t("delete_music")}
+          </button>
         </div>
       )}
     </div>
