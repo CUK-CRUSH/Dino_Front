@@ -15,6 +15,7 @@ import {
   updateMember,
 } from "@api/member-controller/memberController";
 import { UpdateMemberParams } from "types/AdminEdit";
+import { useNavigate } from "react-router-dom";
 
 interface AdminEditModalProps {
   onClose: () => void; // A function to close the modal
@@ -179,10 +180,17 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     cookies: token,
   });
 
-  const handleMember = (data: UpdateMemberParams) => {
+  const navigate = useNavigate();
+
+  const handleMember = async (data: UpdateMemberParams) => {
     // Handle member data
     console.log("Saving data:", data);
     updateMember(data);
+    const code = await updateMember(data);
+    if(code.status === 200) {
+      console.log(code)
+      navigate(`/${code.data.username}/admin`)
+    }
     cancel();
   };
 

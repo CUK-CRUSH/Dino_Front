@@ -75,7 +75,7 @@ const ValidationProps = () => {
     const putUsernameState = await putUsername(username, cookies);
     console.log(putUsernameState);
     if (putUsernameState.status === 200) {
-      navigate(`/${putUsernameState.data}/admin`);
+      navigate(`/SetProfile/${putUsernameState.data}/1`);
     }
   };
 

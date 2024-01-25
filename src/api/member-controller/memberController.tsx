@@ -5,7 +5,7 @@ import { UpdateMemberParams } from "types/AdminEdit";
 export const putUsername = async (username: string, cookies?: string) => {
   try {
     const response = await axiosInstance.put(
-      `/api/v1/member/nickname/${username}`,
+      `/api/v1/member/me/${username}`,
       null,
       {
         headers: {
@@ -135,7 +135,7 @@ export const updateMember = async ({
       );
     }
 
-    const response = await axiosInstance.patch("/api/v1/member", formData, {
+    const response = await axiosInstance.patch("/api/v1/member/me", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${cookies}`,
