@@ -2,7 +2,6 @@ import React from "react";
 import ImageCropper from "@utils/ImageCrop/ImageCropper";
 import { ShowImageDTO } from "types/EditplayList";
 import ImageDisplay from "@components/EditList/EditImage/ImageDisplay";
-import { useParams } from "react-router-dom";
 
 const ShowImage: React.FC<ShowImageDTO> = ({
   aspectRatio,
@@ -10,8 +9,8 @@ const ShowImage: React.FC<ShowImageDTO> = ({
   playlists,
   isCompressLoading,
   isEditing,
+  playlistId,
 }) => {
-  const { playlistId } = useParams<{ playlistId: string }>();
   const playlist = playlists.find(
     (playlist: any) => playlist?.id === Number(playlistId)
   );

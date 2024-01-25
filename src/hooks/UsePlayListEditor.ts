@@ -14,7 +14,8 @@ export const UsePlayListEditor = (
   uploadImage: string | null,
   token: string,
   playlistName: string,
-  musicData: any
+  musicData: any,
+  playlistId: string | undefined
 ) => {
   const dispatch = useDispatch();
 
@@ -23,8 +24,13 @@ export const UsePlayListEditor = (
   };
 
   const handleSaveClick = async (compressedImage: string | null) => {
-    if (playlists.length > 0) {
-      const { id } = playlists[0];
+    const playlist = playlists.find(
+      (playlist: any) => playlist?.id === Number(playlistId)
+    );
+
+    if (playlist) {
+      const id = playlist.id;
+
       if (uploadImage) {
         await putPlayList(id, null, uploadImage, token);
       }

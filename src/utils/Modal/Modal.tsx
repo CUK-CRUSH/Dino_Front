@@ -40,13 +40,21 @@ export default function CustomModal({
   token,
   playlistName,
   musicData,
+  playlistId,
 }: Readonly<CustomModalDTO>) {
   const isEditing = useSelector(
     (state: RootState) => state.editPlaylistToggle.isEditing
   );
 
   const { handleEditClick, handleSaveClick, handleCancelClick } =
-    UsePlayListEditor(playlists, uploadImage, token, playlistName, musicData);
+    UsePlayListEditor(
+      playlists,
+      uploadImage,
+      token,
+      playlistName,
+      musicData,
+      playlistId
+    );
 
   return (
     <ReactModal

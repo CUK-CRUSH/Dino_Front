@@ -8,6 +8,7 @@ export interface EditPlayListControlsDTO {
 export interface MusicDataDTO {
   isEditing: boolean;
   musicList: any;
+  playlistId: string | undefined;
 }
 
 export interface MusicContentDTO {
@@ -24,6 +25,7 @@ export interface MusicDataRowContentProps {
   ArtistLength: boolean;
   musicData: MusicContentDTO;
   isEditing: boolean;
+  order: number;
 }
 
 export interface EditPlsyListDTO {}
@@ -34,6 +36,7 @@ export interface ShowImageDTO {
   playlists: any;
   isCompressLoading: boolean;
   isEditing: boolean;
+  playlistId: string | undefined;
 }
 
 export interface EditModalDTO {
