@@ -45,7 +45,7 @@ export const SetProfilePage = () => {
     const imageUrl = URL.createObjectURL(compressedUserProfileImage);
     setCompressedUserProfileImage(imageUrl);
     dispatch(setProfileImage(uploadUserProfileImage));
-  }, [uploadUserProfileImage, compressUserProfileImage]);
+  }, [uploadUserProfileImage, compressUserProfileImage,dispatch]);
 
   useEffect(() => {
     if (uploadUserProfileImage) {
@@ -81,11 +81,12 @@ export const SetProfilePage = () => {
     const imageUrl = URL.createObjectURL(compressedUserProfileBackgroundImage);
 
     setCompressedUserProfileBackgroundImage(imageUrl);
-    dispatch(setProfileBackgroundImage(uploadUserProfileImage));
+    dispatch(setProfileBackgroundImage(uploadUserProfileBackgroundImage));
 
   }, [
     uploadUserProfileBackgroundImage,
     compressUserProfileBackgroundImage,
+    dispatch
   ]);
 
   useEffect(() => {
