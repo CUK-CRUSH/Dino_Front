@@ -29,8 +29,8 @@ export const MusicDataRow: React.FC<MusicDataDTO> = ({
   const ArtistLength = artistWidth >= 80;
 
   return (
-    <div className="h-[60%] overflow-auto text-[17px] flex justify-center ">
-      <div className="w-full mx-2 my-10">
+    <div className="h-[60%] scrollbar-hide overflow-auto text-[17px] flex justify-center ">
+      <div className="w-full mx-2 my-[44px]">
         {musicList?.data &&
           musicList.data.map((musicItem: any, index: number) =>
             !isEditing ? (
