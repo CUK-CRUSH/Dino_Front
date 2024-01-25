@@ -10,10 +10,11 @@ import SetProfileBackgroundImage from "./Setter/SetProfileBackgroundImage";
 import SetProfileIntroduction from "./Setter/SetProfileIntroduction";
 import { setProfileBackgroundImage, setProfileImage, setProfileIntroduction } from "@reducer/setProfile/setProfile";
 import { useDispatch } from "react-redux";
+import Next from "./Next";
 
 export const SetProfilePage = () => {
   // 프로필 설정 단계
-  const { step } = useParams<{ step?: string }>();
+  const { username , step } = useParams<{ username? : string, step?: string }>();
   const parsedStep = parseInt(step || "1", 10);
   const dispatch = useDispatch();
   // 프로필사진
@@ -113,7 +114,10 @@ export const SetProfilePage = () => {
 
   return (
     <div className="w-full h-full relative bg-white flex flex-col align-middle items-center">
-      <Skip />
+      <Skip 
+        step={parsedStep}
+        username={username}
+      />
       <Progress step={parsedStep} />
       <Text step={parsedStep} />
       {parsedStep === 1 && <SetProfileImage
@@ -135,6 +139,13 @@ export const SetProfilePage = () => {
           value={''}
           onChange={onChangeInput}/>}
 
+        <Next 
+          step={parsedStep}
+          username={username}
+          profileImage={uploadUserProfileImage}
+          profileBackgroundImage={uploadUserProfileBackgroundImage}
+          profileIntroduction={input.introduction}        
+          />
     </div>
   );
 };

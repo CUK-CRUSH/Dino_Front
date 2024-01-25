@@ -132,7 +132,7 @@ export const updateMember = async ({
       );
     }
 
-    const response = await axiosInstance.patch("/api/v1/member", formData, {
+    const response = await axiosInstance.patch("/api/v1/member/me", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${cookies}`,

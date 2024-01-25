@@ -1,5 +1,18 @@
 // 타입지정
 
+export interface SkipDTO {
+  step : number;
+  username : string | undefined;
+}
+
+export interface NextDTO {
+  step : number;
+  username : string | undefined;
+  profileImage : string | null;
+  profileBackgroundImage : string | null;
+  profileIntroduction : string | null;
+}
+
 export interface ProgressDTO {
   step : number;
 }
