@@ -48,6 +48,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const decodedToken = useDecodedJWT(token);
   const id = decodedToken.sub;
   //
+  // console.log(musicList);
   const {
     handleEditClick,
     handleSaveClick,

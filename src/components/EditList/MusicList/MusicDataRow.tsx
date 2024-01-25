@@ -3,6 +3,7 @@ import "@styles/EditList/playList.css";
 import { useEffect, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 import { MusicDataRowContent } from "./MusicContents";
+import Youtube from "react-youtube";
 
 export const MusicDataRow: React.FC<MusicDataDTO> = ({
   isEditing,
@@ -13,6 +14,7 @@ export const MusicDataRow: React.FC<MusicDataDTO> = ({
   const titleRef = useRef<HTMLSpanElement>(null);
   const artistRef = useRef<HTMLSpanElement>(null);
   // console.log(musicList);
+  const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
 
   useEffect(() => {
     if (titleRef.current && artistRef.current) {
@@ -28,13 +30,21 @@ export const MusicDataRow: React.FC<MusicDataDTO> = ({
   const TitleLength = titleWidth >= 185; // 텍스트 너비에 따라 애니메이션 적용 여부 결정
   const ArtistLength = artistWidth >= 80;
 
+  const handleVideoSelection = (url: string) => {
+    const videoId = url.split("v=")[1].split("&t")[0];
+    setSelectedVideoId(videoId);
+  };
+  console.log(selectedVideoId);
   return (
     <div className="h-[60%] scrollbar-hide overflow-auto text-[17px] flex justify-center ">
       <div className="w-full mx-2 my-[44px]">
         {musicList?.data &&
           musicList.data.map((musicItem: any, index: number) =>
             !isEditing ? (
-              <Link to={musicItem.url} key={musicItem.id}>
+              <div
+                onClick={() => handleVideoSelection(musicItem.url)}
+                key={musicItem.id}
+              >
                 <MusicDataRowContent
                   titleRef={titleRef}
                   artistRef={artistRef}
@@ -44,7 +54,7 @@ export const MusicDataRow: React.FC<MusicDataDTO> = ({
                   isEditing={isEditing}
                   order={index + 1}
                 />
-              </Link>
+              </div>
             ) : (
               <MusicDataRowContent
                 key={musicItem.id}
@@ -58,6 +68,7 @@ export const MusicDataRow: React.FC<MusicDataDTO> = ({
               />
             )
           )}
+        {selectedVideoId && <Youtube videoId={selectedVideoId} />}
       </div>
     </div>
   );
