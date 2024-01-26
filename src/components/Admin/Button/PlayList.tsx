@@ -3,8 +3,6 @@ import { Link } from "react-router-dom";
 import useWindowSizeCustom from "../../../hooks/useWindowSizeCustom";
 import { getPlaylistDTO } from "types/Admin";
 
-// 플레이리스트 조회하고 사진은 src="ex" 에 넣으면 됨
-
 export const PlayList = ({ playlist }: { playlist: getPlaylistDTO }) => {
   const {windowSize, isMobile} = useWindowSizeCustom();
 
@@ -20,11 +18,11 @@ export const PlayList = ({ playlist }: { playlist: getPlaylistDTO }) => {
     }
 
   }, [windowSize.width, customMargin,isMobile]);
-
+  
     return (
     <div style={{ marginLeft: `${customMargin}px`, marginRight: `${customMargin}px` }}
       className="inline-block h-[150px] mt-[42px] relative">
-      <Link to="13">
+      <Link to={`${playlist.id}`}>
         <button className="w-[150px] h-[150px] rounded-[13px] font-light text-zinc-300 text-4xl">
 
         {playlist.thumbnailUrl ?
