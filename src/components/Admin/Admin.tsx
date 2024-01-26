@@ -20,7 +20,7 @@ const AdminPage: React.FC = () => {
   const [userData, setUserdata] = useState<getMemberDTO>();
 
   // 플레이리스트 데이터
-  const [playlistData, setPlaylistdata] = useState<getPlaylistDTO[]>([]);
+  const [playlistData, setPlaylistdata] = useState<getPlaylistDTO[]>();
 
   const {username} = useParams<{username : string | undefined}>();
 
@@ -130,23 +130,30 @@ const AdminPage: React.FC = () => {
 
         {/* 프로필 이미지 */}
         <div className=" flex items-center flex-col z-10">
+          
           <UserProfileImage userProfileImage={userData?.profileImageUrl} />
-
-          <UserProfileInfo
-            username={userData?.username}
-            introText={userData?.introduction}
-          />
         </div>
+
+          
+          <UserProfileInfo
+          username={userData?.username}
+          introText={userData?.introduction} />
+          
 
         {/* 내가 생성한 플레이리스트 뽑아주고 마지막에 플레이리스트 추가 컴포넌트 붙이기. */}
 
         
         {playlistData && playlistData.map((playlist : getPlaylistDTO, index : number) => (
-            
             <PlayList 
               playlist={playlist}/>
-        ))}       
-        {<AddPlayList />}
+        ))}   
+            
+        {playlistData ? 
+          <AddPlayList />
+            :
+          <></>
+        }
+        
       </div>
     </div>
   );

@@ -3,8 +3,7 @@ import { Link } from "react-router-dom";
 import useWindowSizeCustom from "../../../hooks/useWindowSizeCustom";
 import { getPlaylistDTO } from "types/Admin";
 import Skeleton from "@components/Skeleton.tsx/Skeleton";
-
-// 플레이리스트 조회하고 사진은 src="ex" 에 넣으면 됨
+import React from "react";
 
 export const PlayList = ({ playlist }: { playlist: getPlaylistDTO }) => {
   const [isLoading,setIsLoding] = useState<boolean>(true);
@@ -56,7 +55,12 @@ export const PlayList = ({ playlist }: { playlist: getPlaylistDTO }) => {
         </button>
       </Link>
       :
-      <Skeleton width="150px" height="150px" background="#2E2E2E"/>
+      <React.Fragment>
+        <Skeleton width="150px" height="150px" background="#2E2E2E"/>
+        <Skeleton width="100px" height="15px" marginTop="5px" marginRight="5px" display="inline-block" background="#2E2E2E"/>
+        <Skeleton width="45px" height="15px" marginTop="5px" display="inline-block" background="#2E2E2E"/>
+      </React.Fragment>
+
       }
     </div>
   );
