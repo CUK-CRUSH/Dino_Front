@@ -10,6 +10,7 @@ export interface MusicDataDTO {
   isEditing: boolean;
   musicList: any;
   playlistId: string | undefined;
+  username: string | null;
 }
 
 export interface MusicContentDTO {
@@ -27,6 +28,8 @@ export interface MusicDataRowContentProps {
   musicData: MusicContentDTO;
   isEditing: boolean;
   order: number;
+  playlistId: string | undefined;
+  username: string | null;
 }
 
 export interface EditPlsyListDTO {}

@@ -7,7 +7,7 @@ import {
 } from "@reducer/musicadd";
 import { RootState } from "@store/index";
 import { useSelector, useDispatch } from "react-redux";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { toggleShowInformation } from "@reducer/toggle/addMusicToggle";
 import { AddMusicInput } from "@components/Addmusic/AddMusicInput";
 import Swal from "sweetalert2";
@@ -16,11 +16,22 @@ import AddMusicTitle from "@components/Addmusic/Title/AddMusicTitle";
 import AddBackButton from "@components/Addmusic/Button/AddBackButton";
 import { useTranslation } from "react-i18next";
 import { playAutoComplete } from "@api/AutoComplete/AutocompleteControl";
+import EditButton from "./Button/EditButton";
+import { setIsEditMusics } from "@reducer/editMusic/editMusic";
+import { patchMusicList } from "@api/music-controller/musicControl";
+import { useCookies } from "react-cookie";
 
 const AddMusic: React.FC = () => {
   const { t } = useTranslation("AddMusic");
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const { musicId } = useParams();
+
+  // 쿠키에서 유저 id 가져오기
+  const [cookies] = useCookies(["accessToken"]);
+  const token = cookies.accessToken;
+
+  //
 
   const [suggestions, setSuggestions] = useState<{ [key: string]: string[] }>(
     {}
@@ -39,8 +50,8 @@ const AddMusic: React.FC = () => {
     },
     []
   );
-  const musicAdd = useSelector((state: RootState) => state.musicAdd);
-  const { title, artist, url } = musicAdd;
+  const musicData = useSelector((state: RootState) => state.musicAdd);
+  const { title, artist, url } = musicData;
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(updateTitle(e.target.value));
@@ -56,6 +67,9 @@ const AddMusic: React.FC = () => {
 
   const { showInformation } = useSelector(
     (state: RootState) => state.addMusicInformationToggle
+  );
+  const { isEditMusics } = useSelector(
+    (state: RootState) => state.editMusicsToggle
   );
 
   const handleInformationToggle = useCallback(() => {
@@ -96,15 +110,43 @@ const AddMusic: React.FC = () => {
     navigate(-1);
   }, [navigate]);
 
+  const handlePatchClick = async () => {
+    if (musicData && musicData.title) {
+      console.log(
+        musicId,
+        musicData.title,
+        musicData.artist,
+        musicData.url,
+        token
+      );
+      await patchMusicList(
+        Number(musicId),
+        musicData.title,
+        musicData.artist,
+        musicData.url,
+        token
+      );
+    }
+    console.log(patchMusicList);
+    dispatch(setIsEditMusics(false));
+    dispatch(updateTitle(""));
+    dispatch(updateArtist(""));
+    dispatch(updateURL(""));
+    navigate(-1);
+  };
+
   useEffect(() => {
     fetchAutoComplete("title", title);
     fetchAutoComplete("artist", artist);
-  }, [title, artist, fetchAutoComplete]);
+    if (!musicId) {
+      dispatch(setIsEditMusics(false));
+    }
+  }, [title, artist, fetchAutoComplete, dispatch, musicId]);
 
   return (
     <div className="relative z-30 h-full w-full flex flex-col bg-black text-white py-10 text-[17px] leading-[18px]">
       <AddBackButton handleBack={handleBack} />
-      <AddMusicTitle title={t("musicTitle")} />
+      <AddMusicTitle title={isEditMusics ? "음악 수정하기" : t("musicTitle")} />
       <div className="space-y-8 mx-4">
         <AddMusicInput
           label={t("title")}
@@ -134,8 +176,11 @@ const AddMusic: React.FC = () => {
           infoText={showInformation ? t("toggle") : ""}
           infoToggleHandler={handleInformationToggle}
         />
-
-        <AddButton handleSave={handleSave} plusText={t("plus")} />
+        {isEditMusics ? (
+          <EditButton handleSave={handlePatchClick} plusText={t("edit")} />
+        ) : (
+          <AddButton handleSave={handleSave} plusText={t("plus")} />
+        )}
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import {
   updateTitle,
   updateURL,
   updateImage,
+  resetIsSaved,
 } from "@reducer/musicadd";
 import { setIsEditing } from "@reducer/editPlayList/isEdit";
 import { putPlayList } from "@api/playlist-controller/playlistControl";
@@ -62,6 +63,7 @@ export const UsePlayListEditor = (
     dispatch(updateURL(""));
     dispatch(updateImage(null));
     dispatch(setIsEditing(false));
+    dispatch(resetIsSaved());
   };
 
   const handleDeleteClick = () => {

@@ -45,17 +45,49 @@ export const postMusicList = async (
 };
 
 // 음악 삭제하기
-export const deleteMusicList = async (
-  playlistId: number,
-  musicId: string,
+export const deleteMusicList = async (musicId: string, cookies?: string) => {
+  try {
+    const response = await axiosInstance.delete(
+      `/api/v1/music?musicId=${musicId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${cookies}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+// 음악 변경하기
+export const patchMusicList = async (
+  musicId: number,
+  title: string,
+  artist: string,
+  url: string,
   cookies?: string
 ) => {
+  if (!musicId || !title || !artist || !url) {
+    throw new Error("모든 항목을 입력해주세요.");
+  }
   try {
-    const response = await axiosInstance.delete(`/api/v1/music`, {
-      headers: {
-        Authorization: `Bearer ${cookies}`,
+    const response = await axiosInstance.patch(
+      `/api/v1/music?musicId=${musicId}`,
+      {
+        title,
+        artist,
+        url,
       },
-    });
+      {
+        headers: {
+          Authorization: `Bearer ${cookies}`,
+        },
+      }
+    );
+
     return response.data;
   } catch (error) {
     console.log(error);
