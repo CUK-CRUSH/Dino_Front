@@ -31,6 +31,9 @@ export const MainEditButton: React.FC<{
         </button>
       </div>
       <div>
+        <p className="text-center">플레이리스트</p>
+      </div>
+      <div>
         <button onClick={() => setModalOpen(true)}>
           <FaEllipsisVertical color="white" size={24} />
         </button>

@@ -17,6 +17,7 @@ import { getMember } from "@api/member-controller/memberController";
 import { getPlayList } from "@api/playlist-controller/playlistControl";
 import { getMusicList } from "@api/music-controller/musicControl";
 import { useParams } from "react-router-dom";
+import { MusicLength } from "./MusicList/MusicLength";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
   const isEditing = useSelector(
@@ -29,7 +30,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const [playlists, setPlaylists] = useState<any[]>([]);
   const [username, setUsername] = useState<string | null>(null);
   const [playlistName, setPlaylistName] = useState("");
-  const [musicList, setMusicList] = useState<any[]>([]);
+  const [musicList, setMusicList] = useState<any>([]);
   const { playlistId } = useParams<{ playlistId: string }>();
 
   const handleUploadImage = (image: string) => setUploadImage(image);
@@ -47,8 +48,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const token = cookies.accessToken;
   const decodedToken = useDecodedJWT(token);
   const id = decodedToken.sub;
-  //
-  // console.log(musicList);
+
   const {
     handleEditClick,
     handleSaveClick,
@@ -83,7 +83,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   // 일단 의존성때문에 넣을건데 musicList빼고 나중에 다 지워도 될ㄷ스.
 
   return (
-    <div className="h-full w-full flex flex-col bg-black text-white font-medium leading-[18px]">
+    <div className="h-full w-full scrollbar flex flex-col bg-black text-white font-medium leading-[18px]">
       {!isEditing && (
         <MainEditButton
           playlists={playlists}
@@ -129,6 +129,8 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         playlistId={playlistId}
         username={username}
       />
+
+      <MusicLength musicList={musicList} />
 
       {isEditing && <PlusButton playlists={playlists} username={username} />}
     </div>

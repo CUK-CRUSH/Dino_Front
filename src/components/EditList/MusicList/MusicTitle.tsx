@@ -19,13 +19,13 @@ export const MusicTitle: React.FC<MusicTitleProps> = ({
     titlechange(e.target.value);
   };
   return (
-    <h2 className="mt-5 ml-5 text-[25px] text-shadow-title font-bold leading-5">
+    <h2 className="mt-5 mx-6 text-[25px] text-shadow-title font-bold leading-5">
       {isEditing ? (
         <input
           type="text"
           defaultValue={playlist?.playlistName}
           onChange={handleTitleChange}
-          className="text-black"
+          className="w-full px-2 py-[2px] bg-black rounded-xl border-2 border-white"
         />
       ) : (
         playlist?.playlistName
