@@ -91,7 +91,9 @@ const ValidationProps = () => {
 
   return (
     <div className="w-full h-full relative bg-white flex flex-col align-middle items-center">
+      
       <div className="text-center text-black text-xl font-semibold font-['Noto Sans'] my-10">
+        
         <img className="mx-auto mt-16 mb-10" src={Fanfare} alt="Fanfare" />
         환영합니다 !
         <br />
@@ -116,13 +118,22 @@ const ValidationProps = () => {
             <img src={not} alt="Edit" className="w-4 h-4 cursor-pointer" />
           )}
         </div>
+        
       </div>
-      <div
-        className="fixed w-full h-[70px] mx-auto bottom-0 pt-6 text-center text-white bg-black"
-        onClick={() => handleUsername(username, cookies.accessToken)}
-      >
-        계속하기
-      </div>
+      {!nicknameValidation ? 
+        <div
+          className="absolute bottom-0 -left-0 p-4 w-full bg-[#b6b6b6] text-white flex items-center justify-center overflow-hidden"
+        >
+          계속하기 
+        </div>
+        :
+        <div
+          className="absolute bottom-0 -left-0 p-4 w-full bg-[#000000] text-white flex items-center justify-center overflow-hidden"
+          onClick={() => handleUsername(username, cookies.accessToken)}
+        > 
+          계속하기 
+        </div>
+      }
     </div>
   );
 };

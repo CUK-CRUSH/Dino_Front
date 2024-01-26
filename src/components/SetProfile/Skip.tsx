@@ -1,14 +1,49 @@
+import { updateMember } from "@api/member-controller/memberController";
 import { setProfileBackgroundImage, setProfileImage, setProfileIntroduction } from "@reducer/setProfile/setProfile";
+import { RootState } from "@store/index";
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useCookies } from "react-cookie";
+import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
+import { UpdateMemberParams } from "types/AdminEdit";
 import { SkipDTO } from "types/SetProfile/setProfile";
 
 const Skip = ({ step,username }: SkipDTO) => {
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [cookie] = useCookies();
+  const token = cookie.accessToken;
 
+  const { profileImage, profileBackgroundImage, profileIntroduction } = useSelector(
+    (state: RootState) => state.setProfile
+  );  
+
+  const updateMemberData: UpdateMemberParams = {
+    username: undefined,
+    introduction: profileIntroduction,
+    profileImage: profileImage,
+    backgroundImage: profileBackgroundImage,
+    cookies: token,
+    }
+
+  const handleMember = async (data: UpdateMemberParams) => {
+    // Handle member data
+    console.log("Saving data:", data);
+
+    if(step === 3) { 
+
+      await new Promise(resolve => setTimeout(resolve, 700));
+
+      const code = await updateMember(data);
+      if(code.status === 200) {
+        console.log(code)
+        navigate(`/${code.data.username}/admin`)
+      }
+    }
+  
+  };
+  
   useEffect(() => {
     if (step >= 4) { navigate(`/${username}/admin`); }
   }, [step,navigate,username])
@@ -16,7 +51,8 @@ const Skip = ({ step,username }: SkipDTO) => {
   const handleClick = () => {
     if(step === 1) {dispatch(setProfileImage(undefined))}
     if(step === 2) {dispatch(setProfileBackgroundImage(undefined))}
-    if(step === 3) {dispatch(setProfileIntroduction(undefined))}
+    if(step === 3) {dispatch(setProfileIntroduction(undefined))
+                    handleMember(updateMemberData)}
   }
 
   return (
