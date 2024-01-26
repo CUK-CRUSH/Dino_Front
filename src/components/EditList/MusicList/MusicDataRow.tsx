@@ -9,6 +9,8 @@ import { RootState } from "@store/index";
 export const MusicDataRow: React.FC<MusicDataDTO> = ({
   isEditing,
   musicList,
+  playlistId,
+  username,
 }) => {
   const [titleWidth, setTitleWidth] = useState(0);
   const [artistWidth, setArtistWidth] = useState(0);
@@ -72,6 +74,8 @@ export const MusicDataRow: React.FC<MusicDataDTO> = ({
                 musicData={musicItem}
                 isEditing={isEditing}
                 order={index + 1}
+                playlistId={playlistId}
+                username={username}
               />
             </div>
           ))
@@ -95,6 +99,8 @@ export const MusicDataRow: React.FC<MusicDataDTO> = ({
             }}
             isEditing={isEditing}
             order={musicList.data.length + 1}
+            playlistId={playlistId}
+            username={username}
           />
         )}
 

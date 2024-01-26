@@ -9,6 +9,7 @@ const Admin = loadable(() => import("@pages/Admin/Admin"));
 const EditPlayList = loadable(() => import("@pages/Editlist/editPlaylist"));
 const Validation = loadable(() => import("@pages/Validation/validation"));
 const AddMusic = loadable(() => import("@pages/AddMusic/addMusic"));
+const EditMusic = loadable(() => import("@pages/EditMusic/EditMusics"));
 const Redirect = loadable(() => import("@pages/Redirect/Redirect"));
 
 function App() {
@@ -24,6 +25,10 @@ function App() {
         <Route
           path="/:username/admin/:playlistId/edit"
           element={<AddMusic />}
+        />
+        <Route
+          path="/:username/admin/:playlistId/edit/:musicId"
+          element={<EditMusic />}
         />
         <Route path="/redirect" element={<Redirect />} />
       </Routes>
