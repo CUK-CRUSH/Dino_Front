@@ -38,13 +38,27 @@ export default function CustomModal({
   playlists,
   uploadImage,
   token,
+  playlistName,
+  musicData,
+  playlistId,
 }: Readonly<CustomModalDTO>) {
   const isEditing = useSelector(
     (state: RootState) => state.editPlaylistToggle.isEditing
   );
 
-  const { handleEditClick, handleSaveClick, handleCancelClick } =
-    UsePlayListEditor(playlists, uploadImage, token);
+  const {
+    handleEditClick,
+    handleSaveClick,
+    handleCancelClick,
+    handleDeleteClick,
+  } = UsePlayListEditor(
+    playlists,
+    uploadImage,
+    token,
+    playlistName,
+    musicData,
+    playlistId
+  );
 
   return (
     <ReactModal
@@ -59,6 +73,7 @@ export default function CustomModal({
         onSave={() => handleSaveClick(compressedImage)}
         onCancel={handleCancelClick}
         onEdit={handleEditClick}
+        onDelete={handleDeleteClick}
       />
     </ReactModal>
   );

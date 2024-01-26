@@ -5,4 +5,7 @@ export interface CustomModalDTO {
   playlists: any[];
   uploadImage: string | null;
   token: string;
+  playlistName: string;
+  musicData: any;
+  playlistId: string | undefined;
 }

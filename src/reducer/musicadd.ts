@@ -23,9 +23,17 @@ const musicAddSlice = createSlice({
     updateImage: (state, action) => {
       state.image = action.payload;
     },
+    resetMusicAdd: () => {
+      return initialState;
+    },
   },
 });
 
-export const { updateTitle, updateArtist, updateURL, updateImage } =
-  musicAddSlice.actions;
+export const {
+  updateTitle,
+  updateArtist,
+  updateURL,
+  updateImage,
+  resetMusicAdd,
+} = musicAddSlice.actions;
 export default musicAddSlice.reducer;

@@ -4,6 +4,7 @@ import Layout from "@components/Layout/layout";
 
 const Home = loadable(() => import("@pages/Home/home"));
 const LogIn = loadable(() => import("@pages/LogIn/login"));
+const SetProfile = loadable(() => import("@pages/SetProfile/SetProfile"));
 const Admin = loadable(() => import("@pages/Admin/Admin"));
 const EditPlayList = loadable(() => import("@pages/Editlist/editPlaylist"));
 const Validation = loadable(() => import("@pages/Validation/validation"));
@@ -16,6 +17,7 @@ function App() {
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/login" element={<LogIn />} />
+        <Route path="/SetProfile/:username/:step" element={<SetProfile />} />
         <Route path="/:username/admin" element={<Admin />} />
         <Route path="/:username/admin/:playlistId" element={<EditPlayList />} />
         <Route path="/login/validation" element={<Validation />} />

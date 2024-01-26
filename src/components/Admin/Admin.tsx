@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect,  useState } from "react";
 import AdminEditModal from "@pages/Admin/AdminEditModal";
 import { AddPlayList } from "@components/Admin/Button/AddPLayList";
 import { EditProfile } from "@components/Admin/Modal/EditProfile";
@@ -7,21 +7,13 @@ import OpenOption from "./Button/OpenOption";
 import UserProfileImage from "./UserProfileImage";
 import UserProfileInfo from "./UserProfileInfo";
 import { PlayList } from "@components/Admin/Button/PlayList";
-import { getMember } from "@api/member-controller/memberController";
-import { useCookies } from "react-cookie";
-import useDecodedJWT from "@hooks/useDecodedJWT";
+import {  getMemberUsername } from "@api/member-controller/memberController";
 import { getMemberDTO, getPlaylistDTO } from "types/Admin";
 import { getPlayList } from "@api/playlist-controller/playlistControl";
-import { useParams } from "react-router-dom";
+import {  useParams } from "react-router-dom";
 
 const AdminPage: React.FC = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-
-  const [cookies] = useCookies();
-  // 액세스 토큰
-  const token = cookies.accessToken;
-
-  const decodedToken = useDecodedJWT(token);
 
   // 유저데이터
   const [userData, setUserdata] = useState<getMemberDTO>();
@@ -30,34 +22,38 @@ const AdminPage: React.FC = () => {
   const [playlistData, setPlaylistdata] = useState<getPlaylistDTO[]>([]);
 
   const {username} = useParams<{username : string | undefined}>();
-  // 정보불러오기
+
   useEffect(() => {
     const fetchData = async () => {
+      if (username !== userData?.username) {
+        try {
+          const userDataResult = await getMemberUsername(username);
+          setUserdata(userDataResult.data);
+          console.log(userDataResult);
+        } catch (error) {
+          console.error("Error fetching user data:", error);
+        }
+      }
+    };
+  
+    fetchData();
+  }, [username,userData]); // Only include username in the dependency array
+  
+  useEffect(() => {
+    const fetchPlaylistData = async () => {
       try {
-        // 유저 정보 조회
-        const userDataResult = await getMember(
-          decodedToken.sub,
-          cookies.accessToken
-        );
-        setUserdata(userDataResult.data);
-
-        // 유저 - 플레이리스트 조회
-        const playlistDataResult = await getPlayList(
-          username
-        );
+        // User - Playlist query
+        const playlistDataResult = await getPlayList(username);
         setPlaylistdata(playlistDataResult.data);
+        console.log(playlistDataResult);
       } catch (error) {
-        console.error("Error fetching user data:", error);
+        console.error("Error fetching playlist data:", error);
         // Handle errors appropriately
       }
     };
-
-    // Call the asynchronous function inside useEffect
-    fetchData();
-  }, [decodedToken.sub, cookies.accessToken, userData, username]);
-
-  // 유저 프로필 불러오기
-  // const userProfile = useSelector((state: RootState) => state.userProfile);
+  
+    fetchPlaylistData();
+  }, [username,userData]); 
 
   const openEditModal = () => {
     setIsEditModalOpen(true);
@@ -135,12 +131,12 @@ const AdminPage: React.FC = () => {
 
         {/* 내가 생성한 플레이리스트 뽑아주고 마지막에 플레이리스트 추가 컴포넌트 붙이기. */}
 
-        {<AddPlayList />}
+        
         {playlistData && playlistData.map((playlist : getPlaylistDTO, index : number) => (
             <PlayList 
               playlist={playlist}/>
         ))}       
-
+        {<AddPlayList />}
       </div>
     </div>
   );

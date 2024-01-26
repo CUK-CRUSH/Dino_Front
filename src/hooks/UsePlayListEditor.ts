@@ -7,11 +7,15 @@ import {
 } from "@reducer/musicadd";
 import { setIsEditing } from "@reducer/editPlayList/isEdit";
 import { putPlayList } from "@api/playlist-controller/playlistControl";
+import { postMusicList } from "@api/music-controller/musicControl";
 
 export const UsePlayListEditor = (
   playlists: any[],
   uploadImage: string | null,
-  token: string
+  token: string,
+  playlistName: string,
+  musicData: any,
+  playlistId: string | undefined
 ) => {
   const dispatch = useDispatch();
 
@@ -20,10 +24,31 @@ export const UsePlayListEditor = (
   };
 
   const handleSaveClick = async (compressedImage: string | null) => {
-    if (playlists.length > 0 && uploadImage) {
-      const { id, playlistName } = playlists[0];
-      console.log(uploadImage);
-      await putPlayList(id, playlistName, uploadImage, token);
+    const playlist = playlists.find(
+      (playlist: any) => playlist?.id === Number(playlistId)
+    );
+
+    if (playlist) {
+      const id = playlist.id;
+
+      if (uploadImage) {
+        await putPlayList(id, null, uploadImage, token);
+      }
+      if (playlistName) {
+        await putPlayList(id, playlistName, null, token);
+      }
+      if (musicData && musicData.title && musicData.artist && musicData.url) {
+        await postMusicList(
+          id,
+          musicData.title,
+          musicData.artist,
+          musicData.url,
+          token
+        );
+        dispatch(updateTitle(""));
+        dispatch(updateArtist(""));
+        dispatch(updateURL(""));
+      }
     }
     dispatch(setIsEditing(false));
     if (compressedImage) {
@@ -39,9 +64,14 @@ export const UsePlayListEditor = (
     dispatch(setIsEditing(false));
   };
 
+  const handleDeleteClick = () => {
+    dispatch(updateTitle(""));
+  };
+
   return {
     handleEditClick,
     handleSaveClick,
     handleCancelClick,
+    handleDeleteClick,
   };
 };

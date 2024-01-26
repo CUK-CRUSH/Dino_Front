@@ -3,20 +3,17 @@ export interface EditPlayListControlsDTO {
   onSave: () => void;
   onCancel: () => void;
   onEdit: () => void;
-}
-
-interface MusicData {
-  // id: number;
-  title: string;
-  artist: string;
-  url: string;
+  onDelete: () => void;
 }
 
 export interface MusicDataDTO {
-  musicData: MusicData;
+  isEditing: boolean;
+  musicList: any;
+  playlistId: string | undefined;
 }
 
 export interface MusicContentDTO {
+  id: number;
   title: string;
   artist: string;
   url: string;
@@ -29,6 +26,7 @@ export interface MusicDataRowContentProps {
   ArtistLength: boolean;
   musicData: MusicContentDTO;
   isEditing: boolean;
+  order: number;
 }
 
 export interface EditPlsyListDTO {}
@@ -36,9 +34,10 @@ export interface EditPlsyListDTO {}
 export interface ShowImageDTO {
   aspectRatio: number;
   onCrop: (image: string) => void;
-  compressedImage: string | null;
+  playlists: any;
   isCompressLoading: boolean;
   isEditing: boolean;
+  playlistId: string | undefined;
 }
 
 export interface EditModalDTO {

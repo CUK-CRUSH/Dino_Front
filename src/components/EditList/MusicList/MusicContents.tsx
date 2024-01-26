@@ -8,11 +8,12 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   ArtistLength,
   musicData,
   isEditing,
+  order,
 }) => {
   return (
-    <div className="flex flex-row items-center p-3 h-[50px] mx-[7px] rounded-[15px] bg-[#2E2E2E]">
+    <div className="flex flex-row items-center p-3 mb-2 h-[50px] mx-[7px] rounded-[15px] bg-[#2E2E2E]">
       <div className="ml-2 w-1/12">
-        <span>1</span> {/* 이 부분은 실제 데이터로 변경하셔야 합니다. */}
+        <span>{order}</span>
       </div>
       <div className="w-7/12 overflow-hidden">
         <div className="flex items-center">

@@ -5,7 +5,7 @@ import { UpdateMemberParams } from "types/AdminEdit";
 export const putUsername = async (username: string, cookies?: string) => {
   try {
     const response = await axiosInstance.put(
-      `/api/v1/member/nickname/${username}`,
+      `/api/v1/member/me/${username}`,
       null,
       {
         headers: {
@@ -21,12 +21,12 @@ export const putUsername = async (username: string, cookies?: string) => {
 };
 
 // 특정 회원 정보 조회
-export const getMember = async (id: number, cookies?: string) => {
+export const getMember = async (id: number) => {
   try {
     const response = await axiosInstance.get(`/api/v1/member/id/${id}`, {
-      headers: {
-        Authorization: `Bearer ${cookies}`,
-      },
+      // headers: {
+      //   Authorization: `Bearer ${cookies}`,
+      // },
     });
     return response.data;
   } catch (error) {
@@ -36,14 +36,14 @@ export const getMember = async (id: number, cookies?: string) => {
 };
 
 // 특정 회원 정보 조회
-export const getMemberUsername = async (id: number, cookies?: string) => {
+export const getMemberUsername = async (username: string | undefined) => {
   try {
     const response = await axiosInstance.get(
-      `/api/v1/member/id/${id}`,
+      `/api/v1/member/nickname/${username}`,
       {
-        headers: {
-          Authorization: `Bearer ${cookies}`,
-        },
+        // headers: {
+        //   Authorization: `Bearer ${cookies}`,
+        // },
       }
     );
     return response.data;
@@ -135,7 +135,7 @@ export const updateMember = async ({
       );
     }
 
-    const response = await axiosInstance.patch("/api/v1/member", formData, {
+    const response = await axiosInstance.patch("/api/v1/member/me", formData, {
       headers: {
         "Content-Type": "multipart/form-data",
         Authorization: `Bearer ${cookies}`,
