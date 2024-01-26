@@ -43,7 +43,7 @@ const Next = ({ step,username}: NextDTO) => {
   return (
     <Link to={`/SetProfile/${username}/${step + 1}`}>
 
-      <div onClick={()=>handleMember(updateMemberData)} style={{ background: "#B6B6B6" }} className="absolute bottom-0 -left-0 p-4 w-full bg-slate-200 text-white flex items-center justify-center overflow-hidden">
+      <div onClick={()=>handleMember(updateMemberData)} className="absolute bottom-0 -left-0 p-4 w-full bg-[#b6b6b6] text-white flex items-center justify-center overflow-hidden">
         계속하기
       </div>
     </Link>
