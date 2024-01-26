@@ -3,6 +3,8 @@ import "@styles/EditList/playList.css";
 import { useEffect, useRef, useState } from "react";
 import { MusicDataRowContent } from "./MusicContents";
 import Youtube from "react-youtube";
+import { useSelector } from "react-redux";
+import { RootState } from "@store/index";
 
 export const MusicDataRow: React.FC<MusicDataDTO> = ({
   isEditing,
@@ -13,6 +15,10 @@ export const MusicDataRow: React.FC<MusicDataDTO> = ({
   const titleRef = useRef<HTMLSpanElement>(null);
   const artistRef = useRef<HTMLSpanElement>(null);
   const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
+
+  const musicAdd = useSelector((state: RootState) => state.musicAdd);
+  const { title, artist, url } = musicAdd;
+  const { isSaved } = useSelector((state: RootState) => state.musicAdd);
 
   useEffect(() => {
     if (titleRef.current && artistRef.current) {
@@ -42,30 +48,23 @@ export const MusicDataRow: React.FC<MusicDataDTO> = ({
 
     setSelectedVideoId(videoId);
   };
-  console.log(selectedVideoId);
+
+  // ...
+
   return (
     <div className="h-[60%] scrollbar-hide overflow-auto text-[17px] flex justify-center ">
-      <div className="w-full mx-2 my-[44px]">
+      <div className="w-full mx-2 my-[44px] ">
         {musicList?.data &&
-          musicList.data.map((musicItem: any, index: number) =>
-            !isEditing ? (
-              <div
-                onClick={() => handleVideoSelection(musicItem.url)}
-                key={musicItem.id}
-              >
-                <MusicDataRowContent
-                  titleRef={titleRef}
-                  artistRef={artistRef}
-                  TitleLength={TitleLength}
-                  ArtistLength={ArtistLength}
-                  musicData={musicItem}
-                  isEditing={isEditing}
-                  order={index + 1}
-                />
-              </div>
-            ) : (
+          musicList.data.map((musicItem: any, index: number) => (
+            <div
+              key={musicItem.id}
+              onClick={
+                !isEditing
+                  ? () => handleVideoSelection(musicItem.url)
+                  : undefined
+              }
+            >
               <MusicDataRowContent
-                key={musicItem.id}
                 titleRef={titleRef}
                 artistRef={artistRef}
                 TitleLength={TitleLength}
@@ -74,8 +73,26 @@ export const MusicDataRow: React.FC<MusicDataDTO> = ({
                 isEditing={isEditing}
                 order={index + 1}
               />
-            )
-          )}
+            </div>
+          ))}
+
+        {isEditing && isSaved && musicList?.data && (
+          <MusicDataRowContent
+            titleRef={titleRef}
+            artistRef={artistRef}
+            TitleLength={TitleLength}
+            ArtistLength={ArtistLength}
+            musicData={{
+              title: title,
+              artist: artist,
+              url: url,
+              id: Date.now(),
+            }}
+            isEditing={isEditing}
+            order={musicList.data.length + 1}
+          />
+        )}
+
         {selectedVideoId && (
           <div
             className="fixed inset-0 flex items-center justify-center z-10"

@@ -11,7 +11,7 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   order,
 }) => {
   return (
-    <div className="flex flex-row items-center p-3 mb-2 h-[50px] mx-[7px] rounded-[15px] bg-[#2E2E2E]">
+    <div className="flex flex-row items-center p-3 mb-2 h-[50px] mx-[7px] rounded-[15px] bg-[#2E2E2E] cursor-pointer">
       <div className="ml-2 w-1/12">
         <span>{order}</span>
       </div>

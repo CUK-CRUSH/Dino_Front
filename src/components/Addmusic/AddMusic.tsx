@@ -1,5 +1,10 @@
 import React, { useCallback, useEffect, useState } from "react";
-import { updateArtist, updateTitle, updateURL } from "@reducer/musicadd";
+import {
+  saveMusic,
+  updateArtist,
+  updateTitle,
+  updateURL,
+} from "@reducer/musicadd";
 import { RootState } from "@store/index";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate } from "react-router-dom";
@@ -76,6 +81,7 @@ const AddMusic: React.FC = () => {
       dispatch(updateTitle(title));
       dispatch(updateArtist(artist));
       dispatch(updateURL(url));
+      dispatch(saveMusic());
       navigate(-1);
     } catch (error) {
       Swal.fire({

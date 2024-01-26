@@ -9,7 +9,7 @@ const initialState = {
 
 const musicAddSlice = createSlice({
   name: "musicAdd",
-  initialState,
+  initialState: { ...initialState, isSaved: false },
   reducers: {
     updateTitle: (state, action) => {
       state.title = action.payload;
@@ -23,8 +23,12 @@ const musicAddSlice = createSlice({
     updateImage: (state, action) => {
       state.image = action.payload;
     },
-    resetMusicAdd: () => {
-      return initialState;
+
+    saveMusic: (state) => {
+      state.isSaved = true;
+    },
+    resetIsSaved: (state) => {
+      state.isSaved = false;
     },
   },
 });
@@ -34,6 +38,7 @@ export const {
   updateArtist,
   updateURL,
   updateImage,
-  resetMusicAdd,
+  saveMusic,
+  resetIsSaved,
 } = musicAddSlice.actions;
 export default musicAddSlice.reducer;
