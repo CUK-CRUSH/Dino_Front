@@ -127,7 +127,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         isEditing={isEditing}
         musicList={musicList}
         playlistId={playlistId}
-        // fetchMoreData={fetchMoreData}
       />
 
       {isEditing && <PlusButton playlists={playlists} username={username} />}
