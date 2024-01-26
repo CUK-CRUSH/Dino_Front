@@ -12,7 +12,6 @@ export const MusicDataRow: React.FC<MusicDataDTO> = ({
   const [artistWidth, setArtistWidth] = useState(0);
   const titleRef = useRef<HTMLSpanElement>(null);
   const artistRef = useRef<HTMLSpanElement>(null);
-  // console.log(musicList);
   const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
 
   useEffect(() => {
@@ -30,7 +29,17 @@ export const MusicDataRow: React.FC<MusicDataDTO> = ({
   const ArtistLength = artistWidth >= 80;
 
   const handleVideoSelection = (url: string) => {
-    const videoId = url.split("v=")[1].split("&t")[0];
+    let videoId = "";
+    const urlParams = new URLSearchParams(url.split("?")[1]);
+
+    if (urlParams.has("v")) {
+      // 웹 버전
+      videoId = urlParams.get("v")!;
+    } else if (urlParams.has("si")) {
+      // 모바일 버전
+      videoId = urlParams.get("si")!;
+    }
+
     setSelectedVideoId(videoId);
   };
   console.log(selectedVideoId);
@@ -67,7 +76,26 @@ export const MusicDataRow: React.FC<MusicDataDTO> = ({
               />
             )
           )}
-        {selectedVideoId && <Youtube videoId={selectedVideoId} />}
+        {selectedVideoId && (
+          <div
+            className="fixed inset-0 flex items-center justify-center z-10"
+            onClick={() => setSelectedVideoId(null)}
+          >
+            <div onClick={(e) => e.stopPropagation()}>
+              <Youtube
+                videoId={selectedVideoId}
+                opts={{
+                  width: "390",
+                  height: "300",
+                  playerVars: {
+                    autoplay: 1,
+                    modestbranding: 1,
+                  },
+                }}
+              />
+            </div>
+          </div>
+        )}
       </div>
     </div>
   );
