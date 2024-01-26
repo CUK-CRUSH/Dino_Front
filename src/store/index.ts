@@ -8,6 +8,7 @@ import isEdit from "@reducer/editPlayList/isEdit";
 import addMusicInformationToggle from "@reducer/toggle/addMusicToggle";
 import playlistReducer from "@reducer/editPlayList/setPlaylist";
 import setProfile from "@reducer/setProfile/setProfile";
+import editMusicListToggle from "@reducer/editMusic/editMusic";
 
 export const store = configureStore({
   reducer: {
@@ -19,7 +20,8 @@ export const store = configureStore({
     editPlaylistToggle: isEdit,
     addMusicInformationToggle: addMusicInformationToggle,
     playlist: playlistReducer,
-    setProfile : setProfile,
+    setProfile: setProfile,
+    editMusicsToggle: editMusicListToggle,
   },
 });
 

@@ -1,6 +1,8 @@
 import { MusicDataRowContentProps } from "types/EditplayList";
 import { FaAngleRight } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setIsEditMusics } from "@reducer/editMusic/editMusic";
 
 export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   titleRef,
@@ -14,8 +16,10 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   username,
 }) => {
   const navigate = useNavigate();
+  const dispatch = useDispatch();
   const handleEditClick = () => {
     navigate(`/${username}/admin/${playlistId}/edit/${musicData.id}`);
+    dispatch(setIsEditMusics(true));
   };
   return (
     <div className="flex flex-row items-center p-3 mb-2 h-[50px] mx-[7px] rounded-[15px] bg-[#2E2E2E] cursor-pointer">

@@ -16,6 +16,7 @@ import AddMusicTitle from "@components/Addmusic/Title/AddMusicTitle";
 import AddBackButton from "@components/Addmusic/Button/AddBackButton";
 import { useTranslation } from "react-i18next";
 import { playAutoComplete } from "@api/AutoComplete/AutocompleteControl";
+import EditButton from "./Button/EditButton";
 
 const AddMusic: React.FC = () => {
   const { t } = useTranslation("AddMusic");
@@ -56,6 +57,9 @@ const AddMusic: React.FC = () => {
 
   const { showInformation } = useSelector(
     (state: RootState) => state.addMusicInformationToggle
+  );
+  const { isEditMusics } = useSelector(
+    (state: RootState) => state.editMusicsToggle
   );
 
   const handleInformationToggle = useCallback(() => {
@@ -104,7 +108,7 @@ const AddMusic: React.FC = () => {
   return (
     <div className="relative z-30 h-full w-full flex flex-col bg-black text-white py-10 text-[17px] leading-[18px]">
       <AddBackButton handleBack={handleBack} />
-      <AddMusicTitle title={t("musicTitle")} />
+      <AddMusicTitle title={isEditMusics ? "음악 수정하기" : t("musicTitle")} />
       <div className="space-y-8 mx-4">
         <AddMusicInput
           label={t("title")}
@@ -134,8 +138,11 @@ const AddMusic: React.FC = () => {
           infoText={showInformation ? t("toggle") : ""}
           infoToggleHandler={handleInformationToggle}
         />
-
-        <AddButton handleSave={handleSave} plusText={t("plus")} />
+        {isEditMusics ? (
+          <EditButton handleSave={handleSave} plusText={t("edit")} />
+        ) : (
+          <AddButton handleSave={handleSave} plusText={t("plus")} />
+        )}
       </div>
     </div>
   );
