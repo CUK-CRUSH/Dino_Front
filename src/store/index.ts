@@ -19,7 +19,7 @@ export const store = configureStore({
     editPlaylistToggle: isEdit,
     addMusicInformationToggle: addMusicInformationToggle,
     playlist: playlistReducer,
-    profile : setProfile,
+    setProfile : setProfile,
   },
 });
 

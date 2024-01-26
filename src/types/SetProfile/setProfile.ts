@@ -8,9 +8,7 @@ export interface SkipDTO {
 export interface NextDTO {
   step : number;
   username : string | undefined;
-  profileImage : string | null;
-  profileBackgroundImage : string | null;
-  profileIntroduction : string | null;
+
 }
 
 export interface ProgressDTO {

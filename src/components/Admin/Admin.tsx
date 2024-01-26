@@ -23,6 +23,7 @@ const AdminPage: React.FC = () => {
 
   const {username} = useParams<{username : string | undefined}>();
 
+
   useEffect(() => {
     const fetchData = async () => {
       if (username !== userData?.username) {
@@ -37,7 +38,7 @@ const AdminPage: React.FC = () => {
     };
   
     fetchData();
-  }, [username,userData]); // Only include username in the dependency array
+  }, [username,userData]); 
   
   useEffect(() => {
     const fetchPlaylistData = async () => {
