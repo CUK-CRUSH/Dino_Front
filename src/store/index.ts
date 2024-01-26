@@ -1,4 +1,6 @@
 import { configureStore } from "@reduxjs/toolkit";
+import { persistReducer, persistStore } from "redux-persist";
+import storage from "redux-persist/lib/storage";
 import counterReducer from "@reducer/counter";
 import uiReducer from "@reducer/uiSlice";
 import imageReducer from "@reducer/imageSlice";
@@ -9,6 +11,13 @@ import addMusicInformationToggle from "@reducer/toggle/addMusicToggle";
 import playlistReducer from "@reducer/editPlayList/setPlaylist";
 import setProfile from "@reducer/setProfile/setProfile";
 import editMusicListToggle from "@reducer/editMusic/editMusic";
+
+const persistConfig = {
+  key: "editMusicsToggle",
+  storage,
+};
+
+const persistedReducer = persistReducer(persistConfig, editMusicListToggle);
 
 export const store = configureStore({
   reducer: {
@@ -21,9 +30,10 @@ export const store = configureStore({
     addMusicInformationToggle: addMusicInformationToggle,
     playlist: playlistReducer,
     setProfile: setProfile,
-    editMusicsToggle: editMusicListToggle,
+    editMusicsToggle: persistedReducer,
   },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
 export type AppDispatch = typeof store.dispatch;
+export const persistor = persistStore(store);

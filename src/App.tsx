@@ -1,6 +1,9 @@
 import loadable from "@loadable/component";
 import { Route, Routes } from "react-router-dom";
 import Layout from "@components/Layout/layout";
+import { Provider } from "react-redux";
+import { PersistGate } from "redux-persist/integration/react";
+import { store, persistor } from "@store/index";
 
 const Home = loadable(() => import("@pages/Home/home"));
 const LogIn = loadable(() => import("@pages/LogIn/login"));
@@ -14,25 +17,35 @@ const Redirect = loadable(() => import("@pages/Redirect/Redirect"));
 
 function App() {
   return (
-    <Layout>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<LogIn />} />
-        <Route path="/SetProfile/:username/:step" element={<SetProfile />} />
-        <Route path="/:username/admin" element={<Admin />} />
-        <Route path="/:username/admin/:playlistId" element={<EditPlayList />} />
-        <Route path="/login/validation" element={<Validation />} />
-        <Route
-          path="/:username/admin/:playlistId/edit"
-          element={<AddMusic />}
-        />
-        <Route
-          path="/:username/admin/:playlistId/edit/:musicId"
-          element={<EditMusic />}
-        />
-        <Route path="/redirect" element={<Redirect />} />
-      </Routes>
-    </Layout>
+    <Provider store={store}>
+      <PersistGate loading={null} persistor={persistor}>
+        <Layout>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/login" element={<LogIn />} />
+            <Route
+              path="/SetProfile/:username/:step"
+              element={<SetProfile />}
+            />
+            <Route path="/:username/admin" element={<Admin />} />
+            <Route
+              path="/:username/admin/:playlistId"
+              element={<EditPlayList />}
+            />
+            <Route path="/login/validation" element={<Validation />} />
+            <Route
+              path="/:username/admin/:playlistId/edit"
+              element={<AddMusic />}
+            />
+            <Route
+              path="/:username/admin/:playlistId/edit/:musicId"
+              element={<EditMusic />}
+            />
+            <Route path="/redirect" element={<Redirect />} />
+          </Routes>
+        </Layout>
+      </PersistGate>
+    </Provider>
   );
 }
 
