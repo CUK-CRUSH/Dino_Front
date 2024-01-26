@@ -14,9 +14,9 @@ const Skip = ({ step,username }: SkipDTO) => {
   }, [step,navigate,username])
 
   const handleClick = () => {
-    if(step === 1) {dispatch(setProfileImage(null))}
-    if(step === 2) {dispatch(setProfileBackgroundImage(null))}
-    if(step === 3) {dispatch(setProfileIntroduction(''))}
+    if(step === 1) {dispatch(setProfileImage(undefined))}
+    if(step === 2) {dispatch(setProfileBackgroundImage(undefined))}
+    if(step === 3) {dispatch(setProfileIntroduction(undefined))}
   }
 
   return (
