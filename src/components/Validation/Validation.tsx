@@ -43,24 +43,34 @@ const ValidationProps = () => {
 
   const onChange = debounce(async (e) => {
     setUsername(e.target.value);
-
+  
     if (e.target.value) {
-      // Backend 닉네임 체크
-      const checkNicknameBack = await getNicknameAvailable(
-        e.target.value,
-        token
-      );
-      console.log(checkNicknameBack);
-
-      if (checkNickname(e.target.value) && checkNicknameBack.status === 200) {
-        setNicknameValidation(true);
-      } else if (
-        !checkNickname(e.target.value) &&
-        checkNicknameBack.status !== 200
-      ) {
-        setNicknameValidation(false);
-      } else {
-        setNicknameValidation(false);
+      try {
+        // Check backend nickname
+        const checkNicknameBack = await getNicknameAvailable(
+          e.target.value,
+          token
+        );
+        console.log(checkNicknameBack);
+  
+        if (checkNickname(e.target.value) && checkNicknameBack.status === 200) {
+          setNicknameValidation(true);
+        } else if (
+          !checkNickname(e.target.value) &&
+          checkNicknameBack.status !== 200
+        ) {
+          setNicknameValidation(false);
+        } else {
+          setNicknameValidation(false);
+        }
+      } catch (error : any) {
+        // If the status is 400, simply skip the error
+        if (error.response && error.response.status === 400) {
+          console.log("Nickname validation skipped");
+          setNicknameValidation(false);
+        } else {
+          console.error("Error checking nickname:", error);
+        }
       }
     } else {
       setNicknameValidation(false);
