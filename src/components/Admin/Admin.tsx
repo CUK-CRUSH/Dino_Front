@@ -11,6 +11,7 @@ import {  getMemberUsername } from "@api/member-controller/memberController";
 import { getMemberDTO, getPlaylistDTO } from "types/Admin";
 import { getPlayList } from "@api/playlist-controller/playlistControl";
 import {  useParams } from "react-router-dom";
+import Skeleton from "@components/Skeleton.tsx/Skeleton";
 
 const AdminPage: React.FC = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -23,6 +24,7 @@ const AdminPage: React.FC = () => {
 
   const {username} = useParams<{username : string | undefined}>();
 
+  const [isLoading,setIsLoding] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -37,16 +39,20 @@ const AdminPage: React.FC = () => {
       }
     };
   
-    fetchData();
-  }, [username,userData]); 
+    const delay = 1200; // 1.2 second
+    const timeoutId = setTimeout(() => {
+      setIsLoding(false);
+      fetchData();
+    }, delay);
+  
+    return () => clearTimeout(timeoutId);
+    }, [username,userData]); 
   
   useEffect(() => {
     const fetchPlaylistData = async () => {
       try {
-        // User - Playlist query
         const playlistDataResult = await getPlayList(username);
         setPlaylistdata(playlistDataResult.data);
-        console.log(playlistDataResult);
       } catch (error) {
         console.error("Error fetching playlist data:", error);
         // Handle errors appropriately
@@ -95,9 +101,11 @@ const AdminPage: React.FC = () => {
 
   return (
     <div className=" h-full w-full relative bg-white">
+      {isLoading ? <Skeleton width="100px" height="100%"/> : 
       <UserProfileBackground
         userBackgroundImage={userData?.backgroundImageUrl}
       />
+      }
 
       <div className="h-full w-full left-0 top-[165px] absolute bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px]">
         {/* ... 설정창 */}
@@ -134,6 +142,7 @@ const AdminPage: React.FC = () => {
 
         
         {playlistData && playlistData.map((playlist : getPlaylistDTO, index : number) => (
+            
             <PlayList 
               playlist={playlist}/>
         ))}       

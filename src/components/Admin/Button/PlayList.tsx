@@ -2,8 +2,24 @@ import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useWindowSizeCustom from "../../../hooks/useWindowSizeCustom";
 import { getPlaylistDTO } from "types/Admin";
+import Skeleton from "@components/Skeleton.tsx/Skeleton";
+
+// 플레이리스트 조회하고 사진은 src="ex" 에 넣으면 됨
 
 export const PlayList = ({ playlist }: { playlist: getPlaylistDTO }) => {
+  const [isLoading,setIsLoding] = useState<boolean>(true);
+  
+  useEffect(() => {
+    
+    const delay = 1200; // 1.2 second
+    const timeoutId = setTimeout(() => {
+      setIsLoding(false);
+      console.log(isLoading)
+    }, delay);
+  
+    return () => clearTimeout(timeoutId);
+    }, []); 
+
   const {windowSize, isMobile} = useWindowSizeCustom();
 
   const [customMargin, setCustomMargin] = useState<number>(0);
@@ -18,12 +34,13 @@ export const PlayList = ({ playlist }: { playlist: getPlaylistDTO }) => {
     }
 
   }, [windowSize.width, customMargin,isMobile]);
-  
+
     return (
     <div style={{ marginLeft: `${customMargin}px`, marginRight: `${customMargin}px` }}
       className="inline-block h-[150px] mt-[42px] relative">
+      {!isLoading ? 
       <Link to={`${playlist.id}`}>
-        <button className="w-[150px] h-[150px] rounded-[13px] font-light text-zinc-300 text-4xl">
+      <button className="w-[150px] h-[150px] rounded-[13px] font-light text-zinc-300 text-4xl">
 
         {playlist.thumbnailUrl ?
          <img className="mx-auto w-[150px] h-full rounded-[13px]" src={playlist.thumbnailUrl ?? "default-image-url"} alt='x' />
@@ -38,6 +55,9 @@ export const PlayList = ({ playlist }: { playlist: getPlaylistDTO }) => {
           </div>
         </button>
       </Link>
+      :
+      <Skeleton width="150px" height="150px" background="#2E2E2E"/>
+      }
     </div>
   );
 };
