@@ -54,7 +54,7 @@ export const MusicDataRow: React.FC<MusicDataDTO> = ({
   return (
     <div className="h-[60%] scrollbar-hide overflow-auto text-[17px] flex justify-center ">
       <div className="w-full mx-2 my-[44px] ">
-        {musicList?.data &&
+        {musicList?.data?.length > 0 ? (
           musicList.data.map((musicItem: any, index: number) => (
             <div
               key={musicItem.id}
@@ -74,7 +74,12 @@ export const MusicDataRow: React.FC<MusicDataDTO> = ({
                 order={index + 1}
               />
             </div>
-          ))}
+          ))
+        ) : (
+          <div className="text-center flex justify-center items-center text-xl">
+            {isSaved ? "" : "아직 음악이 없습니다!"}
+          </div>
+        )}
 
         {isEditing && isSaved && musicList?.data && (
           <MusicDataRowContent
