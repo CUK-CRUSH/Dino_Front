@@ -90,7 +90,7 @@ const HomeComponent = () => {
             <div>내 리스트 만들기</div>
           </div>
 
-          <div className={"h-[50px]"}></div>
+          <div className={"h-[30px]"}></div>
 
           <div>
             <Swiper
@@ -130,6 +130,8 @@ const HomeComponent = () => {
               </SwiperSlide>
             </Swiper>
           </div>
+
+          <div className={"h-[38px]"}></div>
         </div>
       </div>
   );
