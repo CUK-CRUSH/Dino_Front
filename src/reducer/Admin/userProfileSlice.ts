@@ -3,29 +3,31 @@
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  userProfileBackgroundImage : null,
-  username: "Username",
-  introText: "Welcome to the Admin Page!",
-  userProfileImage: null,
+  profileBackgroundImage : null,
+  username: '',
+  introduction: '',
+  profileImage: null,
 };
 
 const userProfileSlice = createSlice({
   name: "userProfile",
   initialState,
   reducers: {
-    setUserProfileBackgroundImage : (state, action) => {
-      state.userProfileBackgroundImage = action.payload;
+    setProfileBackgroundImage : (state, action) => {
+      state.profileBackgroundImage = action.payload;
     },
-    updateProfile: (state, action) => {
-      state.username = action.payload.username;
-      state.introText = action.payload.introText;
-    },
-    setUserProfileImage: (state, action) => {
-      state.userProfileImage = action.payload;
+      setProfileUsername: (state, action) => {
+        state.username = action.payload;
+      },
+      setProfileIntroduction : (state, action) =>{
+        state.introduction = action.payload
+      },
+    setProfileImage: (state, action) => {
+      state.profileImage = action.payload;
     },
   },
 });
 
-export const { setUserProfileBackgroundImage, updateProfile, setUserProfileImage } = userProfileSlice.actions;
+export const { setProfileBackgroundImage, setProfileUsername, setProfileIntroduction, setProfileImage } = userProfileSlice.actions;
 
 export default userProfileSlice.reducer;

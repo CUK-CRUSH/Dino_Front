@@ -1,6 +1,5 @@
 import { updateMember } from "@api/member-controller/memberController";
 import { RootState } from "@store/index";
-import {  useState } from "react";
 import { useCookies } from "react-cookie";
 import { useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
@@ -29,7 +28,9 @@ const Next = ({ step,username}: NextDTO) => {
     console.log("Saving data:", data);
 
     if(step === 3) { 
-      updateMember(data); 
+
+      await new Promise(resolve => setTimeout(resolve, 700));
+
       const code = await updateMember(data);
       if(code.status === 200) {
         console.log(code)

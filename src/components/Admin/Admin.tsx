@@ -23,25 +23,6 @@ const AdminPage: React.FC = () => {
 
   const {username} = useParams<{username : string | undefined}>();
 
-  useEffect(() => {
-    const fetchData = async () => {
-      try {
-        const userDataResult = await getMemberUsername(username);
-        setUserdata(userDataResult.data);
-        console.log(userDataResult);
-      } catch (error) {
-        console.error("Error fetching user data:", error);
-      }
-    };
-  
-    // Delay execution by 1 second
-    const delay = setTimeout(() => {
-      fetchData();
-    }, 1000);
-  
-    // Cleanup the timeout to avoid potential memory leaks
-    return () => clearTimeout(delay);
-  }, []); 
 
   useEffect(() => {
     const fetchData = async () => {
