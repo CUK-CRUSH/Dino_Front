@@ -5,6 +5,7 @@ import { MusicDataRowContent } from "./MusicContents";
 import Youtube from "react-youtube";
 import { useSelector } from "react-redux";
 import { RootState } from "@store/index";
+import { MusicLength } from "./MusicLength";
 
 export const MusicDataRow: React.FC<MusicDataDTO> = ({
   isEditing,
@@ -44,11 +45,12 @@ export const MusicDataRow: React.FC<MusicDataDTO> = ({
       // 웹 버전
       videoId = urlParams.get("v")!;
     } else if (urlParams.has("si")) {
-      // 모바일 버전
-      videoId = urlParams.get("si")!;
+      // 축약 URL
+      videoId = url.split("?")[0].split("/").pop()!;
     }
 
     setSelectedVideoId(videoId);
+    console.log(videoId);
   };
 
   // ...
@@ -124,6 +126,7 @@ export const MusicDataRow: React.FC<MusicDataDTO> = ({
             </div>
           </div>
         )}
+        <MusicLength musicList={musicList} />
       </div>
     </div>
   );

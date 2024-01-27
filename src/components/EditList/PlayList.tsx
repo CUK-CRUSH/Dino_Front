@@ -17,7 +17,6 @@ import { getMember } from "@api/member-controller/memberController";
 import { getPlayList } from "@api/playlist-controller/playlistControl";
 import { getMusicList } from "@api/music-controller/musicControl";
 import { useParams } from "react-router-dom";
-import { MusicLength } from "./MusicList/MusicLength";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
   const isEditing = useSelector(
@@ -129,8 +128,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         playlistId={playlistId}
         username={username}
       />
-
-      <MusicLength musicList={musicList} />
 
       {isEditing && <PlusButton playlists={playlists} username={username} />}
     </div>

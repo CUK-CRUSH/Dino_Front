@@ -52,6 +52,7 @@ export const UsePlayListEditor = (
       }
     }
     dispatch(setIsEditing(false));
+    dispatch(resetIsSaved());
     if (compressedImage) {
       dispatch(updateImage(compressedImage));
     }
