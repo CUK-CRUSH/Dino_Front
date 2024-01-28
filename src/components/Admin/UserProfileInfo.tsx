@@ -39,7 +39,6 @@ const UserProfileInfo = ({ username, introText }: UserProfileInfoDTO) => {
       <div className="text-center text-white text-[15px] font-medium font-['Noto Sans'] mx-auto leading-[18px] mt-[19px]">
         {isLoading ? (
           <div className="flex items-center justify-center">
-
             <Skeleton width="200px" height="20px" background="#2E2E2E" />
           </div>
         ) : (

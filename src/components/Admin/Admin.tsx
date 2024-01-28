@@ -53,6 +53,7 @@ const AdminPage: React.FC = () => {
       try {
         const playlistDataResult = await getPlayList(username);
         setPlaylistdata(playlistDataResult.data);
+        
       } catch (error) {
         console.error("Error fetching playlist data:", error);
         // Handle errors appropriately
@@ -139,21 +140,18 @@ const AdminPage: React.FC = () => {
           username={userData?.username}
           introText={userData?.introduction} />
           
-
-        {/* 내가 생성한 플레이리스트 뽑아주고 마지막에 플레이리스트 추가 컴포넌트 붙이기. */}
-
-        
         {playlistData && playlistData.map((playlist : getPlaylistDTO, index : number) => (
             <PlayList 
               playlist={playlist}/>
         ))}   
             
-        {playlistData ? 
+        {!isLoading ? 
           <AddPlayList />
             :
           <></>
         }
         
+
       </div>
     </div>
   );
