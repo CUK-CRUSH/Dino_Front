@@ -1,11 +1,10 @@
 import Skeleton from "@components/Skeleton.tsx/Skeleton"
 
-interface SkeltonPlaylist {
+interface SkeltonPlaylistDTO {
   customMargin : number;
 }
 
-const SkeltonPlaylist = ({customMargin} : SkeltonPlaylist) => {
-  console.log(customMargin)
+const SkeltonPlaylist = ({customMargin} : SkeltonPlaylistDTO) => {
   return (
     <div className="inline-block h-[150px] mt-[42px] relative">
 

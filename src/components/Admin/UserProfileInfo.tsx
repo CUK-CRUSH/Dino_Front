@@ -17,7 +17,7 @@ const UserProfileInfo = ({ username, introText }: UserProfileInfoDTO) => {
     }, delay);
 
     return () => clearTimeout(timeoutId);
-  }, []);
+  }, [isLoading]);
 
   const { introduction } = useSelector(
     (state: RootState) => state.userProfile
