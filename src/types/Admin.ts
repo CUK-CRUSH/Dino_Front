@@ -1,3 +1,7 @@
+export interface LoadingDTO {
+  isLoading : boolean;
+}
+
 export interface EditProfileDTO {
   top : number;
   left : number;
@@ -36,5 +40,5 @@ export interface getPlaylistDTO {
   id: number,
   playlistName : string,
   thumbnailUrl : string | null,
-  numberOfMusics : number
+  numberOfMusics : number,
   }
