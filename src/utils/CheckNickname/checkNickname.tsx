@@ -1,4 +1,3 @@
-import { checkBadWord } from "@utils/checkBadWord/checkBadWord";
   
   // 닉네임 체크
   export const checkNickname = (nickname : string) => {
