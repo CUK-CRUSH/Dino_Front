@@ -16,7 +16,7 @@ const ToastComponent: React.FC<ToastComponentDTO> = ({  background,text }) => {
   useEffect(() => {
     const timeoutId = setTimeout(() => {
       dispatch(setToast(''));
-    }, 2000);
+    }, 3000);
 
     return () => clearTimeout(timeoutId);
   }, [dispatch]);

@@ -9,28 +9,16 @@ import {
   getNicknameAvailable,
   putUsername,
 } from "@api/member-controller/memberController";
-import { checkBadWord } from "@utils/checkBadWord/checkBadWord";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { RootState } from "@store/index";
 import ToastComponent from "@components/Toast/Toast";
 import { useDispatch } from "react-redux";
 import { setToast } from "@reducer/toast/toast";
+import { checkNickname } from "@utils/checkNickname/checkNickname";
+import { checkBadWord } from "@utils/checkBadWord/checkBadWord";
 
-// 닉네임 체크
-export const checkNickname = (nickname: string) => {
-  // 숫자영어 _ . 허용
-  const nicknameRegex = /^[a-zA-Z0-9._]{3,30}$/;
-  console.log(nickname);
-  if (nicknameRegex.test(nickname)) {
-    if (!checkBadWord(nickname)) {
-      return true;
-    }
-  } else if (!nicknameRegex.test(nickname)) {
-    return false;
-  }
-};
-// import { checkNickname } from "@utils/checkNickname/checkNickname";
+
 
 const ValidationProps = () => {
   const navigate = useNavigate();
@@ -60,7 +48,7 @@ const ValidationProps = () => {
         );
         console.log(checkNicknameBack);
   
-        if (checkNickname(e.target.value) && checkNicknameBack.status === 200) {
+        if (!checkBadWord(e.target.value) && checkNickname(e.target.value) && checkNicknameBack.status === 200) {
           setNicknameValidation(true);
         } else if (
           !checkNickname(e.target.value) &&
