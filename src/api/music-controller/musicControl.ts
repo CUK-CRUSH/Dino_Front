@@ -1,9 +1,11 @@
 import { axiosInstance } from "@api/axiosInstance";
 
 // 음악 조회하기
-export const getMusicList = async (playlistId: number) => {
+export const getMusicList = async (playlistId: number, page: number) => {
   try {
-    const response = await axiosInstance.get(`/api/v1/music/${playlistId}`);
+    const response = await axiosInstance.get(
+      `/api/v1/music/${playlistId}?page=${page}`
+    );
     return response.data;
   } catch (error) {
     console.log(error);
@@ -45,7 +47,7 @@ export const postMusicList = async (
 };
 
 // 음악 삭제하기
-export const deleteMusicList = async (musicId: string, cookies?: string) => {
+export const deleteMusicList = async (musicId: number, cookies?: string) => {
   try {
     const response = await axiosInstance.delete(
       `/api/v1/music?musicId=${musicId}`,

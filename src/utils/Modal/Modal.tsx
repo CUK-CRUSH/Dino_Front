@@ -41,6 +41,7 @@ export default function CustomModal({
   playlistName,
   musicData,
   playlistId,
+  username,
 }: Readonly<CustomModalDTO>) {
   const isEditing = useSelector(
     (state: RootState) => state.editPlaylistToggle.isEditing
@@ -57,7 +58,8 @@ export default function CustomModal({
     token,
     playlistName,
     musicData,
-    playlistId
+    playlistId,
+    username
   );
 
   return (

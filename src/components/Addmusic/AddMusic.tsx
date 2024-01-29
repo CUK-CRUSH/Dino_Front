@@ -80,7 +80,8 @@ const AddMusic: React.FC = () => {
     // async 키워드 추가
     if (
       !url.startsWith("https://www.youtube.com/") &&
-      !url.startsWith("https://youtu.be/")
+      !url.startsWith("https://youtu.be/") &&
+      !url.startsWith("https://youtube.com/")
     ) {
       Swal.fire({
         icon: "warning",
@@ -112,13 +113,6 @@ const AddMusic: React.FC = () => {
 
   const handlePatchClick = async () => {
     if (musicData && musicData.title) {
-      console.log(
-        musicId,
-        musicData.title,
-        musicData.artist,
-        musicData.url,
-        token
-      );
       await patchMusicList(
         Number(musicId),
         musicData.title,
@@ -177,7 +171,7 @@ const AddMusic: React.FC = () => {
           infoToggleHandler={handleInformationToggle}
         />
         {isEditMusics ? (
-          <EditButton handleSave={handlePatchClick} plusText={t("edit")} />
+          <EditButton handlePatch={handlePatchClick} plusText={t("edit")} />
         ) : (
           <AddButton handleSave={handleSave} plusText={t("plus")} />
         )}

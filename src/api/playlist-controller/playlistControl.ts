@@ -36,6 +36,7 @@ export const postPlayList = async (
         "image.png"
       );
     }
+
     const response = await axiosInstance.post(`/api/v1/playlist`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -43,6 +44,7 @@ export const postPlayList = async (
       },
     });
     console.log(response);
+
     return response.data;
   } catch (error) {
     console.log(error);
@@ -85,11 +87,11 @@ export const putPlayList = async (
       const binaryData = Uint8Array.from(atob(titleImage.split(",")[1]), (c) =>
         c.charCodeAt(0)
       );
-
+      const type = titleImage.split(",")[0].split(":")[1].split(";")[0];
       formData.append(
         "titleImage",
-        new Blob([binaryData], { type: "image/jpg" || "image/png" }),
-        "image.jpg, image/png"
+        new Blob([binaryData], { type }),
+        "image." + type.split("/")[1]
       );
     }
     const response = await axiosInstance.patch(

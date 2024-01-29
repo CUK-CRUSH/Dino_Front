@@ -7,8 +7,12 @@ import {
   resetIsSaved,
 } from "@reducer/musicadd";
 import { setIsEditing } from "@reducer/editPlayList/isEdit";
-import { putPlayList } from "@api/playlist-controller/playlistControl";
+import {
+  deletePlayList,
+  putPlayList,
+} from "@api/playlist-controller/playlistControl";
 import { postMusicList } from "@api/music-controller/musicControl";
+import { useNavigate } from "react-router-dom";
 
 export const UsePlayListEditor = (
   playlists: any[],
@@ -16,9 +20,11 @@ export const UsePlayListEditor = (
   token: string,
   playlistName: string,
   musicData: any,
-  playlistId: string | undefined
+  playlistId: string | undefined,
+  username: string | null
 ) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const handleEditClick = () => {
     dispatch(setIsEditing(true));
@@ -52,6 +58,7 @@ export const UsePlayListEditor = (
       }
     }
     dispatch(setIsEditing(false));
+    dispatch(resetIsSaved());
     if (compressedImage) {
       dispatch(updateImage(compressedImage));
     }
@@ -66,8 +73,10 @@ export const UsePlayListEditor = (
     dispatch(resetIsSaved());
   };
 
-  const handleDeleteClick = () => {
-    dispatch(updateTitle(""));
+  //플리삭제
+  const handleDeleteClick = async () => {
+    await deletePlayList(playlistId ?? "", token);
+    navigate(`/${username}/admin`);
   };
 
   return {
