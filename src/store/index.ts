@@ -11,7 +11,7 @@ import addMusicInformationToggle from "@reducer/toggle/addMusicToggle";
 import playlistReducer from "@reducer/editPlayList/setPlaylist";
 import setProfile from "@reducer/setProfile/setProfile";
 import editMusicListToggle from "@reducer/editMusic/editMusic";
-import toast from "@reducer/Toast/toast";
+import toast from "@reducer/toast/toast";
 
 const persistConfig = {
   key: "editMusicsToggle",

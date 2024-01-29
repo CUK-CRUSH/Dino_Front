@@ -102,6 +102,7 @@ const AdminPage: React.FC = () => {
     openOptionsModal();
   };
 
+  // 토스트
   const { toast } = useSelector(
     (state: RootState) => state.toast
   );
@@ -113,6 +114,20 @@ const AdminPage: React.FC = () => {
           userBackgroundImage={userData?.backgroundImageUrl}
         />
       }
+      {/* 플레이리스트 생성 성공 토스트 */}
+
+      {toast === 'add'  && <ToastComponent background="white" text="새로운 플레이리스트 생성이 완료되었습니다 !" />}
+      
+      {/* 로그인 성공 토스트 */}
+
+      {toast === 'login'  && <ToastComponent background="white" text="로그인 성공 ! " />}
+      {/* 프로필 성공 토스트 */}
+
+      {toast === 'profile'  && <ToastComponent background="white" text="프로필이 정상적으로 수정되었습니다 !" />}
+
+      {/* 복사 성공 토스트 */}
+
+      {toast === 'copy'  && <ToastComponent background="white" text="링크가 복사되었습니다." />}
 
       <div className="h-full w-full left-0 top-[165px] absolute bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px]">
         {/* ... 설정창 */}
@@ -135,8 +150,6 @@ const AdminPage: React.FC = () => {
         {/* 프로필 수정 모달 펼치기 */}
         {isEditModalOpen && <AdminEditModal onClose={closeEditModal} />}
 
-        {/* 프로필 성공 토스트 */}
-        {isEditModalOpen === false && toast && <ToastComponent background="#fff" color="#000" text="플레이리스트가 수정되었습니다" />}
 
         {/* 프로필 이미지 */}
         <div className=" flex items-center flex-col z-10">

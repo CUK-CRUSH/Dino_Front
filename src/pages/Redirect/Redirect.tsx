@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import useDecodedJWT from "@hooks/useDecodedJWT";
 import {  getMember } from "@api/member-controller/memberController";
+import { useDispatch } from "react-redux";
+import { setToast } from "@reducer/toast/toast";
 
 const fetchData = async (setCookie : any) => {
   const params = new URLSearchParams(window.location.search);
@@ -22,7 +24,7 @@ const Redirect = () => {
   const [cookies, setCookie] = useCookies(["accessToken"]);
 
   const decodedToken = useDecodedJWT(cookies.accessToken);
-
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const redirectAfterFetch = async () => {
@@ -38,15 +40,16 @@ const Redirect = () => {
         } catch (error) {
           console.error('Error fetching member:', error);
         }
-        
+        dispatch(setToast('login'));
         navigate("/login/validation");
       } else {
+        dispatch(setToast('login'));
         navigate(`/${getUserData.data.username}/admin`);
       }
     };
 
     redirectAfterFetch();
-  }, [navigate, setCookie, decodedToken]);
+  }, [navigate, setCookie, decodedToken, dispatch]);
 
   return (
     <h2 className={"text-white"}>로그인중입니다....</h2>

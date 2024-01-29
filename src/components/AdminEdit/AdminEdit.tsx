@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setProfileBackgroundImage, setProfileImage, setProfileIntroduction, setProfileUsername } from "@reducer/Admin/userProfileSlice";
 import { RootState } from "@store/index";
-import { setToast } from "@reducer/Toast/toast";
+import { setToast } from "@reducer/toast/toast";
 
 interface AdminEditModalProps {
   onClose: () => void; // A function to close the modal
@@ -215,8 +215,9 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
     const code = await updateMember(data);
     if (code.status === 200) {
+      dispatch(setToast('profile'));
+
       navigate(`/${code.data.username}/admin`);
-      dispatch(setToast(true));
     }
     cancel();
   };
