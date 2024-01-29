@@ -108,7 +108,7 @@ const AdminPage: React.FC = () => {
   );
 
   return (
-    <div className=" h-full w-full relative bg-white">
+    <div className=" h-full w-full relative bg-white overflow-hidden">
       {isLoading ? <Skeleton width="100px" height="100%" /> :
         <UserProfileBackground
           userBackgroundImage={userData?.backgroundImageUrl}

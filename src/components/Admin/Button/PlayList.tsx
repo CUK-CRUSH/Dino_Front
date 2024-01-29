@@ -20,7 +20,7 @@ export const PlayList = ({ playlist }: { playlist: getPlaylistDTO }) => {
 
   useEffect(() => {
     if (!isMobile) {
-      setCustomMargin((371 / 2 - 150) / 2);
+      setCustomMargin((390 / 2 - 150) / 2);
     } else {
       setCustomMargin((isMobile && windowSize.width >= 390) ? (390 / 2 - 150) / 2 : (windowSize.width / 2 - 150) / 2);
     }
