@@ -108,8 +108,8 @@ const AdminPage: React.FC = () => {
   );
 
   return (
-    <div className=" h-full w-full relative bg-white overflow-hidden">
-      {isLoading ? <Skeleton width="100px" height="100%" /> :
+    <div className="w-full relative bg-white scrollbar-hide">
+      {isLoading ? <Skeleton width="100px" height="100%" /> : 
         <UserProfileBackground
           userBackgroundImage={userData?.backgroundImageUrl}
         />
@@ -129,7 +129,7 @@ const AdminPage: React.FC = () => {
 
       {toast === 'copy'  && <ToastComponent background="white" text="링크가 복사되었습니다." />}
 
-      <div className="h-full w-full left-0 top-[165px] absolute bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px]">
+      <div className="h-full w-full left-0 top-[165px] absolute bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px] ">
         {/* ... 설정창 */}
         {
           <OpenOption
@@ -166,6 +166,7 @@ const AdminPage: React.FC = () => {
           <PlayList
             playlist={playlist} />
         ))}
+
 
         {!isLoading && playlistData?.length && playlistData.length < 4 ?
           <AddPlayList />

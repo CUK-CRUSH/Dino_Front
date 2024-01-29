@@ -1,4 +1,4 @@
-import { debounce, set } from "lodash";
+import { debounce } from "lodash";
 import Fanfare from "../../assets/Validation/Fanfare.svg";
 import Check from "../../assets/Validation/Check.svg";
 import not from "../../assets/Validation/not.svg";
@@ -45,9 +45,6 @@ const ValidationProps = () => {
   const [cookies] = useCookies(["accessToken"]);
   // 액세스 토큰
   const token = cookies.accessToken;
-
-  // 선택적 토스트창
-  const [duplicateToast,setDuplicateToast] = useState<boolean>(false);
 
   const dispatch = useDispatch();
   
