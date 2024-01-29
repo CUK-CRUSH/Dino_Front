@@ -4,6 +4,7 @@ import "cropperjs/dist/cropper.css";
 import { ImageCropsDTO } from "types/ImageCrop/imagecrops";
 import ImageControlButton from "@components/EditList/Button/ImageControlButton";
 import Swal from "sweetalert2";
+import useImageCompress from "@hooks/useImageCompress";
 
 const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -16,8 +17,8 @@ const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
       inputRef.current.click();
     }
   };
-
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const { compressImage } = useImageCompress();
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
 
     const files = e.target.files;
@@ -37,12 +38,16 @@ const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
       });
       return;
     }
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      setImage(reader.result as string);
-    };
-    reader.readAsDataURL(files[0]);
+    if (file) {
+      const compressedFile = await compressImage(file as File);
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImage(reader.result as string);
+      };
+      if (compressedFile) {
+        reader.readAsDataURL(compressedFile);
+      }
+    }
   };
 
   const getCropData = () => {
@@ -56,7 +61,7 @@ const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
       <input
         type="file"
         ref={inputRef}
-        accept=".jpg, .jpeg, .png"
+        accept=".jpg, .jpeg, .png ,.webp"
         className="hidden"
         onChange={handleFileChange}
       />

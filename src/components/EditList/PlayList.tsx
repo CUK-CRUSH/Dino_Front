@@ -37,9 +37,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const handleCompressImage = useCallback(async () => {
     if (!uploadImage) return;
 
-    const imageFile = dataURItoFile(uploadImage);
-
-    const result = await compressImage(imageFile);
+    const result = dataURItoFile(uploadImage);
 
     if (!result) return;
   }, [uploadImage, compressImage]);
@@ -68,6 +66,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     if (uploadImage) {
       handleCompressImage();
     }
+    console.log(uploadImage);
     const fetchPlaylist = async (id: number) => {
       const member = await getMember(id);
       const playlist = await getPlayList(member.data.username);

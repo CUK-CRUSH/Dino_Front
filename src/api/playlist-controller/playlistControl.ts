@@ -36,6 +36,7 @@ export const postPlayList = async (
         "image.png"
       );
     }
+
     const response = await axiosInstance.post(`/api/v1/playlist`, formData, {
       headers: {
         "Content-Type": "multipart/form-data",
@@ -43,6 +44,7 @@ export const postPlayList = async (
       },
     });
     console.log(response);
+
     return response.data;
   } catch (error) {
     console.log(error);

@@ -9,8 +9,9 @@ const useImageCompress = () => {
     setIsLoading(true);
 
     const options = {
-      maxSizeMB: 2,
+      maxSizeMB: 1,
       maxWidthOrHeight: 1920,
+      useWebWorker: true,
     };
 
     try {
