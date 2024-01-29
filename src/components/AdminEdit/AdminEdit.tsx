@@ -60,6 +60,20 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     introduction: "",
   });
 
+  // 닉네임 체크
+  const checkNickname = (nickname: string) => {
+    // 숫자영어 _ . 허용
+    const nicknameRegex = /^[a-zA-Z0-9._]{3,30}$/;
+    console.log(nickname);
+    if (nicknameRegex.test(nickname)) {
+      if (!checkBadWord(nickname)) {
+        return true;
+      }
+    } else if (!nicknameRegex.test(nickname)) {
+      return false;
+    }
+  };
+
   const onChangeInput = async (e: { target: { name: any; value: any } }) => {
     const { name, value } = e.target;
 
