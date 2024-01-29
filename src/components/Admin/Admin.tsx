@@ -23,7 +23,7 @@ const AdminPage: React.FC = () => {
   const [userData, setUserdata] = useState<getMemberDTO>();
 
   // 플레이리스트 데이터
-  const [playlistData, setPlaylistdata] = useState<getPlaylistDTO[]>();
+  const [playlistData, setPlaylistdata] = useState<getPlaylistDTO[] | undefined>();
 
   const { username } = useParams<{ username: string | undefined }>();
 
@@ -167,8 +167,7 @@ const AdminPage: React.FC = () => {
             playlist={playlist} />
         ))}
 
-
-        {!isLoading && playlistData?.length && playlistData.length < 4 ?
+        {!isLoading && playlistData?.length !== undefined && playlistData.length < 4 ?
           <AddPlayList />
           :
           <></>
