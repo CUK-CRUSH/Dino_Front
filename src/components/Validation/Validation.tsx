@@ -15,10 +15,7 @@ import { RootState } from "@store/index";
 import ToastComponent from "@components/Toast/Toast";
 import { useDispatch } from "react-redux";
 import { setToast } from "@reducer/Toast/toast";
-import { checkNickname } from "@utils/checkNickname/checkNickname";
 import { checkBadWord } from "@utils/checkBadWord/checkBadWord";
-
-
 
 const ValidationProps = () => {
   const navigate = useNavigate();
@@ -36,6 +33,21 @@ const ValidationProps = () => {
 
   const dispatch = useDispatch();
   
+  // 닉네임 체크
+const checkNickname = (nickname: string) => {
+  // 숫자영어 _ . 허용
+  const nicknameRegex = /^[a-zA-Z0-9._]{3,30}$/;
+  console.log(nickname);
+  if (nicknameRegex.test(nickname)) {
+    if (!checkBadWord(nickname)) {
+      return true;
+    }
+  } else if (!nicknameRegex.test(nickname)) {
+    return false;
+  }
+};
+// import { checkNickname } from "@utils/checkNickname/checkNickname";
+
   const onChange = debounce(async (e) => {
     setUsername(e.target.value);
   
