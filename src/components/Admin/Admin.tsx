@@ -12,6 +12,9 @@ import { getMemberDTO, getPlaylistDTO } from "types/Admin";
 import { getPlayList } from "@api/playlist-controller/playlistControl";
 import { useParams } from "react-router-dom";
 import Skeleton from "@components/Skeleton.tsx/Skeleton";
+import ToastComponent from "@components/Toast/Toast";
+import { useSelector } from "react-redux";
+import { RootState } from "@store/index";
 
 const AdminPage: React.FC = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -99,6 +102,10 @@ const AdminPage: React.FC = () => {
     openOptionsModal();
   };
 
+  const { toast } = useSelector(
+    (state: RootState) => state.toast
+  );
+
   return (
     <div className=" h-full w-full relative bg-white">
       {isLoading ? <Skeleton width="100px" height="100%" /> :
@@ -128,6 +135,9 @@ const AdminPage: React.FC = () => {
         {/* 프로필 수정 모달 펼치기 */}
         {isEditModalOpen && <AdminEditModal onClose={closeEditModal} />}
 
+        {/* 프로필 성공 토스트 */}
+        {isEditModalOpen === false && toast && <ToastComponent background="#fff" color="#000" text="플레이리스트가 수정되었습니다" />}
+
         {/* 프로필 이미지 */}
         <div className=" flex items-center flex-col z-10">
 
@@ -149,8 +159,6 @@ const AdminPage: React.FC = () => {
           :
           <></>
         }
-
-
       </div>
     </div>
   );
