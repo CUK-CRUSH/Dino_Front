@@ -10,7 +10,7 @@ export const PlayList = ({ playlist }: { playlist: getPlaylistDTO }) => {
   const [customMargin, setCustomMargin] = useState<number>(0);
 
   useEffect(() => {
-    const delay = 1200; // 1.2 second
+    const delay = 500;
     const timeoutId = setTimeout(() => {
       setIsLoading(false);
     }, delay);

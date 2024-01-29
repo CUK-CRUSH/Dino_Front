@@ -10,7 +10,7 @@ const UserProfileInfo = ({ username, introText }: UserProfileInfoDTO) => {
 
   useEffect(() => {
 
-    const delay = 1200;
+    const delay = 500;
     const timeoutId = setTimeout(() => {
       setIsLoding(false);
       console.log(isLoading)

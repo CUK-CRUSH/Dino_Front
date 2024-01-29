@@ -42,7 +42,7 @@ const AdminPage: React.FC = () => {
       }
     };
 
-    const delay = 1200; // 1.2 second
+    const delay = 500; 
     const timeoutId = setTimeout(() => {
       setIsLoding(false);
       fetchData();
@@ -108,7 +108,7 @@ const AdminPage: React.FC = () => {
   );
 
   return (
-    <div className="w-full relative bg-white scrollbar-hide">
+    <div className="w-full h-full relative bg-white scrollbar-hide overflow-scroll">
       {isLoading ? <Skeleton width="100px" height="100%" /> : 
         <UserProfileBackground
           userBackgroundImage={userData?.backgroundImageUrl}

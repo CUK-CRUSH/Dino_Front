@@ -11,14 +11,20 @@ export const AddPlayList = () => {
 
   useEffect(() => {
     if (!isMobile) {
-      setCustomMargin((371 / 2 - 150) / 2);
+      setCustomMargin((390 / 2 - 151) / 2);
+    } else {
+      if (windowSize.width > 400 && windowSize.width <= 429) {
+        setCustomMargin((windowSize.width / 2 - 151) / 2);
+      } else if (windowSize.width >= 430) {
+        setCustomMargin((390 / 2 - 151) / 2);
+      } else if (windowSize.width >= 390 && windowSize.width <= 400 ) {
+        setCustomMargin((390 / 2 - 151) / 2);
+      }
+      else if (windowSize.width < 390) {
+        setCustomMargin((windowSize.width / 2 - 151) / 2);
+      }
     }
-    else if (isMobile) {
-      if (windowSize.width >= 390) { setCustomMargin((390 / 2 - 150) / 2) }
-      else { setCustomMargin((windowSize.width / 2 - 150) / 2) };
-    }
-
-  }, [windowSize.width, customMargin, isMobile]);
+  }, [windowSize.width, isMobile]);
 
   const [cookie] = useCookies();
   let token = cookie.accessToken;
@@ -32,7 +38,7 @@ export const AddPlayList = () => {
     const post = await postPlayList(title,titleImage,token)
     console.log(post)
     if(post.status === 200) {
-      navigate(`${post.data.id}`)    
+      navigate(`${post.data.id}`)
     }
   }
 
