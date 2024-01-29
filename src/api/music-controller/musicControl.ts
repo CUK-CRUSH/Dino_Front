@@ -1,9 +1,11 @@
 import { axiosInstance } from "@api/axiosInstance";
 
 // 음악 조회하기
-export const getMusicList = async (playlistId: number) => {
+export const getMusicList = async (playlistId: number, page: number) => {
   try {
-    const response = await axiosInstance.get(`/api/v1/music/${playlistId}`);
+    const response = await axiosInstance.get(
+      `/api/v1/music/${playlistId}?page=${page}`
+    );
     return response.data;
   } catch (error) {
     console.log(error);

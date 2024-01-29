@@ -31,6 +31,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const [playlistName, setPlaylistName] = useState("");
   const [musicList, setMusicList] = useState<any>([]);
   const { playlistId } = useParams<{ playlistId: string }>();
+  const [page, setPage] = useState<number>(0);
 
   const handleUploadImage = (image: string) => setUploadImage(image);
   const handleCompressImage = useCallback(async () => {
@@ -70,7 +71,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       const member = await getMember(id);
       const playlist = await getPlayList(member.data.username);
 
-      const musicAPIData = await getMusicList(Number(playlistId));
+      const musicAPIData = await getMusicList(Number(playlistId), page);
       setUsername(member.data.username);
       setPlaylists(playlist.data);
       setMusicList(musicAPIData);
