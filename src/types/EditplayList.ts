@@ -11,6 +11,7 @@ export interface MusicDataDTO {
   musicList: any;
   playlistId: string | undefined;
   username: string | null;
+  token: string;
 }
 
 export interface MusicContentDTO {
@@ -21,15 +22,12 @@ export interface MusicContentDTO {
 }
 
 export interface MusicDataRowContentProps {
-  titleRef: React.RefObject<HTMLSpanElement>;
-  artistRef: React.RefObject<HTMLSpanElement>;
-  TitleLength: boolean;
-  ArtistLength: boolean;
   musicData: MusicContentDTO;
   isEditing: boolean;
   order: number;
   playlistId: string | undefined;
   username: string | null;
+  token: string;
 }
 
 export interface EditPlsyListDTO {}

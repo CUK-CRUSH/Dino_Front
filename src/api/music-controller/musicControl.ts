@@ -47,7 +47,7 @@ export const postMusicList = async (
 };
 
 // 음악 삭제하기
-export const deleteMusicList = async (musicId: string, cookies?: string) => {
+export const deleteMusicList = async (musicId: number, cookies?: string) => {
   try {
     const response = await axiosInstance.delete(
       `/api/v1/music?musicId=${musicId}`,

@@ -5,18 +5,22 @@ import { useDispatch } from "react-redux";
 import { setIsEditMusics } from "@reducer/editMusic/editMusic";
 import "@styles/EditList/playList.css";
 import Swal from "sweetalert2";
+import { deleteMusicList } from "@api/music-controller/musicControl";
+import { useEffect, useRef, useState } from "react";
 
 export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
-  titleRef,
-  artistRef,
-  TitleLength,
-  ArtistLength,
   musicData,
   order,
   playlistId,
   username,
   isEditing,
+  token,
 }) => {
+  const [titleWidth, setTitleWidth] = useState(0);
+  const [artistWidth, setArtistWidth] = useState(0);
+  const titleRef = useRef<HTMLSpanElement>(null);
+  const artistRef = useRef<HTMLSpanElement>(null);
+
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleEditClick = () => {
@@ -40,28 +44,59 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
         popup:
           "h-[150px] w-[250px] text-center text-[15px] font-bold text-black",
       },
-    }).then((result) => {
+    }).then(async (result) => {
       if (result.isConfirmed) {
         // '취소' 버튼을 눌렀을 때 실행할 코드를 여기에 작성합니다.
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         // '삭제' 버튼을 눌렀을 때 실행할 코드를 여기에 작성합니다.
-        Swal.fire({
-          title: "삭제되었습니다!",
-          width: "250px",
-          customClass: {
-            title: "text-black text-[15px] font-bold",
-            popup:
-              "h-[150px] w-[250px] text-center text-[15px] font-bold text-black",
-          },
-        });
+        try {
+          await deleteMusicList(musicData.id, token);
+
+          Swal.fire({
+            title: "삭제되었습니다!",
+            width: "250px",
+            customClass: {
+              title: "text-black text-[15px] font-bold",
+              popup:
+                "h-[150px] w-[250px] text-center text-[15px] font-bold text-black",
+            },
+          });
+        } catch (error) {
+          console.log(error);
+          Swal.fire({
+            title: "노래 삭제에 실패했습니다.",
+            width: "250px",
+            customClass: {
+              title: "text-black text-[15px] font-bold",
+              popup:
+                "h-[150px] w-[250px] text-center text-[15px] font-bold text-black",
+            },
+          });
+        }
       }
     });
   };
+
+  useEffect(() => {
+    if (titleRef.current && artistRef.current) {
+      const titleElement = titleRef.current;
+      const artistElement = artistRef.current;
+      const titleWidth = titleElement.scrollWidth;
+      const artistWidth = artistElement.scrollWidth;
+      setTitleWidth(titleWidth);
+      setArtistWidth(artistWidth);
+    }
+  }, [musicData]);
+
+  const TitleLength = titleWidth >= 205;
+  const ArtistLength = artistWidth >= 105;
   return (
-    <div className="flex justify-between h-[50px] mb-2 mx-2">
+    <div className="flex  justify-between h-[50px] mb-2 mx-2">
       <div
         onClick={handleEditClick}
-        className="flex flex-row w-full items-center h-[50px] p-3 px-[7px] rounded-[15px] bg-[#2E2E2E] cursor-pointer"
+        className={`flex flex-row ${
+          isEditing ? "" : "w-full"
+        } w-full items-center h-[50px] p-3 px-[7px] rounded-[15px] bg-[#2E2E2E] cursor-pointer`}
       >
         <div className="ml-2 w-1/12">
           <span>{order}</span>
@@ -78,7 +113,7 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
             </span>
           </div>
         </div>
-        <div className="text-[13px] w-4/12 overflow-hidden">
+        <div className="text-[13px] w-4/12 pl-3 overflow-hidden">
           <div className="flex items-center">
             <span
               ref={artistRef}
