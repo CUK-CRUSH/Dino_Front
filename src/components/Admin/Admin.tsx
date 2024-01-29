@@ -1,4 +1,4 @@
-import React, { useEffect,  useState } from "react";
+import React, { useEffect, useState } from "react";
 import AdminEditModal from "@pages/Admin/AdminEditModal";
 import { AddPlayList } from "@components/Admin/Button/AddPLayList";
 import { EditProfile } from "@components/Admin/Modal/EditProfile";
@@ -7,11 +7,14 @@ import OpenOption from "./Button/OpenOption";
 import UserProfileImage from "./UserProfileImage";
 import UserProfileInfo from "./UserProfileInfo";
 import { PlayList } from "@components/Admin/Button/PlayList";
-import {  getMemberUsername } from "@api/member-controller/memberController";
+import { getMemberUsername } from "@api/member-controller/memberController";
 import { getMemberDTO, getPlaylistDTO } from "types/Admin";
 import { getPlayList } from "@api/playlist-controller/playlistControl";
-import {  useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
 import Skeleton from "@components/Skeleton.tsx/Skeleton";
+import ToastComponent from "@components/Toast/Toast";
+import { useSelector } from "react-redux";
+import { RootState } from "@store/index";
 
 const AdminPage: React.FC = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -22,9 +25,9 @@ const AdminPage: React.FC = () => {
   // 플레이리스트 데이터
   const [playlistData, setPlaylistdata] = useState<getPlaylistDTO[]>();
 
-  const {username} = useParams<{username : string | undefined}>();
+  const { username } = useParams<{ username: string | undefined }>();
 
-  const [isLoading,setIsLoding] = useState<boolean>(true);
+  const [isLoading, setIsLoding] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -38,30 +41,29 @@ const AdminPage: React.FC = () => {
         }
       }
     };
-  
+
     const delay = 1200; // 1.2 second
     const timeoutId = setTimeout(() => {
       setIsLoding(false);
       fetchData();
     }, delay);
-  
+
     return () => clearTimeout(timeoutId);
-    }, [username,userData]); 
-  
+  }, [username, userData]);
+
   useEffect(() => {
     const fetchPlaylistData = async () => {
       try {
         const playlistDataResult = await getPlayList(username);
         setPlaylistdata(playlistDataResult.data);
-        
+
       } catch (error) {
         console.error("Error fetching playlist data:", error);
-        // Handle errors appropriately
       }
     };
-  
+
     fetchPlaylistData();
-  }, [username,userData]); 
+  }, [username, userData]);
 
   const openEditModal = () => {
     setIsEditModalOpen(true);
@@ -100,12 +102,16 @@ const AdminPage: React.FC = () => {
     openOptionsModal();
   };
 
+  const { toast } = useSelector(
+    (state: RootState) => state.toast
+  );
+
   return (
     <div className=" h-full w-full relative bg-white">
-      {isLoading ? <Skeleton width="100px" height="100%"/> : 
-      <UserProfileBackground
-        userBackgroundImage={userData?.backgroundImageUrl}
-      />
+      {isLoading ? <Skeleton width="100px" height="100%" /> :
+        <UserProfileBackground
+          userBackgroundImage={userData?.backgroundImageUrl}
+        />
       }
 
       <div className="h-full w-full left-0 top-[165px] absolute bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px]">
@@ -129,29 +135,30 @@ const AdminPage: React.FC = () => {
         {/* 프로필 수정 모달 펼치기 */}
         {isEditModalOpen && <AdminEditModal onClose={closeEditModal} />}
 
+        {/* 프로필 성공 토스트 */}
+        {isEditModalOpen === false && toast && <ToastComponent background="#fff" color="#000" text="플레이리스트가 수정되었습니다" />}
+
         {/* 프로필 이미지 */}
         <div className=" flex items-center flex-col z-10">
-          
+
           <UserProfileImage userProfileImage={userData?.profileImageUrl} />
         </div>
 
-          
-          <UserProfileInfo
+
+        <UserProfileInfo
           username={userData?.username}
           introText={userData?.introduction} />
-          
-        {playlistData && playlistData.map((playlist : getPlaylistDTO, index : number) => (
-            <PlayList 
-              playlist={playlist}/>
-        ))}   
-            
-        {!isLoading ? 
+
+        {playlistData && playlistData.map((playlist: getPlaylistDTO, index: number) => (
+          <PlayList
+            playlist={playlist} />
+        ))}
+
+        {!isLoading && playlistData?.length && playlistData.length < 4 ?
           <AddPlayList />
-            :
+          :
           <></>
         }
-        
-
       </div>
     </div>
   );
