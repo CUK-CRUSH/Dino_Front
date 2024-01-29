@@ -1,12 +1,12 @@
-// userProfileSlice.ts
+// toast.ts
 
 import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
-  toast : false
+  toast : ''
 };
 
-const userProfileSlice = createSlice({
+const toast = createSlice({
   name: "toast",
   initialState,
   reducers: {
@@ -16,6 +16,6 @@ const userProfileSlice = createSlice({
   },
 });
 
-export const { setToast } = userProfileSlice.actions;
+export const { setToast } = toast.actions;
 
-export default userProfileSlice.reducer;
+export default toast.reducer;

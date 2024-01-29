@@ -1,4 +1,4 @@
-import Skeleton from "@components/Skeleton.tsx/Skeleton"
+import Skeleton from "@components/Skeleton/Skeleton"
 
 interface SkeltonPlaylistDTO {
   customMargin : number;

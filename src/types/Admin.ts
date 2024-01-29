@@ -37,7 +37,7 @@ export interface getMemberDTO {
   }
   
 export interface getPlaylistDTO {
-  id: number,
+  id: number | undefined,
   playlistName : string,
   thumbnailUrl : string | null,
   numberOfMusics : number,

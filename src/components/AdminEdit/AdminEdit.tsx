@@ -12,6 +12,7 @@ import { getMemberDTO } from "types/Admin";
 import { useCookies } from "react-cookie";
 import {
   getMemberMe,
+  getNicknameAvailable,
   updateMember,
 } from "@api/member-controller/memberController";
 import { UpdateMemberParams } from "types/AdminEdit";
@@ -20,6 +21,8 @@ import { useDispatch, useSelector } from "react-redux";
 import { setProfileBackgroundImage, setProfileImage, setProfileIntroduction, setProfileUsername } from "@reducer/Admin/userProfileSlice";
 import { RootState } from "@store/index";
 import { setToast } from "@reducer/Toast/toast";
+import { checkBadWord } from "@utils/checkBadWord/checkBadWord";
+import ToastComponent from "@components/Toast/Toast";
 
 interface AdminEditModalProps {
   onClose: () => void; // A function to close the modal
@@ -33,6 +36,8 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
   const dispatch = useDispatch();
 
+  // 유효상태
+  const [nicknameValidation, setNicknameValidation] = useState<boolean>(false);
 
   // 정보불러오기
   useEffect(() => {
@@ -54,7 +59,21 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     introduction: "",
   });
 
-  const onChangeInput = (e: { target: { name: any; value: any } }) => {
+  // 닉네임 체크
+  const checkNickname = (nickname: string) => {
+    // 숫자영어 _ . 허용
+    const nicknameRegex = /^[a-zA-Z0-9._]{3,30}$/;
+    console.log(nickname);
+    if (nicknameRegex.test(nickname)) {
+      if (!checkBadWord(nickname)) {
+        return true;
+      }
+    } else if (!nicknameRegex.test(nickname)) {
+      return false;
+    }
+  };
+
+  const onChangeInput = async (e: { target: { name: any; value: any } }) => {
     const { name, value } = e.target;
 
     setInput({
@@ -68,7 +87,35 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     });
 
     if (name === 'username') {
-      dispatch(setProfileUsername(value));
+      if (value) {
+        try {
+          const checkNicknameBack = await getNicknameAvailable(value, token);
+          console.log(checkNicknameBack);
+          console.log(checkNickname(value))
+          if (!checkBadWord(value) && checkNickname(value) && checkNicknameBack.status === 200) {
+            dispatch(setProfileUsername(value));
+            setNicknameValidation(true);
+          } else if (
+            !checkNickname(e.target.value) &&
+            checkNicknameBack.status !== 200
+          ) {
+            setNicknameValidation(false);
+          } else {
+            setNicknameValidation(false);
+          }
+        } catch (error : any) {
+          // If the status is 400, simply skip the error
+          if (error.response && error.response.status === 400) {
+            dispatch(setToast('duplicate'));
+            setNicknameValidation(false);
+          } else {
+            console.error("Error checking nickname:", error);
+          }
+        }
+      } else {
+        setNicknameValidation(false);
+      }
+
     } else if (name === 'introduction') {
       dispatch(setProfileIntroduction(value));
     }
@@ -206,20 +253,27 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   const navigate = useNavigate();
 
   const handleMember = async (data: UpdateMemberParams) => {
-
-    // Handle member data
+    if (!nicknameValidation) {
+      dispatch(setToast('nicknameValidation'))
+      return;
+    }
     console.log("Saving data:", data);
 
-    // Wait for 1 second using setTimeout
-    await new Promise(resolve => setTimeout(resolve, 700));
-
+    await new Promise(resolve => setTimeout(resolve, 300));
     const code = await updateMember(data);
+
     if (code.status === 200) {
+      dispatch(setToast('profile'));
+
       navigate(`/${code.data.username}/admin`);
-      dispatch(setToast(true));
     }
     cancel();
   };
+    // 토스트
+    const { toast } = useSelector(
+      (state: RootState) => state.toast
+    );
+    
   return (
     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50">
 
@@ -232,7 +286,8 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
           } h-full mt-5 bg-white rounded-t-3xl shadow-lg
         animate-slide-edit-${isOpen ? "in" : "out"}`}
       >
-
+      {toast === 'nicknameValidation'  && <ToastComponent background="black" text="닉네임을 수정해주세요 ! " />}
+      
         {/* 상단 취소/저장 버튼 */}
         <div className="flex justify-between h-[50px]">
           <EditButton
@@ -284,3 +339,5 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 };
 
 export default AdminEdit;
+
+

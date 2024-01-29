@@ -10,7 +10,7 @@ export const PlayList = ({ playlist }: { playlist: getPlaylistDTO }) => {
   const [customMargin, setCustomMargin] = useState<number>(0);
 
   useEffect(() => {
-    const delay = 1200; // 1.2 second
+    const delay = 500;
     const timeoutId = setTimeout(() => {
       setIsLoading(false);
     }, delay);
@@ -20,9 +20,18 @@ export const PlayList = ({ playlist }: { playlist: getPlaylistDTO }) => {
 
   useEffect(() => {
     if (!isMobile) {
-      setCustomMargin((371 / 2 - 150) / 2);
+      setCustomMargin((390 / 2 - 151) / 2);
     } else {
-      setCustomMargin((isMobile && windowSize.width >= 390) ? (390 / 2 - 150) / 2 : (windowSize.width / 2 - 150) / 2);
+      if (windowSize.width > 400 && windowSize.width <= 429) {
+        setCustomMargin((windowSize.width / 2 - 151) / 2);
+      } else if (windowSize.width >= 430) {
+        setCustomMargin((390 / 2 - 151) / 2);
+      } else if (windowSize.width >= 390 && windowSize.width <= 400 ) {
+        setCustomMargin((390 / 2 - 151) / 2);
+      }
+      else if (windowSize.width < 390) {
+        setCustomMargin((windowSize.width / 2 - 151) / 2);
+      }
     }
   }, [windowSize.width, isMobile]);
 

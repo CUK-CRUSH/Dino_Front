@@ -1,4 +1,4 @@
-import Skeleton from "@components/Skeleton.tsx/Skeleton";
+import Skeleton from "@components/Skeleton/Skeleton";
 import { RootState } from "@store/index";
 import React from "react";
 import { useEffect, useState } from "react";
@@ -10,7 +10,7 @@ const UserProfileInfo = ({ username, introText }: UserProfileInfoDTO) => {
 
   useEffect(() => {
 
-    const delay = 1200;
+    const delay = 500;
     const timeoutId = setTimeout(() => {
       setIsLoding(false);
       console.log(isLoading)

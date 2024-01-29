@@ -9,23 +9,13 @@ import {
   getNicknameAvailable,
   putUsername,
 } from "@api/member-controller/memberController";
-import { checkBadWord } from "@utils/checkBadWord/checkBadWord";
 import { useNavigate } from "react-router-dom";
-
-// 닉네임 체크
-export const checkNickname = (nickname: string) => {
-  // 숫자영어 _ . 허용
-  const nicknameRegex = /^[a-zA-Z0-9._]{3,30}$/;
-  console.log(nickname);
-  if (nicknameRegex.test(nickname)) {
-    if (!checkBadWord(nickname)) {
-      return true;
-    }
-  } else if (!nicknameRegex.test(nickname)) {
-    return false;
-  }
-};
-// import { checkNickname } from "@utils/checkNickname/checkNickname";
+import { useSelector } from "react-redux";
+import { RootState } from "@store/index";
+import ToastComponent from "@components/Toast/Toast";
+import { useDispatch } from "react-redux";
+import { setToast } from "@reducer/Toast/toast";
+import { checkBadWord } from "@utils/checkBadWord/checkBadWord";
 
 const ValidationProps = () => {
   const navigate = useNavigate();
@@ -41,6 +31,23 @@ const ValidationProps = () => {
   // 액세스 토큰
   const token = cookies.accessToken;
 
+  const dispatch = useDispatch();
+  
+  // 닉네임 체크
+const checkNickname = (nickname: string) => {
+  // 숫자영어 _ . 허용
+  const nicknameRegex = /^[a-zA-Z0-9._]{3,30}$/;
+  console.log(nickname);
+  if (nicknameRegex.test(nickname)) {
+    if (!checkBadWord(nickname)) {
+      return true;
+    }
+  } else if (!nicknameRegex.test(nickname)) {
+    return false;
+  }
+};
+// import { checkNickname } from "@utils/checkNickname/checkNickname";
+
   const onChange = debounce(async (e) => {
     setUsername(e.target.value);
   
@@ -53,7 +60,7 @@ const ValidationProps = () => {
         );
         console.log(checkNicknameBack);
   
-        if (checkNickname(e.target.value) && checkNicknameBack.status === 200) {
+        if (!checkBadWord(e.target.value) && checkNickname(e.target.value) && checkNicknameBack.status === 200) {
           setNicknameValidation(true);
         } else if (
           !checkNickname(e.target.value) &&
@@ -66,7 +73,7 @@ const ValidationProps = () => {
       } catch (error : any) {
         // If the status is 400, simply skip the error
         if (error.response && error.response.status === 400) {
-          console.log("Nickname validation skipped");
+          dispatch(setToast('duplicate'));
           setNicknameValidation(false);
         } else {
           console.error("Error checking nickname:", error);
@@ -89,11 +96,17 @@ const ValidationProps = () => {
     }
   };
 
-  return (
+  // 토스트
+  const { toast } = useSelector(
+    (state: RootState) => state.toast
+  );
+
+    return (
     <div className="w-full h-full relative bg-white flex flex-col align-middle items-center">
-      
+      {toast === 'login' && <ToastComponent background="black" text="로그인 성공 ! " /> }
+      {toast === 'duplicate' && <ToastComponent background="black" text="이미 존재하는 닉네임입니다 ! " /> }
+
       <div className="text-center text-black text-xl font-semibold font-['Noto Sans'] my-10">
-        
         <img className="mx-auto mt-16 mb-10" src={Fanfare} alt="Fanfare" />
         환영합니다 !
         <br />
