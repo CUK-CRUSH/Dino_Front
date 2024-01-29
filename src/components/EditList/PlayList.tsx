@@ -31,7 +31,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const [playlistName, setPlaylistName] = useState("");
   const [musicList, setMusicList] = useState<any>([]);
   const { playlistId } = useParams<{ playlistId: string }>();
-  const [page, setPage] = useState<number>(0);
+  // const [page, setPage] = useState<number>(0);
 
   const handleUploadImage = (image: string) => setUploadImage(image);
   const handleCompressImage = useCallback(async () => {
@@ -60,7 +60,8 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     token,
     playlistName,
     musicData,
-    playlistId
+    playlistId,
+    username
   );
 
   useEffect(() => {
@@ -71,7 +72,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       const member = await getMember(id);
       const playlist = await getPlayList(member.data.username);
 
-      const musicAPIData = await getMusicList(Number(playlistId), page);
+      const musicAPIData = await getMusicList(Number(playlistId), 0);
       setUsername(member.data.username);
       setPlaylists(playlist.data);
       setMusicList(musicAPIData);
@@ -81,6 +82,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     }
   }, [musicList, id, uploadImage, handleCompressImage, playlistId]);
   // 일단 의존성때문에 넣을건데 musicList빼고 나중에 다 지워도 될ㄷ스.
+  // /[musicList, id, uploadImage, handleCompressImage, playlistId]
 
   return (
     <div className="h-full w-full scrollbar flex flex-col bg-black text-white font-medium leading-[18px]">
@@ -92,6 +94,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
           playlistName={playlistName}
           musicData={musicData}
           playlistId={playlistId}
+          username={username}
         />
       )}
 

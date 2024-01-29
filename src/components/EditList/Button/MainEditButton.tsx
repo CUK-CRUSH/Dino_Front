@@ -10,6 +10,7 @@ export const MainEditButton: React.FC<{
   playlistName: string;
   musicData: any;
   playlistId: string | undefined;
+  username: string | null;
 }> = ({
   playlists,
   uploadImage,
@@ -17,6 +18,7 @@ export const MainEditButton: React.FC<{
   playlistName,
   musicData,
   playlistId,
+  username,
 }) => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
@@ -48,6 +50,7 @@ export const MainEditButton: React.FC<{
         playlistName={playlistName}
         musicData={musicData}
         playlistId={playlistId}
+        username={username}
       />
     </div>
   );

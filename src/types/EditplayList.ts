@@ -46,7 +46,7 @@ export interface EditModalDTO {
 }
 
 export interface ImageDisplayDTO {
-  compressedImage: string | null;
+  imageURL: string | null;
   isCompressLoading: boolean;
   cursor: string | null;
 }

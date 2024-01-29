@@ -5,17 +5,17 @@ import { ImageDisplayDTO } from "types/EditplayList";
 import { useTranslation } from "react-i18next";
 
 const ImageDisplay: React.FC<ImageDisplayDTO> = ({
-  compressedImage,
+  imageURL,
   isCompressLoading,
   cursor,
 }) => {
   const { t } = useTranslation("Edit");
   return (
     <>
-      {compressedImage ? (
+      {imageURL ? (
         <img
           className="h-full w-full rounded-b-3xl object-cover"
-          src={compressedImage}
+          src={imageURL}
           alt="Img"
         />
       ) : (

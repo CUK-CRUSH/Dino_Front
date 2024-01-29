@@ -27,7 +27,7 @@ export const EditPlaylistControls: React.FC<EditPlayListControlsDTO> = ({
         </>
       ) : (
         // 이 부분이 모달입니다 ㅋㅋㅋㅋㅋㅋ
-        <div className="ml-auto text-[18px] space-y-2">
+        <div className="ml-auto text-[18px] space-y-3">
           <button
             className="w-full border-b-[1px] border-[#D9D9D9]"
             onClick={onEdit}
@@ -35,8 +35,11 @@ export const EditPlaylistControls: React.FC<EditPlayListControlsDTO> = ({
             {t("list_edit")}
           </button>
 
-          <button className="w-full" onClick={onDelete}>
-            {t("delete_music")}
+          <button
+            className="w-full text-[13px] text-red-600 font-bold"
+            onClick={onDelete}
+          >
+            {t("delete_playlist")}
           </button>
         </div>
       )}

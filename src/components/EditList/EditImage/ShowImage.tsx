@@ -19,14 +19,14 @@ const ShowImage: React.FC<ShowImageDTO> = ({
       {isEditing ? (
         <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
           <ImageDisplay
-            compressedImage={playlist?.thumbnailUrl}
+            imageURL={playlist?.thumbnailUrl}
             isCompressLoading={isCompressLoading}
             cursor="pointer"
           />
         </ImageCropper>
       ) : (
         <ImageDisplay
-          compressedImage={playlist?.thumbnailUrl}
+          imageURL={playlist?.thumbnailUrl}
           isCompressLoading={isCompressLoading}
           cursor="default"
         />

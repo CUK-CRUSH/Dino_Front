@@ -88,8 +88,10 @@ export const putPlayList = async (
 
       formData.append(
         "titleImage",
-        new Blob([binaryData], { type: "image/jpg" || "image/png" }),
-        "image.jpg, image/png"
+        new Blob([binaryData], {
+          type: "image/jpg" || "image/png" || "image/webp",
+        }),
+        "image.jpg, image/png,image/webp"
       );
     }
     const response = await axiosInstance.patch(
