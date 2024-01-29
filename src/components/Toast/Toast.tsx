@@ -1,6 +1,6 @@
 // ToastComponent.tsx
 
-import { setToast } from '@reducer/toast/toast';
+import { setToast } from '@reducer/Toast/toast';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import 'react-toastify/dist/ReactToastify.css';

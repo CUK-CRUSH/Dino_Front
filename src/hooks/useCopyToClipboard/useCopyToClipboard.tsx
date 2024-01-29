@@ -1,5 +1,5 @@
 import { useDispatch } from 'react-redux';
-import { setToast } from '@reducer/toast/toast';
+import { setToast } from '@reducer/Toast/toast';
 
 const useCopyToClipboard = () => {
   const dispatch = useDispatch();

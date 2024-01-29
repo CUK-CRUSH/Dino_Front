@@ -4,7 +4,7 @@ import { useCookies } from "react-cookie";
 import useDecodedJWT from "@hooks/useDecodedJWT";
 import {  getMember } from "@api/member-controller/memberController";
 import { useDispatch } from "react-redux";
-import { setToast } from "@reducer/toast/toast";
+import { setToast } from "@reducer/Toast/toast";
 
 const fetchData = async (setCookie : any) => {
   const params = new URLSearchParams(window.location.search);

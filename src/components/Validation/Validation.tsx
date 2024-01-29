@@ -14,7 +14,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@store/index";
 import ToastComponent from "@components/Toast/Toast";
 import { useDispatch } from "react-redux";
-import { setToast } from "@reducer/toast/toast";
+import { setToast } from "@reducer/Toast/toast";
 import { checkNickname } from "@utils/checkNickname/checkNickname";
 import { checkBadWord } from "@utils/checkBadWord/checkBadWord";
 
