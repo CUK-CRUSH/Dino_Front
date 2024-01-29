@@ -113,13 +113,6 @@ const AddMusic: React.FC = () => {
 
   const handlePatchClick = async () => {
     if (musicData && musicData.title) {
-      console.log(
-        musicId,
-        musicData.title,
-        musicData.artist,
-        musicData.url,
-        token
-      );
       await patchMusicList(
         Number(musicId),
         musicData.title,

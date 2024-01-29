@@ -74,10 +74,10 @@ export const MusicDataRow: React.FC<MusicDataDTO> = ({
                 TitleLength={TitleLength}
                 ArtistLength={ArtistLength}
                 musicData={musicItem}
-                isEditing={isEditing}
                 order={index + 1}
                 playlistId={playlistId}
                 username={username}
+                isEditing={isEditing}
               />
             </div>
           ))
@@ -99,10 +99,10 @@ export const MusicDataRow: React.FC<MusicDataDTO> = ({
               url: url,
               id: Date.now(),
             }}
-            isEditing={isEditing}
             order={musicList.data.length + 1}
             playlistId={playlistId}
             username={username}
+            isEditing={isEditing}
           />
         )}
 
