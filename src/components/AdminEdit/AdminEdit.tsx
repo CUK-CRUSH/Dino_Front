@@ -21,7 +21,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { setProfileBackgroundImage, setProfileImage, setProfileIntroduction, setProfileUsername } from "@reducer/Admin/userProfileSlice";
 import { RootState } from "@store/index";
 import { setToast } from "@reducer/Toast/toast";
-import { checkNickname } from "@utils/checkNickname/checkNickname";
 import { checkBadWord } from "@utils/checkBadWord/checkBadWord";
 import ToastComponent from "@components/Toast/Toast";
 
