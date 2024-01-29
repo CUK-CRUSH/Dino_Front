@@ -19,7 +19,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setProfileBackgroundImage, setProfileImage, setProfileIntroduction, setProfileUsername } from "@reducer/Admin/userProfileSlice";
 import { RootState } from "@store/index";
-import { setToast } from "@reducer/Admin/toast";
+import { setToast } from "@reducer/Toast/toast";
 
 interface AdminEditModalProps {
   onClose: () => void; // A function to close the modal
