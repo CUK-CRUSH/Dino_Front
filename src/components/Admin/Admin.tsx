@@ -56,7 +56,7 @@ const AdminPage: React.FC = () => {
       try {
         const playlistDataResult = await getPlayList(username);
         setPlaylistdata(playlistDataResult.data);
-
+        
       } catch (error) {
         console.error("Error fetching playlist data:", error);
       }
