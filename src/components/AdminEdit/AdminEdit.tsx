@@ -207,10 +207,8 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
   const handleMember = async (data: UpdateMemberParams) => {
 
-    // Handle member data
     console.log("Saving data:", data);
 
-    // Wait for 1 second using setTimeout
     await new Promise(resolve => setTimeout(resolve, 300));
 
     const code = await updateMember(data);
