@@ -40,3 +40,8 @@ export interface SetUserProfileIntroductionDTO {
   value : string | undefined
   onChange : (e: { target: { name: any; value: any; }; }) => void; 
 }
+
+export interface checkDataItem {
+  key : number;
+  value : string | undefined;
+}

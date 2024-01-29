@@ -19,6 +19,7 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import { setProfileBackgroundImage, setProfileImage, setProfileIntroduction, setProfileUsername } from "@reducer/Admin/userProfileSlice";
 import { RootState } from "@store/index";
+import { setToast } from "@reducer/Toast/toast";
 
 interface AdminEditModalProps {
   onClose: () => void; // A function to close the modal
@@ -31,6 +32,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   const [userData, setUserdata] = useState<getMemberDTO>();
 
   const dispatch = useDispatch();
+
 
   // 정보불러오기
   useEffect(() => {
@@ -54,17 +56,17 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
   const onChangeInput = (e: { target: { name: any; value: any } }) => {
     const { name, value } = e.target;
-  
+
     setInput({
       ...input,
       [name]: value,
     });
-  
+
     setUpdateMemberData({
       ...updateMemberData,
       [name]: value,
     });
-  
+
     if (name === 'username') {
       dispatch(setProfileUsername(value));
     } else if (name === 'introduction') {
@@ -151,7 +153,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
       ...prevData,
       profileImage: uploadUserProfileImage,
     }));
-    
+
     dispatch(setProfileImage(uploadUserProfileImage));
 
   }, [uploadUserProfileImage, compressUserProfileImage, dispatch]);
@@ -190,8 +192,8 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     }, 900);
   };
 
-  const {username,profileImage,profileBackgroundImage,introduction} = useSelector(
-    (state : RootState) => state.userProfile
+  const { username, profileImage, profileBackgroundImage, introduction } = useSelector(
+    (state: RootState) => state.userProfile
   )
   const [updateMemberData, setUpdateMemberData] = useState<UpdateMemberParams>({
     username: username,
@@ -204,31 +206,33 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   const navigate = useNavigate();
 
   const handleMember = async (data: UpdateMemberParams) => {
+
     // Handle member data
     console.log("Saving data:", data);
-  
+
     // Wait for 1 second using setTimeout
     await new Promise(resolve => setTimeout(resolve, 700));
-  
+
     const code = await updateMember(data);
-    
     if (code.status === 200) {
-      console.log(code);
       navigate(`/${code.data.username}/admin`);
+      dispatch(setToast(true));
     }
-  
     cancel();
   };
   return (
     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50">
+
       {/* The following div creates a semi-transparent overlay background */}
       <div className="absolute inset-0 bg-gray-800 opacity-75 "></div>
+
       <div
-        className={`relative ${
-          size ? "w-[390px]" : "w-full"
-        } h-full mt-5 bg-white rounded-t-3xl shadow-lg
+
+        className={`relative ${size ? "w-[390px]" : "w-full"
+          } h-full mt-5 bg-white rounded-t-3xl shadow-lg
         animate-slide-edit-${isOpen ? "in" : "out"}`}
       >
+
         {/* 상단 취소/저장 버튼 */}
         <div className="flex justify-between h-[50px]">
           <EditButton
@@ -273,6 +277,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
           value={userData?.introduction}
           onChange={onChangeInput}
         />
+
       </div>
     </div>
   );

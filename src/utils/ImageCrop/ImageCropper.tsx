@@ -30,7 +30,7 @@ const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
 
     const fileType = file.type;
 
-    if (fileType !== "image/jpeg" && fileType !== "image/png") {
+    if (fileType !== "image/jpeg" && fileType !== "image/png" && fileType !== 'image/webp') {
       Swal.fire({
         icon: "error",
         title: "Oops...",
