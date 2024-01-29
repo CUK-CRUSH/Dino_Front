@@ -1,4 +1,4 @@
-import Skeleton from "@components/Skeleton.tsx/Skeleton";
+import Skeleton from "@components/Skeleton/Skeleton";
 import { RootState } from "@store/index";
 import React from "react";
 import { useEffect, useState } from "react";
