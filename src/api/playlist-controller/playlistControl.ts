@@ -111,3 +111,24 @@ export const putPlayList = async (
     throw error;
   }
 };
+
+// 유저 플레이리스트 이미지 삭제하기
+export const deletePlayListImage = async (
+  playlistId: string,
+  cookies?: string
+) => {
+  try {
+    const response = await axiosInstance.delete(
+      `/api/v1/playlist/${playlistId}/image`,
+      {
+        headers: {
+          Authorization: `Bearer ${cookies}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

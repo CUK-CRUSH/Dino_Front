@@ -5,11 +5,14 @@ import { ImageCropsDTO } from "types/ImageCrop/imagecrops";
 import ImageControlButton from "@components/EditList/Button/ImageControlButton";
 import Swal from "sweetalert2";
 import useImageCompress from "@hooks/useImageCompress";
+import { useDispatch } from "react-redux";
+import { updateImage } from "@reducer/musicadd";
 
 const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const cropperRef = useRef<ReactCropperElement>(null);
   const [image, setImage] = useState<null | string>(null);
+  const dispatch = useDispatch();
 
   const handleChildrenClick = () => {
     if (inputRef.current) {
@@ -30,7 +33,11 @@ const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
 
     const fileType = file.type;
 
-    if (fileType !== "image/jpeg" && fileType !== "image/png" && fileType !== 'image/webp') {
+    if (
+      fileType !== "image/jpeg" &&
+      fileType !== "image/png" &&
+      fileType !== "image/webp"
+    ) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -53,6 +60,9 @@ const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
   const getCropData = () => {
     if (typeof cropperRef.current?.cropper !== "undefined") {
       onCrop(cropperRef.current?.cropper.getCroppedCanvas().toDataURL());
+      dispatch(
+        updateImage(cropperRef.current?.cropper.getCroppedCanvas().toDataURL())
+      );
       setImage(null);
     }
   };

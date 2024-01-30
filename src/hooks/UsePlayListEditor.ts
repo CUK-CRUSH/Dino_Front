@@ -55,6 +55,7 @@ export const UsePlayListEditor = (
         dispatch(updateTitle(""));
         dispatch(updateArtist(""));
         dispatch(updateURL(""));
+        dispatch(updateImage(null));
       }
     }
     dispatch(setIsEditing(false));
