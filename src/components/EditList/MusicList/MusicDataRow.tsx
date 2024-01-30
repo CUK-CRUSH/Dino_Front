@@ -35,7 +35,9 @@ export const MusicDataRow: React.FC<MusicDataDTO> = ({
 
     setSelectedVideoId(videoId);
   };
-  const loadMore = () => {};
+  const loadMore = () => {
+    // TODO: Implement loadMore function
+  };
   return (
     <InfiniteScroll className="h-[50%]" pageStart={0} loadMore={loadMore}>
       <div className="h-[80%] scrollbar-hide overflow-scroll text-[17px] flex justify-center ">
