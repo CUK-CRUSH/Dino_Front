@@ -21,7 +21,7 @@ const ShowImage: React.FC<ShowImageDTO> = ({
   const { image: reduxImage } = useSelector(
     (state: RootState) => state.musicAdd
   );
-  console.log(reduxImage);
+
   return (
     <div className="h-1/3 smartPhone:h-[28%] tabletMini:h-[20%] tablet:h-[18%] relative rounded-b-3xl bg-white ">
       {isEditing ? (
