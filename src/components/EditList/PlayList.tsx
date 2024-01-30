@@ -61,7 +61,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       const member = await getMember(id);
       const playlist = await getPlayList(member.data.username);
 
-      const musicAPIData = await getMusicList(Number(playlistId), 0);
+      const musicAPIData = await getMusicList(Number(playlistId));
       setUsername(member.data.username);
       setPlaylists(playlist.data);
       setMusicList(musicAPIData);
