@@ -5,7 +5,6 @@ import { RootState } from "@store/index";
 import { EditPlsyListDTO } from "types/EditplayList";
 import { EditPlaylistControls } from "@components/EditList/Button/EditPlaylistControl";
 import { MusicDataRow } from "@components/EditList/MusicList/MusicDataRow";
-import useImageCompress from "@hooks/useImageCompress";
 import { PlusButton } from "@components/EditList/Button/PlusButton";
 import ShowImage from "@components/EditList/EditImage/ShowImage";
 import { MainEditButton } from "@components/EditList/Button/MainEditButton";
