@@ -25,15 +25,15 @@ const SetUserProfileBackground = ({ aspectRatio, onCrop, isCompressLoading, earl
   return (
     <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
 
-      <div className="h-52 bg-black bg-opacity-70 mb-[-35px] relative">
+      <div className="h-52 bg-black bg-opacity-70 mb-[-35px] relative cursor-pointer  ">
         {!isChange && earlyImage ? (    // If earlyImage is available
         <div className="relative w-full h-full">
             <img
               src={earlyImage}
               alt="User Profile"
-              className="w-full h-full object-cover object-center rounded-full"
+              className="w-full h-full object-cover object-center "
             />
-            <div className="absolute inset-0 ">
+            <div className="absolute right-2 -bottom-3 z-20">
               <img
                 src={garbage}
                 alt="Overlay"
@@ -47,7 +47,7 @@ const SetUserProfileBackground = ({ aspectRatio, onCrop, isCompressLoading, earl
             <img
               src={profileBackgroundImage}
               alt="User Profile"
-              className="w-full h-full object-cover object-center rounded-full"
+              className="w-full h-full object-cover object-center "
             />
             <div className="absolute right-2 -bottom-3 z-20">
               <img

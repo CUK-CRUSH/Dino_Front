@@ -34,7 +34,7 @@ const SetUserProfileImage = ({ aspectRatio, onCrop,  isCompressLoading, earlyIma
               alt="User Profile"
               className="w-full h-full object-cover object-center rounded-full"
             />
-            <div className="absolute inset-0 ">
+            <div className="absolute -right-2 bottom-0 ">
               <img
                 src={garbage}
                 alt="Overlay"
@@ -49,7 +49,7 @@ const SetUserProfileImage = ({ aspectRatio, onCrop,  isCompressLoading, earlyIma
               alt="Background Profile"
               className="w-full h-full object-cover object-center rounded-full"
             />
-            <div className="absolute -right-2 bottom-0 z-20">
+            <div className="absolute -right-2 bottom-0 ">
               <img
                 src={garbage}
                 alt="Overlay"
