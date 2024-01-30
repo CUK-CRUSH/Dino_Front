@@ -6,6 +6,7 @@ import Youtube from "react-youtube";
 import { useSelector } from "react-redux";
 import { RootState } from "@store/index";
 import { MusicLength } from "./MusicLength";
+import InfiniteScroll from "react-infinite-scroller";
 
 export const MusicDataRow: React.FC<MusicDataDTO> = ({
   isEditing,
@@ -34,74 +35,78 @@ export const MusicDataRow: React.FC<MusicDataDTO> = ({
 
     setSelectedVideoId(videoId);
   };
-
+  const loadMore = () => {
+    // TODO: Implement loadMore function
+  };
   return (
-    <div className="h-[60%] scrollbar-hide overflow-auto text-[17px] flex justify-center ">
-      <div className="w-full mx-2 my-[44px] ">
-        {musicList?.data?.length > 0 ? (
-          musicList.data.map((musicItem: any, index: number) => (
+    <InfiniteScroll className="h-[50%]" pageStart={0} loadMore={loadMore}>
+      <div className="h-[80%] scrollbar-hide overflow-scroll text-[17px] flex justify-center ">
+        <div className="w-full mx-2 my-[44px] ">
+          {musicList?.data?.length > 0 ? (
+            musicList.data.map((musicItem: any, index: number) => (
+              <div
+                key={musicItem.id}
+                onClick={
+                  !isEditing
+                    ? () => handleVideoSelection(musicItem.url)
+                    : undefined
+                }
+              >
+                <MusicDataRowContent
+                  musicData={musicItem}
+                  order={index + 1}
+                  playlistId={playlistId}
+                  username={username}
+                  isEditing={isEditing}
+                  token={token}
+                />
+              </div>
+            ))
+          ) : (
+            <div className="text-center flex justify-center items-center text-xl">
+              {isSaved ? "" : "아직 음악이 없습니다!"}
+            </div>
+          )}
+
+          {isEditing && isSaved && musicList?.data && (
+            <MusicDataRowContent
+              musicData={{
+                title: title,
+                artist: artist,
+                url: url,
+                id: Date.now(),
+              }}
+              order={musicList.data.length + 1}
+              playlistId={playlistId}
+              username={username}
+              isEditing={isEditing}
+              token={token}
+            />
+          )}
+
+          {selectedVideoId && (
             <div
-              key={musicItem.id}
-              onClick={
-                !isEditing
-                  ? () => handleVideoSelection(musicItem.url)
-                  : undefined
-              }
+              className="fixed inset-0 flex items-center justify-center z-10"
+              onClick={() => setSelectedVideoId(null)}
             >
-              <MusicDataRowContent
-                musicData={musicItem}
-                order={index + 1}
-                playlistId={playlistId}
-                username={username}
-                isEditing={isEditing}
-                token={token}
-              />
+              <div onClick={(e) => e.stopPropagation()}>
+                <Youtube
+                  videoId={selectedVideoId}
+                  opts={{
+                    width: "390",
+                    height: "300",
+                    playerVars: {
+                      autoplay: 1,
+                      modestbranding: 1,
+                    },
+                  }}
+                />
+              </div>
             </div>
-          ))
-        ) : (
-          <div className="text-center flex justify-center items-center text-xl">
-            {isSaved ? "" : "아직 음악이 없습니다!"}
-          </div>
-        )}
-
-        {isEditing && isSaved && musicList?.data && (
-          <MusicDataRowContent
-            musicData={{
-              title: title,
-              artist: artist,
-              url: url,
-              id: Date.now(),
-            }}
-            order={musicList.data.length + 1}
-            playlistId={playlistId}
-            username={username}
-            isEditing={isEditing}
-            token={token}
-          />
-        )}
-
-        {selectedVideoId && (
-          <div
-            className="fixed inset-0 flex items-center justify-center z-10"
-            onClick={() => setSelectedVideoId(null)}
-          >
-            <div onClick={(e) => e.stopPropagation()}>
-              <Youtube
-                videoId={selectedVideoId}
-                opts={{
-                  width: "390",
-                  height: "300",
-                  playerVars: {
-                    autoplay: 1,
-                    modestbranding: 1,
-                  },
-                }}
-              />
-            </div>
-          </div>
-        )}
-        <MusicLength musicList={musicList} />
+          )}
+        </div>
       </div>
-    </div>
+      <MusicLength musicList={musicList} />
+    </InfiniteScroll>
   );
 };

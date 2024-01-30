@@ -32,7 +32,7 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   const handleDeleteClick = () => {
     Swal.fire({
       title: "노래를 삭제하시겠습니까?",
-      text: "한번 삭제된 노래는 복구할 수 없습니다!",
+      html: "한번 삭제된 노래는 복구할 수 없습니다!",
       showCancelButton: true,
       confirmButtonColor: "blue",
       cancelButtonColor: "#d33",
@@ -40,9 +40,9 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
       cancelButtonText: "삭제",
       width: "250px",
       customClass: {
-        title: "text-black text-[15px] font-bold",
-        popup:
-          "h-[150px] w-[250px] text-center text-[15px] font-bold text-black",
+        title: "text-black text-[17px] font-bold",
+        popup: "h-[150px] w-[250px] text-[10px] font-bold text-black",
+        confirmButton: "text-black rounded-[10px] text-[15px] font-bold",
       },
     }).then(async (result) => {
       if (result.isConfirmed) {
@@ -51,16 +51,6 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
         // '삭제' 버튼을 눌렀을 때 실행할 코드를 여기에 작성합니다.
         try {
           await deleteMusicList(musicData.id, token);
-
-          Swal.fire({
-            title: "삭제되었습니다!",
-            width: "250px",
-            customClass: {
-              title: "text-black text-[15px] font-bold",
-              popup:
-                "h-[150px] w-[250px] text-center text-[15px] font-bold text-black",
-            },
-          });
         } catch (error) {
           console.log(error);
           Swal.fire({

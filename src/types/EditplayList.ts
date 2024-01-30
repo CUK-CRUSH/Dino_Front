@@ -36,17 +36,11 @@ export interface ShowImageDTO {
   aspectRatio: number;
   onCrop: (image: string) => void;
   playlists: any;
-  isCompressLoading: boolean;
+
   isEditing: boolean;
   playlistId: string | undefined;
 }
 
 export interface EditModalDTO {
   onClose: () => void;
-}
-
-export interface ImageDisplayDTO {
-  imageURL: string | null;
-  isCompressLoading: boolean;
-  cursor: string | null;
 }

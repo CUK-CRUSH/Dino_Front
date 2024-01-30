@@ -5,7 +5,6 @@ import { RootState } from "@store/index";
 import { EditPlsyListDTO } from "types/EditplayList";
 import { EditPlaylistControls } from "@components/EditList/Button/EditPlaylistControl";
 import { MusicDataRow } from "@components/EditList/MusicList/MusicDataRow";
-import useImageCompress from "@hooks/useImageCompress";
 import { PlusButton } from "@components/EditList/Button/PlusButton";
 import ShowImage from "@components/EditList/EditImage/ShowImage";
 import { MainEditButton } from "@components/EditList/Button/MainEditButton";
@@ -24,13 +23,11 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const musicData = useSelector((state: RootState) => state.musicAdd);
   const [uploadImage, setUploadImage] = useState<string | null>(null);
 
-  const { isLoading: isCompressLoading } = useImageCompress();
   const [playlists, setPlaylists] = useState<any[]>([]);
   const [username, setUsername] = useState<string | null>(null);
   const [playlistName, setPlaylistName] = useState("");
   const [musicList, setMusicList] = useState<any>([]);
   const { playlistId } = useParams<{ playlistId: string }>();
-  // const [page, setPage] = useState<number>(0);
 
   const handleUploadImage = (image: string) => setUploadImage(image);
 
@@ -56,12 +53,11 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   );
 
   useEffect(() => {
-    console.log(uploadImage);
     const fetchPlaylist = async (id: number) => {
       const member = await getMember(id);
       const playlist = await getPlayList(member.data.username);
 
-      const musicAPIData = await getMusicList(Number(playlistId), 0);
+      const musicAPIData = await getMusicList(Number(playlistId));
       setUsername(member.data.username);
       setPlaylists(playlist.data);
       setMusicList(musicAPIData);
@@ -74,7 +70,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   // /[musicList, id, uploadImage, handleCompressImage, playlistId]
 
   return (
-    <div className="h-full w-full scrollbar flex flex-col bg-black text-white font-medium leading-[18px]">
+    <div className="h-full w-full scrollbar-hide overflow-scroll flex flex-col bg-black text-white font-medium leading-[18px]">
       {!isEditing && (
         <MainEditButton
           playlists={playlists}
@@ -101,7 +97,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         aspectRatio={1}
         onCrop={handleUploadImage}
         playlists={playlists}
-        isCompressLoading={isCompressLoading}
         isEditing={isEditing}
         playlistId={playlistId}
       />
@@ -123,7 +118,9 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         token={token}
       />
 
-      {isEditing && <PlusButton playlists={playlists} username={username} />}
+      {isEditing && musicList.data?.length < 9 && (
+        <PlusButton playlists={playlists} username={username} />
+      )}
     </div>
   );
 };
