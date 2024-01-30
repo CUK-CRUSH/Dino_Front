@@ -38,12 +38,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   // 유효상태
   const [nicknameValidation, setNicknameValidation] = useState<boolean>(false);
 
-  // 닉네임을 변경하지 않고 저장할때
-  useEffect(()=>{
-    if(input.username === ''){
-      setNicknameValidation(true)
-    }
-  },[])
+
 
   // 정보불러오기
   useEffect(() => {
@@ -151,7 +146,13 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
       dispatch(setProfileIntroduction(value));
     }
   };
-
+  
+  // 닉네임을 변경하지 않고 저장할때
+  useEffect(()=>{
+    if(input.username === ''){
+      setNicknameValidation(true)
+    }
+  },[input.username])
   // 배경화면
   const [
     uploadUserProfileBackgroundImage,
