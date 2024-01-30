@@ -7,7 +7,6 @@ import SetUserProfileBackground from "@components/AdminEdit/SetUserProfileBackgr
 import SetUserProfileImage from "@components/AdminEdit/SetUserProfileImage";
 import SetUserProfileInfo from "@components/AdminEdit/SetUserProfileInfo";
 import useImageCompress from "@hooks/useImageCompress";
-import { dataURItoFile } from "@utils/ImageCrop/common";
 import { getMemberDTO } from "types/Admin";
 import { useCookies } from "react-cookie";
 import {
@@ -126,13 +125,9 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     uploadUserProfileBackgroundImage,
     setUploadUserProfileBackgroundImage,
   ] = useState<string | null>(null);
-  const [
-    compressedUserProfileBackgroundImage,
-    setCompressedUserProfileBackgroundImage,
-  ] = useState<string | undefined | null>(userData?.backgroundImageUrl);
+  
   const {
     isLoading: isCompressUserProfileBackgroundLoading,
-    compressImage: compressUserProfileBackgroundImage,
   } = useImageCompress();
 
   const handleUploadUserProfileBackgroundImage = (image: string) =>
@@ -141,14 +136,14 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   const handleCompressUserProfileBackgroundImage = useCallback(async () => {
     if (!uploadUserProfileBackgroundImage) return;
 
-    const imageFile = dataURItoFile(uploadUserProfileBackgroundImage);
-    const compressedUserProfileBackgroundImage =
-      await compressUserProfileBackgroundImage(imageFile);
+    // const imageFile = dataURItoFile(uploadUserProfileBackgroundImage);
+    // const compressedUserProfileBackgroundImage =
+    //   await compressUserProfileBackgroundImage(imageFile);
 
-    if (!compressedUserProfileBackgroundImage) return;
-    const imageUrl = URL.createObjectURL(compressedUserProfileBackgroundImage);
+    // if (!compressedUserProfileBackgroundImage) return;
+    // const imageUrl = URL.createObjectURL(compressedUserProfileBackgroundImage);
 
-    setCompressedUserProfileBackgroundImage(imageUrl);
+    // setCompressedUserProfileBackgroundImage(imageUrl);
 
     setUpdateMemberData((prevData) => ({
       ...prevData,
@@ -157,7 +152,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
     dispatch(setProfileBackgroundImage(uploadUserProfileBackgroundImage));
 
-  }, [uploadUserProfileBackgroundImage, compressUserProfileBackgroundImage, dispatch]);
+  }, [uploadUserProfileBackgroundImage, dispatch]);
 
   useEffect(() => {
     if (uploadUserProfileBackgroundImage) {
@@ -172,12 +167,9 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   const [uploadUserProfileImage, setUploadUserProfileImage] = useState<
     string | null
   >(null);
-  const [compressedUserProfileImage, setCompressedUserProfileImage] = useState<
-    string | undefined | null
-  >(userData?.profileImageUrl);
+  
   const {
     isLoading: isCompressUserProfileLoading,
-    compressImage: compressUserProfileImage,
   } = useImageCompress();
 
   const handleUploadUserProfileImage = (image: string) =>
@@ -186,30 +178,29 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   const handleCompressUserProfileImage = useCallback(async () => {
     if (!uploadUserProfileImage) return;
 
-    const imageFile = dataURItoFile(uploadUserProfileImage);
+    // const imageFile = dataURItoFile(uploadUserProfileImage);
 
-    const compressedUserProfileImage = await compressUserProfileImage(
-      imageFile
-    );
+    // const compressedUserProfileImage = await compressUserProfileImage(
+    //   imageFile
+    // );
 
-    if (!compressedUserProfileImage) return;
-    const imageUrl = URL.createObjectURL(compressedUserProfileImage);
-    setCompressedUserProfileImage(imageUrl);
+    // if (!compressedUserProfileImage) return;
+    // const imageUrl = URL.createObjectURL(compressedUserProfileImage);
+    // setCompressedUserProfileImage(imageUrl);
 
     setUpdateMemberData((prevData) => ({
       ...prevData,
       profileImage: uploadUserProfileImage,
     }));
-
+    
     dispatch(setProfileImage(uploadUserProfileImage));
-
-  }, [uploadUserProfileImage, compressUserProfileImage, dispatch]);
+  }, [uploadUserProfileImage,dispatch]);
 
   useEffect(() => {
     if (uploadUserProfileImage) {
       handleCompressUserProfileImage();
     }
-  }, [uploadUserProfileImage, handleCompressUserProfileImage, dispatch]);
+  }, [uploadUserProfileImage,dispatch,handleCompressUserProfileImage]);
 
   // 모달닫기
   const close = () => {
@@ -301,7 +292,6 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
         <SetUserProfileBackground
           aspectRatio={1 / 1}
           onCrop={handleUploadUserProfileBackgroundImage}
-          compressedImage={compressedUserProfileBackgroundImage}
           isCompressLoading={isCompressUserProfileBackgroundLoading}
           earlyImage={userData?.backgroundImageUrl}
         />
@@ -310,7 +300,6 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
         <SetUserProfileImage
           aspectRatio={1 / 1}
           onCrop={handleUploadUserProfileImage}
-          compressedImage={compressedUserProfileImage}
           isCompressLoading={isCompressUserProfileLoading}
           earlyImage={userData?.profileImageUrl}
         />

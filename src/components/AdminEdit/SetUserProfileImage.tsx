@@ -4,15 +4,22 @@ import camera from "@assets/Admin/camera.svg";
 import ImageCropper from "@utils/ImageCrop/ImageCropper";
 import LoadingPage from "@utils/loading";
 import { useEffect, useState } from "react";
-const SetUserProfileImage = ({ aspectRatio, onCrop, compressedImage, isCompressLoading, earlyImage }: SetUserProfileImageDTO) => {
+import { useSelector } from "react-redux";
+import { RootState } from "@store/index";
+const SetUserProfileImage = ({ aspectRatio, onCrop,  isCompressLoading, earlyImage }: SetUserProfileImageDTO) => {
 
   // early 이미지는 맨처음에 받아오는 이미지 
   // compressed는 수정한 후 이미지
+
+  const { profileImage } = useSelector(
+    (state: RootState) => state.userProfile
+  )
+  
   const [isChange, setChange] = useState<boolean>(false);
   useEffect(() => {
-    if (compressedImage) { setChange(true) }
+    if (profileImage) { setChange(true) }
 
-  }, [compressedImage])
+  }, [profileImage])
 
   return (
     <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
@@ -24,18 +31,15 @@ const SetUserProfileImage = ({ aspectRatio, onCrop, compressedImage, isCompressL
             alt="User Profile"
             className="w-full h-full object-cover object-center"
           />
-        ) : compressedImage ? (
-          // When there is a compressedImage
+        ) : profileImage ? (
           <img
-            src={compressedImage}
+            src={profileImage}
             alt="User Profile"
             className="w-full h-full object-cover object-center"
           />
         ) : isCompressLoading ? (
-          // When isCompressLoading is true
           <LoadingPage />
         ) : (
-          // When there is no earlyImage or compressedImage, and isCompressLoading is false
           <>
             <div className="absolute inset-0 bg-black bg-opacity-70" />
             <img
