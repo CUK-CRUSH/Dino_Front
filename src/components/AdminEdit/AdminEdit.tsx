@@ -255,6 +255,11 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   const [isOpen, setIsOpen] = useState(true);
 
   const cancel = () => {
+    dispatch(setProfileUsername(''))
+    dispatch(setProfileIntroduction(''))
+    dispatch(setProfileBackgroundImage(null))
+    dispatch(setProfileImage(null))
+      
     setIsOpen(!isOpen);
     // 애니메이션 용 타이머
     setTimeout(() => {
@@ -294,7 +299,11 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
       navigate(`/${code.data.username}/admin`);
     }
-    cancel();
+    setIsOpen(!isOpen);
+    // 애니메이션 용 타이머
+    setTimeout(() => {
+      close();
+    }, 900);
   };
   // 토스트
   const { toast } = useSelector(
