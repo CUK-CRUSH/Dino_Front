@@ -7,7 +7,7 @@ import { useState } from "react";
 import { useCookies } from "react-cookie";
 import {
   getNicknameAvailable,
-  putUsername,
+  updateMember,
 } from "@api/member-controller/memberController";
 import { useNavigate } from "react-router-dom";
 import { useSelector } from "react-redux";
@@ -16,15 +16,13 @@ import ToastComponent from "@components/Toast/Toast";
 import { useDispatch } from "react-redux";
 import { setToast } from "@reducer/Toast/toast";
 import { checkBadWord } from "@utils/checkBadWord/checkBadWord";
+import { UpdateMemberParams } from "types/AdminEdit";
 
 const ValidationProps = () => {
   const navigate = useNavigate();
 
   // 유효상태
   const [nicknameValidation, setNicknameValidation] = useState<boolean>(false);
-
-  // 유저네임
-  const [username, setUsername] = useState<string>("");
 
   // 쿠키
   const [cookies] = useCookies(["accessToken"]);
@@ -49,8 +47,10 @@ const checkNickname = (nickname: string) => {
 // import { checkNickname } from "@utils/checkNickname/checkNickname";
 
   const onChange = debounce(async (e) => {
-    setUsername(e.target.value);
-  
+    setUpdateMemberData((prevData) => ({
+      ...prevData,
+      username : e.target.value,
+    }));  
     if (e.target.value) {
       try {
         // Check backend nickname
@@ -86,13 +86,25 @@ const checkNickname = (nickname: string) => {
 
   console.log(cookies);
 
-  const handleUsername = async (username: string, cookies: string) => {
-    console.log(username, cookies);
+  const [updateMemberData, setUpdateMemberData] = useState<UpdateMemberParams>({
+    // 입력없을때 닉네임 통과
+    username: '',
+    introduction: '',
+    profileImage: '',
+    backgroundImage: '',
+    cookies: token,
+  });
+  
+  const handleMember = async (data: UpdateMemberParams) => {
+    console.log("Saving data:", data);
 
-    const putUsernameState = await putUsername(username, cookies);
-    console.log(putUsernameState);
-    if (putUsernameState.status === 200) {
-      navigate(`/SetProfile/${putUsernameState.data}/1`);
+    await new Promise(resolve => setTimeout(resolve, 300));
+    const code = await updateMember(data);
+
+    if (code.status === 200) {
+      dispatch(setToast('login'));
+
+      navigate(`/SetProfile/${code.data.username}/1`);
     }
   };
 
@@ -142,7 +154,7 @@ const checkNickname = (nickname: string) => {
         :
         <div
           className="absolute bottom-0 -left-0 p-4 w-full bg-[#000000] text-white flex items-center justify-center overflow-hidden"
-          onClick={() => handleUsername(username, cookies.accessToken)}
+          onClick={() => handleMember(updateMemberData)}
         > 
           계속하기 
         </div>
