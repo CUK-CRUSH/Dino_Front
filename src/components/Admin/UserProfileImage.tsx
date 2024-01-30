@@ -1,6 +1,7 @@
 import { RootState } from "@store/index";
 import { useSelector } from "react-redux";
 import { UserProfileImageDTO } from "types/Admin";
+import defaultImage from "@assets/Admin/defaultImage.svg";
 
 const UserProfileImage = ({ userProfileImage }: UserProfileImageDTO) => {
   const { profileImage } = useSelector(
@@ -13,7 +14,7 @@ const UserProfileImage = ({ userProfileImage }: UserProfileImageDTO) => {
         <img src={profileImage} alt="User Profile" className="w-full object-cover" />
       ) : (
         <img
-          src={userProfileImage || '../default-image-url.jpg'} // Provide the correct default image URL
+          src={userProfileImage || defaultImage} // Provide the correct default image URL
           alt="Default User Profile"
           className="w-full object-cover"
         />
