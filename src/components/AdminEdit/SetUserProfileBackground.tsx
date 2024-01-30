@@ -1,39 +1,65 @@
 import React, { useEffect, useState } from "react";
 
 import { SetUserProfileBackgroundDTO } from "types/AdminEdit";
+import garbage from "@assets/Admin/garbage.svg";
 
 import ImageCropper from "@utils/ImageCrop/ImageCropper";
 import LoadingPage from "@utils/loading";
 import camera from "../../assets/Admin/camera.svg";
+import { useSelector } from "react-redux";
+import { RootState } from "@store/index";
 
-const SetUserProfileBackground = ({ aspectRatio, onCrop, compressedImage, isCompressLoading, earlyImage }: SetUserProfileBackgroundDTO) => {
+const SetUserProfileBackground = ({ aspectRatio, onCrop, isCompressLoading, earlyImage }: SetUserProfileBackgroundDTO) => {
   // early 이미지는 맨처음에 받아오는 이미지 
   // compressed는 수정한 후 이미지
+
+  const { profileBackgroundImage } = useSelector(
+    (state: RootState) => state.userProfile
+  )
+
   const [isChange, setChange] = useState<boolean>(false);
   useEffect(() => {
-    if (compressedImage) { setChange(true) }
+    if (profileBackgroundImage) { setChange(true) }
 
-  }, [compressedImage])
+  }, [profileBackgroundImage])
   return (
     <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
 
-      <div className="h-52 bg-black bg-opacity-70 mb-[-35px] relative">
+      <div className="h-52 bg-black bg-opacity-70 mb-[-35px] relative cursor-pointer  ">
         {!isChange && earlyImage ? (    // If earlyImage is available
-          <div className="relative">
+        <div className="relative w-full h-full">
             <img
-              className="h-52 w-full object-cover"
               src={earlyImage}
-              alt="Img"
+              alt="User Profile"
+              className="w-full h-full object-cover object-center "
             />
+            <div className="absolute right-2 -bottom-3 z-20">
+              <img
+                src={garbage}
+                alt="Overlay"
+                className="w-[25px] h-full "
+              />
+            </div>
           </div>
-        ) : compressedImage ? (
+        ) : profileBackgroundImage ? (
           // If compressedImage is available
-          <div className="relative">
+          <div className="relative w-full h-full">
             <img
-              className="h-52 w-full object-cover"
-              src={compressedImage}
-              alt="Img"
+              src={profileBackgroundImage}
+              alt="User Profile"
+              className="w-full h-full object-cover object-center "
             />
+            <div className="absolute right-2 -bottom-3 z-20">
+              <img
+                src={garbage}
+                alt="Overlay"
+                className="w-[25px] h-full"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  console.log('a');
+                }}              
+                />
+            </div>
           </div>
         ) : (
           // If neither earlyImage nor compressedImage is available
