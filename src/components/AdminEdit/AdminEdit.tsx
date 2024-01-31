@@ -18,6 +18,8 @@ import { UpdateMemberParams } from "types/AdminEdit";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
+  setDeleteProfileBackgroundImage,
+  setDeleteProfileImage,
   setProfileBackgroundImage,
   setProfileImage,
   setProfileIntroduction,
@@ -163,12 +165,20 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   const handleCompressUserProfileBackgroundImage = useCallback(async () => {
     if (!uploadUserProfileBackgroundImage) return;
 
+    // const imageFile = dataURItoFile(uploadUserProfileBackgroundImage);
+    // const compressedUserProfileBackgroundImage =
+    //   await compressUserProfileBackgroundImage(imageFile);
+
+    // if (!compressedUserProfileBackgroundImage) return;
+    // const imageUrl = URL.createObjectURL(compressedUserProfileBackgroundImage);
+
+    // setCompressedUserProfileBackgroundImage(imageUrl);
+
     setUpdateMemberData((prevData) => ({
       ...prevData,
       backgroundImage: uploadUserProfileBackgroundImage,
     }));
-
-    dispatch(setProfileBackgroundImage(uploadUserProfileBackgroundImage));
+    dispatch(setDeleteProfileBackgroundImage(false));
   }, [uploadUserProfileBackgroundImage, dispatch]);
 
   useEffect(() => {
@@ -207,8 +217,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
       ...prevData,
       profileImage: uploadUserProfileImage,
     }));
-
-    dispatch(setProfileImage(uploadUserProfileImage));
+    dispatch(setDeleteProfileImage(false));
   }, [uploadUserProfileImage, dispatch]);
 
   useEffect(() => {
@@ -242,6 +251,8 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     dispatch(setProfileIntroduction(""));
     dispatch(setProfileBackgroundImage(null));
     dispatch(setProfileImage(null));
+    dispatch(setDeleteProfileImage(false));
+    dispatch(setDeleteProfileBackgroundImage(false));
 
     setIsOpen(!isOpen);
     // 애니메이션 용 타이머
@@ -250,17 +261,55 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     }, 900);
   };
 
-  const { username, profileImage, profileBackgroundImage, introduction } =
-    useSelector((state: RootState) => state.userProfile);
-
+  // 초깃값
+  const {
+    username,
+    profileImage,
+    profileBackgroundImage,
+    introduction,
+    deleteProfileImage,
+    deleteBackgroundImage,
+  } = useSelector((state: RootState) => state.userProfile);
   const [updateMemberData, setUpdateMemberData] = useState<UpdateMemberParams>({
     // 입력없을때 닉네임 통과
-    username: input.username ? username : "",
+    username: username || "", // Use the directly obtained value
     introduction: introduction,
     profileImage: profileImage,
     backgroundImage: profileBackgroundImage,
     cookies: token,
+    deleteProfileImage: deleteProfileImage,
+    deleteBackgroundImage: deleteBackgroundImage,
   });
+
+  useEffect(() => {
+    if (deleteProfileImage) {
+      setUpdateMemberData((prevData) => ({
+        ...prevData,
+        deleteProfileImage: true,
+        profileImage: null,
+      }));
+    } else {
+      setUpdateMemberData((prevData) => ({
+        ...prevData,
+        deleteProfileImage: false,
+      }));
+    }
+  }, [deleteProfileImage]);
+
+  useEffect(() => {
+    if (deleteBackgroundImage) {
+      setUpdateMemberData((prevData) => ({
+        ...prevData,
+        deleteBackgroundImage: true,
+        profileBackgroundImage: null,
+      }));
+    } else {
+      setUpdateMemberData((prevData) => ({
+        ...prevData,
+        deleteBackgroundImage: false,
+      }));
+    }
+  }, [deleteBackgroundImage]);
 
   const navigate = useNavigate();
 
@@ -274,10 +323,15 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
     await new Promise((resolve) => setTimeout(resolve, 300));
     const code = await updateMember(data);
-
+    console.log(code);
     if (code.status === 200) {
       dispatch(setToast("profile"));
 
+      dispatch(setProfileImage(uploadUserProfileImage));
+      dispatch(setProfileBackgroundImage(uploadUserProfileBackgroundImage));
+
+      dispatch(setDeleteProfileImage(false));
+      dispatch(setDeleteProfileBackgroundImage(false));
       navigate(`/${code.data.username}/admin`);
     }
     setIsOpen(!isOpen);
@@ -325,7 +379,8 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
           aspectRatio={1 / 1}
           onCrop={handleUploadUserProfileBackgroundImage}
           isCompressLoading={isCompressUserProfileBackgroundLoading}
-          earlyImage={userData?.backgroundImageUrl}
+          earlyImage={userData?.profileBackgroundImageUrl}
+          profileBackgroundImage={updateMemberData.backgroundImage}
         />
 
         {/* 프로필 사진 */}
@@ -334,6 +389,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
           onCrop={handleUploadUserProfileImage}
           isCompressLoading={isCompressUserProfileLoading}
           earlyImage={userData?.profileImageUrl}
+          profileImage={updateMemberData.profileImage}
         />
 
         {/* 유저 닉네임 */}

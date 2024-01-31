@@ -111,7 +111,7 @@ const AdminPage: React.FC = () => {
     <div className="w-full h-full relative bg-white scrollbar-hide overflow-scroll">
       {isLoading ? <Skeleton width="100px" height="100%" /> : 
         <UserProfileBackground
-          userBackgroundImage={userData?.backgroundImageUrl}
+          userBackgroundImage={userData?.profileBackgroundImageUrl}
         />
       }
       {/* 플레이리스트 생성 성공 토스트 */}
