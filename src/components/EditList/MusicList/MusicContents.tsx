@@ -11,6 +11,7 @@ import ToastComponent from "@components/Toast/Toast";
 import { setToast } from "@reducer/Toast/toast";
 import { useSelector } from "react-redux";
 import { RootState } from "@store/index";
+import { setMusicData } from "@reducer/editMusic/editMusicData";
 
 export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   musicData,
@@ -41,10 +42,12 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   const dispatch = useDispatch();
   const handleEditClick = () => {
     if (isEditing) {
+      dispatch(setMusicData(musicData));
       navigate(`/${username}/admin/${playlistId}/edit/${musicData.id}`);
       dispatch(setIsEditMusics(true));
     }
   };
+
   const handleDeleteClick = () => {
     swalButton
       .fire({
@@ -96,9 +99,6 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
           isEditing ? "" : "w-full"
         } w-full items-center h-[50px] p-3 px-[7px] rounded-[15px] bg-[#2E2E2E] cursor-pointer`}
       >
-        {toast === "delete" && (
-          <ToastComponent background="white" text="노래가 삭제되었습니다." />
-        )}
         <div className="ml-2 w-1/12">
           <span>{order}</span>
         </div>
@@ -133,6 +133,9 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
       >
         <RiDeleteBin6Fill size={20} className="text-[#FF0000] cursor-pointer" />
       </div>
+      {toast === "delete" && (
+        <ToastComponent background="white" text="노래가 삭제되었습니다." />
+      )}
     </div>
   );
 };

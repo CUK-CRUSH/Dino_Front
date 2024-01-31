@@ -11,7 +11,8 @@ import addMusicInformationToggle from "@reducer/toggle/addMusicToggle";
 import playlistReducer from "@reducer/editPlayList/setPlaylist";
 import setProfile from "@reducer/setProfile/setProfile";
 import editMusicListToggle from "@reducer/editMusic/editMusic";
-import toast from "../reducer/Toast/toast"
+import toast from "../reducer/Toast/toast";
+import musicDataReducer from "@reducer/editMusic/editMusicData";
 
 const persistConfig = {
   key: "editMusicsToggle",
@@ -32,7 +33,8 @@ export const store = configureStore({
     playlist: playlistReducer,
     setProfile: setProfile,
     editMusicsToggle: persistedReducer,
-    toast : toast
+    toast: toast,
+    musicDataReducer: musicDataReducer,
   },
 });
 
