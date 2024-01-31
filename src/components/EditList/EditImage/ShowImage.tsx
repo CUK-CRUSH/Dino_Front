@@ -68,19 +68,25 @@ const ShowImage = ({
   );
   const renderImageControls = (imageSrc: string | null) => (
     <>
-      {imageSrc && renderImage(imageSrc)}
-      <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
-        <button className="absolute bottom-2 right-3">
-          <img src={Camera} alt="Camera" width={32} height={32} />
-        </button>
-      </ImageCropper>
-      {playlist?.thumbnailUrl && (
-        <button
-          className="absolute top-4 left-1/2 transform -translate-x-1/2"
-          onClick={handleDeleteImage}
-        >
-          <img src={TrashCan} alt="Trash Can" width={23} height={23} />
-        </button>
+      {imageSrc ? (
+        <>
+          {renderImage(imageSrc)}
+          <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
+            <button className="absolute bottom-2 right-3">
+              <img src={Camera} alt="Camera" width={32} height={32} />
+            </button>
+          </ImageCropper>
+          {playlist?.thumbnailUrl && (
+            <button
+              className="absolute top-4 left-1/2 transform -translate-x-1/2"
+              onClick={handleDeleteImage}
+            >
+              <img src={TrashCan} alt="Trash Can" width={23} height={23} />
+            </button>
+          )}
+        </>
+      ) : (
+        renderNoImage()
       )}
     </>
   );
@@ -92,11 +98,13 @@ const ShowImage = ({
         <span className="text-center text-[#8E8E8E] text-[17px] pt-[6px]">
           {t("representive_image")}
         </span>
-        <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
-          <button className="absolute bottom-2 right-3">
-            <img src={Camera} alt="Camera" width={32} height={32} />
-          </button>
-        </ImageCropper>
+        {isEditing && (
+          <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
+            <button className="absolute bottom-2 right-3">
+              <img src={Camera} alt="Camera" width={32} height={32} />
+            </button>
+          </ImageCropper>
+        )}
       </div>
     </div>
   );
