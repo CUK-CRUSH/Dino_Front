@@ -64,7 +64,15 @@ export const MusicDataRow: React.FC<MusicDataDTO> = ({
             ))
           ) : (
             <div className="text-center flex justify-center items-center text-xl">
-              {isSaved ? "" : "아직 음악이 없습니다!"}
+              {isSaved ? (
+                ""
+              ) : (
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: "아직 음악이 없습니다!<br /> 곡을 추가해보세요!",
+                  }}
+                />
+              )}
             </div>
           )}
 

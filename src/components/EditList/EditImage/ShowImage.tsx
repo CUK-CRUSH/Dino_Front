@@ -2,15 +2,14 @@ import React from "react";
 import ImageCropper from "@utils/ImageCrop/ImageCropper";
 import { ShowImageDTO } from "types/EditplayList";
 import { AiOutlinePicture } from "react-icons/ai";
-import { IoCameraOutline } from "react-icons/io5";
 import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { RootState } from "@store/index";
 import "@styles/EditList/playList.css";
 import { deletePlayListImage } from "@api/playlist-controller/playlistControl";
 import Swal from "sweetalert2";
-import { FaRegTrashAlt } from "react-icons/fa";
 import TrashCan from "@assets/PlayListImage/trash.svg";
+import Camera from "@assets/PlayListImage/camera.svg";
 
 const ShowImage: React.FC<ShowImageDTO> = ({
   aspectRatio,
@@ -77,8 +76,8 @@ const ShowImage: React.FC<ShowImageDTO> = ({
                 className="h-full w-full object-cover rounded-b-3xl"
               />
               <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
-                <button className="absolute bottom-0 right-2">
-                  <IoCameraOutline size={32} color="black" />
+                <button className="absolute bottom-2 right-3">
+                  <img src={Camera} alt="Camera" width={32} height={32} />
                 </button>
               </ImageCropper>
               {playlist?.thumbnailUrl && (
@@ -98,8 +97,8 @@ const ShowImage: React.FC<ShowImageDTO> = ({
                 alt="Img"
               />
               <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
-                <button className="absolute bottom-0 right-2">
-                  <IoCameraOutline size={32} color="black" />
+                <button className="absolute bottom-2 right-3">
+                  <img src={Camera} alt="Camera" width={32} height={32} />
                 </button>
               </ImageCropper>
               <button
@@ -112,14 +111,15 @@ const ShowImage: React.FC<ShowImageDTO> = ({
           ) : (
             // 이미지 데이터가 없을때 수정했을때
             <div className="h-full flex items-center justify-center rounded-b-3xl text-center bg-white">
-              <div className="flex flex-col justify-center items-center h-full">
+              <div className="flex flex-col justify-center items-center h-full ">
                 <AiOutlinePicture size={29} className="text-[#8E8E8E]" />
                 <span className="text-center text-[#8E8E8E] text-[17px] pt-[6px]">
                   {t("representive_image")}
                 </span>
+
                 <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
-                  <button className="absolute bottom-0 right-2">
-                    <IoCameraOutline size={32} color="black" />
+                  <button className="absolute bottom-2 right-3">
+                    <img src={Camera} alt="Camera" width={32} height={32} />
                   </button>
                 </ImageCropper>
               </div>
@@ -133,7 +133,7 @@ const ShowImage: React.FC<ShowImageDTO> = ({
           alt="Img"
         />
       ) : (
-        <div className="h-full flex items-center justify-center rounded-b-3xl text-center bg-white">
+        <div className="h-full flex items-center justify-center rounded-b-3xl text-center ">
           {reduxImage ? (
             <img
               src={reduxImage}
@@ -142,7 +142,7 @@ const ShowImage: React.FC<ShowImageDTO> = ({
             />
           ) : (
             <div>
-              <div className="flex flex-col justify-center items-center h-full">
+              <div className="flex flex-col justify-center items-center h-full ">
                 <AiOutlinePicture size={29} className="text-[#8E8E8E]" />
                 <span className="text-center text-[#8E8E8E] text-[17px] pt-[6px]">
                   {t("representive_image")}
