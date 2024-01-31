@@ -78,10 +78,17 @@ export const updateMember = async ({
   profileImage,
   backgroundImage,
   cookies,
+  deleteProfileImage,
+  deleteBackgroundImage
 }: UpdateMemberParams) => {
   try {
     const formData = new FormData();
-
+    if (deleteProfileImage){
+      formData.append("deleteProfileImage",deleteProfileImage.toString())
+    }
+    if (deleteBackgroundImage){
+      formData.append("deleteBackgroundImage",deleteBackgroundImage.toString())
+    }
     if (username) {
       formData.append("username", username);
     }

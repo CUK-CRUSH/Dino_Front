@@ -13,7 +13,6 @@ const UserProfileInfo = ({ username, introText }: UserProfileInfoDTO) => {
     const delay = 500;
     const timeoutId = setTimeout(() => {
       setIsLoding(false);
-      console.log(isLoading)
     }, delay);
 
     return () => clearTimeout(timeoutId);
