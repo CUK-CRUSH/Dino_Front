@@ -15,6 +15,7 @@ import { getMember } from "@api/member-controller/memberController";
 import { getPlayList } from "@api/playlist-controller/playlistControl";
 import { getMusicList } from "@api/music-controller/musicControl";
 import { useParams } from "react-router-dom";
+import ToastComponent from "@components/Toast/Toast";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
   const isEditing = useSelector(
@@ -28,7 +29,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const [playlistName, setPlaylistName] = useState("");
   const [musicList, setMusicList] = useState<any>([]);
   const { playlistId } = useParams<{ playlistId: string }>();
-
+  const { toast } = useSelector((state: RootState) => state.toast);
   const handleUploadImage = (image: string) => setUploadImage(image);
 
   // 쿠키에서 유저 id 가져오기
@@ -121,6 +122,12 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
 
       {isEditing && musicList.data?.length < 9 && (
         <PlusButton playlists={playlists} username={username} />
+      )}
+      {toast === "editPlayList" && (
+        <ToastComponent
+          background="white"
+          text="플레이리스트가 수정되었습니다!"
+        />
       )}
     </div>
   );

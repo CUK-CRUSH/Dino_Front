@@ -7,6 +7,10 @@ import "@styles/EditList/playList.css";
 import Swal from "sweetalert2";
 import { deleteMusicList } from "@api/music-controller/musicControl";
 import { useEffect, useRef, useState } from "react";
+import ToastComponent from "@components/Toast/Toast";
+import { setToast } from "@reducer/Toast/toast";
+import { useSelector } from "react-redux";
+import { RootState } from "@store/index";
 
 export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   musicData,
@@ -26,6 +30,7 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
     },
     buttonsStyling: false,
   });
+  const { toast } = useSelector((state: RootState) => state.toast);
 
   const [titleWidth, setTitleWidth] = useState(0);
   const [artistWidth, setArtistWidth] = useState(0);
@@ -58,6 +63,7 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
           // '삭제' 버튼을 눌렀을 때 실행할 코드를 여기에 작성합니다.
           try {
             await deleteMusicList(musicData.id, token);
+            dispatch(setToast("delete"));
           } catch (error) {
             console.log(error);
             swalButton.fire({
@@ -90,6 +96,9 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
           isEditing ? "" : "w-full"
         } w-full items-center h-[50px] p-3 px-[7px] rounded-[15px] bg-[#2E2E2E] cursor-pointer`}
       >
+        {toast === "delete" && (
+          <ToastComponent background="white" text="노래가 삭제되었습니다." />
+        )}
         <div className="ml-2 w-1/12">
           <span>{order}</span>
         </div>
