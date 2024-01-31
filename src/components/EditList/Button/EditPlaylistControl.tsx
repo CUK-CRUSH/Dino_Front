@@ -1,13 +1,13 @@
 import { EditPlayListControlsDTO } from "types/EditplayList";
 import { useTranslation } from "react-i18next";
 
-export const EditPlaylistControls: React.FC<EditPlayListControlsDTO> = ({
+export const EditPlaylistControls = ({
   isEditing,
   onSave,
   onCancel,
   onEdit,
   onDelete,
-}) => {
+}: EditPlayListControlsDTO) => {
   const { t } = useTranslation("Edit");
   return (
     <div className="flex h-[5%] smartPhoneXs:h-[3.5%] smartPhone:h-[3.5%] tabletMini:h-[3%] tablet:h-[3%] items-center justify-between m-3 text-[19px]">

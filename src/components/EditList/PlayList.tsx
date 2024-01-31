@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { UsePlayListEditor } from "@hooks/UsePlayListEditor";
 import { RootState } from "@store/index";
@@ -15,27 +15,30 @@ import { getMember } from "@api/member-controller/memberController";
 import { getPlayList } from "@api/playlist-controller/playlistControl";
 import { getMusicList } from "@api/music-controller/musicControl";
 import { useParams } from "react-router-dom";
+import ToastComponent from "@components/Toast/Toast";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
   const isEditing = useSelector(
     (state: RootState) => state.editPlaylistToggle.isEditing
   );
   const musicData = useSelector((state: RootState) => state.musicAdd);
-  const [uploadImage, setUploadImage] = useState<string | null>(null);
 
+  const [uploadImage, setUploadImage] = useState<string | null>(null);
   const [playlists, setPlaylists] = useState<any[]>([]);
   const [username, setUsername] = useState<string | null>(null);
   const [playlistName, setPlaylistName] = useState("");
   const [musicList, setMusicList] = useState<any>([]);
-  const { playlistId } = useParams<{ playlistId: string }>();
 
-  const handleUploadImage = (image: string) => setUploadImage(image);
+  const { playlistId } = useParams<{ playlistId: string }>();
+  const { toast } = useSelector((state: RootState) => state.toast);
 
   // 쿠키에서 유저 id 가져오기
   const [cookies] = useCookies(["accessToken"]);
   const token = cookies.accessToken;
   const decodedToken = useDecodedJWT(token);
   const id = decodedToken.sub;
+
+  const handleUploadImage = (image: string) => setUploadImage(image);
 
   const {
     handleEditClick,
@@ -52,8 +55,8 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     username
   );
 
-  useEffect(() => {
-    const fetchPlaylist = async (id: number) => {
+  const fetchPlaylist = useCallback(
+    async (id: number) => {
       const member = await getMember(id);
       const playlist = await getPlayList(member.data.username);
 
@@ -61,13 +64,15 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       setUsername(member.data.username);
       setPlaylists(playlist.data);
       setMusicList(musicAPIData);
-    };
+    },
+    [playlistId]
+  );
+
+  useEffect(() => {
     if (id !== undefined) {
       fetchPlaylist(id);
     }
-  }, [musicList, id, uploadImage, playlistId]);
-  // 일단 의존성때문에 넣을건데 musicList빼고 나중에 다 지워도 될ㄷ스.
-  // /[musicList, id, uploadImage, handleCompressImage, playlistId]
+  }, [fetchPlaylist, id, musicList]);
 
   return (
     <div className="h-full w-full scrollbar-hide overflow-scroll flex flex-col bg-black text-white font-medium leading-[18px]">
@@ -99,6 +104,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         playlists={playlists}
         isEditing={isEditing}
         playlistId={playlistId}
+        token={token}
       />
 
       <MusicTitle
@@ -120,6 +126,12 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
 
       {isEditing && musicList.data?.length < 9 && (
         <PlusButton playlists={playlists} username={username} />
+      )}
+      {toast === "editPlayList" && (
+        <ToastComponent
+          background="white"
+          text="플레이리스트가 수정되었습니다!"
+        />
       )}
     </div>
   );

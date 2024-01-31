@@ -13,6 +13,7 @@ import {
 } from "@api/playlist-controller/playlistControl";
 import { postMusicList } from "@api/music-controller/musicControl";
 import { useNavigate } from "react-router-dom";
+import { setToast } from "@reducer/Toast/toast";
 
 export const UsePlayListEditor = (
   playlists: any[],
@@ -58,6 +59,7 @@ export const UsePlayListEditor = (
         dispatch(updateImage(null));
       }
     }
+    dispatch(setToast("editPlayList"));
     dispatch(setIsEditing(false));
     dispatch(resetIsSaved());
     if (compressedImage) {

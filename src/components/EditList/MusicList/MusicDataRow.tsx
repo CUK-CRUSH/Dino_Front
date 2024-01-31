@@ -1,6 +1,6 @@
 import { MusicDataDTO } from "types/EditplayList";
 import "@styles/EditList/playList.css";
-import { useState } from "react";
+import { useCallback, useRef, useState } from "react";
 import { MusicDataRowContent } from "./MusicContents";
 import Youtube from "react-youtube";
 import { useSelector } from "react-redux";
@@ -8,36 +8,56 @@ import { RootState } from "@store/index";
 import { MusicLength } from "./MusicLength";
 import InfiniteScroll from "react-infinite-scroller";
 
-export const MusicDataRow: React.FC<MusicDataDTO> = ({
+export const MusicDataRow = ({
   isEditing,
   musicList,
   playlistId,
   username,
   token,
-}) => {
+}: MusicDataDTO) => {
   const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
+  const [selectedVideoIndex, setSelectedVideoIndex] = useState<number | null>(
+    null
+  );
 
   const musicAdd = useSelector((state: RootState) => state.musicAdd);
   const { title, artist, url } = musicAdd;
   const { isSaved } = useSelector((state: RootState) => state.musicAdd);
 
-  const handleVideoSelection = (url: string) => {
-    let videoId = "";
-    const urlParams = new URLSearchParams(url.split("?")[1]);
+  const elementRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-    if (urlParams.has("v")) {
-      // 웹 버전
-      videoId = urlParams.get("v")!;
-    } else if (urlParams.has("si")) {
-      // 축약 URL
-      videoId = url.split("?")[0].split("/").pop()!;
-    }
+  const handleVideoSelection = useCallback(
+    (url: string, index: number) => {
+      if (selectedVideoIndex === index) {
+        setSelectedVideoId(null);
+        setSelectedVideoIndex(null);
+        return;
+      }
+      let videoId = "";
+      const urlParams = new URLSearchParams(url.split("?")[1]);
 
-    setSelectedVideoId(videoId);
-  };
-  const loadMore = () => {
+      if (urlParams.has("v")) {
+        // 웹 버전
+        videoId = urlParams.get("v")!;
+      } else if (urlParams.has("si")) {
+        // 축약 URL
+        videoId = url.split("?")[0].split("/").pop()!;
+      }
+
+      const element = elementRefs.current[index];
+      if (element) {
+        element.scrollIntoView({ behavior: "smooth", block: "start" });
+      }
+
+      setSelectedVideoId(videoId);
+      setSelectedVideoIndex(index);
+    },
+    [selectedVideoIndex]
+  );
+  const loadMore = useCallback(() => {
     // TODO: Implement loadMore function
-  };
+  }, []);
+
   return (
     <InfiniteScroll className="h-[50%]" pageStart={0} loadMore={loadMore}>
       <div className="h-[80%] scrollbar-hide overflow-scroll text-[17px] flex justify-center ">
@@ -46,9 +66,10 @@ export const MusicDataRow: React.FC<MusicDataDTO> = ({
             musicList.data.map((musicItem: any, index: number) => (
               <div
                 key={musicItem.id}
+                ref={(elem) => (elementRefs.current[index] = elem)}
                 onClick={
                   !isEditing
-                    ? () => handleVideoSelection(musicItem.url)
+                    ? () => handleVideoSelection(musicItem.url, index)
                     : undefined
                 }
               >
@@ -60,11 +81,32 @@ export const MusicDataRow: React.FC<MusicDataDTO> = ({
                   isEditing={isEditing}
                   token={token}
                 />
+                {selectedVideoId && selectedVideoIndex === index && (
+                  <Youtube
+                    videoId={selectedVideoId}
+                    opts={{
+                      width: "390",
+                      height: "300",
+                      playerVars: {
+                        autoplay: 1,
+                        modestbranding: 1,
+                      },
+                    }}
+                  />
+                )}
               </div>
             ))
           ) : (
             <div className="text-center flex justify-center items-center text-xl">
-              {isSaved ? "" : "아직 음악이 없습니다!"}
+              {isSaved ? (
+                ""
+              ) : (
+                <div
+                  dangerouslySetInnerHTML={{
+                    __html: "아직 음악이 없습니다!<br /> 곡을 추가해보세요!",
+                  }}
+                />
+              )}
             </div>
           )}
 
@@ -82,27 +124,6 @@ export const MusicDataRow: React.FC<MusicDataDTO> = ({
               isEditing={isEditing}
               token={token}
             />
-          )}
-
-          {selectedVideoId && (
-            <div
-              className="fixed inset-0 flex items-center justify-center z-10"
-              onClick={() => setSelectedVideoId(null)}
-            >
-              <div onClick={(e) => e.stopPropagation()}>
-                <Youtube
-                  videoId={selectedVideoId}
-                  opts={{
-                    width: "390",
-                    height: "300",
-                    playerVars: {
-                      autoplay: 1,
-                      modestbranding: 1,
-                    },
-                  }}
-                />
-              </div>
-            </div>
           )}
         </div>
       </div>

@@ -17,7 +17,14 @@ import {
 import { UpdateMemberParams } from "types/AdminEdit";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
-import { setDeleteProfileBackgroundImage, setDeleteProfileImage, setProfileBackgroundImage, setProfileImage, setProfileIntroduction, setProfileUsername } from "@reducer/Admin/userProfileSlice";
+import {
+  setDeleteProfileBackgroundImage,
+  setDeleteProfileImage,
+  setProfileBackgroundImage,
+  setProfileImage,
+  setProfileIntroduction,
+  setProfileUsername,
+} from "@reducer/Admin/userProfileSlice";
 import { RootState } from "@store/index";
 import { setToast } from "@reducer/Toast/toast";
 import { checkBadWord } from "@utils/checkBadWord/checkBadWord";
@@ -37,8 +44,6 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
   // 유효상태
   const [nicknameValidation, setNicknameValidation] = useState<boolean>(false);
-
-
 
   // 정보불러오기
   useEffect(() => {
@@ -72,7 +77,6 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     }
   };
 
-
   const onChangeInput = async (e: { target: { name: any; value: any } }) => {
     const { name, value } = e.target;
 
@@ -86,37 +90,31 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
       [name]: value,
     });
 
-    if (name === 'username') {
-
+    if (name === "username") {
       if (value) {
-
         try {
           const checkNicknameBack = await getNicknameAvailable(value, token);
-          if (!checkBadWord(value) && checkNickname(value) && checkNicknameBack.status === 200) {
+          if (
+            !checkBadWord(value) &&
+            checkNickname(value) &&
+            checkNicknameBack.status === 200
+          ) {
             dispatch(setProfileUsername(value));
             setNicknameValidation(true);
             return;
-          }
-          else if (
-            input.username === userData?.username
-          ) {
-            console.log(input.username, userData?.username)
-            setNicknameValidation(true)
+          } else if (input.username === userData?.username) {
+            console.log(input.username, userData?.username);
+            setNicknameValidation(true);
             return;
-          }
-          else if (
-            input.username === ''
-          ) {
-            setNicknameValidation(true)
+          } else if (input.username === "") {
+            setNicknameValidation(true);
             return;
-          }
-          else if (
+          } else if (
             !checkNickname(e.target.value) &&
             checkNicknameBack.status !== 200
           ) {
             setNicknameValidation(false);
-          }
-          else {
+          } else {
             setNicknameValidation(false);
           }
         } catch (error: any) {
@@ -127,11 +125,11 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
               setNicknameValidation(true);
               setUpdateMemberData((prevData) => ({
                 ...prevData,
-                username: '',
+                username: "",
               }));
               return;
             }
-            dispatch(setToast('duplicate'));
+            dispatch(setToast("duplicate"));
             setNicknameValidation(false);
           } else {
             console.error("Error checking nickname:", error);
@@ -139,30 +137,27 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
         }
       } else {
         setNicknameValidation(false);
-        console.log('1')
-
+        console.log("1");
       }
-
-    } else if (name === 'introduction') {
+    } else if (name === "introduction") {
       dispatch(setProfileIntroduction(value));
     }
   };
 
   // 닉네임을 변경하지 않고 저장할때
   useEffect(() => {
-    if (input.username === '') {
-      setNicknameValidation(true)
+    if (input.username === "") {
+      setNicknameValidation(true);
     }
-  }, [input.username])
+  }, [input.username]);
   // 배경화면
   const [
     uploadUserProfileBackgroundImage,
     setUploadUserProfileBackgroundImage,
   ] = useState<string | null>(null);
 
-  const {
-    isLoading: isCompressUserProfileBackgroundLoading,
-  } = useImageCompress();
+  const { isLoading: isCompressUserProfileBackgroundLoading } =
+    useImageCompress();
 
   const handleUploadUserProfileBackgroundImage = (image: string) =>
     setUploadUserProfileBackgroundImage(image);
@@ -183,9 +178,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
       ...prevData,
       backgroundImage: uploadUserProfileBackgroundImage,
     }));
-    dispatch(setDeleteProfileBackgroundImage(false))
-
-
+    dispatch(setDeleteProfileBackgroundImage(false));
   }, [uploadUserProfileBackgroundImage, dispatch]);
 
   useEffect(() => {
@@ -202,9 +195,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     string | null
   >(null);
 
-  const {
-    isLoading: isCompressUserProfileLoading,
-  } = useImageCompress();
+  const { isLoading: isCompressUserProfileLoading } = useImageCompress();
 
   const handleUploadUserProfileImage = (image: string) =>
     setUploadUserProfileImage(image);
@@ -226,8 +217,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
       ...prevData,
       profileImage: uploadUserProfileImage,
     }));
-    dispatch(setDeleteProfileImage(false))
-
+    dispatch(setDeleteProfileImage(false));
   }, [uploadUserProfileImage, dispatch]);
 
   useEffect(() => {
@@ -257,12 +247,12 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   const [isOpen, setIsOpen] = useState(true);
 
   const cancel = () => {
-    dispatch(setProfileUsername(''))
-    dispatch(setProfileIntroduction(''))
-    dispatch(setProfileBackgroundImage(null))
-    dispatch(setProfileImage(null))
-    dispatch(setDeleteProfileImage(false))
-    dispatch(setDeleteProfileBackgroundImage(false))
+    dispatch(setProfileUsername(""));
+    dispatch(setProfileIntroduction(""));
+    dispatch(setProfileBackgroundImage(null));
+    dispatch(setProfileImage(null));
+    dispatch(setDeleteProfileImage(false));
+    dispatch(setDeleteProfileBackgroundImage(false));
 
     setIsOpen(!isOpen);
     // 애니메이션 용 타이머
@@ -272,12 +262,17 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   };
 
   // 초깃값
-  const { username, profileImage, profileBackgroundImage, introduction, deleteProfileImage, deleteBackgroundImage } = useSelector(
-    (state: RootState) => state.userProfile
-  )
+  const {
+    username,
+    profileImage,
+    profileBackgroundImage,
+    introduction,
+    deleteProfileImage,
+    deleteBackgroundImage,
+  } = useSelector((state: RootState) => state.userProfile);
   const [updateMemberData, setUpdateMemberData] = useState<UpdateMemberParams>({
     // 입력없을때 닉네임 통과
-    username: username || '', // Use the directly obtained value
+    username: username || "", // Use the directly obtained value
     introduction: introduction,
     profileImage: profileImage,
     backgroundImage: profileBackgroundImage,
@@ -292,44 +287,29 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
         ...prevData,
         deleteProfileImage: true,
         profileImage: null,
-
-         }
-        )
-      )
-      
-    }
-    else {
+      }));
+    } else {
       setUpdateMemberData((prevData) => ({
         ...prevData,
-        deleteProfileImage: false
-
-          }
-        )
-      )
+        deleteProfileImage: false,
+      }));
     }
-  }, [deleteProfileImage])
+  }, [deleteProfileImage]);
 
   useEffect(() => {
     if (deleteBackgroundImage) {
       setUpdateMemberData((prevData) => ({
         ...prevData,
         deleteBackgroundImage: true,
-        profileBackgroundImage: null
-         }
-        )
-      )
-     
-    }
-    else {
+        profileBackgroundImage: null,
+      }));
+    } else {
       setUpdateMemberData((prevData) => ({
         ...prevData,
-        deleteBackgroundImage: false
-          }
-        )
-      )
+        deleteBackgroundImage: false,
+      }));
     }
-  }, [deleteBackgroundImage])
-
+  }, [deleteBackgroundImage]);
 
   const navigate = useNavigate();
 
@@ -337,23 +317,21 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     console.log("Saving data:", data);
 
     if (!nicknameValidation) {
-
-      dispatch(setToast('nicknameValidation'))
+      dispatch(setToast("nicknameValidation"));
       return;
     }
 
-    await new Promise(resolve => setTimeout(resolve, 300));
+    await new Promise((resolve) => setTimeout(resolve, 300));
     const code = await updateMember(data);
-    console.log(code)
+    console.log(code);
     if (code.status === 200) {
-      dispatch(setToast('profile'));
-
+      dispatch(setToast("profile"));
 
       dispatch(setProfileImage(uploadUserProfileImage));
       dispatch(setProfileBackgroundImage(uploadUserProfileBackgroundImage));
 
-      dispatch(setDeleteProfileImage(false))
-      dispatch(setDeleteProfileBackgroundImage(false))
+      dispatch(setDeleteProfileImage(false));
+      dispatch(setDeleteProfileBackgroundImage(false));
       navigate(`/${code.data.username}/admin`);
     }
     setIsOpen(!isOpen);
@@ -363,25 +341,29 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     }, 900);
   };
   // 토스트
-  const { toast } = useSelector(
-    (state: RootState) => state.toast
-  );
+  const { toast } = useSelector((state: RootState) => state.toast);
 
   return (
     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50">
-
       {/* The following div creates a semi-transparent overlay background */}
       <div className="absolute inset-0 bg-gray-800 opacity-75 "></div>
 
       <div
-
-        className={`relative ${size ? "w-[390px]" : "w-full"
-          } h-full mt-5 bg-white rounded-t-3xl shadow-lg
+        className={`relative ${
+          size ? "w-[390px]" : "w-full"
+        } h-full mt-5 bg-white rounded-t-3xl shadow-lg
         animate-slide-edit-${isOpen ? "in" : "out"}`}
       >
-        {toast === 'duplicate' && <ToastComponent background="black" text="닉네임이 중복되었습니다 ! " />}
+        {toast === "duplicate" && (
+          <ToastComponent
+            background="black"
+            text="닉네임이 중복되었습니다 ! "
+          />
+        )}
 
-        {toast === 'nicknameValidation' && <ToastComponent background="black" text="닉네임을 수정해주세요 ! " />}
+        {toast === "nicknameValidation" && (
+          <ToastComponent background="black" text="닉네임을 수정해주세요 ! " />
+        )}
 
         {/* 상단 취소/저장 버튼 */}
         <div className="flex justify-between h-[50px]">
@@ -408,7 +390,6 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
           isCompressLoading={isCompressUserProfileLoading}
           earlyImage={userData?.profileImageUrl}
           profileImage={updateMemberData.profileImage}
-
         />
 
         {/* 유저 닉네임 */}
@@ -428,12 +409,9 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
           value={userData?.introduction}
           onChange={onChangeInput}
         />
-
       </div>
     </div>
   );
 };
 
 export default AdminEdit;
-
-

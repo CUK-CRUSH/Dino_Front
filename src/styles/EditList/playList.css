@@ -7,10 +7,53 @@
   }
 }
 
+/* Swal */
 .animate-marquee {
   animation: marquee 10s linear infinite;
   white-space: nowrap;
   display: inline-block;
   overflow: hidden;
   width: fit-content;
+}
+
+.popup {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 150px;
+  width: 252px;
+  font-size: 10px;
+  color: #c2c2c2;
+  font-weight: bold;
+  border-radius: 20px;
+}
+
+.confirmButton {
+  color: black;
+  background-color: white;
+  border-width: 2px;
+  padding: 8px 30px;
+  border-color: black;
+  border-radius: 50px;
+  margin-right: 20px;
+  font-weight: bold;
+  font-size: 13px;
+}
+.cancelButton {
+  padding: 8px 30px;
+  border-radius: 50px;
+  color: white;
+  background-color: red;
+  border-width: 2px;
+  border-color: red;
+  font-weight: bold;
+  font-size: 13px;
+}
+.title {
+  color: black;
+  font-size: 15px;
+  font-weight: bold;
+}
+.htmlContainer {
+  font-size: 20px;
 }
