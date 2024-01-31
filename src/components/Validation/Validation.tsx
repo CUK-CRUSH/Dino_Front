@@ -71,6 +71,7 @@ const checkNickname = (nickname: string) => {
           setNicknameValidation(false);
         }
       } catch (error : any) {
+        console.log(error)
         // If the status is 400, simply skip the error
         if (error.response && error.response.status === 400) {
           dispatch(setToast('duplicate'));
