@@ -16,6 +16,17 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   isEditing,
   token,
 }) => {
+  const swalButton = Swal.mixin({
+    customClass: {
+      popup: "popup", // 전체
+      confirmButton: "confirmButton", // 취소
+      cancelButton: "cancelButton", // 삭제
+      title: "title", // 타이틀
+      htmlContainer: "htmlContainer", // 내용
+    },
+    buttonsStyling: false,
+  });
+
   const [titleWidth, setTitleWidth] = useState(0);
   const [artistWidth, setArtistWidth] = useState(0);
   const titleRef = useRef<HTMLSpanElement>(null);
@@ -30,41 +41,32 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
     }
   };
   const handleDeleteClick = () => {
-    Swal.fire({
-      title: "노래를 삭제하시겠습니까?",
-      html: "한번 삭제된 노래는 복구할 수 없습니다!",
-      showCancelButton: true,
-      confirmButtonColor: "blue",
-      cancelButtonColor: "#d33",
-      confirmButtonText: "취소",
-      cancelButtonText: "삭제",
-      width: "250px",
-      customClass: {
-        title: "text-black text-[17px] font-bold",
-        popup: "h-[150px] w-[250px] text-[10px] font-bold text-black",
-        confirmButton: "text-black rounded-[10px] text-[15px] font-bold",
-      },
-    }).then(async (result) => {
-      if (result.isConfirmed) {
-        // '취소' 버튼을 눌렀을 때 실행할 코드를 여기에 작성합니다.
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        // '삭제' 버튼을 눌렀을 때 실행할 코드를 여기에 작성합니다.
-        try {
-          await deleteMusicList(musicData.id, token);
-        } catch (error) {
-          console.log(error);
-          Swal.fire({
-            title: "노래 삭제에 실패했습니다.",
-            width: "250px",
-            customClass: {
-              title: "text-black text-[15px] font-bold",
-              popup:
-                "h-[150px] w-[250px] text-center text-[15px] font-bold text-black",
-            },
-          });
+    swalButton
+      .fire({
+        title: "노래를 삭제하시겠습니까?",
+        html: "한번 삭제된 노래는 복구할 수 없습니다!",
+        showCancelButton: true,
+        confirmButtonColor: "blue",
+        cancelButtonColor: "#d33",
+        confirmButtonText: "취소",
+        cancelButtonText: "삭제",
+      })
+      .then(async (result) => {
+        if (result.isConfirmed) {
+          // '취소' 버튼을 눌렀을 때 실행할 코드를 여기에 작성합니다.
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          // '삭제' 버튼을 눌렀을 때 실행할 코드를 여기에 작성합니다.
+          try {
+            await deleteMusicList(musicData.id, token);
+          } catch (error) {
+            console.log(error);
+            swalButton.fire({
+              title: "노래 삭제에 실패했습니다.",
+              width: "250px",
+            });
+          }
         }
-      }
-    });
+      });
   };
 
   useEffect(() => {

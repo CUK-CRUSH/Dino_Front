@@ -99,6 +99,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         playlists={playlists}
         isEditing={isEditing}
         playlistId={playlistId}
+        token={token}
       />
 
       <MusicTitle
