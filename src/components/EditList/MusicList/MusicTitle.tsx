@@ -5,12 +5,12 @@ interface MusicTitleProps {
   playlistId?: string | undefined;
 }
 
-export const MusicTitle: React.FC<MusicTitleProps> = ({
+export const MusicTitle = ({
   playlists,
   titlechange,
   isEditing,
   playlistId,
-}) => {
+}: MusicTitleProps) => {
   const playlist = playlists.find(
     (playlist: any) => playlist?.id === Number(playlistId)
   );
