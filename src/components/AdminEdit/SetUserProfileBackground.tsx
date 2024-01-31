@@ -24,11 +24,11 @@ const swalButton = Swal.mixin({
   buttonsStyling: false,
 });
 
-const SetUserProfileBackground = ({ aspectRatio, onCrop, isCompressLoading, earlyImage }: SetUserProfileBackgroundDTO) => {
+const SetUserProfileBackground = ({ aspectRatio, onCrop, isCompressLoading, earlyImage, profileBackgroundImage }: SetUserProfileBackgroundDTO) => {
   // early 이미지는 맨처음에 받아오는 이미지 
   // compressed는 수정한 후 이미지
 
-  const { profileBackgroundImage, deleteBackgroundImage } = useSelector(
+  const { deleteBackgroundImage } = useSelector(
     (state: RootState) => state.userProfile
   )
 
@@ -83,46 +83,52 @@ const SetUserProfileBackground = ({ aspectRatio, onCrop, isCompressLoading, earl
             {deleteBackgroundImage ?
               <img className="absolute bottom-2 right-2" src={camera} alt="x" />
               :
-              <img
-                src={earlyImage}
-                alt="User Profile"
-                className="w-full h-full object-cover object-center "
-              />
+              <>
+                <img
+                  src={earlyImage}
+                  alt="User Profile"
+                  className="w-full h-full object-cover object-center "
+                />
+                <div className="absolute right-2 -bottom-3 z-20">
+                  <img
+                    src={garbage}
+                    alt="Overlay"
+                    className="w-[25px] h-full "
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDeleteClick();
+                    }}
+                  />
+                </div>
+              </>
             }
-            <div className="absolute right-2 -bottom-3 z-20">
-              <img
-                src={garbage}
-                alt="Overlay"
-                className="w-[25px] h-full "
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleDeleteClick();
-                }}
-              />
-            </div>
+
           </div>
         ) : profileBackgroundImage ? (
           <div className="relative w-full h-full">
             {deleteBackgroundImage ?
               <img className="absolute bottom-2 right-2" src={camera} alt="x" />
               :
-              <img
-                src={profileBackgroundImage}
-                alt="User Profile"
-                className="w-full h-full object-cover object-center "
-              />
+              <>
+                <img
+                  src={profileBackgroundImage}
+                  alt="User Profile"
+                  className="w-full h-full object-cover object-center "
+                />
+                <div className="absolute right-2 -bottom-3 z-20">
+                  <img
+                    src={garbage}
+                    alt="Overlay"
+                    className="w-[25px] h-full"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleDeleteClick();
+                    }}
+                  />
+                </div>
+              </>
             }
-            <div className="absolute right-2 -bottom-3 z-20">
-              <img
-                src={garbage}
-                alt="Overlay"
-                className="w-[25px] h-full"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  handleDeleteClick();
-                }}
-              />
-            </div>
+
           </div>
         ) : (
           // If neither earlyImage nor compressedImage is available

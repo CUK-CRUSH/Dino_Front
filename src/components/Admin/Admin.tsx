@@ -111,7 +111,7 @@ const AdminPage: React.FC = () => {
     <div className="w-full h-full relative bg-white scrollbar-hide overflow-scroll">
       {isLoading ? <Skeleton width="100px" height="100%" /> : 
         <UserProfileBackground
-          userBackgroundImage={userData?.profileBackgroundImage}
+          userBackgroundImage={userData?.profileBackgroundImageUrl}
         />
       }
       {/* 플레이리스트 생성 성공 토스트 */}
@@ -154,7 +154,7 @@ const AdminPage: React.FC = () => {
         {/* 프로필 이미지 */}
         <div className=" flex items-center flex-col z-10">
 
-          <UserProfileImage userProfileImage={userData?.profileImage} />
+          <UserProfileImage userProfileImage={userData?.profileImageUrl} />
         </div>
 
 

@@ -183,8 +183,8 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
       ...prevData,
       backgroundImage: uploadUserProfileBackgroundImage,
     }));
+    dispatch(setDeleteProfileBackgroundImage(false))
 
-    dispatch(setProfileBackgroundImage(uploadUserProfileBackgroundImage));
 
   }, [uploadUserProfileBackgroundImage, dispatch]);
 
@@ -226,8 +226,8 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
       ...prevData,
       profileImage: uploadUserProfileImage,
     }));
+    dispatch(setDeleteProfileImage(false))
 
-    dispatch(setProfileImage(uploadUserProfileImage));
   }, [uploadUserProfileImage, dispatch]);
 
   useEffect(() => {
@@ -275,7 +275,6 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   const { username, profileImage, profileBackgroundImage, introduction, deleteProfileImage, deleteBackgroundImage } = useSelector(
     (state: RootState) => state.userProfile
   )
-    console.log(deleteProfileImage)
   const [updateMemberData, setUpdateMemberData] = useState<UpdateMemberParams>({
     // 입력없을때 닉네임 통과
     username: username || '', // Use the directly obtained value
@@ -291,15 +290,19 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     if (deleteProfileImage) {
       setUpdateMemberData((prevData) => ({
         ...prevData,
-        deleteProfileImage: true
+        deleteProfileImage: true,
+        profileImage: null,
+
          }
         )
       )
+      
     }
     else {
       setUpdateMemberData((prevData) => ({
         ...prevData,
         deleteProfileImage: false
+
           }
         )
       )
@@ -310,10 +313,12 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     if (deleteBackgroundImage) {
       setUpdateMemberData((prevData) => ({
         ...prevData,
-        deleteBackgroundImage: true
+        deleteBackgroundImage: true,
+        profileBackgroundImage: null
          }
         )
       )
+     
     }
     else {
       setUpdateMemberData((prevData) => ({
@@ -342,6 +347,10 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     console.log(code)
     if (code.status === 200) {
       dispatch(setToast('profile'));
+
+
+      dispatch(setProfileImage(uploadUserProfileImage));
+      dispatch(setProfileBackgroundImage(uploadUserProfileBackgroundImage));
 
       dispatch(setDeleteProfileImage(false))
       dispatch(setDeleteProfileBackgroundImage(false))
@@ -388,7 +397,8 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
           aspectRatio={1 / 1}
           onCrop={handleUploadUserProfileBackgroundImage}
           isCompressLoading={isCompressUserProfileBackgroundLoading}
-          earlyImage={userData?.profileBackgroundImage}
+          earlyImage={userData?.profileBackgroundImageUrl}
+          profileBackgroundImage={updateMemberData.backgroundImage}
         />
 
         {/* 프로필 사진 */}
@@ -396,7 +406,8 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
           aspectRatio={1 / 1}
           onCrop={handleUploadUserProfileImage}
           isCompressLoading={isCompressUserProfileLoading}
-          earlyImage={userData?.profileImage}
+          earlyImage={userData?.profileImageUrl}
+          profileImage={updateMemberData.profileImage}
 
         />
 

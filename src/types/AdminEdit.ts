@@ -20,6 +20,7 @@ export interface SetUserProfileBackgroundDTO {
   onCrop: (image: string) => void;
   isCompressLoading: boolean;
   earlyImage?: string | null;
+  profileBackgroundImage? : string | null;
 
 }
 
@@ -28,6 +29,7 @@ export interface SetUserProfileImageDTO {
   onCrop: (image: string) => void;
   isCompressLoading: boolean;
   earlyImage?: string | null;
+  profileImage? : string | null;
 
 }
 

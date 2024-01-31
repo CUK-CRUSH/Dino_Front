@@ -27,12 +27,12 @@ export interface UserProfileInfoDTO{
 }
 
 export interface getMemberDTO {
-  profileBackgroundImage : string | null,
+  profileBackgroundImageUrl : string | null,
   id? : number,
   introduction : string,
   name? : string,
   oauth2id? : string,
-  profileImage : string | null,
+  profileImageUrl : string | null,
   username : string,
   }
   

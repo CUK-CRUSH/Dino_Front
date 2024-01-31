@@ -24,11 +24,10 @@ const swalButton = Swal.mixin({
   buttonsStyling: false,
 });
 
-const SetUserProfileImage = ({ aspectRatio, onCrop, isCompressLoading, earlyImage }: SetUserProfileImageDTO) => {
-
+const SetUserProfileImage = ({ aspectRatio, onCrop, isCompressLoading, earlyImage, profileImage}: SetUserProfileImageDTO) => {
   // early 이미지는 맨처음에 받아오는 이미지 
 
-  const { profileImage, deleteProfileImage } = useSelector(
+  const {  deleteProfileImage } = useSelector(
     (state: RootState) => state.userProfile
   )
 
