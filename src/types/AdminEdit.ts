@@ -18,7 +18,7 @@ export interface EditButtonDTO {
 export interface SetUserProfileBackgroundDTO {
   aspectRatio: number;
   onCrop: (image: string) => void;
-  isCompressLoading: boolean;
+  isCompressLoading?: boolean;
   earlyImage?: string | null;
   profileBackgroundImage? : string | null;
 
@@ -27,7 +27,7 @@ export interface SetUserProfileBackgroundDTO {
 export interface SetUserProfileImageDTO {
   aspectRatio: number;
   onCrop: (image: string) => void;
-  isCompressLoading: boolean;
+  isCompressLoading?: boolean;
   earlyImage?: string | null;
   profileImage? : string | null;
 

@@ -6,7 +6,6 @@ import EditButton from "@components/AdminEdit/Button/EditButton";
 import SetUserProfileBackground from "@components/AdminEdit/SetUserProfileBackground";
 import SetUserProfileImage from "@components/AdminEdit/SetUserProfileImage";
 import SetUserProfileInfo from "@components/AdminEdit/SetUserProfileInfo";
-import useImageCompress from "@hooks/useImageCompress";
 import { getMemberDTO } from "types/Admin";
 import { useCookies } from "react-cookie";
 import {
@@ -156,8 +155,8 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     setUploadUserProfileBackgroundImage,
   ] = useState<string | null>(null);
 
-  const { isLoading: isCompressUserProfileBackgroundLoading } =
-    useImageCompress();
+  // const { isLoading: isCompressUserProfileBackgroundLoading } =
+  //   useImageCompress();
 
   const handleUploadUserProfileBackgroundImage = (image: string) =>
     setUploadUserProfileBackgroundImage(image);
@@ -195,7 +194,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     string | null
   >(null);
 
-  const { isLoading: isCompressUserProfileLoading } = useImageCompress();
+  // const { isLoading: isCompressUserProfileLoading } = useImageCompress();
 
   const handleUploadUserProfileImage = (image: string) =>
     setUploadUserProfileImage(image);
@@ -386,7 +385,6 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
         <SetUserProfileBackground
           aspectRatio={1 / 1}
           onCrop={handleUploadUserProfileBackgroundImage}
-          isCompressLoading={isCompressUserProfileBackgroundLoading}
           earlyImage={userData?.profileBackgroundImageUrl}
           profileBackgroundImage={updateMemberData.backgroundImage}
         />
@@ -395,7 +393,6 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
         <SetUserProfileImage
           aspectRatio={1 / 1}
           onCrop={handleUploadUserProfileImage}
-          isCompressLoading={isCompressUserProfileLoading}
           earlyImage={userData?.profileImageUrl}
           profileImage={updateMemberData.profileImage}
         />

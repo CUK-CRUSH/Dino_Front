@@ -3,6 +3,7 @@ import { RootState } from "@store/index";
 import ImageCropper from "@utils/ImageCrop/ImageCropper";
 import { useSelector } from "react-redux";
 import { SetProfileImageDTO } from "types/SetProfile/setProfile";
+import { Img } from "react-image";
 
 const SetProfileBackgroundImage = ({ aspectRatio, onCrop, isCompressLoading }: SetProfileImageDTO) => {
 
@@ -19,11 +20,11 @@ const SetProfileBackgroundImage = ({ aspectRatio, onCrop, isCompressLoading }: S
       >
 
         {profileBackgroundImage ? 
-        <img
+        <Img
           src={profileBackgroundImage}
           alt="User Profile"
           className="w-full h-full object-cover object-center"
-        /> : <img src={file} alt="x" />
+        /> : <Img src={file} alt="x" />
         }
  
       </div>

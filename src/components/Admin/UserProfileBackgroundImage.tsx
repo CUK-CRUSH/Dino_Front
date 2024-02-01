@@ -1,6 +1,7 @@
 import { RootState } from "@store/index";
 import { useSelector } from "react-redux";
 import { UserBackgroundImageDTO } from "types/Admin"
+import { Img } from "react-image";
 
 const UserProfileBackground = ({ userBackgroundImage }: UserBackgroundImageDTO) => {
   const { profileBackgroundImage, deleteBackgroundImage } = useSelector(
@@ -12,14 +13,14 @@ const UserProfileBackground = ({ userBackgroundImage }: UserBackgroundImageDTO) 
 
     <div className="">
       {profileBackgroundImage ? (
-        <img
+        <Img
           src={profileBackgroundImage} // Use profileBackgroundImage here
           alt="Selected"
           className="h-full w-full object-cover"
         />) : deleteBackgroundImage ? (
           null
         ) : userBackgroundImage ? (
-          <img
+          <Img
             src={userBackgroundImage}
             alt="Selected"
             className="h-full w-full object-cover"

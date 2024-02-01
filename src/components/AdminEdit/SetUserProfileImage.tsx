@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { setDeleteProfileImage } from "@reducer/Admin/userProfileSlice";
 import '../../styles/SweetAlert2/SweetAlert2.css'
 import 'sweetalert2/dist/sweetalert2.min.css';
+import { Img } from "react-image";
 
 const swalButton = Swal.mixin({
   customClass: {
@@ -80,12 +81,12 @@ const SetUserProfileImage = ({ aspectRatio, onCrop, isCompressLoading, earlyImag
           // When there is an earlyImage
           <div className="relative w-full h-full">
             {deleteProfileImage ?
-              <img
+              <Img
                 src={setDefaultImage}  // Update this to the correct default image URL
                 alt="User Profile"
                 className="w-full h-full object-cover object-center"
               /> :
-              <img
+              <Img
                 src={earlyImage}
                 alt="User Profile"
                 className="w-full h-full object-cover object-center rounded-full"
@@ -93,7 +94,7 @@ const SetUserProfileImage = ({ aspectRatio, onCrop, isCompressLoading, earlyImag
             }
 
             <div className="absolute -right-2 bottom-0 ">
-              <img
+              <Img
                 src={garbage}
                 alt="Overlay"
                 className="w-[25px] h-full "
@@ -107,19 +108,19 @@ const SetUserProfileImage = ({ aspectRatio, onCrop, isCompressLoading, earlyImag
         ) : profileImage ? (
           <div className="relative w-full h-full">
             {deleteProfileImage ?
-              <img
+              <Img
                 src={setDefaultImage}  // Update this to the correct default image URL
                 alt="User Profile"
                 className="w-full h-full object-cover object-center"
               /> :
-              <img
+              <Img
                 src={profileImage}
                 alt="User Profile"
                 className="w-full h-full object-cover object-center rounded-full"
               />
             }
             <div className="absolute -right-2 bottom-0 ">
-              <img
+              <Img
                 src={garbage}
                 alt="Overlay"
                 className="w-[25px] h-full"
@@ -136,12 +137,12 @@ const SetUserProfileImage = ({ aspectRatio, onCrop, isCompressLoading, earlyImag
             <>
               <div className="absolute inset-0 bg-black bg-opacity-10 rounded-full" />
               
-              <img
+              <Img
                 src={setDefaultImage}  // Update this to the correct default image URL
                 alt="User Profile"
                 className="w-full h-full object-cover object-center"
               />
-              <img
+              <Img
                 src={camera}
                 alt="Overlay"
                 className="absolute top-0 left-[20px] w-[25px] h-full opacity-50"
