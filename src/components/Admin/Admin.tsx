@@ -57,8 +57,7 @@ const AdminPage: React.FC = () => {
 
     return () => clearTimeout(timeoutId);
   }, [username, userData]);
-  // console.log(userData?.id);
-  // console.log(tokenId);
+  console.log(userId, tokenId);
   useEffect(() => {
     const fetchPlaylistData = async () => {
       try {

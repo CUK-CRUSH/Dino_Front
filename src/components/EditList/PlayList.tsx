@@ -26,12 +26,14 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const [uploadImage, setUploadImage] = useState<string | null>(null);
   const [playlists, setPlaylists] = useState<any[]>([]);
   const [username, setUsername] = useState<string | null>(null);
+
   const [playlistName, setPlaylistName] = useState("");
   const [musicList, setMusicList] = useState<any>([]);
 
   const { playlistId } = useParams<{ playlistId: string }>();
   const { toast } = useSelector((state: RootState) => state.toast);
-
+  const userId = useSelector((state: RootState) => state.userId.value);
+  const [compareId, setCompareId] = useState<number | null>(null);
   // 쿠키에서 유저 id 가져오기
   const [cookies] = useCookies(["accessToken"]);
   const token = cookies.accessToken;
@@ -45,28 +47,40 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     handleSaveClick,
     handleCancelClick,
     handleDeleteClick,
-  } = UsePlayListEditor({
+  } = UsePlayListEditor(
     playlists,
+    uploadImage,
     token,
     playlistName,
     musicData,
     playlistId,
-    username,
-  });
+    username
+  );
 
   const fetchPlaylist = useCallback(
     async (id: number) => {
       const member = await getMember(id);
+
       const playlist = await getPlayList(member.data.username);
 
       const musicAPIData = await getMusicList(Number(playlistId));
       setUsername(member.data.username);
       setPlaylists(playlist.data);
+
       setMusicList(musicAPIData);
     },
     [playlistId]
   );
+  useEffect(() => {
+    const fetchCompareId = async () => {
+      if (userId) {
+        const compareMember = await getMember(userId);
+        setCompareId(compareMember.data.id);
+      }
+    };
 
+    fetchCompareId();
+  }, [userId]);
   useEffect(() => {
     if (id !== undefined) {
       fetchPlaylist(id);
@@ -84,6 +98,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
           musicData={musicData}
           playlistId={playlistId}
           username={username}
+          compareId={compareId}
         />
       )}
 

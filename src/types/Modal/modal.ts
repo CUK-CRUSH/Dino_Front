@@ -1,5 +1,6 @@
 export interface CustomModalDTO {
   isOpen: boolean;
+  uploadImage: string | null;
   onRequestClose: () => void;
   compressedImage: string | null;
   playlists: any[];

@@ -1,8 +1,6 @@
-import { RootState } from "@store/index";
 import CustomModal from "@utils/Modal/Modal";
 import { useCallback, useState } from "react";
 import { FaAngleLeft, FaEllipsisVertical } from "react-icons/fa6";
-import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 type MainEditButtonProps = {
@@ -13,6 +11,7 @@ type MainEditButtonProps = {
   musicData: any;
   playlistId: string | undefined;
   username: string | null;
+  compareId: number | null;
 };
 
 export const MainEditButton = ({
@@ -23,11 +22,13 @@ export const MainEditButton = ({
   musicData,
   playlistId,
   username,
+  compareId,
 }: MainEditButtonProps) => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
-  const userId = useSelector((state: RootState) => state.userId.value);
+
   const tokenId = Number(localStorage.getItem("tokenId"));
+  // console.log(userId, tokenId);
 
   const handleBack = useCallback(() => {
     navigate(-1);
@@ -54,7 +55,7 @@ export const MainEditButton = ({
         <FaAngleLeft size={24} />
       </button>
 
-      {userId === tokenId && (
+      {compareId === tokenId && (
         <>
           <p className="text-center">플레이리스트</p>
           <button
