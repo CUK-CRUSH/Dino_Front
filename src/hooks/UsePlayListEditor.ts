@@ -17,6 +17,7 @@ import { setToast } from "@reducer/Toast/toast";
 import { useSelector } from "react-redux";
 import { RootState } from "@store/index";
 import useImageCompress from "./useImageCompress";
+import { resetSelectedFile } from "@reducer/editPlayList/Image/isImageCompress";
 
 interface UsePlayListEditorProps {
   playlists: any[];
@@ -80,13 +81,15 @@ export const UsePlayListEditor = ({
             if (!isLoading) {
               await putPlayList(id, null, result, token);
               dispatch(updateImage(result));
-              dispatch({ type: "RESET_SELECTED_FILE" });
+              dispatch(resetSelectedFile());
             }
           } catch (error) {
             console.error("Error reading file:", error);
           }
         }
       }
+
+      // 비동기 함수들이 완료될 때까지 기다립니다.
       if (playlistName) {
         await putPlayList(id, playlistName, null, token);
       }

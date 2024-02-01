@@ -28,6 +28,7 @@ export interface MusicDataRowContentProps {
   playlistId: string | undefined;
   username: string | null;
   token: string;
+  setWidth: (width: number) => void;
 }
 
 export interface EditPlsyListDTO {}
