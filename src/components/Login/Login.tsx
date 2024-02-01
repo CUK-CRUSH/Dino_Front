@@ -67,7 +67,7 @@ const LoginComponents = () => {
               </svg>
               <div className="w-[10px]"></div>
               <div className=" text-white text-[15px] font-medium font-['Noto Sans']">
-                Log in with your social account
+                소셜 계정으로 3초만에 빠른 가입
               </div>
             </div>
           </div>
@@ -83,7 +83,7 @@ const LoginComponents = () => {
                 />
                 <div className={"w-[20px]"}></div>
                 <div className="flex flex-col items-center text-[17px] font-semibold font-['Noto Sans']">
-                  Sign in with Kakao
+                  카카오로 로그인/회원가입
                 </div>
               </div>
             </div>
@@ -100,7 +100,7 @@ const LoginComponents = () => {
                 />
                 <div className={"w-[20px]"}></div>
                 <div className="flex flex-col items-center text-[17px] font-semibold font-['Noto Sans']">
-                  Sign in with Google
+                  구글로 로그인/회원가입
                 </div>
               </div>
             </div>
@@ -117,7 +117,7 @@ const LoginComponents = () => {
                 ></img>
                 <div className={"w-[20px]"}></div>
                 <div className=" flex flex-col items-center text-center text-[17px] font-semibold font-['Noto Sans']">
-                  <div>Continue with Facebook</div>
+                  <div>페이스북으로 로그인/회원가입</div>
                 </div>
               </div>
             </div>

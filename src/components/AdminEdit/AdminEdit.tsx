@@ -399,7 +399,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
         {/* 유저 닉네임 */}
         <SetUserProfileInfo
-          placeholder="User Name"
+          placeholder="닉네임"
           maxlength={999}
           name="username"
           value={userData?.username}
@@ -408,7 +408,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
         {/* 한줄소개 */}
         <SetUserProfileInfo
-          placeholder="Introduction"
+          placeholder="한줄소개"
           maxlength={50}
           name="introduction"
           value={userData?.introduction}
