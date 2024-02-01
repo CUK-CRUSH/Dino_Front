@@ -11,7 +11,6 @@ import { MainEditButton } from "@components/EditList/Button/MainEditButton";
 import { MusicTitle } from "@components/EditList/MusicList/MusicTitle";
 import { useCookies } from "react-cookie";
 import useDecodedJWT from "@hooks/useDecodedJWT";
-import { getMember } from "@api/member-controller/memberController";
 import { getPlayList } from "@api/playlist-controller/playlistControl";
 import { getMusicList } from "@api/music-controller/musicControl";
 import { useParams } from "react-router-dom";
@@ -37,8 +36,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   // 쿠키에서 유저 id 가져오기
   const [cookies] = useCookies(["accessToken"]);
   const token = cookies.accessToken;
-  const decodedToken = useDecodedJWT(token);
-  const id = decodedToken ? decodedToken.sub : null;
 
   const handleUploadImage = (image: string) => setUploadImage(image);
 
