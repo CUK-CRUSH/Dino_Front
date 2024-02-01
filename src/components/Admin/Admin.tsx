@@ -40,7 +40,6 @@ const AdminPage: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (username !== userData?.username) {
         try {
           const userDataResult = await getMemberUsername(username);
           setUserdata(userDataResult.data);
@@ -48,7 +47,7 @@ const AdminPage: React.FC = () => {
         } catch (error) {
           console.error("Error fetching user data:", error);
         }
-      }
+      
     };
 
     const delay = 500;
@@ -58,7 +57,7 @@ const AdminPage: React.FC = () => {
     }, delay);
 
     return () => clearTimeout(timeoutId);
-  }, [username, userData]);
+  }, []);
 
   const {
 
