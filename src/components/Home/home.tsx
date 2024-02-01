@@ -4,7 +4,7 @@ import Mylist from "@assets/Mylist 1.svg";
 const HomeComponent = () => {
 
   return (
-      <div className="w-full h-full">
+      <div className="w-full h-full scrollbar-hide overflow-scroll">
         <div className={"h-[30px]"}></div>
         <div className={"flex flex-row-reverse justify-between align-middle"}>
           <div className="w-[91px] h-[34px] m-4 bg-neutral-700 rounded-[9px] flex items-center">

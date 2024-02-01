@@ -11,7 +11,6 @@ import { getMemberUsername } from "@api/member-controller/memberController";
 import { getMemberDTO, getPlaylistDTO } from "types/Admin";
 import { getPlayList } from "@api/playlist-controller/playlistControl";
 import { useParams } from "react-router-dom";
-import Skeleton from "@components/Skeleton/Skeleton";
 import ToastComponent from "@components/Toast/Toast";
 import { useSelector } from "react-redux";
 import { RootState } from "@store/index";

@@ -3,7 +3,6 @@ import { SetUserProfileImageDTO } from "types/AdminEdit";
 import camera from "@assets/Admin/camera.svg";
 import garbage from "@assets/Admin/garbage.svg";
 import setDefaultImage from "@assets/Admin/setDefaultImage.svg";
-import UserImageCropper from "@utils/ImageCrop/UserImageCropper";
 import LoadingPage from "@utils/loading";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -14,6 +13,7 @@ import { setDeleteProfileImage } from "@reducer/Admin/userProfileSlice";
 import '../../styles/SweetAlert2/SweetAlert2.css'
 import 'sweetalert2/dist/sweetalert2.min.css';
 import { Img } from "react-image";
+import UserImageCropper from "@utils/ImageCrop/UserImageCropper";
 
 const swalButton = Swal.mixin({
   customClass: {
