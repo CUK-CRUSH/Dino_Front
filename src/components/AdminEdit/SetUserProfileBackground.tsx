@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import { SetUserProfileBackgroundDTO } from "types/AdminEdit";
 import garbage from "@assets/Admin/garbage.svg";
 
-import ImageCropper from "@utils/ImageCrop/ImageCropper";
+import UserImageCropper from "@utils/ImageCrop/UserImageCropper";
 import LoadingPage from "@utils/loading";
 import camera from "../../assets/Admin/camera.svg";
 import { useSelector } from "react-redux";
@@ -75,7 +75,7 @@ const SetUserProfileBackground = ({ aspectRatio, onCrop, isCompressLoading, earl
   }
 
   return (
-    <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
+    <UserImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
 
       <div className="h-52 bg-black bg-opacity-70 mb-[-35px] relative cursor-pointer  ">
         {!isChange && earlyImage ? (    // If earlyImage is available
@@ -141,7 +141,7 @@ const SetUserProfileBackground = ({ aspectRatio, onCrop, isCompressLoading, earl
           </div>
         )}
       </div>
-    </ImageCropper>
+    </UserImageCropper>
 
   )
 }
