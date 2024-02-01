@@ -44,7 +44,7 @@ const Redirect = () => {
             } else {
               // Handle the case where username is present
               dispatch(setToast('login'));
-              navigate(`/${getUserData.data.username}/admin`);
+              navigate(`/${getUserData.data.username}`);
             }
           } catch (error) {
             console.error('Error fetching member:', error);
