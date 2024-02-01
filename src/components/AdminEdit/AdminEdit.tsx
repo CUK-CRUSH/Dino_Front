@@ -335,7 +335,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
       if(uploadUserProfileBackgroundImage){
         dispatch(setProfileBackgroundImage(uploadUserProfileBackgroundImage));
       }
-      if(uploadUserProfileBackgroundImage){
+      if(deleteBackgroundImage){
         dispatch(setProfileBackgroundImage(null));
       }
       dispatch(setDeleteProfileImage(false));
