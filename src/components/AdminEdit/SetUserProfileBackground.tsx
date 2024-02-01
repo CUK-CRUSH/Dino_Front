@@ -13,6 +13,7 @@ import { useDispatch } from "react-redux";
 import { setDeleteProfileBackgroundImage } from "@reducer/Admin/userProfileSlice";
 import '../../styles/SweetAlert2/SweetAlert2.css'
 import 'sweetalert2/dist/sweetalert2.min.css';
+import { Img } from "react-image";
 
 const swalButton = Swal.mixin({
   customClass: {
@@ -61,7 +62,7 @@ const SetUserProfileBackground = ({ aspectRatio, onCrop, isCompressLoading, earl
         } catch (error) {
           console.log(error);
           Swal.fire({
-            title: "노래 삭제에 실패했습니다.",
+            title: "이미지 삭제에 실패했습니다.",
             width: "250px",
             customClass: {
               title: "text-black text-[15px] font-bold",
@@ -81,16 +82,16 @@ const SetUserProfileBackground = ({ aspectRatio, onCrop, isCompressLoading, earl
         {!isChange && earlyImage ? (    // If earlyImage is available
           <div className="relative w-full h-full">
             {deleteBackgroundImage ?
-              <img className="absolute bottom-2 right-2" src={camera} alt="x" />
+              <Img className="absolute bottom-2 right-2" src={camera} alt="x" />
               :
               <>
-                <img
+                <Img
                   src={earlyImage}
                   alt="User Profile"
                   className="w-full h-full object-cover object-center "
                 />
                 <div className="absolute right-2 -bottom-3 z-20">
-                  <img
+                  <Img
                     src={garbage}
                     alt="Overlay"
                     className="w-[25px] h-full "
@@ -107,16 +108,16 @@ const SetUserProfileBackground = ({ aspectRatio, onCrop, isCompressLoading, earl
         ) : profileBackgroundImage ? (
           <div className="relative w-full h-full">
             {deleteBackgroundImage ?
-              <img className="absolute bottom-2 right-2" src={camera} alt="x" />
+              <Img className="absolute bottom-2 right-2" src={camera} alt="x" />
               :
               <>
-                <img
+                <Img
                   src={profileBackgroundImage}
                   alt="User Profile"
                   className="w-full h-full object-cover object-center "
                 />
                 <div className="absolute right-2 -bottom-3 z-20">
-                  <img
+                  <Img
                     src={garbage}
                     alt="Overlay"
                     className="w-[25px] h-full"
@@ -136,7 +137,7 @@ const SetUserProfileBackground = ({ aspectRatio, onCrop, isCompressLoading, earl
             {isCompressLoading ? (
               <LoadingPage />
             ) : (
-              <img className="absolute bottom-2 right-2" src={camera} alt="x" />
+              <Img className="absolute bottom-2 right-2" src={camera} alt="x" />
             )}
           </div>
         )}

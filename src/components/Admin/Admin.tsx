@@ -11,7 +11,6 @@ import { getMemberUsername } from "@api/member-controller/memberController";
 import { getMemberDTO, getPlaylistDTO } from "types/Admin";
 import { getPlayList } from "@api/playlist-controller/playlistControl";
 import { useParams } from "react-router-dom";
-import Skeleton from "@components/Skeleton/Skeleton";
 import ToastComponent from "@components/Toast/Toast";
 import { useSelector } from "react-redux";
 import { RootState } from "@store/index";
@@ -21,8 +20,18 @@ const AdminPage: React.FC = () => {
 
   const tokenId = Number(localStorage.getItem("tokenId"));
   const userId = Number(localStorage.getItem("userId"));
+  const getDefaultMember = (): getMemberDTO => ({
+    backgroundImageUrl: null,
+    id: undefined,
+    introduction: "",
+    name: undefined,
+    oauth2id: undefined,
+    profileImageUrl: null,
+    username: "",
+  });
   // 유저데이터
-  const [userData, setUserdata] = useState<getMemberDTO>();
+  const [userData, setUserdata] = useState<getMemberDTO>(getDefaultMember);
+
   // 플레이리스트 데이터
   const [playlistData, setPlaylistdata] = useState<
     getPlaylistDTO[] | undefined
@@ -34,19 +43,16 @@ const AdminPage: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-      if (username !== userData?.username) {
-        try {
-          const userDataResult = await getMemberUsername(username);
-          setUserdata(userDataResult.data);
-          if (userDataResult.data?.id) {
-            localStorage.setItem("userId", userDataResult.data.id.toString());
-          }
-        } catch (error) {
-          console.error("Error fetching user data:", error);
+      try {
+        const userDataResult = await getMemberUsername(username);
+        setUserdata(userDataResult.data);
+        if (userDataResult.data?.id) {
+          localStorage.setItem("userId", userDataResult.data.id.toString());
         }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
       }
     };
-
     const delay = 500;
     const timeoutId = setTimeout(() => {
       setIsLoding(false);
@@ -54,8 +60,29 @@ const AdminPage: React.FC = () => {
     }, delay);
 
     return () => clearTimeout(timeoutId);
-  }, [username, userData]);
+  }, [username]);
 
+  const { deleteProfileImage, deleteBackgroundImage } = useSelector(
+    (state: RootState) => state.userProfile
+  );
+
+  useEffect(() => {
+    if (deleteProfileImage) {
+      setUserdata((prevData) => ({
+        ...prevData,
+        profileImageUrl: null,
+      }));
+    }
+  }, [deleteProfileImage]);
+
+  useEffect(() => {
+    if (deleteBackgroundImage) {
+      setUserdata((prevData) => ({
+        ...prevData,
+        backgroundImageUrl: null,
+      }));
+    }
+  }, [deleteBackgroundImage]);
   useEffect(() => {
     const fetchPlaylistData = async () => {
       try {
@@ -111,13 +138,10 @@ const AdminPage: React.FC = () => {
 
   return (
     <div className="w-full h-full relative bg-white scrollbar-hide overflow-scroll">
-      {isLoading ? (
-        <Skeleton width="100px" height="100%" />
-      ) : (
-        <UserProfileBackground
-          userBackgroundImage={userData?.profileBackgroundImageUrl}
-        />
-      )}
+      <UserProfileBackground
+        userBackgroundImage={userData?.backgroundImageUrl}
+      />
+
       {/* 플레이리스트 생성 성공 토스트 */}
 
       {toast === "add" && (
@@ -180,7 +204,7 @@ const AdminPage: React.FC = () => {
 
         {playlistData &&
           playlistData.map((playlist: getPlaylistDTO, index: number) => (
-            <PlayList playlist={playlist} />
+            <PlayList key={playlist.id} playlist={playlist} />
           ))}
 
         {!isLoading &&

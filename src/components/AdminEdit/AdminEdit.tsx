@@ -6,7 +6,6 @@ import EditButton from "@components/AdminEdit/Button/EditButton";
 import SetUserProfileBackground from "@components/AdminEdit/SetUserProfileBackground";
 import SetUserProfileImage from "@components/AdminEdit/SetUserProfileImage";
 import SetUserProfileInfo from "@components/AdminEdit/SetUserProfileInfo";
-import useImageCompress from "@hooks/useImageCompress";
 import { getMemberDTO } from "types/Admin";
 import { useCookies } from "react-cookie";
 import {
@@ -156,8 +155,8 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     setUploadUserProfileBackgroundImage,
   ] = useState<string | null>(null);
 
-  const { isLoading: isCompressUserProfileBackgroundLoading } =
-    useImageCompress();
+  // const { isLoading: isCompressUserProfileBackgroundLoading } =
+  //   useImageCompress();
 
   const handleUploadUserProfileBackgroundImage = (image: string) =>
     setUploadUserProfileBackgroundImage(image);
@@ -195,7 +194,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     string | null
   >(null);
 
-  const { isLoading: isCompressUserProfileLoading } = useImageCompress();
+  // const { isLoading: isCompressUserProfileLoading } = useImageCompress();
 
   const handleUploadUserProfileImage = (image: string) =>
     setUploadUserProfileImage(image);
@@ -247,10 +246,6 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   const [isOpen, setIsOpen] = useState(true);
 
   const cancel = () => {
-    dispatch(setProfileUsername(""));
-    dispatch(setProfileIntroduction(""));
-    dispatch(setProfileBackgroundImage(null));
-    dispatch(setProfileImage(null));
     dispatch(setDeleteProfileImage(false));
     dispatch(setDeleteProfileBackgroundImage(false));
 
@@ -283,6 +278,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
   useEffect(() => {
     if (deleteProfileImage) {
+
       setUpdateMemberData((prevData) => ({
         ...prevData,
         deleteProfileImage: true,
@@ -301,7 +297,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
       setUpdateMemberData((prevData) => ({
         ...prevData,
         deleteBackgroundImage: true,
-        profileBackgroundImage: null,
+        backgroundImage: null,
       }));
     } else {
       setUpdateMemberData((prevData) => ({
@@ -327,8 +323,22 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     if (code.status === 200) {
       dispatch(setToast("profile"));
 
-      dispatch(setProfileImage(uploadUserProfileImage));
-      dispatch(setProfileBackgroundImage(uploadUserProfileBackgroundImage));
+      // 존재 폴스 변경 존재 트루 삭제 후 변경
+      if(uploadUserProfileImage) {
+        dispatch(setProfileImage(uploadUserProfileImage));
+      }
+      
+      // 눌 폴스 변경 x 눌 트루 삭제
+      if(deleteProfileImage){
+        dispatch(setProfileImage(null));
+      }
+
+      if(uploadUserProfileBackgroundImage){
+        dispatch(setProfileBackgroundImage(uploadUserProfileBackgroundImage));
+      }
+      if(deleteBackgroundImage){
+        dispatch(setProfileBackgroundImage(null));
+      }
 
       dispatch(setDeleteProfileImage(false));
       dispatch(setDeleteProfileBackgroundImage(false));
@@ -378,8 +388,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
         <SetUserProfileBackground
           aspectRatio={1 / 1}
           onCrop={handleUploadUserProfileBackgroundImage}
-          isCompressLoading={isCompressUserProfileBackgroundLoading}
-          earlyImage={userData?.profileBackgroundImageUrl}
+          earlyImage={userData?.backgroundImageUrl}
           profileBackgroundImage={updateMemberData.backgroundImage}
         />
 
@@ -387,14 +396,13 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
         <SetUserProfileImage
           aspectRatio={1 / 1}
           onCrop={handleUploadUserProfileImage}
-          isCompressLoading={isCompressUserProfileLoading}
           earlyImage={userData?.profileImageUrl}
           profileImage={updateMemberData.profileImage}
         />
 
         {/* 유저 닉네임 */}
         <SetUserProfileInfo
-          placeholder="User Name"
+          placeholder="닉네임"
           maxlength={999}
           name="username"
           value={userData?.username}
@@ -403,7 +411,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
         {/* 한줄소개 */}
         <SetUserProfileInfo
-          placeholder="Introduction"
+          placeholder="한줄소개"
           maxlength={50}
           name="introduction"
           value={userData?.introduction}
