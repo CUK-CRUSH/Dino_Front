@@ -1,12 +1,18 @@
-import { useState } from "react";
 import imageCompression from "browser-image-compression";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { RootState } from "@store/index";
+import { setIsLoading } from "@reducer/editPlayList/Image/isImageCompress";
 
 const useImageCompress = () => {
-  const [isLoading, setIsLoading] = useState(false);
+  const dispatch = useDispatch();
+  const isLoading = useSelector(
+    (state: RootState) => state.selectedFile.isLoading
+  );
 
   const compressImage = async (imageFile: File) => {
     if (isLoading) return;
-    setIsLoading(true);
+    dispatch(setIsLoading(true));
 
     const options = {
       maxSizeMB: 0.1,
