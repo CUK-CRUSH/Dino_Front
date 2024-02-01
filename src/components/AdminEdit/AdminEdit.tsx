@@ -297,7 +297,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
       setUpdateMemberData((prevData) => ({
         ...prevData,
         deleteBackgroundImage: true,
-        profileBackgroundImage: null,
+        backgroundImage: null,
       }));
     } else {
       setUpdateMemberData((prevData) => ({
