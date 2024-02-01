@@ -79,7 +79,7 @@ export const UsePlayListEditor = (
   //플리삭제
   const handleDeleteClick = async () => {
     await deletePlayList(playlistId ?? "", token);
-    navigate(`/${username}/admin`);
+    navigate(`/${username}`);
   };
 
   return {
