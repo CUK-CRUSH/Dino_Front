@@ -27,7 +27,6 @@ export const MainEditButton = ({
 
   const tokenId = Number(localStorage.getItem("tokenId"));
   const compareId = Number(localStorage.getItem("userId"));
-  console.log(compareId, tokenId);
 
   const handleBack = useCallback(() => {
     navigate(-1);
