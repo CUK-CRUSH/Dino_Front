@@ -7,8 +7,6 @@ const UserProfileBackground = ({ userBackgroundImage }: UserBackgroundImageDTO) 
   const { profileBackgroundImage, deleteBackgroundImage } = useSelector(
     (state: RootState) => state.userProfile
   );
-
-  console.log(profileBackgroundImage, userBackgroundImage)
   return (
 
     <div className="">
@@ -17,14 +15,15 @@ const UserProfileBackground = ({ userBackgroundImage }: UserBackgroundImageDTO) 
           src={profileBackgroundImage} // Use profileBackgroundImage here
           alt="Selected"
           className="h-full w-full object-cover"
-        />) : deleteBackgroundImage ? (
-          null
-        ) : userBackgroundImage ? (
+        />) : 
+        userBackgroundImage ? (
           <Img
             src={userBackgroundImage}
             alt="Selected"
             className="h-full w-full object-cover"
           />
+        ) :  deleteBackgroundImage ? (
+          null
         ) : null}
     </div>
   );

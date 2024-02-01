@@ -27,7 +27,7 @@ export interface UserProfileInfoDTO{
 }
 
 export interface getMemberDTO {
-  profileBackgroundImageUrl : string | null,
+  backgroundImageUrl : string | null,
   id? : number,
   introduction : string,
   name? : string,
