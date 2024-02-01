@@ -1,6 +1,8 @@
+import { RootState } from "@store/index";
 import CustomModal from "@utils/Modal/Modal";
 import { useCallback, useState } from "react";
 import { FaAngleLeft, FaEllipsisVertical } from "react-icons/fa6";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 
 type MainEditButtonProps = {
@@ -24,6 +26,8 @@ export const MainEditButton = ({
 }: MainEditButtonProps) => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
+  const userId = useSelector((state: RootState) => state.userId.value);
+  const tokenId = Number(localStorage.getItem("tokenId"));
 
   const handleBack = useCallback(() => {
     navigate(-1);
@@ -49,10 +53,20 @@ export const MainEditButton = ({
       <button type="button" onClick={handleBack} className="text-white">
         <FaAngleLeft size={24} />
       </button>
-      <p className="text-center">플레이리스트</p>
-      <button type="button" onClick={handleModalToggle} className="text-white">
-        <FaEllipsisVertical size={24} />
-      </button>
+
+      {userId === tokenId && (
+        <>
+          <p className="text-center">플레이리스트</p>
+          <button
+            type="button"
+            onClick={handleModalToggle}
+            className="text-white"
+          >
+            <FaEllipsisVertical size={24} />
+          </button>
+        </>
+      )}
+
       <CustomModal {...modalProps} />
     </div>
   );

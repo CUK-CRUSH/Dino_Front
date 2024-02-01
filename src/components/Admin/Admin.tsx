@@ -21,6 +21,8 @@ import { setUserId } from "@reducer/Admin/userId";
 const AdminPage: React.FC = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const dispatch = useDispatch();
+  const userId = useSelector((state: RootState) => state.userId.value);
+  const tokenId = Number(localStorage.getItem("tokenId"));
   // 유저데이터
   const [userData, setUserdata] = useState<getMemberDTO>();
   // 플레이리스트 데이터
@@ -185,6 +187,7 @@ const AdminPage: React.FC = () => {
           ))}
 
         {!isLoading &&
+        userId === tokenId &&
         playlistData?.length !== undefined &&
         playlistData.length < 4 ? (
           <AddPlayList />
