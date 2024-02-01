@@ -10,6 +10,8 @@ import Swal from "sweetalert2";
 import TrashCan from "@assets/PlayListImage/trash.svg";
 import Camera from "@assets/PlayListImage/camera.svg";
 import { useCallback } from "react";
+import { Img } from "react-image";
+import Spinner from "@assets/Spinner/Spinner.svg";
 
 const ShowImage = ({
   aspectRatio,
@@ -60,9 +62,10 @@ const ShowImage = ({
   }, [playlist, token, swalButton]);
 
   const renderImage = (imageSrc: string) => (
-    <img
+    <Img
       src={imageSrc}
       alt="Img"
+      loader={Spinner}
       className="h-full w-full object-cover rounded-b-3xl"
     />
   );
@@ -73,7 +76,7 @@ const ShowImage = ({
           {renderImage(imageSrc)}
           <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
             <button className="absolute bottom-2 right-3">
-              <img src={Camera} alt="Camera" width={32} height={32} />
+              <Img src={Camera} alt="Camera" width={32} height={32} />
             </button>
           </ImageCropper>
           {playlist?.thumbnailUrl && (
@@ -81,7 +84,7 @@ const ShowImage = ({
               className="absolute top-4 left-1/2 transform -translate-x-1/2"
               onClick={handleDeleteImage}
             >
-              <img src={TrashCan} alt="Trash Can" width={23} height={23} />
+              <Img src={TrashCan} alt="Trash Can" width={23} height={23} />
             </button>
           )}
         </>
@@ -101,7 +104,7 @@ const ShowImage = ({
         {isEditing && (
           <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
             <button className="absolute bottom-2 right-3">
-              <img src={Camera} alt="Camera" width={32} height={32} />
+              <Img src={Camera} alt="Camera" width={32} height={32} />
             </button>
           </ImageCropper>
         )}
