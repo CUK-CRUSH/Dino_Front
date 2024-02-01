@@ -42,7 +42,7 @@ const UserProfileInfo = ({ username, introText }: UserProfileInfoDTO) => {
           </div>
         ) : (
           <React.Fragment>
-            {introduction || introText}
+            <p className="">{introduction || introText}</p>
           </React.Fragment>
         )}
 
