@@ -45,15 +45,14 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     handleSaveClick,
     handleCancelClick,
     handleDeleteClick,
-  } = UsePlayListEditor(
+  } = UsePlayListEditor({
     playlists,
-    uploadImage,
     token,
     playlistName,
     musicData,
     playlistId,
-    username
-  );
+    username,
+  });
 
   const fetchPlaylist = useCallback(
     async (id: number) => {

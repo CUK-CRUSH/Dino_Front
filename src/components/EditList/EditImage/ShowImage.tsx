@@ -12,6 +12,7 @@ import Camera from "@assets/PlayListImage/camera.svg";
 import { useCallback } from "react";
 import { Img } from "react-image";
 import Spinner from "@assets/Spinner/Spinner.svg";
+import useImageCompress from "@hooks/useImageCompress";
 
 const ShowImage = ({
   aspectRatio,
@@ -22,6 +23,7 @@ const ShowImage = ({
   token,
 }: ShowImageDTO) => {
   const { t } = useTranslation("Edit");
+  const { isLoading } = useImageCompress();
 
   const swalButton = Swal.mixin({
     customClass: {
@@ -39,6 +41,7 @@ const ShowImage = ({
   const { image: reduxImage } = useSelector(
     (state: RootState) => state.musicAdd
   );
+
   const handleDeleteImage = useCallback(async () => {
     const result = await swalButton.fire({
       title: "이미지를 삭제하시겠습니까?",
@@ -114,11 +117,15 @@ const ShowImage = ({
 
   return (
     <div className="h-1/3 smartPhone:h-[28%] tabletMini:h-[20%] tablet:h-[18%] relative rounded-b-3xl bg-white ">
-      {isEditing
-        ? renderImageControls(reduxImage || playlist?.thumbnailUrl || null)
-        : reduxImage || playlist?.thumbnailUrl
-        ? renderImage(reduxImage || playlist?.thumbnailUrl || "")
-        : renderNoImage()}
+      {isLoading ? (
+        <Img src={Spinner} alt="Spinner" />
+      ) : isEditing ? (
+        renderImageControls(reduxImage || playlist?.thumbnailUrl || null)
+      ) : reduxImage || playlist?.thumbnailUrl ? (
+        renderImage(reduxImage || playlist?.thumbnailUrl || "")
+      ) : (
+        renderNoImage()
+      )}
     </div>
   );
 };
