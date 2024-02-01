@@ -4,7 +4,6 @@ import "cropperjs/dist/cropper.css";
 import { ImageCropsDTO } from "types/ImageCrop/imagecrops";
 import ImageControlButton from "@components/EditList/Button/ImageControlButton";
 import Swal from "sweetalert2";
-import useImageCompress from "@hooks/useImageCompress";
 import { useDispatch } from "react-redux";
 import { updateImage } from "@reducer/musicadd";
 
@@ -20,7 +19,7 @@ const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
       inputRef.current.click();
     }
   };
-  const { compressImage } = useImageCompress();
+
   const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
 
@@ -46,14 +45,12 @@ const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
       return;
     }
     if (file) {
-      const compressedFile = await compressImage(file as File);
+      dispatch({ type: "SET_SELECTED_FILE", payload: file });
       const reader = new FileReader();
       reader.onload = () => {
         setImage(reader.result as string);
       };
-      if (compressedFile) {
-        reader.readAsDataURL(compressedFile);
-      }
+      reader.readAsDataURL(file);
     }
   };
 

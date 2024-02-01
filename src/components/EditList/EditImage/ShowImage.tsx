@@ -10,6 +10,9 @@ import Swal from "sweetalert2";
 import TrashCan from "@assets/PlayListImage/trash.svg";
 import Camera from "@assets/PlayListImage/camera.svg";
 import { useCallback } from "react";
+import { Img } from "react-image";
+import Spinner from "@assets/Spinner/Spinner.svg";
+import useImageCompress from "@hooks/useImageCompress";
 
 const ShowImage = ({
   aspectRatio,
@@ -20,6 +23,7 @@ const ShowImage = ({
   token,
 }: ShowImageDTO) => {
   const { t } = useTranslation("Edit");
+  const { isLoading } = useImageCompress();
 
   const swalButton = Swal.mixin({
     customClass: {
@@ -37,6 +41,7 @@ const ShowImage = ({
   const { image: reduxImage } = useSelector(
     (state: RootState) => state.musicAdd
   );
+
   const handleDeleteImage = useCallback(async () => {
     const result = await swalButton.fire({
       title: "이미지를 삭제하시겠습니까?",
@@ -60,9 +65,10 @@ const ShowImage = ({
   }, [playlist, token, swalButton]);
 
   const renderImage = (imageSrc: string) => (
-    <img
+    <Img
       src={imageSrc}
       alt="Img"
+      loader={Spinner}
       className="h-full w-full object-cover rounded-b-3xl"
     />
   );
@@ -73,7 +79,7 @@ const ShowImage = ({
           {renderImage(imageSrc)}
           <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
             <button className="absolute bottom-2 right-3">
-              <img src={Camera} alt="Camera" width={32} height={32} />
+              <Img src={Camera} alt="Camera" width={32} height={32} />
             </button>
           </ImageCropper>
           {playlist?.thumbnailUrl && (
@@ -81,7 +87,7 @@ const ShowImage = ({
               className="absolute top-4 left-1/2 transform -translate-x-1/2"
               onClick={handleDeleteImage}
             >
-              <img src={TrashCan} alt="Trash Can" width={23} height={23} />
+              <Img src={TrashCan} alt="Trash Can" width={23} height={23} />
             </button>
           )}
         </>
@@ -101,7 +107,7 @@ const ShowImage = ({
         {isEditing && (
           <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
             <button className="absolute bottom-2 right-3">
-              <img src={Camera} alt="Camera" width={32} height={32} />
+              <Img src={Camera} alt="Camera" width={32} height={32} />
             </button>
           </ImageCropper>
         )}
@@ -111,11 +117,15 @@ const ShowImage = ({
 
   return (
     <div className="h-1/3 smartPhone:h-[28%] tabletMini:h-[20%] tablet:h-[18%] relative rounded-b-3xl bg-white ">
-      {isEditing
-        ? renderImageControls(reduxImage || playlist?.thumbnailUrl || null)
-        : reduxImage || playlist?.thumbnailUrl
-        ? renderImage(reduxImage || playlist?.thumbnailUrl || "")
-        : renderNoImage()}
+      {isLoading ? (
+        <Img src={Spinner} alt="Spinner" />
+      ) : isEditing ? (
+        renderImageControls(reduxImage || playlist?.thumbnailUrl || null)
+      ) : reduxImage || playlist?.thumbnailUrl ? (
+        renderImage(reduxImage || playlist?.thumbnailUrl || "")
+      ) : (
+        renderNoImage()
+      )}
     </div>
   );
 };

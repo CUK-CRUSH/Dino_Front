@@ -5,6 +5,7 @@ import {
   updateTitle,
   updateURL,
 } from "@reducer/musicadd";
+import { usePreviousLocation } from "@utils/RouteRedux/isRouting";
 import React, { useEffect } from "react";
 import { batch } from "react-redux";
 import { useDispatch } from "react-redux";
@@ -15,15 +16,23 @@ const Layout: React.FC<LayoutDTO> = ({ children }) => {
   const dispatch = useDispatch();
   const location = useLocation();
 
+  const prevLocation = usePreviousLocation();
+
   useEffect(() => {
-    batch(() => {
-      dispatch(updateTitle(""));
-      dispatch(updateArtist(""));
-      dispatch(updateURL(""));
-      dispatch(updateImage(null));
-      dispatch(setIsEditing(false));
-    });
-  }, [location.pathname, dispatch]);
+    // EditPlayList에서 Admin으로 이동하는 경우에만 상태 초기화
+    if (
+      prevLocation.pathname.includes("/EditPlayList") &&
+      location.pathname.includes("/Admin")
+    ) {
+      batch(() => {
+        dispatch(updateTitle(""));
+        dispatch(updateArtist(""));
+        dispatch(updateURL(""));
+        dispatch(updateImage(null));
+        dispatch(setIsEditing(false));
+      });
+    }
+  }, [location.pathname, prevLocation.pathname, dispatch]);
   return (
     <div className="overflow-hidden bg-[#111111]">
       <div className="h-full w-full max-h-full flex justify-center">

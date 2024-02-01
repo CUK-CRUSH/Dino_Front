@@ -43,7 +43,7 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   const handleEditClick = () => {
     if (isEditing) {
       dispatch(setMusicData(musicData));
-      navigate(`/${username}/admin/${playlistId}/edit/${musicData.id}`);
+      navigate(`/${username}/${playlistId}/edit/${musicData.id}`);
       dispatch(setIsEditMusics(true));
     }
   };

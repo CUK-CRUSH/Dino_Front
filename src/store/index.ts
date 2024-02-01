@@ -13,6 +13,7 @@ import setProfile from "@reducer/setProfile/setProfile";
 import editMusicListToggle from "@reducer/editMusic/editMusic";
 import toast from "../reducer/Toast/toast";
 import musicDataReducer from "@reducer/editMusic/editMusicData";
+import selectedFileReducer from "@reducer/editPlayList/Image/isImageCompress";
 
 const persistConfig = {
   key: "editMusicsToggle",
@@ -35,6 +36,7 @@ export const store = configureStore({
     editMusicsToggle: persistedReducer,
     toast: toast,
     musicDataReducer: musicDataReducer,
+    selectedFile: selectedFileReducer,
   },
 });
 

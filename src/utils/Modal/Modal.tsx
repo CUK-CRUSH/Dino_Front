@@ -36,7 +36,6 @@ export default function CustomModal({
   onRequestClose,
   compressedImage,
   playlists,
-  uploadImage,
   token,
   playlistName,
   musicData,
@@ -52,15 +51,14 @@ export default function CustomModal({
     handleSaveClick,
     handleCancelClick,
     handleDeleteClick,
-  } = UsePlayListEditor(
+  } = UsePlayListEditor({
     playlists,
-    uploadImage,
     token,
     playlistName,
     musicData,
     playlistId,
-    username
-  );
+    username,
+  });
 
   return (
     <ReactModal
