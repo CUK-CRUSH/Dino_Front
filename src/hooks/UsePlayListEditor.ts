@@ -41,7 +41,11 @@ export const UsePlayListEditor = ({
     (state: RootState) => state.selectedFile
   );
   const selectedFile = selectedFileState.selectedFile;
-  const { compressImage, isLoading } = useImageCompress();
+  const { compressImage } = useImageCompress();
+
+  const isLoading = useSelector(
+    (state: RootState) => state.selectedFile.isLoading
+  );
 
   const handleEditClick = () => {
     dispatch(setIsEditing(true));
