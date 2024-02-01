@@ -14,18 +14,51 @@ import {
 import { postMusicList } from "@api/music-controller/musicControl";
 import { useNavigate } from "react-router-dom";
 import { setToast } from "@reducer/Toast/toast";
+import { useSelector } from "react-redux";
+import { RootState } from "@store/index";
+import useImageCompress from "./useImageCompress";
 
-export const UsePlayListEditor = (
-  playlists: any[],
-  uploadImage: string | null,
-  token: string,
-  playlistName: string,
-  musicData: any,
-  playlistId: string | undefined,
-  username: string | null
-) => {
+interface UsePlayListEditorProps {
+  playlists: any[];
+  token: string;
+  playlistName: string;
+  musicData: any;
+  playlistId: string | undefined;
+  username: string | null;
+}
+
+export const UsePlayListEditor = ({
+  playlists,
+  token,
+  playlistName,
+  musicData,
+  playlistId,
+  username,
+}: UsePlayListEditorProps) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const selectedFileState = useSelector(
+    (state: RootState) => state.selectedFile
+  );
+  const selectedFile = selectedFileState.selectedFile;
+  const { compressImage } = useImageCompress();
+  const isLoading = useSelector(
+    (state: RootState) => state.selectedFile.isLoading
+  );
+  const readImageFile = (file: File) => {
+    return new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (typeof reader.result === "string") {
+          resolve(reader.result);
+        } else {
+          reject("File read error");
+        }
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  };
 
   const handleEditClick = () => {
     dispatch(setIsEditing(true));
@@ -39,8 +72,20 @@ export const UsePlayListEditor = (
     if (playlist) {
       const id = playlist.id;
 
-      if (uploadImage) {
-        await putPlayList(id, null, uploadImage, token);
+      if (selectedFile) {
+        const compressedFile = await compressImage(selectedFile);
+        if (compressedFile) {
+          try {
+            const result = await readImageFile(compressedFile);
+            if (!isLoading) {
+              await putPlayList(id, null, result, token);
+              dispatch(updateImage(result));
+              dispatch({ type: "RESET_SELECTED_FILE" });
+            }
+          } catch (error) {
+            console.error("Error reading file:", error);
+          }
+        }
       }
       if (playlistName) {
         await putPlayList(id, playlistName, null, token);
@@ -79,7 +124,7 @@ export const UsePlayListEditor = (
   //플리삭제
   const handleDeleteClick = async () => {
     await deletePlayList(playlistId ?? "", token);
-    navigate(`/${username}/admin`);
+    navigate(`/${username}`);
   };
 
   return {

@@ -51,15 +51,14 @@ export default function CustomModal({
     handleSaveClick,
     handleCancelClick,
     handleDeleteClick,
-  } = UsePlayListEditor(
+  } = UsePlayListEditor({
     playlists,
-    uploadImage,
     token,
     playlistName,
     musicData,
     playlistId,
-    username
-  );
+    username,
+  });
 
   return (
     <ReactModal

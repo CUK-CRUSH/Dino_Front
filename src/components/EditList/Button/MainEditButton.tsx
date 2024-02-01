@@ -11,7 +11,6 @@ type MainEditButtonProps = {
   musicData: any;
   playlistId: string | undefined;
   username: string | null;
-  compareId: number | null;
 };
 
 export const MainEditButton = ({
@@ -22,13 +21,13 @@ export const MainEditButton = ({
   musicData,
   playlistId,
   username,
-  compareId,
 }: MainEditButtonProps) => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
 
   const tokenId = Number(localStorage.getItem("tokenId"));
-  // console.log(userId, tokenId);
+  const compareId = Number(localStorage.getItem("userId"));
+  console.log(compareId, tokenId);
 
   const handleBack = useCallback(() => {
     navigate(-1);

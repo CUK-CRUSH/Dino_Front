@@ -15,14 +15,12 @@ import Skeleton from "@components/Skeleton/Skeleton";
 import ToastComponent from "@components/Toast/Toast";
 import { useSelector } from "react-redux";
 import { RootState } from "@store/index";
-import { useDispatch } from "react-redux";
-import { setUserId } from "@reducer/Admin/userId";
 
 const AdminPage: React.FC = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const dispatch = useDispatch();
-  const userId = useSelector((state: RootState) => state.userId.value);
+
   const tokenId = Number(localStorage.getItem("tokenId"));
+  const userId = Number(localStorage.getItem("userId"));
   // 유저데이터
   const [userData, setUserdata] = useState<getMemberDTO>();
   // 플레이리스트 데이터
@@ -41,7 +39,7 @@ const AdminPage: React.FC = () => {
           const userDataResult = await getMemberUsername(username);
           setUserdata(userDataResult.data);
           if (userDataResult.data?.id) {
-            dispatch(setUserId(userDataResult.data.id));
+            localStorage.setItem("userId", userDataResult.data.id.toString());
           }
         } catch (error) {
           console.error("Error fetching user data:", error);
@@ -57,7 +55,7 @@ const AdminPage: React.FC = () => {
 
     return () => clearTimeout(timeoutId);
   }, [username, userData]);
-  console.log(userId, tokenId);
+
   useEffect(() => {
     const fetchPlaylistData = async () => {
       try {

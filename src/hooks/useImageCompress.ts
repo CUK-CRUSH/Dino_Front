@@ -23,11 +23,11 @@ const useImageCompress = () => {
     try {
       const compressedFile = await imageCompression(imageFile, options);
 
-      setIsLoading(false);
+      dispatch(setIsLoading(false));
 
       return compressedFile;
     } catch (error) {
-      setIsLoading(false);
+      dispatch(setIsLoading(false));
       console.log(error);
     }
   };
