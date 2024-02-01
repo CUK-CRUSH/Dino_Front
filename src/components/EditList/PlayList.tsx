@@ -10,8 +10,6 @@ import ShowImage from "@components/EditList/EditImage/ShowImage";
 import { MainEditButton } from "@components/EditList/Button/MainEditButton";
 import { MusicTitle } from "@components/EditList/MusicList/MusicTitle";
 import { useCookies } from "react-cookie";
-import useDecodedJWT from "@hooks/useDecodedJWT";
-import { getMember } from "@api/member-controller/memberController";
 import { getPlayList } from "@api/playlist-controller/playlistControl";
 import { getMusicList } from "@api/music-controller/musicControl";
 import { useParams } from "react-router-dom";
@@ -31,12 +29,12 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const [musicList, setMusicList] = useState<any>([]);
 
   const { playlistId } = useParams<{ playlistId: string }>();
+  console.log("playlistId", playlists);
+  console.log(playlistId);
   const { toast } = useSelector((state: RootState) => state.toast);
   // 쿠키에서 유저 id 가져오기
   const [cookies] = useCookies(["accessToken"]);
   const token = cookies.accessToken;
-  const decodedToken = useDecodedJWT(token);
-  const id = decodedToken.sub;
 
   const handleUploadImage = (image: string) => setUploadImage(image);
 
@@ -54,24 +52,22 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     username,
   });
 
-  const fetchPlaylist = useCallback(
-    async (id: number) => {
-      const member = await getMember(id);
-      const playlist = await getPlayList(member.data.username);
-      const musicAPIData = await getMusicList(Number(playlistId));
+  const fetchPlaylist = useCallback(async () => {
+    // 항상 로컬 스토리지에서 username을 가져옴
+    let usernameToUse = localStorage.getItem("username") || "defaultUsername";
 
-      setUsername(member.data.username);
-      setPlaylists(playlist.data);
-      setMusicList(musicAPIData);
-    },
-    [playlistId]
-  );
+    const playlist = await getPlayList(usernameToUse);
+    const musicAPIData = await getMusicList(Number(playlistId));
+
+    setUsername(usernameToUse);
+    setPlaylists(playlist.data);
+    setMusicList(musicAPIData);
+  }, [playlistId]);
 
   useEffect(() => {
-    if (id !== undefined) {
-      fetchPlaylist(id);
-    }
-  }, [fetchPlaylist, id, musicList]);
+    fetchPlaylist();
+  }, [fetchPlaylist, musicList]);
+
   return (
     <div className="h-full w-full scrollbar-hide overflow-scroll flex flex-col bg-black text-white font-medium leading-[18px]">
       {!isEditing && (

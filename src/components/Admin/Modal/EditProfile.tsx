@@ -3,8 +3,6 @@ import { EditProfileDTO } from "types/Admin";
 import { useLocation } from "react-router-dom";
 import "../../../styles/Admin/style.css";
 import useCopyToClipboard from "@hooks/useCopyToClipboard/useCopyToClipboard";
-import { useSelector } from "react-redux";
-import { RootState } from "@store/index";
 
 export const EditProfile = ({
   top,
@@ -13,7 +11,7 @@ export const EditProfile = ({
   closeOptionsModalOpen,
 }: EditProfileDTO) => {
   const location = useLocation();
-  const userId = useSelector((state: RootState) => state.userId.value);
+  const userId = Number(localStorage.getItem("userId"));
   const tokenId = Number(localStorage.getItem("tokenId"));
 
   // 스크롤 방지이벤트
