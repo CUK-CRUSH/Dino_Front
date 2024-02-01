@@ -3,7 +3,7 @@ import { SetUserProfileImageDTO } from "types/AdminEdit";
 import camera from "@assets/Admin/camera.svg";
 import garbage from "@assets/Admin/garbage.svg";
 import setDefaultImage from "@assets/Admin/setDefaultImage.svg";
-import ImageCropper from "@utils/ImageCrop/ImageCropper";
+import UserImageCropper from "@utils/ImageCrop/UserImageCropper";
 import LoadingPage from "@utils/loading";
 import { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
@@ -73,7 +73,7 @@ const SetUserProfileImage = ({ aspectRatio, onCrop, isCompressLoading, earlyImag
   }
   return (
     
-    <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
+    <UserImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
 
       <div className="block w-16 h-16 mx-auto mb-2 relative cursor-pointer">
         {!isChange && earlyImage ? (
@@ -150,7 +150,7 @@ const SetUserProfileImage = ({ aspectRatio, onCrop, isCompressLoading, earlyImag
           )}
       </div>
 
-    </ImageCropper>
+    </UserImageCropper>
   )
 }
 
