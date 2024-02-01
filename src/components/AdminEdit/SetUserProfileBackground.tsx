@@ -62,7 +62,7 @@ const SetUserProfileBackground = ({ aspectRatio, onCrop, isCompressLoading, earl
         } catch (error) {
           console.log(error);
           Swal.fire({
-            title: "노래 삭제에 실패했습니다.",
+            title: "이미지 삭제에 실패했습니다.",
             width: "250px",
             customClass: {
               title: "text-black text-[15px] font-bold",

@@ -297,7 +297,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
       setUpdateMemberData((prevData) => ({
         ...prevData,
         deleteBackgroundImage: true,
-        profileBackgroundImage: null,
+        backgroundImage: null,
       }));
     } else {
       setUpdateMemberData((prevData) => ({
@@ -323,10 +323,12 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     if (code.status === 200) {
       dispatch(setToast("profile"));
 
+      // 존재 폴스 변경 존재 트루 삭제 후 변경
       if(uploadUserProfileImage) {
         dispatch(setProfileImage(uploadUserProfileImage));
       }
       
+      // 눌 폴스 변경 x 눌 트루 삭제
       if(deleteProfileImage){
         dispatch(setProfileImage(null));
       }
@@ -337,6 +339,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
       if(deleteBackgroundImage){
         dispatch(setProfileBackgroundImage(null));
       }
+
       dispatch(setDeleteProfileImage(false));
       dispatch(setDeleteProfileBackgroundImage(false));
       navigate(`/${code.data.username}`);
@@ -385,7 +388,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
         <SetUserProfileBackground
           aspectRatio={1 / 1}
           onCrop={handleUploadUserProfileBackgroundImage}
-          earlyImage={userData?.profileBackgroundImageUrl}
+          earlyImage={userData?.backgroundImageUrl}
           profileBackgroundImage={updateMemberData.backgroundImage}
         />
 
@@ -399,7 +402,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
         {/* 유저 닉네임 */}
         <SetUserProfileInfo
-          placeholder="User Name"
+          placeholder="닉네임"
           maxlength={999}
           name="username"
           value={userData?.username}
@@ -408,7 +411,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
         {/* 한줄소개 */}
         <SetUserProfileInfo
-          placeholder="Introduction"
+          placeholder="한줄소개"
           maxlength={50}
           name="introduction"
           value={userData?.introduction}
