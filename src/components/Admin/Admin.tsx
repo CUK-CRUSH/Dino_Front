@@ -46,9 +46,7 @@ const AdminPage: React.FC = () => {
         } catch (error) {
           console.error("Error fetching user data:", error);
         }
-      
     };
-
     const delay = 500;
     const timeoutId = setTimeout(() => {
       setIsLoding(false);
@@ -56,7 +54,7 @@ const AdminPage: React.FC = () => {
     }, delay);
 
     return () => clearTimeout(timeoutId);
-  }, []);
+  }, [username]);
 
   const {
 
