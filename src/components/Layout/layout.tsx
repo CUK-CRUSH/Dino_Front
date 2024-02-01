@@ -32,7 +32,7 @@ const Layout: React.FC<LayoutDTO> = ({ children }) => {
         dispatch(setIsEditing(false));
       });
     }
-  }, [location.pathname, dispatch]);
+  }, [location.pathname, prevLocation.pathname, dispatch]);
   return (
     <div className="overflow-hidden bg-[#111111]">
       <div className="h-full w-full max-h-full flex justify-center">
