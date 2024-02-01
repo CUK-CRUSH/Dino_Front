@@ -6,6 +6,7 @@ import ImageControlButton from "@components/EditList/Button/ImageControlButton";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { updateImage } from "@reducer/musicadd";
+import { setSelectedFile } from "@reducer/editPlayList/Image/isImageCompress";
 
 const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -45,7 +46,7 @@ const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
       return;
     }
     if (file) {
-      dispatch({ type: "SET_SELECTED_FILE", payload: file });
+      dispatch(setSelectedFile(file));
       const reader = new FileReader();
       reader.onload = () => {
         setImage(reader.result as string);

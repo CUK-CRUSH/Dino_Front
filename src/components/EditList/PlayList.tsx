@@ -26,12 +26,12 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const [uploadImage, setUploadImage] = useState<string | null>(null);
   const [playlists, setPlaylists] = useState<any[]>([]);
   const [username, setUsername] = useState<string | null>(null);
+
   const [playlistName, setPlaylistName] = useState("");
   const [musicList, setMusicList] = useState<any>([]);
 
   const { playlistId } = useParams<{ playlistId: string }>();
   const { toast } = useSelector((state: RootState) => state.toast);
-
   // 쿠키에서 유저 id 가져오기
   const [cookies] = useCookies(["accessToken"]);
   const token = cookies.accessToken;
@@ -58,8 +58,8 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     async (id: number) => {
       const member = await getMember(id);
       const playlist = await getPlayList(member.data.username);
-
       const musicAPIData = await getMusicList(Number(playlistId));
+
       setUsername(member.data.username);
       setPlaylists(playlist.data);
       setMusicList(musicAPIData);
@@ -72,7 +72,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       fetchPlaylist(id);
     }
   }, [fetchPlaylist, id, musicList]);
-
   return (
     <div className="h-full w-full scrollbar-hide overflow-scroll flex flex-col bg-black text-white font-medium leading-[18px]">
       {!isEditing && (

@@ -17,6 +17,7 @@ import { setToast } from "@reducer/Toast/toast";
 import { useSelector } from "react-redux";
 import { RootState } from "@store/index";
 import useImageCompress from "./useImageCompress";
+import { resetSelectedFile } from "@reducer/editPlayList/Image/isImageCompress";
 
 interface UsePlayListEditorProps {
   playlists: any[];
@@ -41,7 +42,24 @@ export const UsePlayListEditor = ({
     (state: RootState) => state.selectedFile
   );
   const selectedFile = selectedFileState.selectedFile;
-  const { compressImage, isLoading } = useImageCompress();
+  const { compressImage } = useImageCompress();
+  const isLoading = useSelector(
+    (state: RootState) => state.selectedFile.isLoading
+  );
+  const readImageFile = (file: File) => {
+    return new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (typeof reader.result === "string") {
+          resolve(reader.result);
+        } else {
+          reject("File read error");
+        }
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
+  };
 
   const handleEditClick = () => {
     dispatch(setIsEditing(true));
@@ -58,18 +76,20 @@ export const UsePlayListEditor = ({
       if (selectedFile) {
         const compressedFile = await compressImage(selectedFile);
         if (compressedFile) {
-          const reader = new FileReader();
-          reader.onloadend = async () => {
-            const result = reader.result as string;
+          try {
+            const result = await readImageFile(compressedFile);
             if (!isLoading) {
               await putPlayList(id, null, result, token);
               dispatch(updateImage(result));
-              dispatch({ type: "RESET_SELECTED_FILE" });
+              dispatch(resetSelectedFile());
             }
-          };
-          reader.readAsDataURL(compressedFile);
+          } catch (error) {
+            console.error("Error reading file:", error);
+          }
         }
       }
+
+      // 비동기 함수들이 완료될 때까지 기다립니다.
       if (playlistName) {
         await putPlayList(id, playlistName, null, token);
       }

@@ -18,20 +18,24 @@ import { RootState } from "@store/index";
 const AdminPage: React.FC = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
-  const getDefaultMember= (): getMemberDTO => ({
+  const tokenId = Number(localStorage.getItem("tokenId"));
+  const userId = Number(localStorage.getItem("userId"));
+  const getDefaultMember = (): getMemberDTO => ({
     backgroundImageUrl: null,
     id: undefined,
-    introduction: '',
+    introduction: "",
     name: undefined,
     oauth2id: undefined,
     profileImageUrl: null,
-    username: '',
+    username: "",
   });
   // 유저데이터
   const [userData, setUserdata] = useState<getMemberDTO>(getDefaultMember);
 
   // 플레이리스트 데이터
-  const [playlistData, setPlaylistdata] = useState<getPlaylistDTO[] | undefined>();
+  const [playlistData, setPlaylistdata] = useState<
+    getPlaylistDTO[] | undefined
+  >();
 
   const { username } = useParams<{ username: string | undefined }>();
 
@@ -39,13 +43,15 @@ const AdminPage: React.FC = () => {
 
   useEffect(() => {
     const fetchData = async () => {
-        try {
-          const userDataResult = await getMemberUsername(username);
-          setUserdata(userDataResult.data);
-          console.log(userDataResult);
-        } catch (error) {
-          console.error("Error fetching user data:", error);
+      try {
+        const userDataResult = await getMemberUsername(username);
+        setUserdata(userDataResult.data);
+        if (userDataResult.data?.id) {
+          localStorage.setItem("userId", userDataResult.data.id.toString());
         }
+      } catch (error) {
+        console.error("Error fetching user data:", error);
+      }
     };
     const delay = 500;
     const timeoutId = setTimeout(() => {
@@ -56,15 +62,12 @@ const AdminPage: React.FC = () => {
     return () => clearTimeout(timeoutId);
   }, [username]);
 
-  const {
-
-    deleteProfileImage,
-    deleteBackgroundImage,
-  } = useSelector((state: RootState) => state.userProfile);
+  const { deleteProfileImage, deleteBackgroundImage } = useSelector(
+    (state: RootState) => state.userProfile
+  );
 
   useEffect(() => {
     if (deleteProfileImage) {
-
       setUserdata((prevData) => ({
         ...prevData,
         profileImageUrl: null,
@@ -76,16 +79,15 @@ const AdminPage: React.FC = () => {
     if (deleteBackgroundImage) {
       setUserdata((prevData) => ({
         ...prevData,
-        backgroundImageUrl : null
+        backgroundImageUrl: null,
       }));
-    } 
+    }
   }, [deleteBackgroundImage]);
   useEffect(() => {
     const fetchPlaylistData = async () => {
       try {
         const playlistDataResult = await getPlayList(username);
         setPlaylistdata(playlistDataResult.data);
-
       } catch (error) {
         console.error("Error fetching playlist data:", error);
       }
@@ -132,31 +134,42 @@ const AdminPage: React.FC = () => {
   };
 
   // 토스트
-  const { toast } = useSelector(
-    (state: RootState) => state.toast
-  );
+  const { toast } = useSelector((state: RootState) => state.toast);
 
   return (
     <div className="w-full h-full relative bg-white scrollbar-hide overflow-scroll">
-
       <UserProfileBackground
         userBackgroundImage={userData?.backgroundImageUrl}
       />
 
       {/* 플레이리스트 생성 성공 토스트 */}
 
-      {toast === 'add' && <ToastComponent background="white" text="새로운 플레이리스트 생성이 완료되었습니다 !" />}
+      {toast === "add" && (
+        <ToastComponent
+          background="white"
+          text="새로운 플레이리스트 생성이 완료되었습니다 !"
+        />
+      )}
 
       {/* 로그인 성공 토스트 */}
 
-      {toast === 'login' && <ToastComponent background="white" text="로그인 성공 ! " />}
+      {toast === "login" && (
+        <ToastComponent background="white" text="로그인 성공 ! " />
+      )}
       {/* 프로필 성공 토스트 */}
 
-      {toast === 'profile' && <ToastComponent background="white" text="프로필이 정상적으로 수정되었습니다 !" />}
+      {toast === "profile" && (
+        <ToastComponent
+          background="white"
+          text="프로필이 정상적으로 수정되었습니다 !"
+        />
+      )}
 
       {/* 복사 성공 토스트 */}
 
-      {toast === 'copy' && <ToastComponent background="white" text="링크가 복사되었습니다." />}
+      {toast === "copy" && (
+        <ToastComponent background="white" text="링크가 복사되었습니다." />
+      )}
 
       <div className="h-full w-full left-0 top-[165px] absolute bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px] ">
         {/* ... 설정창 */}
@@ -179,29 +192,29 @@ const AdminPage: React.FC = () => {
         {/* 프로필 수정 모달 펼치기 */}
         {isEditModalOpen && <AdminEditModal onClose={closeEditModal} />}
 
-
         {/* 프로필 이미지 */}
         <div className=" flex items-center flex-col z-10">
-
           <UserProfileImage userProfileImage={userData?.profileImageUrl} />
         </div>
 
-
         <UserProfileInfo
           username={userData?.username}
-          introText={userData?.introduction} />
+          introText={userData?.introduction}
+        />
 
-        {playlistData && playlistData.map((playlist: getPlaylistDTO, index: number) => (
-          <PlayList
-            key={playlist.id}
-            playlist={playlist} />
-        ))}
+        {playlistData &&
+          playlistData.map((playlist: getPlaylistDTO, index: number) => (
+            <PlayList key={playlist.id} playlist={playlist} />
+          ))}
 
-        {!isLoading && playlistData?.length !== undefined && playlistData.length < 4 ?
+        {!isLoading &&
+        userId === tokenId &&
+        playlistData?.length !== undefined &&
+        playlistData.length < 4 ? (
           <AddPlayList />
-          :
+        ) : (
           <></>
-        }
+        )}
       </div>
     </div>
   );
