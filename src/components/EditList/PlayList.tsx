@@ -10,7 +10,6 @@ import ShowImage from "@components/EditList/EditImage/ShowImage";
 import { MainEditButton } from "@components/EditList/Button/MainEditButton";
 import { MusicTitle } from "@components/EditList/MusicList/MusicTitle";
 import { useCookies } from "react-cookie";
-import useDecodedJWT from "@hooks/useDecodedJWT";
 import { getPlayList } from "@api/playlist-controller/playlistControl";
 import { getMusicList } from "@api/music-controller/musicControl";
 import { useParams } from "react-router-dom";
