@@ -163,7 +163,8 @@ const AdminPage: React.FC = () => {
           introText={userData?.introduction} />
 
         {playlistData && playlistData.map((playlist: getPlaylistDTO, index: number) => (
-          <PlayList
+          <PlayList 
+            key={playlist.id}
             playlist={playlist} />
         ))}
 

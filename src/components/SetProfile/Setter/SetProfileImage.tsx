@@ -3,6 +3,7 @@ import ImageCropper from "@utils/ImageCrop/ImageCropper";
 import { SetProfileImageDTO } from "types/SetProfile/setProfile";
 import { RootState } from "@store/index";
 import { useSelector } from "react-redux";
+import { Img } from "react-image";
 
 const SetProfileImage = ({ aspectRatio, onCrop, isCompressLoading }: SetProfileImageDTO ) => {
 
@@ -18,11 +19,11 @@ const SetProfileImage = ({ aspectRatio, onCrop, isCompressLoading }: SetProfileI
         className="w-[170px] h-[170px]  relative top-72 rounded-full flex items-center justify-center"
       >
 
-        {profileImage ? <img
+        {profileImage ? <Img
           src={profileImage}
           alt="User Profile"
           className="w-full h-full object-cover object-center rounded-full"
-        /> : <img src={file} alt="x" />
+        /> : <Img src={file} alt="x" />
         }
  
       </div>
