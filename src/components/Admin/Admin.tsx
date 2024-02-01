@@ -1,4 +1,4 @@
-import React, { useEffect,  useState } from "react";
+import React, { useEffect, useState } from "react";
 import AdminEditModal from "@pages/Admin/AdminEditModal";
 import { AddPlayList } from "@components/Admin/Button/AddPLayList";
 import { EditProfile } from "@components/Admin/Modal/EditProfile";
@@ -7,10 +7,14 @@ import OpenOption from "./Button/OpenOption";
 import UserProfileImage from "./UserProfileImage";
 import UserProfileInfo from "./UserProfileInfo";
 import { PlayList } from "@components/Admin/Button/PlayList";
-import {  getMemberUsername } from "@api/member-controller/memberController";
+import { getMemberUsername } from "@api/member-controller/memberController";
 import { getMemberDTO, getPlaylistDTO } from "types/Admin";
 import { getPlayList } from "@api/playlist-controller/playlistControl";
-import {  useParams } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import Skeleton from "@components/Skeleton/Skeleton";
+import ToastComponent from "@components/Toast/Toast";
+import { useSelector } from "react-redux";
+import { RootState } from "@store/index";
 
 const AdminPage: React.FC = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -19,10 +23,11 @@ const AdminPage: React.FC = () => {
   const [userData, setUserdata] = useState<getMemberDTO>();
 
   // 플레이리스트 데이터
-  const [playlistData, setPlaylistdata] = useState<getPlaylistDTO[]>([]);
+  const [playlistData, setPlaylistdata] = useState<getPlaylistDTO[] | undefined>();
 
-  const {username} = useParams<{username : string | undefined}>();
+  const { username } = useParams<{ username: string | undefined }>();
 
+  const [isLoading, setIsLoding] = useState<boolean>(true);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -36,25 +41,29 @@ const AdminPage: React.FC = () => {
         }
       }
     };
-  
-    fetchData();
-  }, [username,userData]); 
-  
+
+    const delay = 500; 
+    const timeoutId = setTimeout(() => {
+      setIsLoding(false);
+      fetchData();
+    }, delay);
+
+    return () => clearTimeout(timeoutId);
+  }, [username, userData]);
+
   useEffect(() => {
     const fetchPlaylistData = async () => {
       try {
-        // User - Playlist query
         const playlistDataResult = await getPlayList(username);
         setPlaylistdata(playlistDataResult.data);
-        console.log(playlistDataResult);
+        
       } catch (error) {
         console.error("Error fetching playlist data:", error);
-        // Handle errors appropriately
       }
     };
-  
+
     fetchPlaylistData();
-  }, [username,userData]); 
+  }, [username, userData]);
 
   const openEditModal = () => {
     setIsEditModalOpen(true);
@@ -93,13 +102,34 @@ const AdminPage: React.FC = () => {
     openOptionsModal();
   };
 
-  return (
-    <div className=" h-full w-full relative bg-white">
-      <UserProfileBackground
-        userBackgroundImage={userData?.backgroundImageUrl}
-      />
+  // 토스트
+  const { toast } = useSelector(
+    (state: RootState) => state.toast
+  );
 
-      <div className="h-full w-full left-0 top-[165px] absolute bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px]">
+  return (
+    <div className="w-full h-full relative bg-white scrollbar-hide overflow-scroll">
+      {isLoading ? <Skeleton width="100px" height="100%" /> : 
+        <UserProfileBackground
+          userBackgroundImage={userData?.profileBackgroundImageUrl}
+        />
+      }
+      {/* 플레이리스트 생성 성공 토스트 */}
+
+      {toast === 'add'  && <ToastComponent background="white" text="새로운 플레이리스트 생성이 완료되었습니다 !" />}
+      
+      {/* 로그인 성공 토스트 */}
+
+      {toast === 'login'  && <ToastComponent background="white" text="로그인 성공 ! " />}
+      {/* 프로필 성공 토스트 */}
+
+      {toast === 'profile'  && <ToastComponent background="white" text="프로필이 정상적으로 수정되었습니다 !" />}
+
+      {/* 복사 성공 토스트 */}
+
+      {toast === 'copy'  && <ToastComponent background="white" text="링크가 복사되었습니다." />}
+
+      <div className="h-full w-full left-0 top-[165px] absolute bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px] ">
         {/* ... 설정창 */}
         {
           <OpenOption
@@ -120,24 +150,29 @@ const AdminPage: React.FC = () => {
         {/* 프로필 수정 모달 펼치기 */}
         {isEditModalOpen && <AdminEditModal onClose={closeEditModal} />}
 
+
         {/* 프로필 이미지 */}
         <div className=" flex items-center flex-col z-10">
-          <UserProfileImage userProfileImage={userData?.profileImageUrl} />
 
-          <UserProfileInfo
-            username={userData?.username}
-            introText={userData?.introduction}
-          />
+          <UserProfileImage userProfileImage={userData?.profileImageUrl} />
         </div>
 
-        {/* 내가 생성한 플레이리스트 뽑아주고 마지막에 플레이리스트 추가 컴포넌트 붙이기. */}
 
-        
-        {playlistData && playlistData.map((playlist : getPlaylistDTO, index : number) => (
-            <PlayList 
-              playlist={playlist}/>
-        ))}       
-        {<AddPlayList />}
+        <UserProfileInfo
+          username={userData?.username}
+          introText={userData?.introduction} />
+
+        {playlistData && playlistData.map((playlist: getPlaylistDTO, index: number) => (
+          <PlayList 
+            key={playlist.id}
+            playlist={playlist} />
+        ))}
+
+        {!isLoading && playlistData?.length !== undefined && playlistData.length < 4 ?
+          <AddPlayList />
+          :
+          <></>
+        }
       </div>
     </div>
   );

@@ -29,13 +29,13 @@ const Next = ({ step,username}: NextDTO) => {
     console.log("Saving data:", data);
 
     if(step === 3) { 
-
-      await new Promise(resolve => setTimeout(resolve, 700));
-
       const code = await updateMember(data);
       if(code.status === 200) {
         console.log(code)
-        navigate(`/${code.data.username}/admin`)
+        setTimeout(async () => {
+          navigate(`/${code.data.username}`)
+        }, 1000);  
+        
       }
     }
   

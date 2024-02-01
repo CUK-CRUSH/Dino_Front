@@ -1,8 +1,8 @@
 import React, { useEffect} from "react";
 import { EditProfileDTO } from "types/Admin";
 import { useLocation } from "react-router-dom";
-import { handleCopyClipBoard } from "@utils/CopyLink/handelCopyClipBoard";
 import "../../../styles/Admin/style.css";
+import useCopyToClipboard from "@hooks/useCopyToClipboard/useCopyToClipboard";
 
 export const EditProfile = ({top,left,openEditModal, closeOptionsModalOpen } : EditProfileDTO ) => {
   const location = useLocation();
@@ -23,9 +23,14 @@ export const EditProfile = ({top,left,openEditModal, closeOptionsModalOpen } : E
 
   // 앞 주소 ex) https://localhost3000
   const baseUrl = window.location.origin;
-  
- // 열고닫기
-//  const [isOpen, setIsOpen] = useState(true);
+
+  const { handleCopyToClipboard } = useCopyToClipboard();
+
+  const handleClick = (text : string) => {
+    
+    handleCopyToClipboard(text);
+  };
+
   return (
     <div 
       onClick={closeOptionsModalOpen}
@@ -47,7 +52,7 @@ export const EditProfile = ({top,left,openEditModal, closeOptionsModalOpen } : E
 
             <button 
               className="block text-black hover:bg-gray-300 p-2 w-full text-center"
-              onClick={() => handleCopyClipBoard(`${baseUrl}${location.pathname}`)}>
+              onClick={() => handleClick(`${baseUrl}${location.pathname}`)}>
               Copy Link
             </button>
           </div>

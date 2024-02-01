@@ -3,7 +3,6 @@ import Progress from "./Progress";
 import Skip from "./Skip";
 import Text from "./Text";
 import { useCallback, useEffect, useState } from "react";
-import { dataURItoFile } from "@utils/ImageCrop/common";
 import useImageCompress from "@hooks/useImageCompress";
 import SetProfileImage from "./Setter/SetProfileImage";
 import SetProfileBackgroundImage from "./Setter/SetProfileBackgroundImage";
@@ -21,12 +20,9 @@ export const SetProfilePage = () => {
   const [uploadUserProfileImage, setUploadUserProfileImage] = useState<
     string | null
   >(null);
-  const [compressedUserProfileImage, setCompressedUserProfileImage] = useState<
-    string | undefined | null
-  >();
+
   const {
     isLoading: isCompressUserProfileLoading,
-    compressImage: compressUserProfileImage,
   } = useImageCompress();
 
   const handleUploadUserProfileImage = (image: string) =>
@@ -35,17 +31,18 @@ export const SetProfilePage = () => {
   const handleCompressUserProfileImage = useCallback(async () => {
     if (!uploadUserProfileImage) return;
 
-    const imageFile = dataURItoFile(uploadUserProfileImage);
+    // const imageFile = dataURItoFile(uploadUserProfileImage);
 
-    const compressedUserProfileImage = await compressUserProfileImage(
-      imageFile
-    );
+    // const compressedUserProfileImage = await compressUserProfileImage(
+    //   imageFile
+    // );
 
-    if (!compressedUserProfileImage) return;
-    const imageUrl = URL.createObjectURL(compressedUserProfileImage);
-    setCompressedUserProfileImage(imageUrl);
+    // if (!compressedUserProfileImage) return;
+    // const imageUrl = URL.createObjectURL(compressedUserProfileImage);
+    // setCompressedUserProfileImage(imageUrl);
+
     dispatch(setProfileImage(uploadUserProfileImage));
-  }, [uploadUserProfileImage, compressUserProfileImage,dispatch]);
+  }, [uploadUserProfileImage, dispatch]);
 
   useEffect(() => {
     if (uploadUserProfileImage) {
@@ -58,13 +55,9 @@ export const SetProfilePage = () => {
     uploadUserProfileBackgroundImage,
     setUploadUserProfileBackgroundImage,
   ] = useState<string | null>(null);
-  const [
-    compressedUserProfileBackgroundImage,
-    setCompressedUserProfileBackgroundImage,
-  ] = useState<string | undefined | null>();
+  
   const {
     isLoading: isCompressUserProfileBackgroundLoading,
-    compressImage: compressUserProfileBackgroundImage,
   } = useImageCompress();
 
   const handleUploadUserProfileBackgroundImage = (image: string) =>
@@ -73,19 +66,18 @@ export const SetProfilePage = () => {
   const handleCompressUserProfileBackgroundImage = useCallback(async () => {
     if (!uploadUserProfileBackgroundImage) return;
 
-    const imageFile = dataURItoFile(uploadUserProfileBackgroundImage);
-    const compressedUserProfileBackgroundImage =
-      await compressUserProfileBackgroundImage(imageFile);
+    // const imageFile = dataURItoFile(uploadUserProfileBackgroundImage);
+    // const compressedUserProfileBackgroundImage =
+    //   await compressUserProfileBackgroundImage(imageFile);
 
-    if (!compressedUserProfileBackgroundImage) return;
-    const imageUrl = URL.createObjectURL(compressedUserProfileBackgroundImage);
+    // if (!compressedUserProfileBackgroundImage) return;
+    // const imageUrl = URL.createObjectURL(compressedUserProfileBackgroundImage);
 
-    setCompressedUserProfileBackgroundImage(imageUrl);
+    // setCompressedUserProfileBackgroundImage(imageUrl);
     dispatch(setProfileBackgroundImage(uploadUserProfileBackgroundImage));
 
   }, [
     uploadUserProfileBackgroundImage,
-    compressUserProfileBackgroundImage,
     dispatch
   ]);
 
@@ -124,13 +116,11 @@ export const SetProfilePage = () => {
       {parsedStep === 1 && <SetProfileImage
         aspectRatio={1 / 1}
         onCrop={handleUploadUserProfileImage}
-        compressedImage={compressedUserProfileImage}
         isCompressLoading={isCompressUserProfileLoading} 
         />}
       {parsedStep === 2 && <SetProfileBackgroundImage 
         aspectRatio={1 / 1}
         onCrop={handleUploadUserProfileBackgroundImage}
-        compressedImage={compressedUserProfileBackgroundImage}
         isCompressLoading={isCompressUserProfileBackgroundLoading} 
         />}
       {parsedStep === 3 && <SetProfileIntroduction 

@@ -4,6 +4,7 @@ import Layout from "@components/Layout/layout";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "@store/index";
+import './styles/font.css';
 
 const Home = loadable(() => import("@pages/Home/home"));
 const LogIn = loadable(() => import("@pages/LogIn/login"));
@@ -27,18 +28,12 @@ function App() {
               path="/SetProfile/:username/:step"
               element={<SetProfile />}
             />
-            <Route path="/:username/admin" element={<Admin />} />
-            <Route
-              path="/:username/admin/:playlistId"
-              element={<EditPlayList />}
-            />
+            <Route path="/:username" element={<Admin />} />
+            <Route path="/:username/:playlistId" element={<EditPlayList />} />
             <Route path="/login/validation" element={<Validation />} />
+            <Route path="/:username/:playlistId/edit" element={<AddMusic />} />
             <Route
-              path="/:username/admin/:playlistId/edit"
-              element={<AddMusic />}
-            />
-            <Route
-              path="/:username/admin/:playlistId/edit/:musicId"
+              path="/:username/:playlistId/edit/:musicId"
               element={<EditMusic />}
             />
             <Route path="/redirect" element={<Redirect />} />

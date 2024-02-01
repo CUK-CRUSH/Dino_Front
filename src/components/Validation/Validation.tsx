@@ -7,13 +7,32 @@ import { useState } from "react";
 import { useCookies } from "react-cookie";
 import {
   getNicknameAvailable,
-  putUsername,
+  updateMember,
 } from "@api/member-controller/memberController";
-import { checkBadWord } from "@utils/checkBadWord/checkBadWord";
 import { useNavigate } from "react-router-dom";
+import { useSelector } from "react-redux";
+import { RootState } from "@store/index";
+import ToastComponent from "@components/Toast/Toast";
+import { useDispatch } from "react-redux";
+import { setToast } from "@reducer/Toast/toast";
+import { checkBadWord } from "@utils/checkBadWord/checkBadWord";
+import { UpdateMemberParams } from "types/AdminEdit";
 
-// 닉네임 체크
-export const checkNickname = (nickname: string) => {
+const ValidationProps = () => {
+  const navigate = useNavigate();
+
+  // 유효상태
+  const [nicknameValidation, setNicknameValidation] = useState<boolean>(false);
+
+  // 쿠키
+  const [cookies] = useCookies(["accessToken"]);
+  // 액세스 토큰
+  const token = cookies.accessToken;
+
+  const dispatch = useDispatch();
+  
+  // 닉네임 체크
+const checkNickname = (nickname: string) => {
   // 숫자영어 _ . 허용
   const nicknameRegex = /^[a-zA-Z0-9._]{3,30}$/;
   console.log(nickname);
@@ -27,23 +46,11 @@ export const checkNickname = (nickname: string) => {
 };
 // import { checkNickname } from "@utils/checkNickname/checkNickname";
 
-const ValidationProps = () => {
-  const navigate = useNavigate();
-
-  // 유효상태
-  const [nicknameValidation, setNicknameValidation] = useState<boolean>(false);
-
-  // 유저네임
-  const [username, setUsername] = useState<string>("");
-
-  // 쿠키
-  const [cookies] = useCookies(["accessToken"]);
-  // 액세스 토큰
-  const token = cookies.accessToken;
-
   const onChange = debounce(async (e) => {
-    setUsername(e.target.value);
-  
+    setUpdateMemberData((prevData) => ({
+      ...prevData,
+      username : e.target.value,
+    }));  
     if (e.target.value) {
       try {
         // Check backend nickname
@@ -53,7 +60,7 @@ const ValidationProps = () => {
         );
         console.log(checkNicknameBack);
   
-        if (checkNickname(e.target.value) && checkNicknameBack.status === 200) {
+        if (!checkBadWord(e.target.value) && checkNickname(e.target.value) && checkNicknameBack.status === 200) {
           setNicknameValidation(true);
         } else if (
           !checkNickname(e.target.value) &&
@@ -64,9 +71,10 @@ const ValidationProps = () => {
           setNicknameValidation(false);
         }
       } catch (error : any) {
+        console.log(error)
         // If the status is 400, simply skip the error
         if (error.response && error.response.status === 400) {
-          console.log("Nickname validation skipped");
+          dispatch(setToast('duplicate'));
           setNicknameValidation(false);
         } else {
           console.error("Error checking nickname:", error);
@@ -79,21 +87,39 @@ const ValidationProps = () => {
 
   console.log(cookies);
 
-  const handleUsername = async (username: string, cookies: string) => {
-    console.log(username, cookies);
+  const [updateMemberData, setUpdateMemberData] = useState<UpdateMemberParams>({
+    // 입력없을때 닉네임 통과
+    username: '',
+    introduction: '',
+    profileImage: '',
+    backgroundImage: '',
+    cookies: token,
+  });
+  
+  const handleMember = async (data: UpdateMemberParams) => {
+    console.log("Saving data:", data);
 
-    const putUsernameState = await putUsername(username, cookies);
-    console.log(putUsernameState);
-    if (putUsernameState.status === 200) {
-      navigate(`/SetProfile/${putUsernameState.data}/1`);
+    await new Promise(resolve => setTimeout(resolve, 300));
+    const code = await updateMember(data);
+
+    if (code.status === 200) {
+      dispatch(setToast('login'));
+
+      navigate(`/SetProfile/${code.data.username}/1`);
     }
   };
 
-  return (
+  // 토스트
+  const { toast } = useSelector(
+    (state: RootState) => state.toast
+  );
+
+    return (
     <div className="w-full h-full relative bg-white flex flex-col align-middle items-center">
-      
+      {toast === 'login' && <ToastComponent background="black" text="로그인 성공 ! " /> }
+      {toast === 'duplicate' && <ToastComponent background="black" text="이미 존재하는 닉네임입니다 ! " /> }
+
       <div className="text-center text-black text-xl font-semibold font-['Noto Sans'] my-10">
-        
         <img className="mx-auto mt-16 mb-10" src={Fanfare} alt="Fanfare" />
         환영합니다 !
         <br />
@@ -129,7 +155,7 @@ const ValidationProps = () => {
         :
         <div
           className="absolute bottom-0 -left-0 p-4 w-full bg-[#000000] text-white flex items-center justify-center overflow-hidden"
-          onClick={() => handleUsername(username, cookies.accessToken)}
+          onClick={() => handleMember(updateMemberData)}
         > 
           계속하기 
         </div>

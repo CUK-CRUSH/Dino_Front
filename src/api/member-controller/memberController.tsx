@@ -1,25 +1,6 @@
 import { axiosInstance } from "@api/axiosInstance";
 import { UpdateMemberParams } from "types/AdminEdit";
 
-// 회원 닉네임 변경
-export const putUsername = async (username: string, cookies?: string) => {
-  try {
-    const response = await axiosInstance.put(
-      `/api/v1/member/me/${username}`,
-      null,
-      {
-        headers: {
-          Authorization: `Bearer ${cookies}`,
-        },
-      }
-    );
-    return response.data;
-  } catch (error) {
-    console.log(error);
-    throw error;
-  }
-};
-
 // 특정 회원 정보 조회
 export const getMember = async (id: number) => {
   try {
@@ -97,10 +78,17 @@ export const updateMember = async ({
   profileImage,
   backgroundImage,
   cookies,
+  deleteProfileImage,
+  deleteBackgroundImage
 }: UpdateMemberParams) => {
   try {
     const formData = new FormData();
-
+    if (deleteProfileImage){
+      formData.append("deleteProfileImage",deleteProfileImage.toString())
+    }
+    if (deleteBackgroundImage){
+      formData.append("deleteBackgroundImage",deleteBackgroundImage.toString())
+    }
     if (username) {
       formData.append("username", username);
     }

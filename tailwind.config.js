@@ -40,6 +40,19 @@ module.exports = {
       tabletMini: { min: "768px", max: "820px" },
       tablet: { min: "821px", max: "1030px" },
     },
+    fontFamily : {
+      PretendardBlack : ["Pretendard Black"],
+      PretendardBold : ["Pretendard Bold"],
+      PretendardExtraBold : ["PretendardExtraBold"],
+      PretendardExtraLight : ["PretendardExtraLight"],
+      PretendardLight : ["PretendardLight"],
+      PretendardMedium : ["Pretendard Medium"],
+      PretendardRegular : ["Pretendard Regular"],
+      PretendardSemiBold : ["Pretendard SemiBold"],
+      PretendardThin : ["Pretendard Thin"]
+
+
+    }
   },
   variants: {},
   plugins: [

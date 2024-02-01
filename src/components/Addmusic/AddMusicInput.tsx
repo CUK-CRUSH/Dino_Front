@@ -65,6 +65,11 @@ export const AddMusicInput: React.FC<MusicInputDTO> = ({
         value={value}
         required={required}
         onChange={handleChange}
+        onKeyDown={(e) => {
+          if (e.key === "Enter" || e.key === "Tab") {
+            setIsSuggestionsVisible(false);
+          }
+        }}
       />
       {isSuggestionsVisible && (
         <div className="absolute top-full w-full mt-2 border-white border-b-2  border-x-2 bg-red-400 z-10">

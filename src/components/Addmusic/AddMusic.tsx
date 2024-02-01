@@ -5,6 +5,7 @@ import {
   updateTitle,
   updateURL,
 } from "@reducer/musicadd";
+import { setIsEditMusics } from "@reducer/editMusic/editMusic";
 import { RootState } from "@store/index";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -17,9 +18,14 @@ import AddBackButton from "@components/Addmusic/Button/AddBackButton";
 import { useTranslation } from "react-i18next";
 import { playAutoComplete } from "@api/AutoComplete/AutocompleteControl";
 import EditButton from "./Button/EditButton";
-import { setIsEditMusics } from "@reducer/editMusic/editMusic";
 import { patchMusicList } from "@api/music-controller/musicControl";
 import { useCookies } from "react-cookie";
+import {
+  setMusicData,
+  updateMusicArtist,
+  updateMusicTitle,
+  updateMusicUrl,
+} from "@reducer/editMusic/editMusicData";
 
 const AddMusic: React.FC = () => {
   const { t } = useTranslation("AddMusic");
@@ -51,18 +57,35 @@ const AddMusic: React.FC = () => {
     []
   );
   const musicData = useSelector((state: RootState) => state.musicAdd);
+  const EditMusicData = useSelector(
+    (state: RootState) => state.musicDataReducer
+  );
+
   const { title, artist, url } = musicData;
+  const { editTitle, editArtist, editUrl } = EditMusicData;
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(updateTitle(e.target.value));
+    if (isEditMusics) {
+      dispatch(updateMusicTitle(e.target.value));
+    } else {
+      dispatch(updateTitle(e.target.value));
+    }
   };
 
   const handleArtistChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(updateArtist(e.target.value));
+    if (isEditMusics) {
+      dispatch(updateMusicArtist(e.target.value));
+    } else {
+      dispatch(updateArtist(e.target.value));
+    }
   };
 
   const handleURLChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(updateURL(e.target.value));
+    if (isEditMusics) {
+      dispatch(updateMusicUrl(e.target.value));
+    } else {
+      dispatch(updateURL(e.target.value));
+    }
   };
 
   const { showInformation } = useSelector(
@@ -80,7 +103,8 @@ const AddMusic: React.FC = () => {
     // async 키워드 추가
     if (
       !url.startsWith("https://www.youtube.com/") &&
-      !url.startsWith("https://youtu.be/")
+      !url.startsWith("https://youtu.be/") &&
+      !url.startsWith("https://youtube.com/")
     ) {
       Swal.fire({
         icon: "warning",
@@ -92,9 +116,15 @@ const AddMusic: React.FC = () => {
     }
 
     try {
-      dispatch(updateTitle(title));
-      dispatch(updateArtist(artist));
-      dispatch(updateURL(url));
+      if (isEditMusics) {
+        dispatch(
+          setMusicData({ title: editTitle, artist: editArtist, url: editUrl })
+        );
+      } else {
+        dispatch(updateTitle(title));
+        dispatch(updateArtist(artist));
+        dispatch(updateURL(url));
+      }
       dispatch(saveMusic());
       navigate(-1);
     } catch (error) {
@@ -104,30 +134,34 @@ const AddMusic: React.FC = () => {
         text: "Something went wrong!",
       });
     }
-  }, [navigate, url, dispatch, artist, title, t]); // 의존성 배열에 playlistId와 token 추가
+  }, [
+    navigate,
+    url,
+    dispatch,
+    artist,
+    title,
+    t,
+    isEditMusics,
+    editTitle,
+    editArtist,
+    editUrl,
+  ]); // 의존성 배열에 playlistId와 token 추가
 
   const handleBack = useCallback(() => {
     navigate(-1);
   }, [navigate]);
 
   const handlePatchClick = async () => {
-    if (musicData && musicData.title) {
-      console.log(
-        musicId,
-        musicData.title,
-        musicData.artist,
-        musicData.url,
-        token
-      );
+    if ((isEditMusics && editTitle) || (musicData && musicData.title)) {
       await patchMusicList(
         Number(musicId),
-        musicData.title,
-        musicData.artist,
-        musicData.url,
+        isEditMusics ? editTitle : musicData.title,
+        isEditMusics ? editArtist : musicData.artist,
+        isEditMusics ? editUrl : musicData.url,
         token
       );
     }
-    console.log(patchMusicList);
+
     dispatch(setIsEditMusics(false));
     dispatch(updateTitle(""));
     dispatch(updateArtist(""));
@@ -151,7 +185,7 @@ const AddMusic: React.FC = () => {
         <AddMusicInput
           label={t("title")}
           placeholder={t("title")}
-          value={title}
+          value={isEditMusics ? editTitle : title}
           required={true}
           onChange={handleTitleChange}
           suggestions={suggestions["title"]}
@@ -160,7 +194,7 @@ const AddMusic: React.FC = () => {
         <AddMusicInput
           label={t("artist")}
           placeholder={t("artist")}
-          value={artist}
+          value={isEditMusics ? editArtist : artist}
           required={true}
           onChange={handleArtistChange}
           suggestions={suggestions["artist"]}
@@ -169,7 +203,7 @@ const AddMusic: React.FC = () => {
         <AddMusicInput
           label="URL"
           placeholder="https://youtu.be"
-          value={url}
+          value={isEditMusics ? editUrl : url}
           required={true}
           onChange={handleURLChange}
           infoButton={true}
@@ -177,7 +211,7 @@ const AddMusic: React.FC = () => {
           infoToggleHandler={handleInformationToggle}
         />
         {isEditMusics ? (
-          <EditButton handleSave={handlePatchClick} plusText={t("edit")} />
+          <EditButton handlePatch={handlePatchClick} plusText={t("edit")} />
         ) : (
           <AddButton handleSave={handleSave} plusText={t("plus")} />
         )}

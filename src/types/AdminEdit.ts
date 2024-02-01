@@ -1,9 +1,12 @@
 export interface UpdateMemberParams {
-  username: string | undefined;
-  introduction: string | undefined | null;
+  username?: string;
+  introduction?: string | null;
   profileImage?: string | null;
   backgroundImage?: string | null;
+  deleteProfileImage? : boolean;
+  deleteBackgroundImage? : boolean;
   cookies?: string;
+
 }
 
 export interface EditButtonDTO {
@@ -15,17 +18,18 @@ export interface EditButtonDTO {
 export interface SetUserProfileBackgroundDTO {
   aspectRatio: number;
   onCrop: (image: string) => void;
-  compressedImage: string | undefined | null;
-  isCompressLoading: boolean;
-  earlyImage: string | undefined ;
+  isCompressLoading?: boolean;
+  earlyImage?: string | null;
+  profileBackgroundImage? : string | null;
+
 }
 
 export interface SetUserProfileImageDTO {
   aspectRatio: number;
   onCrop: (image: string) => void;
-  compressedImage: string | undefined | null;
-  isCompressLoading: boolean;
-  earlyImage: string | undefined ;
+  isCompressLoading?: boolean;
+  earlyImage?: string | null;
+  profileImage? : string | null;
 
 }
 

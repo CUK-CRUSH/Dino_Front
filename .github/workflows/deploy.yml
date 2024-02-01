@@ -14,7 +14,7 @@ jobs:
           echo "REACT_APP_FB_PROJECT_ID=${{ secrets.REACT_APP_FB_PROJECT_ID }}" >> .env
           echo "REACT_APP_FB_STORAGE_BUCKET=${{ secrets.REACT_APP_FB_STORAGE_BUCKET }}" >> .env
           echo "REACT_APP_FB_MESSAGING_SENDER_ID=${{ secrets.REACT_APP_FB_MESSAGING_SENDER_ID }}" >> .env
-          echo "REACT_APP_FB_APP_ID=${{ secrets.REACT_APP_FB_APP_ID }}" >> .env
+          echo "REACT_APP_FB_API_ID=${{ secrets.REACT_APP_FB_API_ID }}" >> .env
           echo "REACT_APP_FB_MEASUREMENT_ID=${{ secrets.REACT_APP_FB_MEASUREMENT_ID }}" >> .env
           echo "REACT_APP_SERVER=${{ secrets.REACT_APP_SERVER }}" >> .env
 

@@ -1,5 +1,4 @@
 @import "./playList.css";
-
 body,
 h1,
 h2,
@@ -21,6 +20,7 @@ dd {
 }
 body {
   font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  
 }
 
 /* 기타 전역 스타일 ... */

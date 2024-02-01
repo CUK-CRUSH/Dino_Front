@@ -4,11 +4,14 @@ import "cropperjs/dist/cropper.css";
 import { ImageCropsDTO } from "types/ImageCrop/imagecrops";
 import ImageControlButton from "@components/EditList/Button/ImageControlButton";
 import Swal from "sweetalert2";
+import { useDispatch } from "react-redux";
+import { updateImage } from "@reducer/musicadd";
 
 const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const cropperRef = useRef<ReactCropperElement>(null);
   const [image, setImage] = useState<null | string>(null);
+  const dispatch = useDispatch();
 
   const handleChildrenClick = () => {
     if (inputRef.current) {
@@ -17,7 +20,7 @@ const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
     }
   };
 
-  const handleFileChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
     e.preventDefault();
 
     const files = e.target.files;
@@ -29,7 +32,11 @@ const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
 
     const fileType = file.type;
 
-    if (fileType !== "image/jpeg" && fileType !== "image/png") {
+    if (
+      fileType !== "image/jpeg" &&
+      fileType !== "image/png" &&
+      fileType !== "image/webp"
+    ) {
       Swal.fire({
         icon: "error",
         title: "Oops...",
@@ -37,17 +44,22 @@ const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
       });
       return;
     }
-
-    const reader = new FileReader();
-    reader.onload = () => {
-      setImage(reader.result as string);
-    };
-    reader.readAsDataURL(files[0]);
+    if (file) {
+      dispatch({ type: "SET_SELECTED_FILE", payload: file });
+      const reader = new FileReader();
+      reader.onload = () => {
+        setImage(reader.result as string);
+      };
+      reader.readAsDataURL(file);
+    }
   };
 
   const getCropData = () => {
     if (typeof cropperRef.current?.cropper !== "undefined") {
       onCrop(cropperRef.current?.cropper.getCroppedCanvas().toDataURL());
+      dispatch(
+        updateImage(cropperRef.current?.cropper.getCroppedCanvas().toDataURL())
+      );
       setImage(null);
     }
   };
@@ -56,7 +68,7 @@ const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
       <input
         type="file"
         ref={inputRef}
-        accept=".jpg, .jpeg, .png"
+        accept=".jpg, .jpeg, .png ,.webp"
         className="hidden"
         onChange={handleFileChange}
       />

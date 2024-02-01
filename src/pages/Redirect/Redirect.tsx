@@ -3,6 +3,8 @@ import { useNavigate } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import useDecodedJWT from "@hooks/useDecodedJWT";
 import {  getMember } from "@api/member-controller/memberController";
+import { useDispatch } from "react-redux";
+import { setToast } from "@reducer/Toast/toast";
 
 const fetchData = async (setCookie : any) => {
   const params = new URLSearchParams(window.location.search);
@@ -22,31 +24,40 @@ const Redirect = () => {
   const [cookies, setCookie] = useCookies(["accessToken"]);
 
   const decodedToken = useDecodedJWT(cookies.accessToken);
-
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const redirectAfterFetch = async () => {
       const success = await fetchData(setCookie);
-
-      // 특정 유저 정보 조회
-      const getUserData = await getMember(decodedToken.sub);
-      console.log(getUserData);
-
-      if (success && !getUserData.data.username) {
-        try {
-          
-        } catch (error) {
-          console.error('Error fetching member:', error);
-        }
-        
-        navigate("/login/validation");
+  
+      if (decodedToken) {
+        // If decodedToken is present, fetch user data after a 1-second delay
+       
+          try {
+            const getUserData = await getMember(decodedToken.sub);
+            console.log(getUserData);
+  
+            if (success && !getUserData.data.username) {
+              // Handle the case where username is not present
+              dispatch(setToast('login'));
+              navigate("/login/validation");
+            } else {
+              // Handle the case where username is present
+              dispatch(setToast('login'));
+              navigate(`/${getUserData.data.username}`);
+            }
+          } catch (error) {
+            console.error('Error fetching member:', error);
+          }
       } else {
-        navigate(`/${getUserData.data.username}/admin`);
+        // Handle the case where decodedToken is not present
+        console.error('Decoded token is not present');
+        // You may want to add additional handling for this case if necessary
       }
     };
-
+  
     redirectAfterFetch();
-  }, [navigate, setCookie, decodedToken]);
+  }, [navigate, setCookie, decodedToken, dispatch]);
 
   return (
     <h2 className={"text-white"}>로그인중입니다....</h2>
