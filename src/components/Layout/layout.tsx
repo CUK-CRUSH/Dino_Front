@@ -23,7 +23,7 @@ const Layout: React.FC<LayoutDTO> = ({ children }) => {
       dispatch(updateImage(null));
       dispatch(setIsEditing(false));
     });
-  }, [location.pathname]);
+  }, [location.pathname, dispatch]);
   return (
     <div className="overflow-hidden bg-[#111111]">
       <div className="h-full w-full max-h-full flex justify-center">
