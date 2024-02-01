@@ -15,6 +15,7 @@ import Skeleton from "@components/Skeleton/Skeleton";
 import ToastComponent from "@components/Toast/Toast";
 import { useSelector } from "react-redux";
 import { RootState } from "@store/index";
+import { iteratee } from "lodash";
 
 const AdminPage: React.FC = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -163,7 +164,8 @@ const AdminPage: React.FC = () => {
           introText={userData?.introduction} />
 
         {playlistData && playlistData.map((playlist: getPlaylistDTO, index: number) => (
-          <PlayList
+          <PlayList 
+            key={playlist.id}
             playlist={playlist} />
         ))}
 

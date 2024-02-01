@@ -247,10 +247,6 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   const [isOpen, setIsOpen] = useState(true);
 
   const cancel = () => {
-    dispatch(setProfileUsername(""));
-    dispatch(setProfileIntroduction(""));
-    dispatch(setProfileBackgroundImage(null));
-    dispatch(setProfileImage(null));
     dispatch(setDeleteProfileImage(false));
     dispatch(setDeleteProfileBackgroundImage(false));
 
@@ -283,6 +279,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
   useEffect(() => {
     if (deleteProfileImage) {
+
       setUpdateMemberData((prevData) => ({
         ...prevData,
         deleteProfileImage: true,
@@ -327,9 +324,20 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     if (code.status === 200) {
       dispatch(setToast("profile"));
 
-      dispatch(setProfileImage(uploadUserProfileImage));
-      dispatch(setProfileBackgroundImage(uploadUserProfileBackgroundImage));
+      if(uploadUserProfileImage) {
+        dispatch(setProfileImage(uploadUserProfileImage));
+      }
+      
+      if(deleteProfileImage){
+        dispatch(setProfileImage(null));
+      }
 
+      if(uploadUserProfileBackgroundImage){
+        dispatch(setProfileBackgroundImage(uploadUserProfileBackgroundImage));
+      }
+      if(uploadUserProfileBackgroundImage){
+        dispatch(setProfileBackgroundImage(null));
+      }
       dispatch(setDeleteProfileImage(false));
       dispatch(setDeleteProfileBackgroundImage(false));
       navigate(`/${code.data.username}`);

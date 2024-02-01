@@ -4,7 +4,7 @@ import { UserProfileImageDTO } from "types/Admin";
 import defaultImage from "@assets/Admin/defaultImage.svg";
 
 const UserProfileImage = ({ userProfileImage }: UserProfileImageDTO) => {
-  const { profileImage } = useSelector(
+  const { profileImage, deleteProfileImage } = useSelector(
     (state: RootState) => state.userProfile
   );
 
@@ -12,13 +12,23 @@ const UserProfileImage = ({ userProfileImage }: UserProfileImageDTO) => {
     <div className="w-[75px] h-[75px] mt-[-35px] rounded-full overflow-hidden">
       {profileImage ? (
         <img src={profileImage} alt="User Profile" className="w-full object-cover" />
-      ) : (
+      ) : deleteProfileImage ? (
         <img
-          src={userProfileImage || defaultImage} // Provide the correct default image URL
+          src={defaultImage}
           alt="Default User Profile"
           className="w-full object-cover"
         />
-      )}
+      ) : userProfileImage ? (
+        <img
+          src={userProfileImage}
+          alt="Default User Profile"
+          className="w-full object-cover"
+        />
+      ) : <img
+        src={defaultImage}
+        alt="Default User Profile"
+        className="w-full object-cover"
+      />}
     </div>
   );
 };
