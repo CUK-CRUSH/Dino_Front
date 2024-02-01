@@ -12,6 +12,7 @@ import { setToast } from "@reducer/Toast/toast";
 import { useSelector } from "react-redux";
 import { RootState } from "@store/index";
 import { setMusicData } from "@reducer/editMusic/editMusicData";
+import { set } from "lodash";
 
 export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   musicData,
@@ -92,7 +93,7 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
       setTitleWidth(titleWidth);
       setArtistWidth(artistWidth);
     }
-  }, [musicData, contentRef]);
+  }, [musicData, contentRef, setWidth]);
 
   const TitleLength = titleWidth >= 205;
   const ArtistLength = artistWidth >= 105;

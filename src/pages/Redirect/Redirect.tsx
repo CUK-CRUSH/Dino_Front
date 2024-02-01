@@ -63,7 +63,7 @@ const Redirect = () => {
     };
 
     redirectAfterFetch();
-  }, [navigate, setCookie, decodedToken, dispatch]);
+  }, [navigate, setCookie, decodedToken, dispatch, id]);
 
   return <h2 className={"text-white"}>로그인중입니다....</h2>;
 };
