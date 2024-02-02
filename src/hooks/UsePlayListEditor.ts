@@ -129,9 +129,10 @@ export const UsePlayListEditor = ({
     dispatch(setToast("editPlayList"));
     dispatch(setIsEditing(false));
     dispatch(resetIsSaved());
-    if (compressedImage) {
-      dispatch(updateImage(compressedImage));
-    }
+    dispatch(updateImage(null));
+    // if (compressedImage) {
+    //   dispatch(updateImage(compressedImage));
+    // }
   };
 
   const handleCancelClick = () => {
