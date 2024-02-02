@@ -139,7 +139,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
           text="플레이리스트가 수정되었습니다!"
         />
       )}
-      <Footer />
+      <Footer bgColor="black" />
     </div>
   );
 };

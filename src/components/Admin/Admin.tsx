@@ -140,7 +140,6 @@ const AdminPage: React.FC = () => {
 
   return (
     <div className="relative w-full h-full scrollbar-hide overflow-scroll flex flex-col">
-
       <UserProfileBackground
         userBackgroundImage={userData?.backgroundImageUrl}
       />
@@ -218,10 +217,8 @@ const AdminPage: React.FC = () => {
         ) : (
           <></>
         )}
-        <div className="flex-grow mt-32 relative">
-          <Footer 
-            // background="bg-neutral-900"
-            />
+        <div className="mt-16 relative">
+          <Footer bgColor="neutral-900" />
         </div>
       </div>
     </div>
