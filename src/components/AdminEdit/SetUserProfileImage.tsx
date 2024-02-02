@@ -14,7 +14,6 @@ import '../../styles/SweetAlert2/SweetAlert2.css'
 import 'sweetalert2/dist/sweetalert2.min.css';
 import { Img } from "react-image";
 import UserImageCropper from "@utils/ImageCrop/UserImageCropper";
-import Spinner from "@assets/Spinner/Spinner.svg";
 
 const swalButton = Swal.mixin({
   customClass: {
@@ -85,13 +84,11 @@ const SetUserProfileImage = ({ aspectRatio, onCrop, isCompressLoading, earlyImag
               <Img
                 src={setDefaultImage}  // Update this to the correct default image URL
                 alt="User Profile"
-                loader={Spinner}
                 className="w-full h-full object-cover object-center"
               /> :
               <Img
                 src={earlyImage}
                 alt="User Profile"
-                loader={Spinner}
                 className="w-full h-full object-cover object-center rounded-full"
               />
             }
@@ -100,7 +97,6 @@ const SetUserProfileImage = ({ aspectRatio, onCrop, isCompressLoading, earlyImag
               <Img
                 src={garbage}
                 alt="Overlay"
-                loader={Spinner}
                 className="w-[25px] h-full "
                 onClick={(e) => {
                   e.stopPropagation();
@@ -115,13 +111,11 @@ const SetUserProfileImage = ({ aspectRatio, onCrop, isCompressLoading, earlyImag
               <Img
                 src={setDefaultImage}  // Update this to the correct default image URL
                 alt="User Profile"
-                loader={Spinner}
                 className="w-full h-full object-cover object-center"
               /> :
               <Img
                 src={profileImage}
                 alt="User Profile"
-                loader={Spinner}
                 className="w-full h-full object-cover object-center rounded-full"
               />
             }
@@ -146,7 +140,6 @@ const SetUserProfileImage = ({ aspectRatio, onCrop, isCompressLoading, earlyImag
               <Img
                 src={setDefaultImage}  // Update this to the correct default image URL
                 alt="User Profile"
-                loader={Spinner}
                 className="w-full h-full object-cover object-center"
               />
               <Img

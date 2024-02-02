@@ -98,11 +98,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
             checkNickname(value) &&
             checkNicknameBack.status === 200
           ) {
-            setUpdateMemberData({
-              ...updateMemberData,
-              [name]: value.toLowerCase(),
-            });
-            dispatch(setProfileUsername(value.toLowerCase()));
+            dispatch(setProfileUsername(value));
             setNicknameValidation(true);
             return;
           } else if (input.username === userData?.username) {
