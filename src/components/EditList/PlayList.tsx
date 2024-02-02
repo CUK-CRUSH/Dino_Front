@@ -40,21 +40,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const token = cookies.accessToken;
 
   const handleUploadImage = (image: string) => setUploadImage(image);
-
-  const {
-    handleEditClick,
-    handleSaveClick,
-    handleCancelClick,
-    handleDeleteClick,
-  } = UsePlayListEditor({
-    playlists,
-    token,
-    playlistName,
-    musicData,
-    playlistId,
-    username,
-  });
-
   const fetchPlaylist = useCallback(async () => {
     // 항상 로컬 스토리지에서 username을 가져옴
     let usernameToUse = localStorage.getItem("username") || "defaultUsername";
@@ -71,10 +56,24 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       setHasError(true);
     }
   }, [playlistId]);
+  const {
+    handleEditClick,
+    handleSaveClick,
+    handleCancelClick,
+    handleDeleteClick,
+  } = UsePlayListEditor({
+    playlists,
+    token,
+    playlistName,
+    musicData,
+    playlistId,
+    username,
+    fetchPlaylist,
+  });
 
   useEffect(() => {
     fetchPlaylist();
-  }, [fetchPlaylist, playlists]);
+  }, [fetchPlaylist]);
 
   if (hasError) {
     return <NotFound />;
@@ -91,6 +90,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
           musicData={musicData}
           playlistId={playlistId}
           username={username}
+          fetchPlaylist={fetchPlaylist}
         />
       )}
 

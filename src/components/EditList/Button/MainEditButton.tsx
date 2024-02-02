@@ -11,6 +11,7 @@ type MainEditButtonProps = {
   musicData: any;
   playlistId: string | undefined;
   username: string | null;
+  fetchPlaylist: () => void;
 };
 
 export const MainEditButton = ({
@@ -21,6 +22,7 @@ export const MainEditButton = ({
   musicData,
   playlistId,
   username,
+  fetchPlaylist,
 }: MainEditButtonProps) => {
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
@@ -46,6 +48,7 @@ export const MainEditButton = ({
     musicData,
     playlistId,
     username,
+    fetchPlaylist,
   };
   return (
     <div className="flex h-[5%] smartPhoneXs:h-[3.5%] smartPhone:h-[3.5%] tabletMini:h-[3%] tablet:h-[3%] items-center justify-between m-3 text-[19px]">

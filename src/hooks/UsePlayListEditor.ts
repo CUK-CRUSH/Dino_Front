@@ -30,6 +30,7 @@ interface UsePlayListEditorProps {
   musicData: any;
   playlistId: string | undefined;
   username: string | null;
+  fetchPlaylist: () => void;
 }
 
 export const UsePlayListEditor = ({
@@ -39,6 +40,7 @@ export const UsePlayListEditor = ({
   musicData,
   playlistId,
   username,
+  fetchPlaylist,
 }: UsePlayListEditorProps) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -133,6 +135,7 @@ export const UsePlayListEditor = ({
     // if (compressedImage) {
     //   dispatch(updateImage(compressedImage));
     // }
+    fetchPlaylist();
   };
 
   const handleCancelClick = () => {
