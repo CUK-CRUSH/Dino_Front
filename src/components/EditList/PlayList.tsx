@@ -29,8 +29,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const [musicList, setMusicList] = useState<any>([]);
 
   const { playlistId } = useParams<{ playlistId: string }>();
-  console.log("playlistId", playlists);
-  console.log(playlistId);
+
   const { toast } = useSelector((state: RootState) => state.toast);
   // 쿠키에서 유저 id 가져오기
   const [cookies] = useCookies(["accessToken"]);
@@ -66,7 +65,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
 
   useEffect(() => {
     fetchPlaylist();
-  }, [fetchPlaylist, musicList]);
+  }, [fetchPlaylist, musicData]);
 
   return (
     <div className="h-full w-full scrollbar-hide overflow-scroll flex flex-col bg-black text-white font-medium leading-[18px]">
