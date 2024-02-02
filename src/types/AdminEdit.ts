@@ -38,5 +38,5 @@ export interface SetUserProfileInfoDTO {
   maxlength : number;
   name : string | undefined;
   value : string | undefined
-  onChange : (e: { target: { name: any; value: any; }; }) => void; 
+  onChange? : (e: { target: { name: any; value: any; }; }) => void; 
 }

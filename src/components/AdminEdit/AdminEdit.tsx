@@ -136,8 +136,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
         }
       } else {
         setNicknameValidation(false);
-        console.log("1");
-      }
+     }
     } else if (name === "introduction") {
       dispatch(setProfileIntroduction(value));
     }
