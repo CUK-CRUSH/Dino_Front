@@ -65,6 +65,7 @@ const ShowImage = ({
       }
     }
   }, [playlist, token, swalButton]);
+  // console.log(reduxImage);
 
   const renderImage = (imageSrc: string) => (
     <Img
@@ -81,7 +82,7 @@ const ShowImage = ({
           {renderImage(imageSrc)}
           <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
             <button className="absolute bottom-2 right-3">
-              <Img src={Camera} alt="Camera" width={32} height={32} />
+              <img src={Camera} alt="Camera" width={32} height={32} />
             </button>
           </ImageCropper>
           {playlist?.thumbnailUrl && (
@@ -89,7 +90,7 @@ const ShowImage = ({
               className="absolute top-4 left-1/2 transform -translate-x-1/2"
               onClick={handleDeleteImage}
             >
-              <Img src={TrashCan} alt="Trash Can" width={23} height={23} />
+              <img src={TrashCan} alt="Trash Can" width={23} height={23} />
             </button>
           )}
         </>
@@ -109,7 +110,7 @@ const ShowImage = ({
         {isEditing && (
           <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
             <button className="absolute bottom-2 right-3">
-              <Img src={Camera} alt="Camera" width={32} height={32} />
+              <img src={Camera} alt="Camera" width={32} height={32} />
             </button>
           </ImageCropper>
         )}
