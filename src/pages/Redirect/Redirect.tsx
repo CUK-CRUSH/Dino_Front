@@ -5,6 +5,7 @@ import useDecodedJWT from "@hooks/useDecodedJWT";
 import { getMember } from "@api/member-controller/memberController";
 import { useDispatch } from "react-redux";
 import { setToast } from "@reducer/Toast/toast";
+import Cookies from "js-cookie";
 
 const fetchData = async (setCookie: any) => {
   const params = new URLSearchParams(window.location.search);
@@ -12,6 +13,7 @@ const fetchData = async (setCookie: any) => {
   const refreshToken = params.get("refresh_token");
 
   if (accessToken && refreshToken) {
+
     setCookie("accessToken", accessToken, { path: "/" }); // Set accessToken in cookies
     localStorage.setItem("refreshToken", refreshToken); // Set refreshToken in local storage
     return true; // tokens are successfully set
