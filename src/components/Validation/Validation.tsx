@@ -49,7 +49,7 @@ const checkNickname = (nickname: string) => {
   const onChange = debounce(async (e) => {
     setUpdateMemberData((prevData) => ({
       ...prevData,
-      username : e.target.value,
+      username: e.target.value.toLowerCase(),
     }));  
     if (e.target.value) {
       try {
