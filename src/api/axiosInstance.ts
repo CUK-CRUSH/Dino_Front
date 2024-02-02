@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useCookies } from "react-cookie";
+// import { useCookies } from "react-cookie";
 
 // GET과 같이 다른 사람도 볼 수 있는 페이지는 토큰 필요없이 가능하다.
 export const axiosInstance = axios.create({
