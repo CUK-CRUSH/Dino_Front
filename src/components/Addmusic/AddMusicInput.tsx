@@ -61,7 +61,7 @@ export const AddMusicInput: React.FC<MusicInputDTO> = ({
       <input
         type={infoButton ? "url" : "text"}
         placeholder={placeholder}
-        className="w-full px-2 py-3 border bg-black border-white rounded-[3px]"
+        className="w-full px-2 py-4 border bg-black border-white rounded-[12px]"
         value={value}
         required={required}
         onChange={handleChange}
@@ -71,15 +71,20 @@ export const AddMusicInput: React.FC<MusicInputDTO> = ({
           }
         }}
       />
-      {isSuggestionsVisible && (
-        <div className="absolute top-full w-full mt-2 border-white border-b-2  border-x-2 bg-red-400 z-10">
+      {suggestions.length > 0 && isSuggestionsVisible && (
+        <div className="absolute top-full w-full mt-2 text-xl rounded-[15px] py-2  bg-[#2E2E2E] z-10">
           {suggestions.map((suggestion, index) => (
-            <div key={index} onClick={() => handleSuggestionClick(suggestion)}>
-              {suggestion}
+            <div
+              key={index}
+              onClick={() => handleSuggestionClick(suggestion)}
+              className="cursor-pointer mx-2 py-[1px] rounded-[15px] hover:bg-[#545454] transition-colors duration-200"
+            >
+              <p className="m-1">{suggestion}</p>
             </div>
           ))}
         </div>
       )}
+
       {infoButton && infoText && (
         <div className="absolute -bottom-16 w-full px-2 py-3 bg-[#3B3B3B] rounded-xl">
           <p>{infoText}</p>
