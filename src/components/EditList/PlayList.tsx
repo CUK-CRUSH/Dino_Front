@@ -73,7 +73,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
 
   useEffect(() => {
     fetchPlaylist();
-  }, [fetchPlaylist, musicData]);
+  }, [fetchPlaylist, playlists]);
 
   if (hasError) {
     return <NotFound />;
