@@ -33,7 +33,7 @@ const Next = ({ step,username}: NextDTO) => {
       if(code.status === 200) {
         console.log(code)
         setTimeout(async () => {
-          navigate(`/${code.data.username}`)
+          navigate(`/user/${code.data.username}`)
         }, 1000);  
         
       }

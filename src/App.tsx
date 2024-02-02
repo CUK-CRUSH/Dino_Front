@@ -29,12 +29,12 @@ function App() {
               path="/SetProfile/:username/:step"
               element={<SetProfile />}
             />
-            <Route path="/:username" element={<Admin />} />
-            <Route path="/:username/:playlistId" element={<EditPlayList />} />
+            <Route path="user/:username" element={<Admin />} />
+            <Route path="user/:username/:playlistId" element={<EditPlayList />} />
             <Route path="/login/validation" element={<Validation />} />
-            <Route path="/:username/:playlistId/edit" element={<AddMusic />} />
+            <Route path="user/:username/:playlistId/edit" element={<AddMusic />} />
             <Route
-              path="/:username/:playlistId/edit/:musicId"
+              path="user/:username/:playlistId/edit/:musicId"
               element={<EditMusic />}
             />
             <Route path="/redirect" element={<Redirect />} />

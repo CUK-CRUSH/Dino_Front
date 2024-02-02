@@ -49,7 +49,7 @@ const Redirect = () => {
             } else {
               // Handle the case where username is present
               dispatch(setToast("login"));
-              navigate(`/${getUserData.data.username}`);
+              navigate(`/user/${getUserData.data.username}`);
             }
           }
         } catch (error) {
