@@ -14,6 +14,7 @@ import { getPlayList } from "@api/playlist-controller/playlistControl";
 import { getMusicList } from "@api/music-controller/musicControl";
 import { useParams } from "react-router-dom";
 import ToastComponent from "@components/Toast/Toast";
+import NotFound from "@pages/NotFound/NotFonud";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
   const isEditing = useSelector(
@@ -27,6 +28,8 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
 
   const [playlistName, setPlaylistName] = useState("");
   const [musicList, setMusicList] = useState<any>([]);
+
+  const [hasError, setHasError] = useState<boolean>(false);
 
   const { playlistId } = useParams<{ playlistId: string }>();
 
@@ -55,17 +58,26 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     // 항상 로컬 스토리지에서 username을 가져옴
     let usernameToUse = localStorage.getItem("username") || "defaultUsername";
 
-    const playlist = await getPlayList(usernameToUse);
-    const musicAPIData = await getMusicList(Number(playlistId));
+    try {
+      const playlist = await getPlayList(usernameToUse);
+      const musicAPIData = await getMusicList(Number(playlistId));
 
-    setUsername(usernameToUse);
-    setPlaylists(playlist.data);
-    setMusicList(musicAPIData);
+      setUsername(usernameToUse);
+      setPlaylists(playlist.data);
+      setMusicList(musicAPIData);
+    } catch (error) {
+      console.error(error);
+      setHasError(true);
+    }
   }, [playlistId]);
 
   useEffect(() => {
     fetchPlaylist();
   }, [fetchPlaylist, musicData]);
+
+  if (hasError) {
+    return <NotFound />;
+  }
 
   return (
     <div className="h-full w-full scrollbar-hide overflow-scroll flex flex-col bg-black text-white font-medium leading-[18px]">
