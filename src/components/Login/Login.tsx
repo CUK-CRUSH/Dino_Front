@@ -2,7 +2,7 @@
 
 import mylist2 from "@assets/Mylist2.png";
 import googlelogo from "@assets/Google logo.png";
-import facebook from "@assets/facebook-3 logo.png";
+// import facebook from "@assets/facebook-3 logo.png";
 import kakao from "@assets/Kakao.svg";
 import { useCookies } from "react-cookie";
 
@@ -18,7 +18,7 @@ const LoginComponents = () => {
     window.location.href = `${process.env.REACT_APP_SERVER}/oauth2/authorization/${link}`;
   };
   return (
-    <div className="w-full h-full relative bg-white">
+    <div className="w-full h-full relative bg-white scrollbar-hide overflow-scroll">
       <div
         className={
           "flex flex-col items-center justify-items-center justify-self-center"
@@ -45,8 +45,12 @@ const LoginComponents = () => {
             fill="#121212"
           />
         </svg>
-        <br></br>
+        
+        <br />
         <img className="w-[179px] h-[55px]" src={mylist2} alt={mylist2} />
+        <br />
+        <br />
+        <br />
         <div className={"h-[100px]"}></div>
         <div className={"flex flex-row"}>
           <div className="w-[284px] h-[49px]">
@@ -106,7 +110,7 @@ const LoginComponents = () => {
             </div>
           </button>
         </div>
-        <div className={"flex flex-row justify-center my-2"}>
+        {/* <div className={"flex flex-row justify-center my-2"}>
         <button onClick={() => handleLogin('facebook')}>
             <div className="w-full bg-white">
               <div className="w-[360px] h-[58px] flex flex-row items-center justify-center bg-white rounded-[30px] border border-zinc-300">
@@ -121,7 +125,7 @@ const LoginComponents = () => {
                 </div>
               </div>
             </div>
-</button>        </div>
+</button>        </div> */}
       </div>
     </div>
   );
