@@ -138,7 +138,8 @@ const AdminPage: React.FC = () => {
   const { toast } = useSelector((state: RootState) => state.toast);
 
   return (
-    <div className="w-full h-full relative bg-white scrollbar-hide overflow-scroll">
+    <div className="relative w-full h-full scrollbar-hide overflow-scroll">
+
       <UserProfileBackground
         userBackgroundImage={userData?.backgroundImageUrl}
       />

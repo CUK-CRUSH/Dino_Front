@@ -51,18 +51,19 @@ export const EditProfile = ({
                 className="block text-black hover:bg-gray-300 p-2 w-full text-center cursor-pointer"
                 onClick={openEditModal}
               >
+
                 프로필 편집
-              {/* Edit Profile */}
+                {/* Edit Profile */}
               </div>
             )}
             <div className="w-11/12 border-b border-gray-300 mx-auto"></div>
 
             <button
               className="block text-black hover:bg-gray-300 p-2 w-full text-center"
-              onClick={() => handleClick(`${baseUrl}${location.pathname}`)}
-            >
-            링크 복사하기
+              onClick={() => handleClick(`${baseUrl}${location.pathname}`)}>
+              링크 복사하기
               {/* Copy Link */}
+
             </button>
           </div>
         </div>
