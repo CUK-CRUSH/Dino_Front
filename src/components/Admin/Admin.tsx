@@ -15,7 +15,6 @@ import ToastComponent from "@components/Toast/Toast";
 import { useSelector } from "react-redux";
 import { RootState } from "@store/index";
 import Footer from "@components/Layout/footer";
-import Cookies from "js-cookie";
 
 const AdminPage: React.FC = () => {
   // console.log(Cookies.get("accessToken"))

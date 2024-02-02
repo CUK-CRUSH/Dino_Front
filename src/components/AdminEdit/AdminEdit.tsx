@@ -136,7 +136,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
         }
       } else {
         setNicknameValidation(false);
-      }
+     }
     } else if (name === "introduction") {
       dispatch(setProfileIntroduction(value));
     }
@@ -341,11 +341,6 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
       dispatch(setDeleteProfileImage(false));
       dispatch(setDeleteProfileBackgroundImage(false));
-      setUpdateMemberData((prevData) => ({
-        ...prevData,
-        username: "",
-      }));
-
       navigate(`/user/${code.data.username}`);
     }
     setIsOpen(!isOpen);
@@ -410,6 +405,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
           maxlength={999}
           name="username"
           value={userData?.username}
+          onChange={onChangeInput}
         />
 
         {/* 한줄소개 */}

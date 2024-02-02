@@ -17,7 +17,7 @@ axiosInstance.interceptors.response.use(
     const { config, response: { status } } = error;
     const originalRequest = config;
     console.log('Request Body:', originalRequest.data);
-
+    console.log(status)
     if (error.response.status === 401) {
       try {
         const tokenResponse = await postRefreshToken();
