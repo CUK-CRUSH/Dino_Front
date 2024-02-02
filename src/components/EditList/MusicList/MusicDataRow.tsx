@@ -1,6 +1,6 @@
 import { MusicDataDTO } from "types/EditplayList";
 import "@styles/EditList/playList.css";
-import { useCallback, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { MusicDataRowContent } from "./MusicContents";
 import Youtube from "react-youtube";
 import { useSelector } from "react-redux";
@@ -59,6 +59,13 @@ export const MusicDataRow = ({
     // TODO: Implement loadMore function
   }, []);
 
+  useEffect(() => {
+    if (isEditing) {
+      setSelectedVideoId(null);
+      setSelectedVideoIndex(null);
+    }
+  }, [isEditing]);
+
   return (
     <InfiniteScroll className="h-[50%]" pageStart={0} loadMore={loadMore}>
       <div className="h-[80%] scrollbar-hide overflow-scroll text-[17px] flex justify-center ">
@@ -83,19 +90,21 @@ export const MusicDataRow = ({
                   token={token}
                   setWidth={setWidth}
                 />
-                {selectedVideoId && selectedVideoIndex === index && (
-                  <Youtube
-                    videoId={selectedVideoId}
-                    opts={{
-                      width: `${width}`,
-                      height: "300",
-                      playerVars: {
-                        autoplay: 1,
-                        modestbranding: 1,
-                      },
-                    }}
-                  />
-                )}
+                {!isEditing &&
+                  selectedVideoId &&
+                  selectedVideoIndex === index && (
+                    <Youtube
+                      videoId={selectedVideoId}
+                      opts={{
+                        width: `${width}`,
+                        height: "300",
+                        playerVars: {
+                          autoplay: 1,
+                          modestbranding: 1,
+                        },
+                      }}
+                    />
+                  )}
               </div>
             ))
           ) : (
