@@ -11,7 +11,7 @@ export const PlusButton: React.FC<{
     const { id } = playlists[0];
     // 플레이리스트 보다 하나 많은 id로 이동하여 데이터를 추가한다.
     // Save시 원래 id인 페이지로 이동
-    navigate(`/${username}/${id}/edit`);
+    navigate(`/user/${username}/${id}/edit`);
   };
   const { t } = useTranslation("Edit");
   return (
