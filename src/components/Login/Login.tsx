@@ -18,7 +18,7 @@ const LoginComponents = () => {
     window.location.href = `${process.env.REACT_APP_SERVER}/oauth2/authorization/${link}`;
   };
   return (
-    <div className="w-full h-full relative bg-white">
+    <div className="w-full h-full relative bg-white scrollbar-hide overflow-scroll">
       <div
         className={
           "flex flex-col items-center justify-items-center justify-self-center"
