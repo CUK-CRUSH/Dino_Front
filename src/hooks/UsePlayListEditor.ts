@@ -148,8 +148,8 @@ export const UsePlayListEditor = ({
   const handleDeleteClick = async () => {
     swalButton
       .fire({
-        title: "노래를 삭제하시겠습니까?",
-        html: "한번 삭제된 노래는 복구할 수 없습니다!",
+        title: "플레이리스트를 삭제하시겠습니까?",
+        html: "한번 삭제된 플레이리스트는 복구할 수 없습니다!",
         showCancelButton: true,
         confirmButtonColor: "blue",
         cancelButtonColor: "#d33",
@@ -163,11 +163,11 @@ export const UsePlayListEditor = ({
           // '삭제' 버튼을 눌렀을 때 실행할 코드를 여기에 작성합니다.
           try {
             await deletePlayList(playlistId ?? "", token);
-            navigate(`/${username}`);
+            navigate(`/user/${username}`);
           } catch (error) {
             console.log(error);
             swalButton.fire({
-              title: "노래 삭제에 실패했습니다.",
+              title: "플리 삭제에 실패했습니다.",
               width: "250px",
             });
           }
