@@ -11,7 +11,6 @@ export const axiosInstance = axios.create({
 
 // //refresh token api
 // export async function postRefreshToken() {
-//   const [,setCookie] = useCookies();
 
 //   const response = await axiosInstance.post('/login/token/reissue', {
 //     refreshToken: localStorage.getItem('refreshToken'),
