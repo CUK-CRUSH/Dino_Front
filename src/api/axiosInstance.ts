@@ -1,5 +1,4 @@
 import axios from "axios";
-// import { useCookies } from "react-cookie";
 
 // GET과 같이 다른 사람도 볼 수 있는 페이지는 토큰 필요없이 가능하다.
 export const axiosInstance = axios.create({
@@ -9,7 +8,7 @@ export const axiosInstance = axios.create({
 // POST, DELETE, PATCH, PUT 등 유저가 수정, 추가하는 부분은
 // 헤더에 토큰 넣어줌.
 
-// //refresh token api
+//refresh token api
 // export async function postRefreshToken() {
 
 //   const response = await axiosInstance.post('/login/token/reissue', {
@@ -30,8 +29,9 @@ export const axiosInstance = axios.create({
 //       config,
 //       response: { status },
 //     } = error;
-    
 // 	//토큰이 만료되을 때
+//   // const [,setCookie] = useCookies();
+
 //     if (status === 401) {
 //       if (error.response.data.message === 'Unauthorized') {
 //         const originRequest = config;
@@ -40,7 +40,7 @@ export const axiosInstance = axios.create({
 //         //리프레시 토큰 요청이 성공할 때
 //         if (response.status === 200) {
 //           const newAccessToken = response.data.token;
-//           setCookie('accessToken', response.data.token);
+//           // setCookie('accessToken', response.data.token);
 //           localStorage.setItem('refreshToken', response.data.refreshToken);
 //           axios.defaults.headers.common.Authorization = `Bearer ${newAccessToken}`;
 //           //진행중이던 요청 이어서하기

@@ -218,8 +218,10 @@ const AdminPage: React.FC = () => {
         ) : (
           <></>
         )}
-        <div className="mt-16 relative">
-        <Footer />
+        <div className="flex-grow mt-32 relative">
+          <Footer 
+            // background="bg-neutral-900"
+            />
         </div>
       </div>
     </div>

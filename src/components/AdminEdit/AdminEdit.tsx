@@ -342,7 +342,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
       dispatch(setDeleteProfileImage(false));
       dispatch(setDeleteProfileBackgroundImage(false));
-      navigate(`/${code.data.username}`);
+      navigate(`user/${code.data.username}`);
     }
     setIsOpen(!isOpen);
     // 애니메이션 용 타이머
