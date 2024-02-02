@@ -34,6 +34,7 @@ const customModalStyles: ReactModal.Styles = {
 export default function CustomModal({
   isOpen,
   onRequestClose,
+  uploadImage,
   compressedImage,
   playlists,
   token,
@@ -45,7 +46,6 @@ export default function CustomModal({
   const isEditing = useSelector(
     (state: RootState) => state.editPlaylistToggle.isEditing
   );
-
   const {
     handleEditClick,
     handleSaveClick,

@@ -12,7 +12,6 @@ import Camera from "@assets/PlayListImage/camera.svg";
 import { useCallback } from "react";
 import { Img } from "react-image";
 import Spinner from "@assets/Spinner/Spinner.svg";
-import useImageCompress from "@hooks/useImageCompress";
 
 const ShowImage = ({
   aspectRatio,
@@ -23,7 +22,10 @@ const ShowImage = ({
   token,
 }: ShowImageDTO) => {
   const { t } = useTranslation("Edit");
-  const { isLoading } = useImageCompress();
+
+  const isLoading = useSelector(
+    (state: RootState) => state.selectedFile.isLoading
+  );
 
   const swalButton = Swal.mixin({
     customClass: {

@@ -19,6 +19,7 @@ export const MusicDataRow = ({
   const [selectedVideoIndex, setSelectedVideoIndex] = useState<number | null>(
     null
   );
+  const [width, setWidth] = useState(0);
 
   const musicAdd = useSelector((state: RootState) => state.musicAdd);
   const { title, artist, url } = musicAdd;
@@ -80,12 +81,13 @@ export const MusicDataRow = ({
                   username={username}
                   isEditing={isEditing}
                   token={token}
+                  setWidth={setWidth}
                 />
                 {selectedVideoId && selectedVideoIndex === index && (
                   <Youtube
                     videoId={selectedVideoId}
                     opts={{
-                      width: "390",
+                      width: `${width}`,
                       height: "300",
                       playerVars: {
                         autoplay: 1,
@@ -123,6 +125,7 @@ export const MusicDataRow = ({
               username={username}
               isEditing={isEditing}
               token={token}
+              setWidth={setWidth}
             />
           )}
         </div>

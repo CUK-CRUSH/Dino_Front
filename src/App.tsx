@@ -4,7 +4,7 @@ import Layout from "@components/Layout/layout";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "@store/index";
-import './styles/font.css';
+import "./styles/font.css";
 
 const Home = loadable(() => import("@pages/Home/home"));
 const LogIn = loadable(() => import("@pages/LogIn/login"));
@@ -15,6 +15,7 @@ const Validation = loadable(() => import("@pages/Validation/validation"));
 const AddMusic = loadable(() => import("@pages/AddMusic/addMusic"));
 const EditMusic = loadable(() => import("@pages/EditMusic/EditMusics"));
 const Redirect = loadable(() => import("@pages/Redirect/Redirect"));
+const NotFound = loadable(() => import("@pages/NotFound/NotFonud"));
 
 function App() {
   return (
@@ -37,6 +38,7 @@ function App() {
               element={<EditMusic />}
             />
             <Route path="/redirect" element={<Redirect />} />
+            <Route path="*" element={<NotFound />} />
           </Routes>
         </Layout>
       </PersistGate>

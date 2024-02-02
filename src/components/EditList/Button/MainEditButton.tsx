@@ -25,6 +25,9 @@ export const MainEditButton = ({
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
 
+  const tokenId = Number(localStorage.getItem("tokenId"));
+  const compareId = Number(localStorage.getItem("userId"));
+
   const handleBack = useCallback(() => {
     navigate(-1);
   }, [navigate]);
@@ -49,10 +52,20 @@ export const MainEditButton = ({
       <button type="button" onClick={handleBack} className="text-white">
         <FaAngleLeft size={24} />
       </button>
-      <p className="text-center">플레이리스트</p>
-      <button type="button" onClick={handleModalToggle} className="text-white">
-        <FaEllipsisVertical size={24} />
-      </button>
+
+      {compareId === tokenId && (
+        <>
+          <p className="text-center">플레이리스트</p>
+          <button
+            type="button"
+            onClick={handleModalToggle}
+            className="text-white"
+          >
+            <FaEllipsisVertical size={24} />
+          </button>
+        </>
+      )}
+
       <CustomModal {...modalProps} />
     </div>
   );

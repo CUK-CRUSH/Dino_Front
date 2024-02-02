@@ -20,6 +20,7 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   username,
   isEditing,
   token,
+  setWidth,
 }) => {
   const swalButton = Swal.mixin({
     customClass: {
@@ -37,6 +38,7 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   const [artistWidth, setArtistWidth] = useState(0);
   const titleRef = useRef<HTMLSpanElement>(null);
   const artistRef = useRef<HTMLSpanElement>(null);
+  const contentRef = useRef<HTMLDivElement>(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -84,15 +86,18 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
       const artistElement = artistRef.current;
       const titleWidth = titleElement.scrollWidth;
       const artistWidth = artistElement.scrollWidth;
+      if (contentRef.current) {
+        setWidth(contentRef.current.offsetWidth);
+      }
       setTitleWidth(titleWidth);
       setArtistWidth(artistWidth);
     }
-  }, [musicData]);
+  }, [musicData, contentRef, setWidth]);
 
   const TitleLength = titleWidth >= 205;
   const ArtistLength = artistWidth >= 105;
   return (
-    <div className="flex  justify-between h-[50px] mb-2 mx-2">
+    <div ref={contentRef} className="flex justify-between h-[50px] mb-2 mx-2">
       <div
         onClick={handleEditClick}
         className={`flex flex-row ${
