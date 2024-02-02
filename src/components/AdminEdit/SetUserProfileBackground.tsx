@@ -14,6 +14,7 @@ import { setDeleteProfileBackgroundImage } from "@reducer/Admin/userProfileSlice
 import '../../styles/SweetAlert2/SweetAlert2.css'
 import 'sweetalert2/dist/sweetalert2.min.css';
 import { Img } from "react-image";
+import Spinner from "@assets/Spinner/Spinner.svg";
 
 const swalButton = Swal.mixin({
   customClass: {
@@ -88,6 +89,7 @@ const SetUserProfileBackground = ({ aspectRatio, onCrop, isCompressLoading, earl
                 <Img
                   src={earlyImage}
                   alt="User Profile"
+                  loader={Spinner}
                   className="w-full h-full object-cover object-center "
                 />
                 <div className="absolute right-2 -bottom-3 z-20">
@@ -114,6 +116,7 @@ const SetUserProfileBackground = ({ aspectRatio, onCrop, isCompressLoading, earl
                 <Img
                   src={profileBackgroundImage}
                   alt="User Profile"
+                  loader={Spinner}
                   className="w-full h-full object-cover object-center "
                 />
                 <div className="absolute right-2 -bottom-3 z-20">
@@ -121,6 +124,7 @@ const SetUserProfileBackground = ({ aspectRatio, onCrop, isCompressLoading, earl
                     src={garbage}
                     alt="Overlay"
                     className="w-[25px] h-full"
+                    loader={Spinner}
                     onClick={(e) => {
                       e.stopPropagation();
                       handleDeleteClick();
