@@ -405,7 +405,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
           maxlength={999}
           name="username"
           value={userData?.username}
-          onChange={onChangeInput}
+          // onChange={onChangeInput}
         />
 
         {/* 한줄소개 */}
