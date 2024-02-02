@@ -137,7 +137,7 @@ const AdminPage: React.FC = () => {
   );
 
   return (
-    <div className="w-full h-full relative bg-white scrollbar-hide overflow-scroll">
+    <div className="relative w-full h-full scrollbar-hide overflow-scroll">
 
       <UserProfileBackground
         userBackgroundImage={userData?.backgroundImageUrl}
@@ -158,7 +158,7 @@ const AdminPage: React.FC = () => {
 
       {toast === 'copy' && <ToastComponent background="white" text="링크가 복사되었습니다." />}
 
-      <div className="h-full w-full left-0 top-[165px] absolute bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px] ">
+      <div className="h-auto w-full left-0 top-[165px] absolute bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px] ">
         {/* ... 설정창 */}
         {
           <OpenOption
