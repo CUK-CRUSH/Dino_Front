@@ -69,10 +69,10 @@ export const UsePlayListEditor = ({
     const playlist = playlists.find(
       (playlist: any) => playlist?.id === Number(playlistId)
     );
-
+  
     if (playlist) {
       const id = playlist.id;
-
+  
       if (selectedFile) {
         const compressedFile = await compressImage(selectedFile);
         if (compressedFile) {
@@ -88,11 +88,13 @@ export const UsePlayListEditor = ({
           }
         }
       }
-
+  
       // 비동기 함수들이 완료될 때까지 기다립니다.
       if (playlistName) {
         await putPlayList(id, playlistName, null, token);
       }
+  
+      // 이미지 저장이 완료된 후에 음악 추가를 진행하도록 변경
       if (musicData && musicData.title && musicData.artist && musicData.url) {
         await postMusicList(
           id,
@@ -107,6 +109,7 @@ export const UsePlayListEditor = ({
         dispatch(updateImage(null));
       }
     }
+  
     dispatch(setToast("editPlayList"));
     dispatch(setIsEditing(false));
     dispatch(resetIsSaved());
@@ -114,6 +117,7 @@ export const UsePlayListEditor = ({
       dispatch(updateImage(compressedImage));
     }
   };
+  
 
   const handleCancelClick = () => {
     dispatch(updateTitle(""));
