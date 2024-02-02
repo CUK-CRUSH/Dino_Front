@@ -15,6 +15,7 @@ import { getMusicList } from "@api/music-controller/musicControl";
 import { useParams } from "react-router-dom";
 import ToastComponent from "@components/Toast/Toast";
 import NotFound from "@pages/NotFound/NotFonud";
+import Footer from "@components/Layout/footer";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
   const isEditing = useSelector(
@@ -73,7 +74,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
 
   useEffect(() => {
     fetchPlaylist();
-  }, [fetchPlaylist, musicData]);
+  }, [fetchPlaylist, playlists]);
 
   if (hasError) {
     return <NotFound />;
@@ -138,6 +139,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
           text="플레이리스트가 수정되었습니다!"
         />
       )}
+      <Footer />
     </div>
   );
 };
