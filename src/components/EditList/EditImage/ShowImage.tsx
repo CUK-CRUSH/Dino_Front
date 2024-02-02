@@ -1,4 +1,3 @@
-import ImageCropper from "@utils/ImageCrop/ImageCropper";
 import { ShowImageDTO } from "types/EditplayList";
 import { AiOutlinePicture } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
@@ -14,8 +13,6 @@ import { Img } from "react-image";
 import Spinner from "@assets/Spinner/Spinner.svg";
 
 const ShowImage = ({
-  aspectRatio,
-  onCrop,
   playlists,
   isEditing,
   playlistId,
@@ -79,11 +76,11 @@ const ShowImage = ({
       {imageSrc ? (
         <>
           {renderImage(imageSrc)}
-          <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
-            <button className="absolute bottom-2 right-3">
-              <Img src={Camera} alt="Camera" width={32} height={32} />
-            </button>
-          </ImageCropper>
+
+          <button className="absolute bottom-2 right-3">
+            <Img src={Camera} alt="Camera" width={32} height={32} />
+          </button>
+
           {playlist?.thumbnailUrl && (
             <button
               className="absolute top-4 left-1/2 transform -translate-x-1/2"
@@ -107,11 +104,9 @@ const ShowImage = ({
           {t("representive_image")}
         </span>
         {isEditing && (
-          <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
-            <button className="absolute bottom-2 right-3">
-              <Img src={Camera} alt="Camera" width={32} height={32} />
-            </button>
-          </ImageCropper>
+          <button className="absolute bottom-2 right-3">
+            <Img src={Camera} alt="Camera" width={32} height={32} />
+          </button>
         )}
       </div>
     </div>

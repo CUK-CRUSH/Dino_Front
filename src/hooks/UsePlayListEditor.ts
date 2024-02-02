@@ -16,7 +16,10 @@ import { useNavigate } from "react-router-dom";
 import { setToast } from "@reducer/Toast/toast";
 import { RootState } from "@store/index";
 import useImageCompress from "./useImageCompress";
-import { resetSelectedFile } from "@reducer/editPlayList/Image/isImageCompress";
+import {
+  resetSelectedFile,
+  setSelectedFile,
+} from "@reducer/editPlayList/Image/isImageCompress";
 import Swal from "sweetalert2";
 import "@styles/EditList/playList.css";
 
@@ -136,6 +139,7 @@ export const UsePlayListEditor = ({
     dispatch(updateArtist(""));
     dispatch(updateURL(""));
     dispatch(updateImage(null));
+    dispatch(setSelectedFile(null));
     dispatch(setIsEditing(false));
     dispatch(resetIsSaved());
   };
