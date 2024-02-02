@@ -1,4 +1,3 @@
-import ImageCropper from "@utils/ImageCrop/ImageCropper";
 import { ShowImageDTO } from "types/EditplayList";
 import { AiOutlinePicture } from "react-icons/ai";
 import { useTranslation } from "react-i18next";
