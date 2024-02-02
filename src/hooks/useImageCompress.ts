@@ -1,6 +1,5 @@
 import imageCompression from "browser-image-compression";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@store/index";
 import { setIsLoading } from "@reducer/editPlayList/Image/isImageCompress";
 
