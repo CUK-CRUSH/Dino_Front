@@ -217,7 +217,7 @@ const AdminPage: React.FC = () => {
         ) : (
           <></>
         )}
-        <div className="mt-16 relative">
+        <div className="mt-28 relative">
           <Footer bgColor="neutral-900" />
         </div>
       </div>
