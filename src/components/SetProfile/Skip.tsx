@@ -38,14 +38,14 @@ const Skip = ({ step,username }: SkipDTO) => {
       const code = await updateMember(data);
       if(code.status === 200) {
         console.log(code)
-        navigate(`/${code.data.username}`)
+        navigate(`/user/${code.data.username}`)
       }
     }
   
   };
   
   useEffect(() => {
-    if (step >= 4) { navigate(`/${username}`); }
+    if (step >= 4) { navigate(`/user/${username}`); }
   }, [step,navigate,username])
 
   const handleClick = () => {

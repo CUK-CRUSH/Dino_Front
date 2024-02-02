@@ -14,6 +14,7 @@ import { useParams } from "react-router-dom";
 import ToastComponent from "@components/Toast/Toast";
 import { useSelector } from "react-redux";
 import { RootState } from "@store/index";
+import Footer from "@components/Layout/footer";
 
 const AdminPage: React.FC = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -138,7 +139,7 @@ const AdminPage: React.FC = () => {
   const { toast } = useSelector((state: RootState) => state.toast);
 
   return (
-    <div className="relative w-full h-full scrollbar-hide overflow-scroll">
+    <div className="relative w-full h-full scrollbar-hide overflow-scroll flex flex-col">
 
       <UserProfileBackground
         userBackgroundImage={userData?.backgroundImageUrl}
@@ -217,6 +218,9 @@ const AdminPage: React.FC = () => {
         ) : (
           <></>
         )}
+        <div className="mt-16 relative">
+        <Footer />
+        </div>
       </div>
     </div>
   );
