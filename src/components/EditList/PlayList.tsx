@@ -65,6 +65,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       setHasError(true);
     }
   }, [playlistId]);
+
   const {
     handleEditClick,
     handleSaveClick,
@@ -134,7 +135,11 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       />
 
       {isEditing && musicList.data?.length < 9 && (
-        <PlusButton playlists={playlists} username={username} />
+        <PlusButton
+          playlists={playlists}
+          username={username}
+          playlistId={playlistId}
+        />
       )}
       {toast === "editPlayList" && (
         <ToastComponent

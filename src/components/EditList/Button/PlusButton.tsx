@@ -5,13 +5,17 @@ import { useTranslation } from "react-i18next";
 export const PlusButton: React.FC<{
   playlists: any[];
   username: string | null;
-}> = ({ playlists, username }) => {
+  playlistId: string | undefined;
+}> = ({ playlists, username, playlistId }) => {
   const navigate = useNavigate();
   const handleAddMusicClick = () => {
-    const { id } = playlists[0];
-    // 플레이리스트 보다 하나 많은 id로 이동하여 데이터를 추가한다.
-    // Save시 원래 id인 페이지로 이동
-    navigate(`/user/${username}/${id}/edit`);
+    const currentPlaylist = playlists.find(
+      (pl: any) => pl?.id === Number(playlistId)
+    );
+
+    if (currentPlaylist) {
+      navigate(`/user/${username}/${currentPlaylist.id}/edit`);
+    }
   };
   const { t } = useTranslation("Edit");
   return (
