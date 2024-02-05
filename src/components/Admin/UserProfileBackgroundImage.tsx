@@ -22,9 +22,7 @@ const UserProfileBackground = ({ userBackgroundImage }: UserBackgroundImageDTO) 
             alt="Selected"
             className="h-full w-full object-cover"
           />
-        ) :  deleteBackgroundImage ? (
-          null
-        ) : null}
+        ) : <div className="w-full h-[300px] bg-white"/>}
     </div>
   );
 };
