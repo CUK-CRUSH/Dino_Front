@@ -4,7 +4,7 @@ import { UserBackgroundImageDTO } from "types/Admin"
 import { Img } from "react-image";
 
 const UserProfileBackground = ({ userBackgroundImage }: UserBackgroundImageDTO) => {
-  const { profileBackgroundImage, deleteBackgroundImage } = useSelector(
+  const { profileBackgroundImage } = useSelector(
     (state: RootState) => state.userProfile
   );
   return (

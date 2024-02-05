@@ -217,10 +217,12 @@ const AdminPage: React.FC = () => {
           playlistData?.length !== undefined &&
           playlistData.length < 4 ? (
           <AddPlayList />
+          
         ) : (
           <></>
         )}
-        <div className="relative h-[120px] transform -translate-y-100">
+        
+        <div className="relative mt-[30px] h-[120px] transform -translate-y-100">
           <Footer bgColor="neutral-900" />
         </div>
       </div>
