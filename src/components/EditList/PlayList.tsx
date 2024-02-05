@@ -103,7 +103,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
           setPlaylistName={setPlaylistName}
         />
       )}
-
       {isEditing && (
         <EditPlaylistControls
           isEditing={isEditing}
@@ -113,7 +112,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
           onDelete={handleDeleteClick}
         />
       )}
-
       <ShowImage
         aspectRatio={1}
         onCrop={handleUploadImage}
@@ -122,9 +120,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         playlistId={playlistId}
         token={token}
       />
-
       <MusicTitle isEditing={isEditing} />
-
       <MusicDataRow
         isEditing={isEditing}
         musicList={musicList}
@@ -133,7 +129,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         token={token}
         fetchPlaylist={fetchPlaylist}
       />
-
       {isEditing && musicList.data?.length < 9 && (
         <PlusButton
           playlists={playlists}
@@ -141,13 +136,13 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
           playlistId={playlistId}
         />
       )}
+      <Footer bgColor="black" />{" "}
       {toast === "editPlayList" && (
         <ToastComponent
           background="white"
           text="플레이리스트가 수정되었습니다!"
         />
       )}
-      <Footer bgColor="black" />
     </div>
   );
 };
