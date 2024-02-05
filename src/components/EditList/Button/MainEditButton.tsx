@@ -2,7 +2,7 @@ import { playlistNameState } from "@atoms/Playlist/playlistName";
 import CustomModal from "@utils/Modal/Modal";
 import { useCallback, useState } from "react";
 import { FaAngleLeft, FaEllipsisVertical } from "react-icons/fa6";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 
 type MainEditButtonProps = {

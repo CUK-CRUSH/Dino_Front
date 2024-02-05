@@ -69,7 +69,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       console.error(error);
       setHasError(true);
     }
-  }, [playlistId, setPlaylistName]);
+  }, [playlistId, setPlaylistName, username]);
 
   console.log(playlists);
 
