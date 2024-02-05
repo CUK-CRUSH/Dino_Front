@@ -1,34 +1,27 @@
+import { playlistNameState } from "@atoms/Playlist/playlistName";
+import { useRecoilState } from "recoil";
+
 interface MusicTitleProps {
-  playlists: any;
-  titlechange: (title: string) => void;
   isEditing?: boolean;
-  playlistId?: string | undefined;
 }
 
-export const MusicTitle = ({
-  playlists,
-  titlechange,
-  isEditing,
-  playlistId,
-}: MusicTitleProps) => {
-  const playlist = playlists.find(
-    (playlist: any) => playlist?.id === Number(playlistId)
-  );
+export const MusicTitle = ({ isEditing }: MusicTitleProps) => {
+  const [playlistName, setPlaylistName] = useRecoilState(playlistNameState);
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    titlechange(e.target.value);
+    setPlaylistName(e.target.value);
   };
   return (
     <h2 className="my-4 mx-6 text-[25px] text-shadow-title font-bold leading-5">
       {isEditing ? (
         <input
           type="text"
-          defaultValue={playlist?.playlistName}
+          defaultValue={playlistName}
           onChange={handleTitleChange}
           className="w-full px-2 py-[2px] bg-black rounded-xl border-2 border-white"
         />
       ) : (
-        playlist?.playlistName
+        playlistName
       )}
     </h2>
   );

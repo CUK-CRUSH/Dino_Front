@@ -5,6 +5,7 @@ import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "@store/index";
 import "./styles/font.css";
+import { RecoilRoot } from "recoil";
 
 const Home = loadable(() => import("@pages/Home/home"));
 const LogIn = loadable(() => import("@pages/LogIn/login"));
@@ -21,33 +22,35 @@ function App() {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
-        <Layout>
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/login" element={<LogIn />} />
-            <Route
-              path="/SetProfile/:username/:step"
-              element={<SetProfile />}
-            />
-            <Route path="user/:username" element={<Admin />} />
+        <RecoilRoot>
+          <Layout>
+            <Routes>
+              <Route path="/" element={<Home />} />
+              <Route path="/login" element={<LogIn />} />
+              <Route
+                path="/SetProfile/:username/:step"
+                element={<SetProfile />}
+              />
+              <Route path="user/:username" element={<Admin />} />
 
-            <Route
-              path="user/:username/:playlistId"
-              element={<EditPlayList />}
-            />
-            <Route path="/login/validation" element={<Validation />} />
-            <Route
-              path="user/:username/:playlistId/edit"
-              element={<AddMusic />}
-            />
-            <Route
-              path="user/:username/:playlistId/edit/:musicId"
-              element={<EditMusic />}
-            />
-            <Route path="/redirect" element={<Redirect />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-        </Layout>
+              <Route
+                path="user/:username/:playlistId"
+                element={<EditPlayList />}
+              />
+              <Route path="/login/validation" element={<Validation />} />
+              <Route
+                path="user/:username/:playlistId/edit"
+                element={<AddMusic />}
+              />
+              <Route
+                path="user/:username/:playlistId/edit/:musicId"
+                element={<EditMusic />}
+              />
+              <Route path="/redirect" element={<Redirect />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </Layout>
+        </RecoilRoot>
       </PersistGate>
     </Provider>
   );

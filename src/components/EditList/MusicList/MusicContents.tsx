@@ -21,6 +21,7 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   isEditing,
   token,
   setWidth,
+  fetchPlaylist,
 }) => {
   const swalButton = Swal.mixin({
     customClass: {
@@ -69,6 +70,7 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
           try {
             await deleteMusicList(musicData.id, token);
             dispatch(setToast("delete"));
+            fetchPlaylist();
           } catch (error) {
             console.log(error);
             swalButton.fire({

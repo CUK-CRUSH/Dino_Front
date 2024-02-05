@@ -52,6 +52,9 @@ const AdminPage: React.FC = () => {
         if (userDataResult.data?.id) {
           localStorage.setItem("userId", userDataResult.data.id.toString());
         }
+        if (Date.now() / 1000 > Number(localStorage.getItem("exp"))) {
+          localStorage.removeItem("accessToken");
+        }
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
@@ -211,15 +214,15 @@ const AdminPage: React.FC = () => {
           ))}
 
         {!isLoading &&
-          userId === tokenId &&
-          playlistData?.length !== undefined &&
-          playlistData.length < 4 ? (
+        userId === tokenId &&
+        tokenId &&
+        playlistData?.length !== undefined &&
+        playlistData.length < 4 ? (
           <AddPlayList />
-          
         ) : (
           <></>
         )}
-        
+
         <div className="relative mt-[30px] h-[120px] transform -translate-y-100">
           <Footer bgColor="neutral-900" />
         </div>

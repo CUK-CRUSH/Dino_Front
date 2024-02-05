@@ -38,11 +38,11 @@ export default function CustomModal({
   compressedImage,
   playlists,
   token,
-  playlistName,
   musicData,
   playlistId,
   username,
   fetchPlaylist,
+  setPlaylistName,
 }: Readonly<CustomModalDTO>) {
   const isEditing = useSelector(
     (state: RootState) => state.editPlaylistToggle.isEditing
@@ -55,11 +55,11 @@ export default function CustomModal({
   } = UsePlayListEditor({
     playlists,
     token,
-    playlistName,
     musicData,
     playlistId,
     username,
     fetchPlaylist,
+    setPlaylistName,
   });
 
   return (
