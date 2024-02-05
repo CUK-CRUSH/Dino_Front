@@ -30,7 +30,7 @@ interface UsePlayListEditorProps {
   token: string;
   musicData: any;
   playlistId: string | undefined;
-  username: string | null;
+  usernames: string | null;
   fetchPlaylist: () => void;
   setPlaylistName: (value: string) => void;
 }
@@ -40,7 +40,7 @@ export const UsePlayListEditor = ({
   token,
   musicData,
   playlistId,
-  username,
+  usernames,
   fetchPlaylist,
   setPlaylistName,
 }: UsePlayListEditorProps) => {
@@ -171,7 +171,7 @@ export const UsePlayListEditor = ({
           // '삭제' 버튼을 눌렀을 때 실행할 코드를 여기에 작성합니다.
           try {
             await deletePlayList(playlistId ?? "", token);
-            navigate(`/user/${username}`);
+            navigate(`/user/${usernames}`);
           } catch (error) {
             console.log(error);
             swalButton.fire({

@@ -11,7 +11,7 @@ export interface MusicDataDTO {
   isEditing: boolean;
   musicList: any;
   playlistId: string | undefined;
-  username: string | null;
+  usernames: string | null;
   token: string;
   fetchPlaylist: () => void;
 }
@@ -20,7 +20,7 @@ export const MusicDataRow = ({
   isEditing,
   musicList,
   playlistId,
-  username,
+  usernames,
   token,
   fetchPlaylist,
 }: MusicDataDTO) => {
@@ -94,7 +94,7 @@ export const MusicDataRow = ({
                   musicData={musicItem}
                   order={index + 1}
                   playlistId={playlistId}
-                  username={username}
+                  usernames={usernames}
                   isEditing={isEditing}
                   token={token}
                   setWidth={setWidth}
@@ -141,7 +141,7 @@ export const MusicDataRow = ({
               }}
               order={musicList.data.length + 1}
               playlistId={playlistId}
-              username={username}
+              usernames={usernames}
               isEditing={isEditing}
               token={token}
               setWidth={setWidth}

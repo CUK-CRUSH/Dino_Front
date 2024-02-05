@@ -18,6 +18,7 @@ import NotFound from "@pages/NotFound/NotFonud";
 import Footer from "@components/Layout/footer";
 import { useSetRecoilState } from "recoil";
 import { playlistNameState } from "@atoms/Playlist/playlistName";
+import { getMemberUsername } from "@api/member-controller/memberController";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
   const isEditing = useSelector(
@@ -26,9 +27,11 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const musicData = useSelector((state: RootState) => state.musicAdd);
 
   const [uploadImage, setUploadImage] = useState<string | null>(null);
+  const [memberId, setMemberId] = useState<number | null>(null);
   const [playlists, setPlaylists] = useState<any[]>([]);
-  const [username, setUsername] = useState<string | null>(null);
+  const [usernames, setUsername] = useState<string | null>(null);
 
+  const { username } = useParams<{ username: string | undefined }>();
   const setPlaylistName = useSetRecoilState(playlistNameState);
   const [musicList, setMusicList] = useState<any>([]);
 
@@ -44,13 +47,15 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const handleUploadImage = (image: string) => setUploadImage(image);
   const fetchPlaylist = useCallback(async () => {
     // 항상 로컬 스토리지에서 username을 가져옴
-    let usernameToUse = localStorage.getItem("username") || "defaultUsername";
 
+    console.log(username);
     try {
-      const playlist = await getPlayList(usernameToUse);
+      const member = await getMemberUsername(username);
+      const playlist = await getPlayList(username);
       const musicAPIData = await getMusicList(Number(playlistId));
 
-      setUsername(usernameToUse);
+      setMemberId(member.data.id);
+      setUsername(username || null);
       setPlaylists(playlist.data);
       setMusicList(musicAPIData);
 
@@ -64,7 +69,9 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       console.error(error);
       setHasError(true);
     }
-  }, [playlistId, setPlaylistName]);
+  }, [playlistId, setPlaylistName, username]);
+
+  console.log(playlists);
 
   const {
     handleEditClick,
@@ -76,7 +83,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     token,
     musicData,
     playlistId,
-    username,
+    usernames,
     fetchPlaylist,
     setPlaylistName,
   });
@@ -88,7 +95,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   if (hasError) {
     return <NotFound />;
   }
-
+  console.log(memberId);
   return (
     <div className="h-full w-full scrollbar-hide overflow-scroll flex flex-col bg-black text-white font-medium leading-[18px]">
       {!isEditing && (
@@ -98,12 +105,12 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
           token={token}
           musicData={musicData}
           playlistId={playlistId}
-          username={username}
+          usernames={usernames}
           fetchPlaylist={fetchPlaylist}
           setPlaylistName={setPlaylistName}
+          memberId={memberId}
         />
       )}
-
       {isEditing && (
         <EditPlaylistControls
           isEditing={isEditing}
@@ -113,7 +120,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
           onDelete={handleDeleteClick}
         />
       )}
-
       <ShowImage
         aspectRatio={1}
         onCrop={handleUploadImage}
@@ -122,32 +128,29 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         playlistId={playlistId}
         token={token}
       />
-
       <MusicTitle isEditing={isEditing} />
-
       <MusicDataRow
         isEditing={isEditing}
         musicList={musicList}
         playlistId={playlistId}
-        username={username}
+        usernames={usernames}
         token={token}
         fetchPlaylist={fetchPlaylist}
       />
-
       {isEditing && musicList.data?.length < 9 && (
         <PlusButton
           playlists={playlists}
-          username={username}
+          usernames={usernames}
           playlistId={playlistId}
         />
       )}
+      <Footer bgColor="black" />{" "}
       {toast === "editPlayList" && (
         <ToastComponent
           background="white"
           text="플레이리스트가 수정되었습니다!"
         />
       )}
-      <Footer bgColor="black" />
     </div>
   );
 };

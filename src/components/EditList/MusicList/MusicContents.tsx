@@ -17,7 +17,7 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   musicData,
   order,
   playlistId,
-  username,
+  usernames,
   isEditing,
   token,
   setWidth,
@@ -46,7 +46,7 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   const handleEditClick = () => {
     if (isEditing) {
       dispatch(setMusicData(musicData));
-      navigate(`/user/${username}/${playlistId}/edit/${musicData.id}`);
+      navigate(`/user/${usernames}/${playlistId}/edit/${musicData.id}`);
       dispatch(setIsEditMusics(true));
     }
   };
