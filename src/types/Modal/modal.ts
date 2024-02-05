@@ -10,4 +10,5 @@ export interface CustomModalDTO {
   playlistId: string | undefined;
   username: string | null;
   fetchPlaylist: () => void;
+  setPlaylistName: (value: string) => void;
 }

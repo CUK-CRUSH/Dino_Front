@@ -29,7 +29,7 @@ const Redirect = () => {
 
   const dispatch = useDispatch();
   localStorage.setItem("tokenId", id.toString());
-  localStorage.setItem("exp", exp.toString());
+  localStorage.setItem("exp", exp);
 
   useEffect(() => {
     const redirectAfterFetch = async () => {

@@ -49,7 +49,7 @@ export const MusicDataRow = ({
       if (urlParams.has("v")) {
         // 웹 버전
         videoId = urlParams.get("v")!;
-      } else if (urlParams.has("si")) {
+      } else if (urlParams.has("si") || urlParams.has("feature")) {
         // 축약 URL
         videoId = url.split("?")[0].split("/").pop()!;
       }

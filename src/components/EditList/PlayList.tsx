@@ -16,6 +16,8 @@ import { useParams } from "react-router-dom";
 import ToastComponent from "@components/Toast/Toast";
 import NotFound from "@pages/NotFound/NotFonud";
 import Footer from "@components/Layout/footer";
+import { useRecoilState } from "recoil";
+import { playlistNameState } from "@atoms/Playlist/playlistName";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
   const isEditing = useSelector(
@@ -27,7 +29,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const [playlists, setPlaylists] = useState<any[]>([]);
   const [username, setUsername] = useState<string | null>(null);
 
-  const [playlistName, setPlaylistName] = useState("");
+  const [playlistName, setPlaylistName] = useRecoilState(playlistNameState);
   const [musicList, setMusicList] = useState<any>([]);
 
   const [hasError, setHasError] = useState<boolean>(false);
@@ -51,6 +53,13 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       setUsername(usernameToUse);
       setPlaylists(playlist.data);
       setMusicList(musicAPIData);
+
+      const selectedPlaylist = playlist.data.find(
+        (pl: any) => pl.id === Number(playlistId)
+      );
+      if (selectedPlaylist) {
+        setPlaylistName(selectedPlaylist.playlistName);
+      }
     } catch (error) {
       console.error(error);
       setHasError(true);
@@ -64,11 +73,11 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   } = UsePlayListEditor({
     playlists,
     token,
-    playlistName,
     musicData,
     playlistId,
     username,
     fetchPlaylist,
+    setPlaylistName,
   });
 
   useEffect(() => {
@@ -86,11 +95,11 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
           playlists={playlists}
           uploadImage={uploadImage}
           token={token}
-          playlistName={playlistName}
           musicData={musicData}
           playlistId={playlistId}
           username={username}
           fetchPlaylist={fetchPlaylist}
+          setPlaylistName={setPlaylistName}
         />
       )}
 
@@ -113,14 +122,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         token={token}
       />
 
-      <MusicTitle
-        playlists={playlists}
-        titlechange={(newTitle) => {
-          setPlaylistName(newTitle);
-        }}
-        isEditing={isEditing}
-        playlistId={playlistId}
-      />
+      <MusicTitle isEditing={isEditing} />
 
       <MusicDataRow
         isEditing={isEditing}
