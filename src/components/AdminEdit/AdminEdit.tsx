@@ -52,8 +52,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
         const userDataResult = await getMemberMe(cookies.accessToken);
         setUserdata(userDataResult.data);
       } catch (error) {
-        console.error("Error fetching user data:", error);
-        // Handle errors appropriately
+        
       }
     };
     fetchData();
