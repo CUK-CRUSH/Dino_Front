@@ -128,6 +128,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         playlistId={playlistId}
         username={username}
         token={token}
+        fetchPlaylist={fetchPlaylist}
       />
 
       {isEditing && musicList.data?.length < 9 && (

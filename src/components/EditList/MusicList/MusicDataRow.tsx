@@ -1,4 +1,3 @@
-import { MusicDataDTO } from "types/EditplayList";
 import "@styles/EditList/playList.css";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { MusicDataRowContent } from "./MusicContents";
@@ -8,12 +7,22 @@ import { RootState } from "@store/index";
 import { MusicLength } from "./MusicLength";
 import InfiniteScroll from "react-infinite-scroller";
 
+export interface MusicDataDTO {
+  isEditing: boolean;
+  musicList: any;
+  playlistId: string | undefined;
+  username: string | null;
+  token: string;
+  fetchPlaylist: () => void;
+}
+
 export const MusicDataRow = ({
   isEditing,
   musicList,
   playlistId,
   username,
   token,
+  fetchPlaylist,
 }: MusicDataDTO) => {
   const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
   const [selectedVideoIndex, setSelectedVideoIndex] = useState<number | null>(
@@ -89,6 +98,7 @@ export const MusicDataRow = ({
                   isEditing={isEditing}
                   token={token}
                   setWidth={setWidth}
+                  fetchPlaylist={fetchPlaylist}
                 />
                 {!isEditing &&
                   selectedVideoId &&
@@ -135,6 +145,7 @@ export const MusicDataRow = ({
               isEditing={isEditing}
               token={token}
               setWidth={setWidth}
+              fetchPlaylist={fetchPlaylist}
             />
           )}
         </div>

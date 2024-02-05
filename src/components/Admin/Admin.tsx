@@ -43,7 +43,6 @@ const AdminPage: React.FC = () => {
   localStorage.setItem("username", username ? username : "");
 
   const [isLoading, setIsLoding] = useState<boolean>(true);
-  console.log(Date.now() / 1000);
 
   useEffect(() => {
     const fetchData = async () => {

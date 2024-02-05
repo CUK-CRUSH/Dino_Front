@@ -21,7 +21,7 @@ const Layout: React.FC<LayoutDTO> = ({ children }) => {
     // EditPlayList에서 Admin으로 이동하는 경우에만 상태 초기화
     if (
       prevLocation.pathname.includes("/EditPlayList") &&
-      location.pathname.includes("/Admin")
+      location.pathname.includes("/user")
     ) {
       batch(() => {
         dispatch(updateTitle(""));

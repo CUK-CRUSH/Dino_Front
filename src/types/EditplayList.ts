@@ -6,14 +6,6 @@ export interface EditPlayListControlsDTO {
   onDelete: () => void;
 }
 
-export interface MusicDataDTO {
-  isEditing: boolean;
-  musicList: any;
-  playlistId: string | undefined;
-  username: string | null;
-  token: string;
-}
-
 export interface MusicContentDTO {
   id: number;
   title: string;
@@ -29,6 +21,7 @@ export interface MusicDataRowContentProps {
   username: string | null;
   token: string;
   setWidth: (width: number) => void;
+  fetchPlaylist: () => void;
 }
 
 export interface EditPlsyListDTO {}
