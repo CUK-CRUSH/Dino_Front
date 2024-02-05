@@ -17,7 +17,6 @@ import { RootState } from "@store/index";
 import Footer from "@components/Layout/footer";
 
 const AdminPage: React.FC = () => {
-  // console.log(Cookies.get("accessToken"))
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const tokenId = Number(localStorage.getItem("tokenId"));
@@ -48,7 +47,6 @@ const AdminPage: React.FC = () => {
     const fetchData = async () => {
       try {
         const userDataResult = await getMemberUsername(username);
-        // Cookies.set('accessToken', 'accessToken');
 
         setUserdata(userDataResult.data);
         if (userDataResult.data?.id) {
