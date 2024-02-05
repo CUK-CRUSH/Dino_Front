@@ -12,7 +12,7 @@ const UserProfileBackground = ({ userBackgroundImage }: UserBackgroundImageDTO) 
     <div className="">
       {profileBackgroundImage ? (
         <Img
-          src={profileBackgroundImage} // Use profileBackgroundImage here
+          src={profileBackgroundImage} 
           alt="Selected"
           className="h-full w-full object-cover"
         />) : 

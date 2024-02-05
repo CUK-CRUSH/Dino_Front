@@ -28,6 +28,7 @@ import { RootState } from "@store/index";
 import { setToast } from "@reducer/Toast/toast";
 import { checkBadWord } from "@utils/checkBadWord/checkBadWord";
 import ToastComponent from "@components/Toast/Toast";
+import { useMemberDataUpdate } from "@hooks/useMemberDataUpdate";
 
 interface AdminEditModalProps {
   onClose: () => void; // A function to close the modal
@@ -52,7 +53,8 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
         const userDataResult = await getMemberMe(cookies.accessToken);
         setUserdata(userDataResult.data);
       } catch (error) {
-        
+        console.error("Error fetching user data:", error);
+        // Handle errors appropriately
       }
     };
     fetchData();
@@ -274,36 +276,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     deleteBackgroundImage: deleteBackgroundImage,
   });
 
-  useEffect(() => {
-    if (deleteProfileImage) {
-
-      setUpdateMemberData((prevData) => ({
-        ...prevData,
-        deleteProfileImage: true,
-        profileImage: null,
-      }));
-    } else {
-      setUpdateMemberData((prevData) => ({
-        ...prevData,
-        deleteProfileImage: false,
-      }));
-    }
-  }, [deleteProfileImage]);
-
-  useEffect(() => {
-    if (deleteBackgroundImage) {
-      setUpdateMemberData((prevData) => ({
-        ...prevData,
-        deleteBackgroundImage: true,
-        backgroundImage: null,
-      }));
-    } else {
-      setUpdateMemberData((prevData) => ({
-        ...prevData,
-        deleteBackgroundImage: false,
-      }));
-    }
-  }, [deleteBackgroundImage]);
+ useMemberDataUpdate({setUpdateMemberData,deleteProfileImage,deleteBackgroundImage});
 
   const navigate = useNavigate();
 
