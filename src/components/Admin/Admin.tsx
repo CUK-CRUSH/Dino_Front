@@ -43,6 +43,7 @@ const AdminPage: React.FC = () => {
   localStorage.setItem("username", username ? username : "");
 
   const [isLoading, setIsLoding] = useState<boolean>(true);
+  console.log(Date.now() / 1000);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -53,6 +54,9 @@ const AdminPage: React.FC = () => {
         setUserdata(userDataResult.data);
         if (userDataResult.data?.id) {
           localStorage.setItem("userId", userDataResult.data.id.toString());
+        }
+        if (Date.now() / 1000 > Number(localStorage.getItem("exp"))) {
+          localStorage.removeItem("accessToken");
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -214,6 +218,7 @@ const AdminPage: React.FC = () => {
 
         {!isLoading &&
         userId === tokenId &&
+        tokenId &&
         playlistData?.length !== undefined &&
         playlistData.length < 4 ? (
           <AddPlayList />

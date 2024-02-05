@@ -56,7 +56,7 @@ export const MainEditButton = ({
         <FaAngleLeft size={24} />
       </button>
 
-      {compareId === tokenId && (
+      {compareId === tokenId && tokenId && (
         <>
           <p className="text-center">플레이리스트</p>
           <button
