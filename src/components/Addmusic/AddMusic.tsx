@@ -170,12 +170,26 @@ const AddMusic: React.FC = () => {
   };
 
   useEffect(() => {
-    fetchAutoComplete("title", title);
-    fetchAutoComplete("artist", artist);
+    if (isEditMusics) {
+      fetchAutoComplete("title", editTitle);
+      fetchAutoComplete("artist", editArtist);
+    } else {
+      fetchAutoComplete("title", title);
+      fetchAutoComplete("artist", artist);
+    }
     if (!musicId) {
       dispatch(setIsEditMusics(false));
     }
-  }, [title, artist, fetchAutoComplete, dispatch, musicId]);
+  }, [
+    title,
+    artist,
+    editTitle,
+    editArtist,
+    fetchAutoComplete,
+    dispatch,
+    musicId,
+    isEditMusics,
+  ]);
 
   return (
     <div className="relative z-30 h-full w-full flex flex-col bg-black text-white py-10 text-[17px] leading-[18px]">
