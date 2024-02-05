@@ -6,8 +6,8 @@ import {
   updateURL,
 } from "@reducer/musicadd";
 import { usePreviousLocation } from "@utils/RouteRedux/isRouting";
-import React, { useEffect } from "react";
-import { batch, useDispatch } from "react-redux";
+import React, { useEffect, useCallback } from "react";
+import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { LayoutDTO } from "types/layout";
 
@@ -17,21 +17,23 @@ const Layout: React.FC<LayoutDTO> = ({ children }) => {
 
   const prevLocation = usePreviousLocation();
 
+  const resetEditingState = useCallback(() => {
+    dispatch(updateTitle(""));
+    dispatch(updateArtist(""));
+    dispatch(updateURL(""));
+    dispatch(updateImage(null));
+    dispatch(setIsEditing(false));
+  }, [dispatch]);
+
   useEffect(() => {
-    // EditPlayList에서 Admin으로 이동하는 경우에만 상태 초기화
-    if (
-      prevLocation.pathname.includes("/EditPlayList") &&
-      location.pathname.includes("/Admin")
-    ) {
-      batch(() => {
-        dispatch(updateTitle(""));
-        dispatch(updateArtist(""));
-        dispatch(updateURL(""));
-        dispatch(updateImage(null));
-        dispatch(setIsEditing(false));
-      });
+    const prevPathSplit = prevLocation.pathname.split("/");
+    const currPathSplit = location.pathname.split("/");
+
+    if (prevPathSplit.length === 4 && currPathSplit.length === 3) {
+      resetEditingState();
     }
-  }, [location.pathname, prevLocation.pathname, dispatch]);
+  }, [location.pathname, prevLocation.pathname, resetEditingState]);
+
   return (
     <div className="overflow-hidden  scrollbar-hide bg-[#111111]">
       <div className="h-full w-full max-h-full flex justify-center">

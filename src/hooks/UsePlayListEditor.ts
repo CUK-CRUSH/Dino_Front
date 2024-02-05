@@ -22,25 +22,27 @@ import {
 } from "@reducer/editPlayList/Image/isImageCompress";
 import Swal from "sweetalert2";
 import "@styles/EditList/playList.css";
+import { useRecoilValue } from "recoil";
+import { playlistNameState } from "@atoms/Playlist/playlistName";
 
 interface UsePlayListEditorProps {
   playlists: any[];
   token: string;
-  playlistName: string;
   musicData: any;
   playlistId: string | undefined;
   username: string | null;
   fetchPlaylist: () => void;
+  setPlaylistName: (value: string) => void;
 }
 
 export const UsePlayListEditor = ({
   playlists,
   token,
-  playlistName,
   musicData,
   playlistId,
   username,
   fetchPlaylist,
+  setPlaylistName,
 }: UsePlayListEditorProps) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -52,6 +54,7 @@ export const UsePlayListEditor = ({
   const isLoading = useSelector(
     (state: RootState) => state.selectedFile.isLoading
   );
+  const playlistName = useRecoilValue(playlistNameState);
 
   const swalButton = Swal.mixin({
     customClass: {
@@ -132,6 +135,7 @@ export const UsePlayListEditor = ({
     dispatch(setIsEditing(false));
     dispatch(resetIsSaved());
     dispatch(updateImage(null));
+
     // if (compressedImage) {
     //   dispatch(updateImage(compressedImage));
     // }

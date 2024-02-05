@@ -46,12 +46,11 @@ export const EditProfile = ({
       <div className="fixed" style={{ top: top, left: left }}>
         <div className={`relative w-40 p-0 bg-white rounded-[10px] shadow-lg `}>
           <div className="p-1">
-            {userId === tokenId && (
+            {userId === tokenId && tokenId && (
               <div
                 className="block text-black hover:bg-gray-300 p-2 w-full text-center cursor-pointer"
                 onClick={openEditModal}
               >
-
                 프로필 편집
                 {/* Edit Profile */}
               </div>
@@ -60,10 +59,10 @@ export const EditProfile = ({
 
             <button
               className="block text-black hover:bg-gray-300 p-2 w-full text-center"
-              onClick={() => handleClick(`${baseUrl}${location.pathname}`)}>
+              onClick={() => handleClick(`${baseUrl}${location.pathname}`)}
+            >
               링크 복사하기
               {/* Copy Link */}
-
             </button>
           </div>
         </div>

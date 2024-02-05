@@ -1,29 +1,32 @@
+import { playlistNameState } from "@atoms/Playlist/playlistName";
 import CustomModal from "@utils/Modal/Modal";
 import { useCallback, useState } from "react";
 import { FaAngleLeft, FaEllipsisVertical } from "react-icons/fa6";
 import { useNavigate } from "react-router-dom";
+import { useRecoilValue } from "recoil";
 
 type MainEditButtonProps = {
   playlists: any[];
   uploadImage: string | null;
   token: string;
-  playlistName: string;
   musicData: any;
   playlistId: string | undefined;
   username: string | null;
   fetchPlaylist: () => void;
+  setPlaylistName: (name: string) => void;
 };
 
 export const MainEditButton = ({
   playlists,
   uploadImage,
   token,
-  playlistName,
   musicData,
   playlistId,
   username,
   fetchPlaylist,
+  setPlaylistName,
 }: MainEditButtonProps) => {
+  const playlistName = useRecoilValue(playlistNameState);
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -44,11 +47,12 @@ export const MainEditButton = ({
     playlists,
     uploadImage,
     token,
-    playlistName,
     musicData,
     playlistId,
     username,
     fetchPlaylist,
+    setPlaylistName,
+    playlistName,
   };
   return (
     <div className="flex h-[5%] smartPhoneXs:h-[3.5%] smartPhone:h-[3.5%] tabletMini:h-[3%] tablet:h-[3%] items-center justify-between m-3 text-[19px]">
@@ -56,7 +60,7 @@ export const MainEditButton = ({
         <FaAngleLeft size={24} />
       </button>
 
-      {compareId === tokenId && (
+      {compareId === tokenId && tokenId && (
         <>
           <p className="text-center">플레이리스트</p>
           <button
