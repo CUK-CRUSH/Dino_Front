@@ -40,6 +40,7 @@ const AdminPage: React.FC = () => {
   >();
 
   const { username } = useParams<{ username: string | undefined }>();
+
   localStorage.setItem("username", username ? username : "");
 
   const [isLoading, setIsLoding] = useState<boolean>(true);

@@ -27,8 +27,9 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
 
   const [uploadImage, setUploadImage] = useState<string | null>(null);
   const [playlists, setPlaylists] = useState<any[]>([]);
-  const [username, setUsername] = useState<string | null>(null);
+  const [usernames, setUsername] = useState<string | null>(null);
 
+  const { username } = useParams<{ username: string | undefined }>();
   const setPlaylistName = useSetRecoilState(playlistNameState);
   const [musicList, setMusicList] = useState<any>([]);
 
@@ -44,13 +45,13 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const handleUploadImage = (image: string) => setUploadImage(image);
   const fetchPlaylist = useCallback(async () => {
     // 항상 로컬 스토리지에서 username을 가져옴
-    let usernameToUse = localStorage.getItem("username") || "defaultUsername";
 
+    console.log(username);
     try {
-      const playlist = await getPlayList(usernameToUse);
+      const playlist = await getPlayList(username);
       const musicAPIData = await getMusicList(Number(playlistId));
 
-      setUsername(usernameToUse);
+      setUsername(username || null);
       setPlaylists(playlist.data);
       setMusicList(musicAPIData);
 
@@ -76,7 +77,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     token,
     musicData,
     playlistId,
-    username,
+    usernames,
     fetchPlaylist,
     setPlaylistName,
   });
@@ -98,7 +99,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
           token={token}
           musicData={musicData}
           playlistId={playlistId}
-          username={username}
+          usernames={usernames}
           fetchPlaylist={fetchPlaylist}
           setPlaylistName={setPlaylistName}
         />
@@ -125,14 +126,14 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         isEditing={isEditing}
         musicList={musicList}
         playlistId={playlistId}
-        username={username}
+        usernames={usernames}
         token={token}
         fetchPlaylist={fetchPlaylist}
       />
       {isEditing && musicList.data?.length < 9 && (
         <PlusButton
           playlists={playlists}
-          username={username}
+          usernames={usernames}
           playlistId={playlistId}
         />
       )}

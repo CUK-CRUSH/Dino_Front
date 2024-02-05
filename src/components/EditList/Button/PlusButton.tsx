@@ -4,9 +4,9 @@ import { useTranslation } from "react-i18next";
 
 export const PlusButton: React.FC<{
   playlists: any[];
-  username: string | null;
+  usernames: string | null;
   playlistId: string | undefined;
-}> = ({ playlists, username, playlistId }) => {
+}> = ({ playlists, usernames, playlistId }) => {
   const navigate = useNavigate();
   const handleAddMusicClick = () => {
     const currentPlaylist = playlists.find(
@@ -14,7 +14,7 @@ export const PlusButton: React.FC<{
     );
 
     if (currentPlaylist) {
-      navigate(`/user/${username}/${currentPlaylist.id}/edit`);
+      navigate(`/user/${usernames}/${currentPlaylist.id}/edit`);
     }
   };
   const { t } = useTranslation("Edit");

@@ -2,7 +2,7 @@ import { playlistNameState } from "@atoms/Playlist/playlistName";
 import CustomModal from "@utils/Modal/Modal";
 import { useCallback, useState } from "react";
 import { FaAngleLeft, FaEllipsisVertical } from "react-icons/fa6";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 
 type MainEditButtonProps = {
@@ -11,7 +11,7 @@ type MainEditButtonProps = {
   token: string;
   musicData: any;
   playlistId: string | undefined;
-  username: string | null;
+  usernames: string | null;
   fetchPlaylist: () => void;
   setPlaylistName: (name: string) => void;
 };
@@ -22,7 +22,7 @@ export const MainEditButton = ({
   token,
   musicData,
   playlistId,
-  username,
+  usernames,
   fetchPlaylist,
   setPlaylistName,
 }: MainEditButtonProps) => {
@@ -31,7 +31,7 @@ export const MainEditButton = ({
   const [modalOpen, setModalOpen] = useState(false);
 
   const tokenId = Number(localStorage.getItem("tokenId"));
-  const compareId = Number(localStorage.getItem("userId"));
+  const { username } = useParams<{ username: string | undefined }>();
 
   const handleBack = useCallback(() => {
     navigate(-1);
@@ -49,7 +49,7 @@ export const MainEditButton = ({
     token,
     musicData,
     playlistId,
-    username,
+    usernames,
     fetchPlaylist,
     setPlaylistName,
     playlistName,
@@ -60,7 +60,7 @@ export const MainEditButton = ({
         <FaAngleLeft size={24} />
       </button>
 
-      {compareId === tokenId && tokenId && (
+      {Number(username) === tokenId && tokenId && (
         <>
           <p className="text-center">플레이리스트</p>
           <button
