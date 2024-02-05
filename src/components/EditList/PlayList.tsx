@@ -18,6 +18,7 @@ import NotFound from "@pages/NotFound/NotFonud";
 import Footer from "@components/Layout/footer";
 import { useSetRecoilState } from "recoil";
 import { playlistNameState } from "@atoms/Playlist/playlistName";
+import { getMemberUsername } from "@api/member-controller/memberController";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
   const isEditing = useSelector(
@@ -26,6 +27,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const musicData = useSelector((state: RootState) => state.musicAdd);
 
   const [uploadImage, setUploadImage] = useState<string | null>(null);
+  const [memberId, setMemberId] = useState<number | null>(null);
   const [playlists, setPlaylists] = useState<any[]>([]);
   const [usernames, setUsername] = useState<string | null>(null);
 
@@ -48,9 +50,11 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
 
     console.log(username);
     try {
+      const member = await getMemberUsername(username);
       const playlist = await getPlayList(username);
       const musicAPIData = await getMusicList(Number(playlistId));
 
+      setMemberId(member.data.id);
       setUsername(username || null);
       setPlaylists(playlist.data);
       setMusicList(musicAPIData);
@@ -66,6 +70,8 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       setHasError(true);
     }
   }, [playlistId, setPlaylistName]);
+
+  console.log(playlists);
 
   const {
     handleEditClick,
@@ -89,7 +95,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   if (hasError) {
     return <NotFound />;
   }
-
+  console.log(memberId);
   return (
     <div className="h-full w-full scrollbar-hide overflow-scroll flex flex-col bg-black text-white font-medium leading-[18px]">
       {!isEditing && (
@@ -102,6 +108,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
           usernames={usernames}
           fetchPlaylist={fetchPlaylist}
           setPlaylistName={setPlaylistName}
+          memberId={memberId}
         />
       )}
       {isEditing && (

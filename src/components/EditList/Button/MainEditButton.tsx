@@ -14,6 +14,7 @@ type MainEditButtonProps = {
   usernames: string | null;
   fetchPlaylist: () => void;
   setPlaylistName: (name: string) => void;
+  memberId: number | null;
 };
 
 export const MainEditButton = ({
@@ -25,13 +26,13 @@ export const MainEditButton = ({
   usernames,
   fetchPlaylist,
   setPlaylistName,
+  memberId,
 }: MainEditButtonProps) => {
   const playlistName = useRecoilValue(playlistNameState);
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
 
   const tokenId = Number(localStorage.getItem("tokenId"));
-  const { username } = useParams<{ username: string | undefined }>();
 
   const handleBack = useCallback(() => {
     navigate(-1);
@@ -60,7 +61,7 @@ export const MainEditButton = ({
         <FaAngleLeft size={24} />
       </button>
 
-      {Number(username) === tokenId && tokenId && (
+      {memberId === tokenId && tokenId && (
         <>
           <p className="text-center">플레이리스트</p>
           <button
