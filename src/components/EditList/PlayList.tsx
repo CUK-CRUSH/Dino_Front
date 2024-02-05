@@ -16,7 +16,7 @@ import { useParams } from "react-router-dom";
 import ToastComponent from "@components/Toast/Toast";
 import NotFound from "@pages/NotFound/NotFonud";
 import Footer from "@components/Layout/footer";
-import { useRecoilState } from "recoil";
+import { useSetRecoilState } from "recoil";
 import { playlistNameState } from "@atoms/Playlist/playlistName";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
@@ -29,7 +29,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const [playlists, setPlaylists] = useState<any[]>([]);
   const [username, setUsername] = useState<string | null>(null);
 
-  const [playlistName, setPlaylistName] = useRecoilState(playlistNameState);
+  const setPlaylistName = useSetRecoilState(playlistNameState);
   const [musicList, setMusicList] = useState<any>([]);
 
   const [hasError, setHasError] = useState<boolean>(false);
