@@ -50,7 +50,6 @@ export const getNicknameAvailable = async (
     );
     return response.data;
   } catch (error) {
-    console.log(error);
     throw error;
   }
 };
@@ -65,7 +64,6 @@ export const getMemberMe = async (cookies?: string) => {
     });
     return response.data;
   } catch (error) {
-    console.log(error);
     throw error;
   }
 };
@@ -133,7 +131,6 @@ export const updateMember = async ({
     console.log(response);
     return response.data;
   } catch (error) {
-    console.error("Error updating member information:", error);
     throw error;
   }
 };

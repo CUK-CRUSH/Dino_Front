@@ -145,7 +145,7 @@ const AdminPage: React.FC = () => {
   const { toast } = useSelector((state: RootState) => state.toast);
 
   return (
-    <div className="relative w-full h-screen scrollbar-hide overflow-scroll flex flex-col bg-white">
+    <div className="relative w-full h-screen scrollbar-hide overflow-scroll flex flex-col bg-neutral-900">
       <UserProfileBackground
         userBackgroundImage={userData?.backgroundImageUrl}
       />
@@ -224,7 +224,8 @@ const AdminPage: React.FC = () => {
         ) : (
           <></>
         )}
-        <div className="mt-28 relative">
+
+        <div className="relative mt-[30px] h-[120px] transform -translate-y-100">
           <Footer bgColor="neutral-900" />
         </div>
       </div>

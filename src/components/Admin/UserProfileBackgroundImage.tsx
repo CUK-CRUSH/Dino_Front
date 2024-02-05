@@ -4,7 +4,7 @@ import { UserBackgroundImageDTO } from "types/Admin"
 import { Img } from "react-image";
 
 const UserProfileBackground = ({ userBackgroundImage }: UserBackgroundImageDTO) => {
-  const { profileBackgroundImage, deleteBackgroundImage } = useSelector(
+  const { profileBackgroundImage } = useSelector(
     (state: RootState) => state.userProfile
   );
   return (
@@ -12,7 +12,7 @@ const UserProfileBackground = ({ userBackgroundImage }: UserBackgroundImageDTO) 
     <div className="">
       {profileBackgroundImage ? (
         <Img
-          src={profileBackgroundImage} // Use profileBackgroundImage here
+          src={profileBackgroundImage} 
           alt="Selected"
           className="h-full w-full object-cover"
         />) : 
@@ -22,9 +22,7 @@ const UserProfileBackground = ({ userBackgroundImage }: UserBackgroundImageDTO) 
             alt="Selected"
             className="h-full w-full object-cover"
           />
-        ) :  deleteBackgroundImage ? (
-          null
-        ) : null}
+        ) : <div className="w-full h-[300px] bg-white"/>}
     </div>
   );
 };
