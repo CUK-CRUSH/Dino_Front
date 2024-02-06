@@ -2,16 +2,17 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   updateArtist,
   updateTitle,
-  updateURL,
+  updateUrl,
   updateImage,
   resetIsSaved,
+  clearMusic,
 } from "@reducer/musicadd";
 import { setIsEditing } from "@reducer/editPlayList/isEdit";
 import {
   deletePlayList,
   putPlayList,
 } from "@api/playlist-controller/playlistControl";
-import { postMusicList } from "@api/music-controller/musicControl";
+import { postMultipleMusicList } from "@api/music-controller/musicControl";
 import { useNavigate } from "react-router-dom";
 import { setToast } from "@reducer/Toast/toast";
 import { RootState } from "@store/index";
@@ -116,17 +117,9 @@ export const UsePlayListEditor = ({
       }
 
       // 이미지 저장이 완료된 후에 음악 추가를 진행하도록 변경
-      if (musicData && musicData.title && musicData.artist && musicData.url) {
-        await postMusicList(
-          id,
-          musicData.title,
-          musicData.artist,
-          musicData.url,
-          token
-        );
-        dispatch(updateTitle(""));
-        dispatch(updateArtist(""));
-        dispatch(updateURL(""));
+      if (musicData && musicData.musics && musicData.musics.length > 0) {
+        await postMultipleMusicList(id, musicData.musics, token);
+
         dispatch(updateImage(null));
       }
     }
@@ -145,11 +138,12 @@ export const UsePlayListEditor = ({
   const handleCancelClick = () => {
     dispatch(updateTitle(""));
     dispatch(updateArtist(""));
-    dispatch(updateURL(""));
+    dispatch(updateUrl(""));
     dispatch(updateImage(null));
     dispatch(setSelectedFile(null));
     dispatch(setIsEditing(false));
     dispatch(resetIsSaved());
+    dispatch(clearMusic());
   };
 
   //플리삭제

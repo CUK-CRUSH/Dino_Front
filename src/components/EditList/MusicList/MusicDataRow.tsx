@@ -30,8 +30,7 @@ export const MusicDataRow = ({
   );
   const [width, setWidth] = useState(0);
 
-  const musicAdd = useSelector((state: RootState) => state.musicAdd);
-  const { title, artist, url } = musicAdd;
+  const musicData = useSelector((state: RootState) => state.musicAdd);
   const { isSaved } = useSelector((state: RootState) => state.musicAdd);
 
   const elementRefs = useRef<(HTMLDivElement | null)[]>([]);
@@ -131,23 +130,25 @@ export const MusicDataRow = ({
             </div>
           )}
 
-          {isEditing && isSaved && musicList?.data && (
-            <MusicDataRowContent
-              musicData={{
-                title: title,
-                artist: artist,
-                url: url,
-                id: Date.now(),
-              }}
-              order={musicList.data.length + 1}
-              playlistId={playlistId}
-              usernames={usernames}
-              isEditing={isEditing}
-              token={token}
-              setWidth={setWidth}
-              fetchPlaylist={fetchPlaylist}
-            />
-          )}
+          {isEditing &&
+            isSaved &&
+            musicData.musics &&
+            musicData.musics.map((musicItem, index) => (
+              <MusicDataRowContent
+                key={Date.now() + index} // 고유한 키를 생성합니다.
+                musicData={{
+                  ...musicItem,
+                  id: Date.now() + index, // 고유한 id를 부여합니다.
+                }}
+                order={1 + index}
+                playlistId={playlistId}
+                usernames={usernames}
+                isEditing={isEditing}
+                token={token}
+                setWidth={setWidth}
+                fetchPlaylist={fetchPlaylist}
+              />
+            ))}
         </div>
       </div>
       <MusicLength musicList={musicList} />

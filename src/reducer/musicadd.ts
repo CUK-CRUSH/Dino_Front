@@ -1,34 +1,56 @@
-import { createSlice } from "@reduxjs/toolkit";
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-const initialState = {
-  title: "",
-  artist: "",
-  url: "",
+interface Music {
+  title: string;
+  artist: string;
+  url: string;
+}
+
+interface MusicAddState {
+  musics: Music[];
+  image: string | null;
+  isSaved: boolean;
+  title: string; // Add this line
+  artist: string; // Add this line
+  url: string; // Add this line
+}
+
+const initialState: MusicAddState = {
+  musics: [],
   image: null,
+  isSaved: false,
+  title: "", // Add this line
+  artist: "", // Add this line
+  url: "", // Add this line
 };
 
 const musicAddSlice = createSlice({
   name: "musicAdd",
-  initialState: { ...initialState, isSaved: false },
+  initialState,
   reducers: {
-    updateTitle: (state, action) => {
+    updateTitle: (state, action: PayloadAction<string>) => {
       state.title = action.payload;
     },
-    updateArtist: (state, action) => {
+    updateArtist: (state, action: PayloadAction<string>) => {
       state.artist = action.payload;
     },
-    updateURL: (state, action) => {
+    updateUrl: (state, action: PayloadAction<string>) => {
       state.url = action.payload;
     },
-    updateImage: (state, action) => {
+    updateMusic: (state, action: PayloadAction<Music>) => {
+      state.musics.push(action.payload);
+    },
+    updateImage: (state, action: PayloadAction<string | null>) => {
       state.image = action.payload;
     },
-
     saveMusic: (state) => {
       state.isSaved = true;
     },
     resetIsSaved: (state) => {
       state.isSaved = false;
+    },
+    clearMusic: (state) => {
+      state.musics = [];
     },
   },
 });
@@ -36,9 +58,11 @@ const musicAddSlice = createSlice({
 export const {
   updateTitle,
   updateArtist,
-  updateURL,
+  updateUrl,
+  updateMusic,
   updateImage,
   saveMusic,
   resetIsSaved,
+  clearMusic,
 } = musicAddSlice.actions;
 export default musicAddSlice.reducer;
