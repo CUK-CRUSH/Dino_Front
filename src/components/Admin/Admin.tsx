@@ -171,6 +171,13 @@ const AdminPage: React.FC = () => {
         />
       )}
 
+      {/* 프로필 실패 토스트 */}
+      {toast === "not_profile" && (
+        <ToastComponent
+          background="white"
+          text="프로필이 수정을 실패했습니다 !"
+        />
+      )}
       {/* 복사 성공 토스트 */}
 
       {toast === "copy" && (
@@ -214,10 +221,10 @@ const AdminPage: React.FC = () => {
           ))}
 
         {!isLoading &&
-        userId === tokenId &&
-        tokenId &&
-        playlistData?.length !== undefined &&
-        playlistData.length < 4 ? (
+          userId === tokenId &&
+          tokenId &&
+          playlistData?.length !== undefined &&
+          playlistData.length < 4 ? (
           <AddPlayList />
         ) : (
           <></>

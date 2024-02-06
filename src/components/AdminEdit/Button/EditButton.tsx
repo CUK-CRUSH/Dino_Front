@@ -8,7 +8,7 @@ const EditButton = ({ save, cancel, updateMemberData }: EditButtonDTO) => {
         {/* Cancel */}
       </button>
       <button
-        onClick={() => save(updateMemberData)}
+        onClick={() => { if (save) save(updateMemberData) }}
         className="text-gray-800 mr-[10px]"
       >
         저장

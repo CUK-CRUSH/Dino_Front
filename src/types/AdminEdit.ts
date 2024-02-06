@@ -10,7 +10,7 @@ export interface UpdateMemberParams {
 }
 
 export interface EditButtonDTO {
-  save: (updateMemberData: UpdateMemberParams) => void;
+  save: ((updateMemberData: UpdateMemberParams) => void) ;
   cancel : () => void;
   updateMemberData: UpdateMemberParams;
   }

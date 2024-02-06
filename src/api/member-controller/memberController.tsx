@@ -131,6 +131,7 @@ export const updateMember = async ({
     console.log(response);
     return response.data;
   } catch (error) {
+    console.log(error)
     throw error;
   }
 };
