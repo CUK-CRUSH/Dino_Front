@@ -180,6 +180,20 @@ const AddMusic: React.FC = () => {
     if (!musicId) {
       dispatch(setIsEditMusics(false));
     }
+    navigator.clipboard.readText().then((clipText) => {
+      // 클립보드의 값이 YouTube URL인 경우에만 상태를 설정
+      if (
+        clipText.startsWith("https://www.youtube.com/") ||
+        clipText.startsWith("https://youtu.be/") ||
+        clipText.startsWith("https://youtube.com/")
+      ) {
+        if (isEditMusics) {
+          dispatch(updateMusicUrl(clipText));
+        } else {
+          dispatch(updateURL(clipText));
+        }
+      }
+    });
   }, [
     title,
     artist,
@@ -203,7 +217,13 @@ const AddMusic: React.FC = () => {
           required={true}
           onChange={handleTitleChange}
           suggestions={suggestions["title"]}
-          onSuggestionClick={(suggestion) => dispatch(updateTitle(suggestion))}
+          onSuggestionClick={(suggestion) => {
+            if (isEditMusics) {
+              dispatch(updateMusicTitle(suggestion));
+            } else {
+              dispatch(updateTitle(suggestion));
+            }
+          }}
         />
         <AddMusicInput
           label={t("artist")}
@@ -212,7 +232,13 @@ const AddMusic: React.FC = () => {
           required={true}
           onChange={handleArtistChange}
           suggestions={suggestions["artist"]}
-          onSuggestionClick={(suggestion) => dispatch(updateArtist(suggestion))}
+          onSuggestionClick={(suggestion) => {
+            if (isEditMusics) {
+              dispatch(updateMusicArtist(suggestion));
+            } else {
+              dispatch(updateArtist(suggestion));
+            }
+          }}
         />
         <AddMusicInput
           label="URL"
