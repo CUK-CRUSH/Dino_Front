@@ -19,8 +19,6 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   setDeleteProfileBackgroundImage,
   setDeleteProfileImage,
-  setProfileBackgroundImage,
-  setProfileImage,
   setProfileIntroduction,
   setProfileUsername,
 } from "@reducer/Admin/userProfileSlice";
@@ -29,6 +27,7 @@ import { setToast } from "@reducer/Toast/toast";
 import { checkBadWord } from "@utils/checkBadWord/checkBadWord";
 import ToastComponent from "@components/Toast/Toast";
 import { useMemberDataUpdate } from "@hooks/useMemberDataUpdate";
+import { useHandleImageUpdates } from "@hooks/useHandleImageUpdates/useHandleImageUpdates";
 
 interface AdminEditModalProps {
   onClose: () => void; // A function to close the modal
@@ -44,6 +43,8 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
   // 유효상태
   const [nicknameValidation, setNicknameValidation] = useState<boolean>(true);
+
+  const handleImageUpdates = useHandleImageUpdates();
 
   // 정보불러오기
   useEffect(() => {
@@ -272,25 +273,13 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
       if (code.status === 200) {
 
-        // 존재 폴스 변경 존재 트루 삭제 후 변경
-        if (uploadUserProfileImage) {
-          dispatch(setProfileImage(uploadUserProfileImage));
-        }
+        handleImageUpdates({ 
+          uploadUserProfileImage: uploadUserProfileImage,
+          deleteProfileImage: deleteProfileImage,
+          uploadUserProfileBackgroundImage: uploadUserProfileBackgroundImage,
+          deleteBackgroundImage: deleteBackgroundImage
+        });
 
-        // 눌 폴스 변경 x 눌 트루 삭제
-        if (deleteProfileImage) {
-          dispatch(setProfileImage(null));
-        }
-
-        if (uploadUserProfileBackgroundImage) {
-          dispatch(setProfileBackgroundImage(uploadUserProfileBackgroundImage));
-        }
-        if (deleteBackgroundImage) {
-          dispatch(setProfileBackgroundImage(null));
-        }
-
-        dispatch(setDeleteProfileImage(false));
-        dispatch(setDeleteProfileBackgroundImage(false));
         navigate(`/user/${code.data.username}`);
       }
 
