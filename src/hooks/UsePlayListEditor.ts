@@ -119,7 +119,7 @@ export const UsePlayListEditor = ({
       // 이미지 저장이 완료된 후에 음악 추가를 진행하도록 변경
       if (musicData && musicData.musics && musicData.musics.length > 0) {
         await postMultipleMusicList(id, musicData.musics, token);
-
+        dispatch(clearMusic());
         dispatch(updateImage(null));
       }
     }

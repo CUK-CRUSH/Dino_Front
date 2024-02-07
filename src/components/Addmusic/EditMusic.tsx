@@ -1,28 +1,29 @@
 import React, { useCallback, useEffect, useState } from "react";
-import {
-  saveMusic,
-  updateArtist,
-  updateMusic,
-  updateTitle,
-  updateUrl,
-} from "@reducer/musicadd";
+import { updateArtist, updateTitle, updateUrl } from "@reducer/musicadd";
 import { RootState } from "@store/index";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { toggleShowInformation } from "@reducer/toggle/addMusicToggle";
 import { AddMusicInput } from "@components/Addmusic/AddMusicInput";
 import Swal from "sweetalert2";
-import AddButton from "@components/Addmusic/Button/AddButton";
 import AddMusicTitle from "@components/Addmusic/Title/AddMusicTitle";
 import AddBackButton from "@components/Addmusic/Button/AddBackButton";
 import { useTranslation } from "react-i18next";
 import { playAutoComplete } from "@api/AutoComplete/AutocompleteControl";
+import EditButton from "./Button/EditButton";
+import { patchMusicList } from "@api/music-controller/musicControl";
+import { useCookies } from "react-cookie";
 
-const AddMusic: React.FC = () => {
+const EditMusic: React.FC = () => {
   const { t } = useTranslation("AddMusic");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { musicId } = useParams();
+
+  // 쿠키에서 유저 id 가져오기
+  const [cookies] = useCookies(["accessToken"]);
+  const token = cookies.accessToken;
+  //
 
   const [suggestions, setSuggestions] = useState<{ [key: string]: string[] }>(
     {}
@@ -65,7 +66,11 @@ const AddMusic: React.FC = () => {
     dispatch(toggleShowInformation());
   }, [dispatch]);
 
-  const handleSave = useCallback(async () => {
+  const handleBack = useCallback(() => {
+    navigate(-1);
+  }, [navigate]);
+
+  const handlePatchClick = async () => {
     if (
       !url.startsWith("https://www.youtube.com/") &&
       !url.startsWith("https://youtu.be/") &&
@@ -81,8 +86,7 @@ const AddMusic: React.FC = () => {
     }
 
     try {
-      dispatch(updateMusic({ title, artist, url }));
-      dispatch(saveMusic());
+      await patchMusicList(Number(musicId), title, artist, url, token);
       dispatch(updateTitle(""));
       dispatch(updateArtist(""));
       dispatch(updateUrl(""));
@@ -94,14 +98,7 @@ const AddMusic: React.FC = () => {
         text: "Something went wrong!",
       });
     }
-  }, [navigate, url, dispatch, artist, title, t]);
-
-  const handleBack = useCallback(() => {
-    dispatch(updateTitle(""));
-    dispatch(updateArtist(""));
-    dispatch(updateUrl(""));
-    navigate(-1);
-  }, [navigate]);
+  };
 
   useEffect(() => {
     fetchAutoComplete("title", title);
@@ -118,12 +115,11 @@ const AddMusic: React.FC = () => {
       }
     });
   }, [title, artist, fetchAutoComplete, dispatch, musicId]);
-  console.log(musicData);
 
   return (
     <div className="relative z-30 h-full w-full flex flex-col bg-black text-white py-10 text-[17px] leading-[18px]">
       <AddBackButton handleBack={handleBack} />
-      <AddMusicTitle title={t("musicTitle")} />
+      <AddMusicTitle title={"음악 수정하기"} />
       <div className="space-y-8 mx-4">
         <AddMusicInput
           label={t("title")}
@@ -158,10 +154,10 @@ const AddMusic: React.FC = () => {
           infoToggleHandler={handleInformationToggle}
         />
 
-        <AddButton handleSave={handleSave} plusText={t("plus")} />
+        <EditButton handlePatch={handlePatchClick} plusText={t("edit")} />
       </div>
     </div>
   );
 };
 
-export default AddMusic;
+export default EditMusic;

@@ -1,17 +1,14 @@
 import { MusicDataRowContentProps } from "types/EditplayList";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setIsEditMusics } from "@reducer/editMusic/editMusic";
+import { useDispatch, useSelector } from "react-redux";
 import "@styles/EditList/playList.css";
 import Swal from "sweetalert2";
 import { deleteMusicList } from "@api/music-controller/musicControl";
 import { useEffect, useRef, useState } from "react";
 import ToastComponent from "@components/Toast/Toast";
 import { setToast } from "@reducer/Toast/toast";
-import { useSelector } from "react-redux";
 import { RootState } from "@store/index";
-import { setMusicData } from "@reducer/editMusic/editMusicData";
 
 export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   musicData,
@@ -45,9 +42,7 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   const dispatch = useDispatch();
   const handleEditClick = () => {
     if (isEditing) {
-      dispatch(setMusicData(musicData));
       navigate(`/user/${usernames}/${playlistId}/edit/${musicData.id}`);
-      dispatch(setIsEditMusics(true));
     }
   };
 
