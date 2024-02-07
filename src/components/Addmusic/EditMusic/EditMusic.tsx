@@ -108,16 +108,6 @@ const EditMusic: React.FC = () => {
     fetchAutoComplete("title", title);
     fetchAutoComplete("artist", artist);
 
-    navigator.clipboard.readText().then((clipText) => {
-      // 클립보드의 값이 YouTube URL인 경우에만 상태를 설정
-      if (
-        clipText.startsWith("https://www.youtube.com/") ||
-        clipText.startsWith("https://youtu.be/") ||
-        clipText.startsWith("https://youtube.com/")
-      ) {
-        dispatch(updateUrl(clipText));
-      }
-    });
   }, [title, artist, fetchAutoComplete, dispatch, musicId]);
 
   return (
