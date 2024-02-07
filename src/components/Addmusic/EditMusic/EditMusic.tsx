@@ -72,7 +72,7 @@ const EditMusic: React.FC = () => {
     dispatch(updateArtist(""));
     dispatch(updateUrl(""));
     navigate(-1);
-  }, [navigate]);
+  }, [navigate, dispatch]);
 
   const handlePatchClick = async () => {
     if (

@@ -101,7 +101,7 @@ const AddMusic: React.FC = () => {
     dispatch(updateArtist(""));
     dispatch(updateUrl(""));
     navigate(-1);
-  }, [navigate]);
+  }, [navigate, dispatch]);
 
   useEffect(() => {
     fetchAutoComplete("title", title);
