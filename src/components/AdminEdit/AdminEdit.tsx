@@ -178,7 +178,7 @@ const handleCompressUserProfileImage = useCallback(async () => {
   } 
 
   dispatch(setDeleteProfileImage(false));
-}, [uploadUserProfileImage, dispatch, compressImage]);
+}, [uploadUserProfileImage, dispatch]);
 
   useEffect(() => {
     if (uploadUserProfileImage) {
@@ -221,7 +221,7 @@ const handleCompressUserProfileImage = useCallback(async () => {
   } 
 
     dispatch(setDeleteProfileBackgroundImage(false));
-  }, [uploadUserProfileBackgroundImage, dispatch, compressImage]);
+  }, [uploadUserProfileBackgroundImage, dispatch]);
 
   useEffect(() => {
     if (uploadUserProfileBackgroundImage) {
