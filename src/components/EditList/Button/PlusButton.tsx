@@ -19,7 +19,7 @@ export const PlusButton: React.FC<{
   };
   const { t } = useTranslation("Edit");
   return (
-    <div className="flex justify-center items-center h-screen text-black">
+    <div className="flex justify-center items-center text-black">
       <button
         className="w-[191px] h-[50px] flex justify-center items-center flex-row bg-white rounded-[50px] space-x-2"
         onClick={handleAddMusicClick}

@@ -3,7 +3,7 @@ import {
   updateArtist,
   updateImage,
   updateTitle,
-  updateURL,
+  updateUrl,
 } from "@reducer/musicadd";
 import { usePreviousLocation } from "@utils/RouteRedux/isRouting";
 import React, { useEffect, useCallback } from "react";
@@ -20,7 +20,7 @@ const Layout: React.FC<LayoutDTO> = ({ children }) => {
   const resetEditingState = useCallback(() => {
     dispatch(updateTitle(""));
     dispatch(updateArtist(""));
-    dispatch(updateURL(""));
+    dispatch(updateUrl(""));
     dispatch(updateImage(null));
     dispatch(setIsEditing(false));
   }, [dispatch]);

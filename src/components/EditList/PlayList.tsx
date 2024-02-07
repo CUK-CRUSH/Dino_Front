@@ -48,7 +48,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const fetchPlaylist = useCallback(async () => {
     // 항상 로컬 스토리지에서 username을 가져옴
 
-    console.log(username);
     try {
       const member = await getMemberUsername(username);
       const playlist = await getPlayList(username);
@@ -70,8 +69,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       setHasError(true);
     }
   }, [playlistId, setPlaylistName, username]);
-
-  console.log(playlists);
 
   const {
     handleEditClick,
@@ -95,7 +92,8 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   if (hasError) {
     return <NotFound />;
   }
-  console.log(memberId);
+  // console.log(musicData);
+  // console.log(musicList);
   return (
     <div className="h-full w-full scrollbar-hide overflow-scroll flex flex-col bg-black text-white font-medium leading-[18px]">
       {!isEditing && (
@@ -137,14 +135,14 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         token={token}
         fetchPlaylist={fetchPlaylist}
       />
-      {isEditing && musicList.data?.length < 9 && (
+      {isEditing && musicList.data?.length + musicData.musics.length < 9 && (
         <PlusButton
           playlists={playlists}
           usernames={usernames}
           playlistId={playlistId}
         />
       )}
-      <Footer bgColor="black" />{" "}
+      <Footer bgColor="black" />
       {toast === "editPlayList" && (
         <ToastComponent
           background="white"
