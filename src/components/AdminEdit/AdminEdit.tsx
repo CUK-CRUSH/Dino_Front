@@ -295,7 +295,6 @@ const handleCompressUserProfileImage = useCallback(async () => {
   }, [nicknameValidation, dispatch]);
 
   const handleMember = async (data: UpdateMemberParams) => {
-    console.log("Saving data:", data);
 
     // 저장하고 같은 닉네임을 저장할때
     if (updateMemberData.username === input.username) {

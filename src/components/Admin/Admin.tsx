@@ -15,6 +15,8 @@ import ToastComponent from "@components/Toast/Toast";
 import { useSelector } from "react-redux";
 import { RootState } from "@store/index";
 import Footer from "@components/Layout/footer";
+import { useCookies } from "react-cookie";
+import InduceButton from "@components/AdminEdit/Button/IndeceButton";
 
 const AdminPage: React.FC = () => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -43,6 +45,18 @@ const AdminPage: React.FC = () => {
   localStorage.setItem("username", username ? username : "");
 
   const [isLoading, setIsLoding] = useState<boolean>(true);
+
+  const [induceLogin, setInduceLogin] = useState<boolean>(false);
+  // 쿠키
+  const [cookies] = useCookies(["accessToken"]);
+  
+  useEffect(()=>{
+    if(!cookies.accessToken){
+      setInduceLogin(false);
+    } else {
+      setInduceLogin(true);
+    }
+  },[cookies.accessToken]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -148,7 +162,9 @@ const AdminPage: React.FC = () => {
       <UserProfileBackground
         userBackgroundImage={userData?.backgroundImageUrl}
       />
-
+      {/* 로그인 여부 */}
+      {/* {!induceLogin ? <InduceButton /> : <></>} */}
+      
       {/* 플레이리스트 생성 성공 토스트 */}
 
       {toast === "add" && (
