@@ -92,6 +92,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   if (hasError) {
     return <NotFound />;
   }
+  // console.log(musicData);
   // console.log(musicList);
   return (
     <div className="h-full w-full scrollbar-hide overflow-scroll flex flex-col bg-black text-white font-medium leading-[18px]">
@@ -134,7 +135,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         token={token}
         fetchPlaylist={fetchPlaylist}
       />
-      {isEditing && musicList.data?.length < 9 && (
+      {isEditing && musicList.data?.length + musicData.musics.length < 9 && (
         <PlusButton
           playlists={playlists}
           usernames={usernames}

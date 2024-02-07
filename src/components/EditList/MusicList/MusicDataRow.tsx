@@ -34,7 +34,6 @@ export const MusicDataRow = ({
   const { isSaved } = useSelector((state: RootState) => state.musicAdd);
 
   const elementRefs = useRef<(HTMLDivElement | null)[]>([]);
-
   const handleVideoSelection = useCallback(
     (url: string, index: number) => {
       if (selectedVideoIndex === index) {
@@ -140,7 +139,7 @@ export const MusicDataRow = ({
                   ...musicItem,
                   id: Date.now() + index, // 고유한 id를 부여합니다.
                 }}
-                order={1 + index}
+                order={1 + index + musicList?.data?.length}
                 playlistId={playlistId}
                 usernames={usernames}
                 isEditing={isEditing}
