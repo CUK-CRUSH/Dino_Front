@@ -9,6 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import ToastComponent from "@components/Toast/Toast";
 import { setToast } from "@reducer/Toast/toast";
 import { RootState } from "@store/index";
+import { updateArtist, updateTitle } from "@reducer/musicadd";
 
 export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   musicData,
@@ -40,8 +41,11 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const handleEditClick = () => {
     if (isEditing && musicData.id < 100000) {
+      dispatch(updateTitle(musicData.title));
+      dispatch(updateArtist(musicData.artist));
       navigate(`/user/${usernames}/${playlistId}/edit/${musicData.id}`);
     }
   };

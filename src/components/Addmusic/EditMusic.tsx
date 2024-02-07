@@ -19,6 +19,7 @@ const EditMusic: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { musicId } = useParams();
+  // recoil에서 id에 맞는 title, artist 가져옴(빈칸채우기)
 
   // 쿠키에서 유저 id 가져오기
   const [cookies] = useCookies(["accessToken"]);
