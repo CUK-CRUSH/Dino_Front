@@ -41,7 +41,7 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const handleEditClick = () => {
-    if (isEditing) {
+    if (isEditing && musicData.id < 100000) {
       navigate(`/user/${usernames}/${playlistId}/edit/${musicData.id}`);
     }
   };
@@ -94,7 +94,10 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   const TitleLength = titleWidth >= 205;
   const ArtistLength = artistWidth >= 105;
   return (
-    <div ref={contentRef} className="flex justify-between h-[50px] mb-2 mx-2">
+    <div
+      ref={contentRef}
+      className="relative flex justify-between h-[50px] mb-2 mx-2"
+    >
       <div
         onClick={handleEditClick}
         className={`flex flex-row ${
@@ -128,13 +131,19 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
             </span>
           </div>
         </div>
-      </div>{" "}
-      <div
-        onClick={handleDeleteClick}
-        className={`flex ml-2 mx-1 items-center ${isEditing ? "" : "hidden"}`}
-      >
-        <RiDeleteBin6Fill size={20} className="text-[#FF0000] cursor-pointer" />
       </div>
+      {isEditing && musicData.id < 100000 && (
+        <div
+          onClick={handleDeleteClick}
+          className={`flex ml-2 mx-1 items-center absolute bottom-4 right-2`}
+        >
+          <RiDeleteBin6Fill
+            size={20}
+            className="text-[#FF0000] cursor-pointer"
+          />
+        </div>
+      )}
+
       {toast === "delete" && (
         <ToastComponent background="white" text="노래가 삭제되었습니다." />
       )}

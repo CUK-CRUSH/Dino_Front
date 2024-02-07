@@ -67,6 +67,9 @@ const EditMusic: React.FC = () => {
   }, [dispatch]);
 
   const handleBack = useCallback(() => {
+    dispatch(updateTitle(""));
+    dispatch(updateArtist(""));
+    dispatch(updateUrl(""));
     navigate(-1);
   }, [navigate]);
 

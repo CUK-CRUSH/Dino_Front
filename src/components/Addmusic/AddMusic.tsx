@@ -118,7 +118,6 @@ const AddMusic: React.FC = () => {
       }
     });
   }, [title, artist, fetchAutoComplete, dispatch, musicId]);
-  console.log(musicData);
 
   return (
     <div className="relative z-30 h-full w-full flex flex-col bg-black text-white py-10 text-[17px] leading-[18px]">
