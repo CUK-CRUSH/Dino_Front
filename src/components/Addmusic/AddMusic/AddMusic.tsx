@@ -12,11 +12,9 @@ import { GoArrowSwitch } from "react-icons/go";
 import { RootState } from "@store/index";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { toggleShowInformation } from "@reducer/toggle/addMusicToggle";
 import { AddMusicInput } from "@components/Addmusic/AddMusicInput";
 import Swal from "sweetalert2";
 import AddButton from "@components/Addmusic/Button/AddButton";
-import MusicTitle from "@components/Addmusic/Title/MusicTitle";
 import AddBackButton from "@components/Addmusic/Button/AddBackButton";
 import { useTranslation } from "react-i18next";
 import { playAutoComplete } from "@api/AutoComplete/AutocompleteControl";
@@ -84,7 +82,7 @@ const AddMusic: React.FC = () => {
 
   const musicData = useSelector((state: RootState) => state.musicAdd);
   const { title, artist, url } = musicData;
-
+  console.log(title);
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(updateTitle(e.target.value));
   };
@@ -96,14 +94,6 @@ const AddMusic: React.FC = () => {
   const handleURLChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(updateUrl(e.target.value));
   };
-
-  const { showInformation } = useSelector(
-    (state: RootState) => state.addMusicInformationToggle
-  );
-
-  const handleInformationToggle = useCallback(() => {
-    dispatch(toggleShowInformation());
-  }, [dispatch]);
 
   const handleSave = useCallback(async () => {
     if (
@@ -204,6 +194,7 @@ const AddMusic: React.FC = () => {
       {searchClick && (
         <div className="space-y-8 mx-4">
           <AddMusicInput
+            type="text"
             label={t("title")}
             placeholder={t("title")}
             value={title}
@@ -215,6 +206,7 @@ const AddMusic: React.FC = () => {
             }}
           />
           <AddMusicInput
+            type="text"
             label={t("artist")}
             placeholder={t("artist")}
             value={artist}
@@ -226,14 +218,12 @@ const AddMusic: React.FC = () => {
             }}
           />
           <AddMusicInput
+            type="url"
             label="URL"
             placeholder="https://youtu.be"
             value={url}
             required={true}
             onChange={handleURLChange}
-            infoButton={true}
-            infoText={showInformation ? t("toggle") : ""}
-            infoToggleHandler={handleInformationToggle}
           />
 
           <AddButton handleSave={handleSave} plusText={t("plus")} />

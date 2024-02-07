@@ -1,6 +1,10 @@
 import { MusicInputDTO } from "types/Addmusic/AddMusic";
-import React, { useEffect, useRef, useState } from "react";
-import { IoInformationCircleOutline } from "react-icons/io5";
+import { MdCancel } from "react-icons/md";
+import React, { useCallback, useEffect, useRef, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useDispatch } from "react-redux";
+import { updateArtist, updateTitle, updateUrl } from "@reducer/musicadd";
+import { AnyAction } from "@reduxjs/toolkit";
 
 export const AddMusicInput: React.FC<MusicInputDTO> = ({
   label,
@@ -8,14 +12,14 @@ export const AddMusicInput: React.FC<MusicInputDTO> = ({
   value,
   required,
   onChange,
-  infoButton = false,
-  infoText = "",
-  infoToggleHandler = () => {},
   suggestions = [],
   onSuggestionClick,
+  type,
 }) => {
+  const { t } = useTranslation("AddMusic");
   const [isSuggestionsVisible, setIsSuggestionsVisible] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
+  const dispatch = useDispatch();
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -32,34 +36,86 @@ export const AddMusicInput: React.FC<MusicInputDTO> = ({
     };
   }, []);
 
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    onChange(e);
-    setIsSuggestionsVisible(true);
-  };
+  const handleChange = useCallback(
+    (e: React.ChangeEvent<HTMLInputElement>) => {
+      onChange(e);
+      setIsSuggestionsVisible(true);
+    },
+    [onChange]
+  );
 
-  const handleSuggestionClick = (suggestion: string) => {
-    if (onSuggestionClick) {
-      onSuggestionClick(suggestion);
+  const handleSuggestionClick = useCallback(
+    (suggestion: string) => {
+      if (onSuggestionClick) {
+        onSuggestionClick(suggestion);
+      }
+      setIsSuggestionsVisible(false);
+    },
+    [onSuggestionClick]
+  );
+
+  const handleCopyClipBoard = useCallback(async () => {
+    try {
+      const text = await navigator.clipboard.readText();
+      const youtubeUrlPattern =
+        /^(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?\/.+/;
+      if (!youtubeUrlPattern.test(text)) {
+        alert("클립보드의 내용이 유튜브 링크가 아닙니다.");
+        return;
+      }
+      onChange({
+        target: { value: text },
+      } as React.ChangeEvent<HTMLInputElement>);
+    } catch (e) {
+      console.error(e);
     }
-    setIsSuggestionsVisible(false);
-  };
+  }, []);
+  const handleClear = useCallback(
+    (action: () => AnyAction) => {
+      dispatch(action());
+    },
+    [dispatch]
+  );
 
   return (
     <div className="relative" ref={wrapperRef}>
       <div className="flex flex-row ">
         <h3 className="text-[17px] leading-[18px] mb-3 mr-1">{label}</h3>
-        <div className="mt-[3px]">
-          {infoButton && (
-            <IoInformationCircleOutline
-              onClick={infoToggleHandler}
-              color="white"
-              className="cursor-pointer"
-            />
-          )}
-        </div>
       </div>
+      {label === t("title") && (
+        <button
+          onClick={() => handleClear(() => updateTitle(""))}
+          className="absolute top-[42px] right-3 text-[10px] bg-[#2E2E2E] p-1 rounded-lg"
+        >
+          <MdCancel size={20} color="red" />
+        </button>
+      )}
+      {label === t("artist") && (
+        <button
+          onClick={() => handleClear(() => updateArtist(""))}
+          className="absolute top-[42px] right-3 text-[10px] bg-[#2E2E2E] p-1 rounded-lg"
+        >
+          <MdCancel size={20} color="red" />
+        </button>
+      )}
+      {label === "URL" && (
+        <>
+          <button
+            className="absolute -top-1 left-10 text-[10px] bg-[#2E2E2E] p-1 rounded-lg"
+            onClick={handleCopyClipBoard}
+          >
+            붙여넣기
+          </button>
+          <button
+            onClick={() => handleClear(() => updateUrl(""))}
+            className="absolute top-[42px] right-3 text-[10px] bg-[#2E2E2E] p-1 rounded-lg"
+          >
+            <MdCancel size={20} color="red" />
+          </button>
+        </>
+      )}
       <input
-        type={infoButton ? "url" : "text"}
+        type={type}
         placeholder={placeholder}
         className="w-full px-2 py-4 border bg-black border-white rounded-[12px]"
         value={value}
@@ -82,12 +138,6 @@ export const AddMusicInput: React.FC<MusicInputDTO> = ({
               <p className="m-1">{suggestion}</p>
             </div>
           ))}
-        </div>
-      )}
-
-      {infoButton && infoText && (
-        <div className="absolute -bottom-16 w-full px-2 py-3 bg-[#3B3B3B] rounded-xl">
-          <p>{infoText}</p>
         </div>
       )}
     </div>

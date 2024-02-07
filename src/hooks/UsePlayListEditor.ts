@@ -117,10 +117,25 @@ export const UsePlayListEditor = ({
       }
 
       // 이미지 저장이 완료된 후에 음악 추가를 진행하도록 변경
-      if (musicData && musicData.musics && musicData.musics.length > 0) {
-        await postMultipleMusicList(id, musicData.musics, token);
-        dispatch(clearMusic());
-        dispatch(updateImage(null));
+
+      try {
+        if (musicData && musicData.musics && musicData.musics.length > 0) {
+          await postMultipleMusicList(id, musicData.musics, token);
+          dispatch(clearMusic());
+          dispatch(updateImage(null));
+        }
+      } catch (error: any) {
+        if (error.response && error.response.status === 400) {
+          swalButton.fire({
+            title: "URL 형식을 어긋났습니다.",
+            html: "유튜브 영상링크가 포함된 URL을 입력해주세요.",
+            showCancelButton: true,
+            confirmButtonColor: "blue",
+            cancelButtonColor: "#d33",
+          });
+        }
+
+        console.error(error);
       }
     }
 
