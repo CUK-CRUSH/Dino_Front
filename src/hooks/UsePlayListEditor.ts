@@ -99,7 +99,7 @@ export const UsePlayListEditor = ({
         const compressedFile = await compressImage(selectedFile);
         if (compressedFile) {
           try {
-            const result = await readImageFile(compressedFile);
+            const result = await readImageFile(compressedFile.compressedFile);
             if (!isLoading) {
               await putPlayList(id, null, result, token);
               dispatch(updateImage(result));

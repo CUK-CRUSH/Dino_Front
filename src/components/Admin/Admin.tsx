@@ -17,7 +17,6 @@ import { RootState } from "@store/index";
 import Footer from "@components/Layout/footer";
 
 const AdminPage: React.FC = () => {
-  // console.log(Cookies.get("accessToken"))
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const tokenId = Number(localStorage.getItem("tokenId"));
@@ -49,7 +48,6 @@ const AdminPage: React.FC = () => {
     const fetchData = async () => {
       try {
         const userDataResult = await getMemberUsername(username);
-        // Cookies.set('accessToken', 'accessToken');
 
         setUserdata(userDataResult.data);
         if (userDataResult.data?.id) {
@@ -174,6 +172,13 @@ const AdminPage: React.FC = () => {
         />
       )}
 
+      {/* 프로필 실패 토스트 */}
+      {toast === "not_profile" && (
+        <ToastComponent
+          background="white"
+          text="프로필이 수정을 실패했습니다 !"
+        />
+      )}
       {/* 복사 성공 토스트 */}
 
       {toast === "copy" && (
@@ -217,10 +222,10 @@ const AdminPage: React.FC = () => {
           ))}
 
         {!isLoading &&
-        userId === tokenId &&
-        tokenId &&
-        playlistData?.length !== undefined &&
-        playlistData.length < 4 ? (
+          userId === tokenId &&
+          tokenId &&
+          playlistData?.length !== undefined &&
+          playlistData.length < 4 ? (
           <AddPlayList />
         ) : (
           <></>
