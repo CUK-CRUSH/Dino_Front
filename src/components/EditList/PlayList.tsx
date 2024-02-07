@@ -141,7 +141,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
           playlistId={playlistId}
         />
       )}
-      <Footer bgColor="black" />{" "}
+      <Footer bgColor="black" />
       {toast === "editPlayList" && (
         <ToastComponent
           background="white"
