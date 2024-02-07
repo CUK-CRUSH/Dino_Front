@@ -56,7 +56,7 @@ const AdminPage: React.FC = () => {
     } else {
       setInduceLogin(true);
     }
-  },[cookies.accessToken]);
+  },[]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -158,7 +158,8 @@ const AdminPage: React.FC = () => {
   const { toast } = useSelector((state: RootState) => state.toast);
 
   return (
-    <div className="relative w-full h-screen scrollbar-hide overflow-scroll flex flex-col bg-neutral-900">
+
+    <div className="relative w-full h-full scrollbar-hide overflow-scroll flex flex-col justify-between bg-neutral-900">
       <UserProfileBackground
         userBackgroundImage={userData?.backgroundImageUrl}
       />
@@ -201,7 +202,7 @@ const AdminPage: React.FC = () => {
         <ToastComponent background="white" text="링크가 복사되었습니다." />
       )}
 
-      <div className="h-auto w-full left-0 top-[165px] absolute bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px] ">
+      <div className="w-full bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px] -mt-[190px]">
         {/* ... 설정창 */}
         {
           <OpenOption
@@ -247,10 +248,9 @@ const AdminPage: React.FC = () => {
           <></>
         )}
 
-        <div className="relative mt-[30px] h-[120px] transform -translate-y-100">
-          <Footer bgColor="neutral-900" />
-        </div>
       </div>
+      <Footer bgColor="neutral-900" />
+
     </div>
   );
 };

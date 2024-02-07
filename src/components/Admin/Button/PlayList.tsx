@@ -40,7 +40,7 @@ export const PlayList = ({ playlist }: { playlist: getPlaylistDTO }) => {
       {isLoading ? (
         <SkeltonPlaylist customMargin={customMargin} />
       ) : (
-        <div style={{ marginLeft: `${customMargin}px`, marginRight: `${customMargin}px` }} className="inline-block h-[150px] mt-[42px] relative">
+        <div style={{ marginLeft: `${customMargin}px`, marginRight: `${customMargin}px` }} className="inline-block h-[150px] my-[42px] relative">
           <Link to={`${playlist.id}`}>
             <button className="w-[150px] h-[150px] rounded-[13px] font-light text-zinc-300 text-4xl">
               {playlist.thumbnailUrl ? (
