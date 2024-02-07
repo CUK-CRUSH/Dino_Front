@@ -4,13 +4,11 @@ import "cropperjs/dist/cropper.css";
 import { ImageCropsDTO } from "types/ImageCrop/imagecrops";
 import ImageControlButton from "@components/EditList/Button/ImageControlButton";
 import Swal from "sweetalert2";
-import { useDispatch } from "react-redux";
 
 const UserImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const cropperRef = useRef<ReactCropperElement>(null);
   const [image, setImage] = useState<null | string>(null);
-  const dispatch = useDispatch();
 
   const handleChildrenClick = () => {
     if (inputRef.current) {
@@ -43,7 +41,6 @@ const UserImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
       return;
     }
     if (file) {
-      dispatch({ type: "SET_SELECTED_FILE", payload: file });
       const reader = new FileReader();
       reader.onload = () => {
         setImage(reader.result as string);

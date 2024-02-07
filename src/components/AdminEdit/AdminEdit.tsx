@@ -29,6 +29,7 @@ import ToastComponent from "@components/Toast/Toast";
 import { useMemberDataUpdate } from "@hooks/useMemberDataUpdate";
 import { useHandleImageUpdates } from "@hooks/useHandleImageUpdates/useHandleImageUpdates";
 import useImageCompress from "@hooks/useImageCompress";
+import { setProfileBackgroundImageLoader, setProfileImageLoader } from "@reducer/imageLoader/imageLoader";
 
 interface AdminEditModalProps {
   onClose: () => void; // A function to close the modal
@@ -163,9 +164,12 @@ const handleCompressUserProfileImage = useCallback(async () => {
   const file = new File([blob], uploadUserProfileImage, { type: "image/png" });
   // compressImage를 이용하여 이미지를 압축합니다.
   const compressedImageResult = await compressImage(file);
-  
+  dispatch(setProfileImageLoader(true));
+
   if (compressedImageResult) {
     const {  base64data } = compressedImageResult;
+    dispatch(setProfileImageLoader(false));
+
     setUpdateMemberData((prevData) => ({
       ...prevData,
       profileImage: base64data,
@@ -202,10 +206,13 @@ const handleCompressUserProfileImage = useCallback(async () => {
   // Blob 객체를 File 객체로 변환합니다.
   const file = new File([blob], uploadUserProfileBackgroundImage, { type: "image/png" });
   // compressImage를 이용하여 이미지를 압축합니다.
+  dispatch(setProfileBackgroundImageLoader(true));
   const compressedImageResult = await compressImage(file);
   
   if (compressedImageResult) {
     const {  base64data } = compressedImageResult;
+    dispatch(setProfileBackgroundImageLoader(false));
+
     setUpdateMemberData((prevData) => ({
       ...prevData,
       backgroundImage: base64data,

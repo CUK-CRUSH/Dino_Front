@@ -21,7 +21,6 @@ const useImageCompress = () => {
 
     try {
       const compressedFile = await imageCompression(imageFile, options);
-      console.log(`compressedFile : ${compressedFile.size}`)
       dispatch(setIsLoading(false));
 
       const base64data = await new Promise((resolve, reject) => {

@@ -4,7 +4,6 @@ import { SetUserProfileBackgroundDTO } from "types/AdminEdit";
 import garbage from "@assets/Admin/garbage.svg";
 
 import UserImageCropper from "@utils/ImageCrop/UserImageCropper";
-import LoadingPage from "@utils/loading";
 import camera from "../../assets/Admin/camera.svg";
 import { useSelector } from "react-redux";
 import { RootState } from "@store/index";
@@ -26,13 +25,16 @@ const swalButton = Swal.mixin({
   buttonsStyling: false,
 });
 
-const SetUserProfileBackground = ({ aspectRatio, onCrop, isCompressLoading, earlyImage, profileBackgroundImage }: SetUserProfileBackgroundDTO) => {
+const SetUserProfileBackground = ({ aspectRatio, onCrop, earlyImage, profileBackgroundImage }: SetUserProfileBackgroundDTO) => {
   // early 이미지는 맨처음에 받아오는 이미지 
   // compressed는 수정한 후 이미지
+  const { profileBackgroundImageLoader } = useSelector((state: RootState) => state.imageLoader);
 
   const { deleteBackgroundImage } = useSelector(
     (state: RootState) => state.userProfile
   )
+
+  const isLoading = useSelector((state: RootState) => state.selectedFile.isLoading);
 
   const [isChange, setChange] = useState<boolean>(false);
 
@@ -80,71 +82,74 @@ const SetUserProfileBackground = ({ aspectRatio, onCrop, isCompressLoading, earl
     <UserImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
 
       <div className="h-52 bg-black bg-opacity-70 mb-[-35px] relative cursor-pointer  ">
-        {!isChange && earlyImage ? (    // If earlyImage is available
-          <div className="relative w-full h-full">
-            {deleteBackgroundImage ?
-              <Img className="absolute bottom-2 right-2" src={camera} alt="x" />
-              :
-              <>
-                <Img
-                  src={earlyImage}
-                  alt="User Profile"
-                  loader={Spinner}
-                  className="w-full h-full object-cover object-center "
-                />
-                <div className="absolute right-2 -bottom-3 z-20">
+        {profileBackgroundImageLoader ?
+        <div className="relative bg-black">
+          <Img src={Spinner} alt='spinner' className="absolute" />
+        </div>
+          : !isChange && earlyImage ? (    // If earlyImage is available
+            <div className="relative w-full h-full">
+              {deleteBackgroundImage ?
+                <Img className="absolute bottom-2 right-2" src={camera} alt="x" />
+                :
+                <>
                   <Img
-                    src={garbage}
-                    alt="Overlay"
-                    className="w-[25px] h-full "
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDeleteClick();
-                    }}
-                  />
-                </div>
-              </>
-            }
+                    src={earlyImage}
+                    alt="User Profile"
+                    loader={<img src={Spinner} alt="loading" />}
 
-          </div>
-        ) : profileBackgroundImage ? (
-          <div className="relative w-full h-full">
-            {deleteBackgroundImage ?
-              <Img className="absolute bottom-2 right-2" src={camera} alt="x" />
-              :
-              <>
-                <Img
-                  src={profileBackgroundImage}
-                  alt="User Profile"
-                  loader={Spinner}
-                  className="w-full h-full object-cover object-center "
-                />
-                <div className="absolute right-2 -bottom-3 z-20">
+                    className="w-full h-full object-cover object-center "
+                  />
+                  <div className="absolute right-2 -bottom-3 z-20">
+                    <Img
+                      src={garbage}
+                      alt="Overlay"
+                      className="w-[25px] h-full "
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteClick();
+                      }}
+                    />
+                  </div>
+                </>
+              }
+
+            </div>
+          ) : profileBackgroundImage ? (
+            <div className="relative w-full h-full">
+              {deleteBackgroundImage ?
+                <Img className="absolute bottom-2 right-2" src={camera} alt="x" />
+                :
+                <>
                   <Img
-                    src={garbage}
-                    alt="Overlay"
-                    className="w-[25px] h-full"
-                    loader={Spinner}
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      handleDeleteClick();
-                    }}
+                    src={profileBackgroundImage}
+                    alt="User Profile"
+                    loader={<img src={Spinner} alt="loading" />}
+                    className="w-full h-full object-cover object-center "
                   />
-                </div>
-              </>
-            }
+                  <div className="absolute right-2 -bottom-3 z-20">
+                    <Img
+                      src={garbage}
+                      alt="Overlay"
+                      className="w-[25px] h-full"
+                      loader={<img src={Spinner} alt="loading" />}
 
-          </div>
-        ) : (
-          // If neither earlyImage nor compressedImage is available
-          <div className="h-full flex items-center justify-center text-center cursor-pointer">
-            {isCompressLoading ? (
-              <LoadingPage />
-            ) : (
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        handleDeleteClick();
+                      }}
+                    />
+                  </div>
+                </>
+              }
+
+            </div>
+          ) : (
+            // If neither earlyImage nor compressedImage is available
+            <div className="h-full flex items-center justify-center text-center cursor-pointer">
+
               <Img className="absolute bottom-2 right-2" src={camera} alt="x" />
-            )}
-          </div>
-        )}
+            </div>
+          )}
       </div>
     </UserImageCropper>
 
