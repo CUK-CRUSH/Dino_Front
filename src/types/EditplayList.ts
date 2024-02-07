@@ -18,7 +18,7 @@ export interface MusicDataRowContentProps {
   isEditing: boolean;
   order: number;
   playlistId: string | undefined;
-  username: string | null;
+  usernames: string | null;
   token: string;
   setWidth: (width: number) => void;
   fetchPlaylist: () => void;

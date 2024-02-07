@@ -106,7 +106,7 @@ const ShowImage = ({
         <AiOutlinePicture size={29} className="text-[#8E8E8E]" />
         <span className="text-center text-[#8E8E8E] text-[17px] pt-[6px]">
           {t("representive_image")}
-        </span>
+        </span>{" "}
         {isEditing && (
           <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
             <button className="absolute bottom-2 right-3">

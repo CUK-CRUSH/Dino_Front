@@ -1,23 +1,21 @@
 import { MusicDataRowContentProps } from "types/EditplayList";
 import { RiDeleteBin6Fill } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setIsEditMusics } from "@reducer/editMusic/editMusic";
+import { useDispatch, useSelector } from "react-redux";
 import "@styles/EditList/playList.css";
 import Swal from "sweetalert2";
 import { deleteMusicList } from "@api/music-controller/musicControl";
 import { useEffect, useRef, useState } from "react";
 import ToastComponent from "@components/Toast/Toast";
 import { setToast } from "@reducer/Toast/toast";
-import { useSelector } from "react-redux";
 import { RootState } from "@store/index";
-import { setMusicData } from "@reducer/editMusic/editMusicData";
+import { updateArtist, updateTitle } from "@reducer/musicadd";
 
 export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   musicData,
   order,
   playlistId,
-  username,
+  usernames,
   isEditing,
   token,
   setWidth,
@@ -43,11 +41,12 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
+
   const handleEditClick = () => {
-    if (isEditing) {
-      dispatch(setMusicData(musicData));
-      navigate(`/user/${username}/${playlistId}/edit/${musicData.id}`);
-      dispatch(setIsEditMusics(true));
+    if (isEditing && musicData.id < 100000) {
+      dispatch(updateTitle(musicData.title));
+      dispatch(updateArtist(musicData.artist));
+      navigate(`/user/${usernames}/${playlistId}/edit/${musicData.id}`);
     }
   };
 
@@ -99,7 +98,10 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   const TitleLength = titleWidth >= 205;
   const ArtistLength = artistWidth >= 105;
   return (
-    <div ref={contentRef} className="flex justify-between h-[50px] mb-2 mx-2">
+    <div
+      ref={contentRef}
+      className="relative flex justify-between h-[50px] mb-2 mx-2"
+    >
       <div
         onClick={handleEditClick}
         className={`flex flex-row ${
@@ -133,13 +135,19 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
             </span>
           </div>
         </div>
-      </div>{" "}
-      <div
-        onClick={handleDeleteClick}
-        className={`flex ml-2 mx-1 items-center ${isEditing ? "" : "hidden"}`}
-      >
-        <RiDeleteBin6Fill size={20} className="text-[#FF0000] cursor-pointer" />
       </div>
+      {isEditing && musicData.id < 100000 && (
+        <div
+          onClick={handleDeleteClick}
+          className={`flex ml-2 mx-1 items-center absolute bottom-4 right-2`}
+        >
+          <RiDeleteBin6Fill
+            size={20}
+            className="text-[#FF0000] cursor-pointer"
+          />
+        </div>
+      )}
+
       {toast === "delete" && (
         <ToastComponent background="white" text="노래가 삭제되었습니다." />
       )}

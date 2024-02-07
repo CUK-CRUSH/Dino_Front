@@ -66,7 +66,7 @@ export const AddMusicInput: React.FC<MusicInputDTO> = ({
         required={required}
         onChange={handleChange}
         onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === "Tab") {
+          if (e.key === "Enter" || e.key === "Tab" || e.keyCode === 13) {
             setIsSuggestionsVisible(false);
           }
         }}

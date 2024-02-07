@@ -11,7 +11,7 @@ export interface MusicDataDTO {
   isEditing: boolean;
   musicList: any;
   playlistId: string | undefined;
-  username: string | null;
+  usernames: string | null;
   token: string;
   fetchPlaylist: () => void;
 }
@@ -20,7 +20,7 @@ export const MusicDataRow = ({
   isEditing,
   musicList,
   playlistId,
-  username,
+  usernames,
   token,
   fetchPlaylist,
 }: MusicDataDTO) => {
@@ -30,12 +30,10 @@ export const MusicDataRow = ({
   );
   const [width, setWidth] = useState(0);
 
-  const musicAdd = useSelector((state: RootState) => state.musicAdd);
-  const { title, artist, url } = musicAdd;
+  const musicData = useSelector((state: RootState) => state.musicAdd);
   const { isSaved } = useSelector((state: RootState) => state.musicAdd);
 
   const elementRefs = useRef<(HTMLDivElement | null)[]>([]);
-
   const handleVideoSelection = useCallback(
     (url: string, index: number) => {
       if (selectedVideoIndex === index) {
@@ -94,7 +92,7 @@ export const MusicDataRow = ({
                   musicData={musicItem}
                   order={index + 1}
                   playlistId={playlistId}
-                  username={username}
+                  usernames={usernames}
                   isEditing={isEditing}
                   token={token}
                   setWidth={setWidth}
@@ -131,23 +129,25 @@ export const MusicDataRow = ({
             </div>
           )}
 
-          {isEditing && isSaved && musicList?.data && (
-            <MusicDataRowContent
-              musicData={{
-                title: title,
-                artist: artist,
-                url: url,
-                id: Date.now(),
-              }}
-              order={musicList.data.length + 1}
-              playlistId={playlistId}
-              username={username}
-              isEditing={isEditing}
-              token={token}
-              setWidth={setWidth}
-              fetchPlaylist={fetchPlaylist}
-            />
-          )}
+          {isEditing &&
+            isSaved &&
+            musicData.musics &&
+            musicData.musics.map((musicItem, index) => (
+              <MusicDataRowContent
+                key={Date.now() + index} // 고유한 키를 생성합니다.
+                musicData={{
+                  ...musicItem,
+                  id: Date.now() + index, // 고유한 id를 부여합니다.
+                }}
+                order={1 + index + musicList?.data?.length}
+                playlistId={playlistId}
+                usernames={usernames}
+                isEditing={isEditing}
+                token={token}
+                setWidth={setWidth}
+                fetchPlaylist={fetchPlaylist}
+              />
+            ))}
         </div>
       </div>
       <MusicLength musicList={musicList} />
