@@ -92,6 +92,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   if (hasError) {
     return <NotFound />;
   }
+  console.log(musicList);
   return (
     <div className="h-full w-full scrollbar-hide overflow-scroll flex flex-col bg-black text-white font-medium leading-[18px]">
       {!isEditing && (
