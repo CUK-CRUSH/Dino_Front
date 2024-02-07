@@ -28,6 +28,7 @@ import { checkBadWord } from "@utils/checkBadWord/checkBadWord";
 import ToastComponent from "@components/Toast/Toast";
 import { useMemberDataUpdate } from "@hooks/useMemberDataUpdate";
 import { useHandleImageUpdates } from "@hooks/useHandleImageUpdates/useHandleImageUpdates";
+import useImageCompress from "@hooks/useImageCompress";
 
 interface AdminEditModalProps {
   onClose: () => void; // A function to close the modal
@@ -142,7 +143,46 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     }
   };
 
+  // useImageCompress를 사용합니다.
+  const { compressImage} = useImageCompress();
+// 프로필사진
+ const [uploadUserProfileImage, setUploadUserProfileImage] = useState<
+ string | null
+>(null);
 
+const handleUploadUserProfileImage = (image: string) =>
+setUploadUserProfileImage(image);
+
+const handleCompressUserProfileImage = useCallback(async () => {
+  if (!uploadUserProfileImage) return;
+  // uploadUserProfileImage를 Blob 객체로 변환합니다.
+  const response = await fetch(uploadUserProfileImage);
+  const blob = await response.blob();
+
+  // Blob 객체를 File 객체로 변환합니다.
+  const file = new File([blob], uploadUserProfileImage, { type: "image/png" });
+  // compressImage를 이용하여 이미지를 압축합니다.
+  const compressedImageResult = await compressImage(file);
+  
+  if (compressedImageResult) {
+    const {  base64data } = compressedImageResult;
+    setUpdateMemberData((prevData) => ({
+      ...prevData,
+      profileImage: base64data,
+    }));
+  } 
+
+  dispatch(setDeleteProfileImage(false));
+}, [uploadUserProfileImage, dispatch]);
+
+  useEffect(() => {
+    if (uploadUserProfileImage) {
+      handleCompressUserProfileImage();
+    }
+  }, [
+    uploadUserProfileImage,
+    handleCompressUserProfileImage,
+  ]);
   // 배경화면
   const [
     uploadUserProfileBackgroundImage,
@@ -155,10 +195,23 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   const handleCompressUserProfileBackgroundImage = useCallback(async () => {
     if (!uploadUserProfileBackgroundImage) return;
 
+   // uploadUserProfileImage를 Blob 객체로 변환합니다.
+  const response = await fetch(uploadUserProfileBackgroundImage);
+  const blob = await response.blob();
+
+  // Blob 객체를 File 객체로 변환합니다.
+  const file = new File([blob], uploadUserProfileBackgroundImage, { type: "image/png" });
+  // compressImage를 이용하여 이미지를 압축합니다.
+  const compressedImageResult = await compressImage(file);
+  
+  if (compressedImageResult) {
+    const {  base64data } = compressedImageResult;
     setUpdateMemberData((prevData) => ({
       ...prevData,
-      backgroundImage: uploadUserProfileBackgroundImage,
+      backgroundImage: base64data,
     }));
+  } 
+
     dispatch(setDeleteProfileBackgroundImage(false));
   }, [uploadUserProfileBackgroundImage, dispatch]);
 
@@ -170,30 +223,6 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     uploadUserProfileBackgroundImage,
     handleCompressUserProfileBackgroundImage,
   ]);
-
-  // 프로필사진
-  const [uploadUserProfileImage, setUploadUserProfileImage] = useState<
-    string | null
-  >(null);
-
-  const handleUploadUserProfileImage = (image: string) =>
-    setUploadUserProfileImage(image);
-
-  const handleCompressUserProfileImage = useCallback(async () => {
-    if (!uploadUserProfileImage) return;
-
-    setUpdateMemberData((prevData) => ({
-      ...prevData,
-      profileImage: uploadUserProfileImage,
-    }));
-    dispatch(setDeleteProfileImage(false));
-  }, [uploadUserProfileImage, dispatch]);
-
-  useEffect(() => {
-    if (uploadUserProfileImage) {
-      handleCompressUserProfileImage();
-    }
-  }, [uploadUserProfileImage, dispatch, handleCompressUserProfileImage]);
 
   // 모달닫기
   const close = () => {

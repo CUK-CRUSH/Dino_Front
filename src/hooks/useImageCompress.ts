@@ -14,23 +14,31 @@ const useImageCompress = () => {
     dispatch(setIsLoading(true));
 
     const options = {
-      maxSizeMB: 0.1,
+      maxSizeMB: 2,
       maxWidthOrHeight: 1080,
       useWebWorker: true,
     };
 
     try {
       const compressedFile = await imageCompression(imageFile, options);
-
+      console.log(`compressedFile : ${compressedFile.size}`)
       dispatch(setIsLoading(false));
 
-      return compressedFile;
+      const base64data = await new Promise((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(compressedFile);
+        reader.onloadend = function() {
+          resolve(reader.result);
+        }
+        reader.onerror = reject;
+      });
+
+      return {compressedFile, base64data};
     } catch (error) {
       dispatch(setIsLoading(false));
       console.log(error);
     }
   };
-
   return { compressImage, isLoading };
 };
 
