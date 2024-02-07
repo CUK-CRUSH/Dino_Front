@@ -34,8 +34,6 @@ const SetUserProfileBackground = ({ aspectRatio, onCrop, earlyImage, profileBack
     (state: RootState) => state.userProfile
   )
 
-  const isLoading = useSelector((state: RootState) => state.selectedFile.isLoading);
-
   const [isChange, setChange] = useState<boolean>(false);
 
   useEffect(() => {

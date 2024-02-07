@@ -5,7 +5,6 @@ import "../../styles/Admin/style.css";
 import EditButton from "@components/AdminEdit/Button/EditButton";
 import SetUserProfileBackground from "@components/AdminEdit/SetUserProfileBackground";
 import SetUserProfileImage from "@components/AdminEdit/SetUserProfileImage";
-import SetUserProfileInfo from "@components/AdminEdit/SetUserProfileInfo";
 import { getMemberDTO } from "types/Admin";
 import { useCookies } from "react-cookie";
 import {
@@ -30,6 +29,8 @@ import { useMemberDataUpdate } from "@hooks/useMemberDataUpdate";
 import { useHandleImageUpdates } from "@hooks/useHandleImageUpdates/useHandleImageUpdates";
 import useImageCompress from "@hooks/useImageCompress";
 import { setProfileBackgroundImageLoader, setProfileImageLoader } from "@reducer/imageLoader/imageLoader";
+import SetUserProfileNickname from "@components/AdminEdit/SetUserProfileNickname";
+import SetUserProfileIntroduction from "./SetUserProfileIntroduction";
 
 interface AdminEditModalProps {
   onClose: () => void; // A function to close the modal
@@ -177,7 +178,7 @@ const handleCompressUserProfileImage = useCallback(async () => {
   } 
 
   dispatch(setDeleteProfileImage(false));
-}, [uploadUserProfileImage, dispatch]);
+}, [uploadUserProfileImage, dispatch, compressImage]);
 
   useEffect(() => {
     if (uploadUserProfileImage) {
@@ -220,7 +221,7 @@ const handleCompressUserProfileImage = useCallback(async () => {
   } 
 
     dispatch(setDeleteProfileBackgroundImage(false));
-  }, [uploadUserProfileBackgroundImage, dispatch]);
+  }, [uploadUserProfileBackgroundImage, dispatch, compressImage]);
 
   useEffect(() => {
     if (uploadUserProfileBackgroundImage) {
@@ -376,16 +377,17 @@ const handleCompressUserProfileImage = useCallback(async () => {
         />
 
         {/* 유저 닉네임 */}
-        <SetUserProfileInfo
+        <SetUserProfileNickname
           placeholder="닉네임"
           maxlength={999}
           name="username"
           value={userData?.username}
           onChange={onChangeInput}
+          nicknameValidation={nicknameValidation}
         />
 
         {/* 한줄소개 */}
-        <SetUserProfileInfo
+        <SetUserProfileIntroduction
           placeholder="한줄소개"
           maxlength={50}
           name="introduction"

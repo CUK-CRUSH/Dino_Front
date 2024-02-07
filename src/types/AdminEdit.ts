@@ -31,7 +31,16 @@ export interface SetUserProfileImageDTO {
 
 }
 
-export interface SetUserProfileInfoDTO {
+export interface SetUserProfileNicknameDTO {
+  placeholder : string;
+  maxlength : number;
+  name : string | undefined;
+  value : string | undefined
+  onChange? : (e: { target: { name: any; value: any; }; }) => void; 
+  nicknameValidation? : boolean;
+}
+
+export interface SetUserProfileIntroductionDTO {
   placeholder : string;
   maxlength : number;
   name : string | undefined;
