@@ -13,32 +13,29 @@ import editMusicListToggle from "@reducer/editMusic/editMusic";
 import toast from "../reducer/Toast/toast";
 import selectedFileReducer from "@reducer/editPlayList/Image/isImageCompress";
 import userIdReducer from "@reducer/Admin/userId";
-import labelsReducer from "@reducer/AddMusic/labelSlice";
 
 const persistConfig = {
-  key: "editMusicsToggle",
-  storage,
+    key: "editMusicsToggle",
+    storage,
 };
 
 const persistedReducer = persistReducer(persistConfig, editMusicListToggle);
 
 export const store = configureStore({
-  reducer: {
-    counter: counterReducer,
-    ui: uiReducer,
-    image: imageReducer,
-    musicAdd: musicadd,
-    userProfile: userProfileReducer,
-    editPlaylistToggle: isEdit,
-    addMusicInformationToggle: addMusicInformationToggle,
-    setProfile: setProfile,
-    editMusicsToggle: persistedReducer,
-    toast: toast,
-    selectedFile: selectedFileReducer,
-    imageLoader : imageLoader,
-    userId: userIdReducer,
-    labels: labelsReducer,
-  },
+    reducer: {
+        counter: counterReducer,
+        ui: uiReducer,
+        image: imageReducer,
+        musicAdd: musicadd,
+        userProfile: userProfileReducer,
+        editPlaylistToggle: isEdit,
+        addMusicInformationToggle: addMusicInformationToggle,
+        setProfile: setProfile,
+        editMusicsToggle: persistedReducer,
+        toast: toast,
+        selectedFile: selectedFileReducer,
+        userId: userIdReducer,
+    },
 });
 
 export type RootState = ReturnType<typeof store.getState>;
