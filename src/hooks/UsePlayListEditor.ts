@@ -34,6 +34,7 @@ interface UsePlayListEditorProps {
   usernames: string | null;
   fetchPlaylist: () => void;
   setPlaylistName: (value: string) => void;
+  uploadImage?:string|null;
 }
 
 export const UsePlayListEditor = ({
@@ -44,13 +45,14 @@ export const UsePlayListEditor = ({
   usernames,
   fetchPlaylist,
   setPlaylistName,
+  uploadImage
 }: UsePlayListEditorProps) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const selectedFileState = useSelector(
-    (state: RootState) => state.selectedFile
-  );
-  const selectedFile = selectedFileState.selectedFile;
+  // const selectedFileState = useSelector(
+  //   (state: RootState) => state.selectedFile
+  // );
+  // const selectedFile = selectedFileState.selectedFile;
   const { compressImage } = useImageCompress();
   const isLoading = useSelector(
     (state: RootState) => state.selectedFile.isLoading
@@ -95,8 +97,12 @@ export const UsePlayListEditor = ({
     if (playlist) {
       const id = playlist.id;
 
-      if (selectedFile) {
-        const compressedFile = await compressImage(selectedFile);
+      if (uploadImage) {
+        const response = await fetch(uploadImage);
+        const blob = await response.blob();
+        const file = new File([blob], uploadImage, { type: "image/png" });
+        const compressedFile = await compressImage(file);
+
         if (compressedFile) {
           try {
             const result = await readImageFile(compressedFile.compressedFile);

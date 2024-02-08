@@ -74,7 +74,7 @@ export const deletePlayList = async (playlistId: string, cookies?: string) => {
 export const putPlayList = async (
   playlistId: string,
   playlistName: string | null,
-  titleImage?: string | null,
+  titleImage?: any,
   cookies?: string
 ) => {
   try {
