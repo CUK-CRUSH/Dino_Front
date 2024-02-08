@@ -22,6 +22,12 @@ export interface MusicDataRowContentProps {
   token: string;
   setWidth: (width: number) => void;
   fetchPlaylist: () => void;
+  selectedVideoId: string | null;
+  width: number;
+  selectedVideoIndex: number | null;
+  index: number;
+  setSelectedVideoId: (id: string | null) => void;
+  setSelectedVideoIndex: (index: number | null) => void;
 }
 
 export interface EditPlsyListDTO {}
