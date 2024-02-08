@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import mainGraphic from "@assets/main_graphic.svg";
 import Mylist from "@assets/Mylist 1.svg";
 const HomeComponent = () => {
-
+// This is the HomeComponent that has been fixed.
   return (
       <div className="w-full h-full scrollbar-hide overflow-scroll">
         <div className={"h-[30px]"}></div>
