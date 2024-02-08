@@ -1,9 +1,6 @@
 import React, { useEffect, useState } from "react";
-import AdminEditModal from "@pages/Admin/AdminEditModal";
 import { AddPlayList } from "@components/Admin/Button/AddPLayList";
-import { EditProfile } from "@components/Admin/Modal/EditProfile";
 import UserProfileBackground from "./UserProfileBackgroundImage";
-import OpenOption from "./Button/OpenOption";
 import UserProfileImage from "./UserProfileImage";
 import UserProfileInfo from "./UserProfileInfo";
 import { PlayList } from "@components/Admin/Button/PlayList";
@@ -15,10 +12,11 @@ import ToastComponent from "@components/Toast/Toast";
 import { useSelector } from "react-redux";
 import { RootState } from "@store/index";
 import Footer from "@components/Layout/footer";
+import { useCookies } from "react-cookie";
+// import InduceButton from "@components/AdminEdit/Button/IndeceButton";
+import Header from "@components/Layout/header";
 
 const AdminPage: React.FC = () => {
-  // console.log(Cookies.get("accessToken"))
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const tokenId = Number(localStorage.getItem("tokenId"));
   const userId = Number(localStorage.getItem("userId"));
@@ -45,11 +43,22 @@ const AdminPage: React.FC = () => {
 
   const [isLoading, setIsLoding] = useState<boolean>(true);
 
+  const [, setInduceLogin] = useState<boolean>(false);
+  // 쿠키
+  const [cookies] = useCookies(["accessToken"]);
+  
+  useEffect(()=>{
+    if(!cookies.accessToken){
+      setInduceLogin(false);
+    } else {
+      setInduceLogin(true);
+    }
+  },[cookies.accessToken]);
+
   useEffect(() => {
     const fetchData = async () => {
       try {
         const userDataResult = await getMemberUsername(username);
-        // Cookies.set('accessToken', 'accessToken');
 
         setUserdata(userDataResult.data);
         if (userDataResult.data?.id) {
@@ -105,52 +114,20 @@ const AdminPage: React.FC = () => {
     fetchPlaylistData();
   }, [username, userData]);
 
-  const openEditModal = () => {
-    setIsEditModalOpen(true);
-  };
-
-  const closeEditModal = () => {
-    setIsEditModalOpen(false);
-  };
-
-  // 옵션 모달 열기 이벤트
-  const [optionsModalPosition, setOptionsModalPosition] = useState<{
-    top: number;
-    left: number;
-  }>({ top: 0, left: 0 });
-
-  const [isOptionsModalOpen, setOptionsModalOpen] = useState(false);
-
-  const openOptionsModal = () => {
-    setOptionsModalOpen(true);
-  };
-
-  const closeOptionsModal = () => {
-    setOptionsModalOpen(false);
-  };
-
-  // 옵션모달 열리는 창 위치
-  const calculateOptionsModalPosition = (e: React.MouseEvent<EventTarget>) => {
-    const button = e.target as HTMLElement;
-    const rect = button.getBoundingClientRect();
-
-    setOptionsModalPosition({
-      top: rect.top + rect.height,
-      left: rect.left - 160 + rect.width,
-    });
-
-    openOptionsModal();
-  };
-
   // 토스트
   const { toast } = useSelector((state: RootState) => state.toast);
 
   return (
-    <div className="relative w-full h-screen scrollbar-hide overflow-scroll flex flex-col bg-neutral-900">
+
+    <div className="relative w-full h-full mx-auto scrollbar-hide overflow-scroll flex flex-col justify-between bg-neutral-900">
+      <Header />
+
       <UserProfileBackground
         userBackgroundImage={userData?.backgroundImageUrl}
       />
-
+      {/* 로그인 여부 */}
+      {/* {!induceLogin ? <InduceButton /> : <></>} */}
+      
       {/* 플레이리스트 생성 성공 토스트 */}
 
       {toast === "add" && (
@@ -174,32 +151,21 @@ const AdminPage: React.FC = () => {
         />
       )}
 
+      {/* 프로필 실패 토스트 */}
+      {toast === "not_profile" && (
+        <ToastComponent
+          background="white"
+          text="프로필이 수정을 실패했습니다 !"
+        />
+      )}
       {/* 복사 성공 토스트 */}
 
       {toast === "copy" && (
         <ToastComponent background="white" text="링크가 복사되었습니다." />
       )}
 
-      <div className="h-auto w-full left-0 top-[165px] absolute bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px] ">
-        {/* ... 설정창 */}
-        {
-          <OpenOption
-            calculateOptionsModalPosition={calculateOptionsModalPosition}
-          />
-        }
+      <div className="w-full bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px] -mt-[20px]">
 
-        {/* ...설정창 펼치기 */}
-        {isOptionsModalOpen && (
-          <EditProfile
-            top={optionsModalPosition.top}
-            left={optionsModalPosition.left}
-            openEditModal={openEditModal}
-            closeOptionsModalOpen={closeOptionsModal}
-          />
-        )}
-
-        {/* 프로필 수정 모달 펼치기 */}
-        {isEditModalOpen && <AdminEditModal onClose={closeEditModal} />}
 
         {/* 프로필 이미지 */}
         <div className=" flex items-center flex-col z-10">
@@ -217,19 +183,18 @@ const AdminPage: React.FC = () => {
           ))}
 
         {!isLoading &&
-        userId === tokenId &&
-        tokenId &&
-        playlistData?.length !== undefined &&
-        playlistData.length < 4 ? (
+          userId === tokenId &&
+          tokenId &&
+          playlistData?.length !== undefined &&
+          playlistData.length < 4 ? (
           <AddPlayList />
         ) : (
           <></>
         )}
 
-        <div className="relative mt-[30px] h-[120px] transform -translate-y-100">
-          <Footer bgColor="neutral-900" />
-        </div>
       </div>
+      <Footer bgColor="neutral-900" />
+
     </div>
   );
 };
