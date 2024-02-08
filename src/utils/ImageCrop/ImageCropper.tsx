@@ -6,7 +6,6 @@ import ImageControlButton from "@components/EditList/Button/ImageControlButton";
 import Swal from "sweetalert2";
 import { useDispatch } from "react-redux";
 import { updateImage } from "@reducer/musicadd";
-import { setSelectedFile } from "@reducer/editPlayList/Image/isImageCompress";
 
 const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
   const inputRef = useRef<HTMLInputElement>(null);
@@ -46,7 +45,8 @@ const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
       return;
     }
     if (file) {
-      dispatch(setSelectedFile(file));
+      // patch 할떄 보내는 데이터
+      
       const reader = new FileReader();
       reader.onload = () => {
         setImage(reader.result as string);
@@ -58,8 +58,8 @@ const ImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
   const getCropData = () => {
     if (typeof cropperRef.current?.cropper !== "undefined") {
       onCrop(cropperRef.current?.cropper.getCroppedCanvas().toDataURL());
-      dispatch(
-        updateImage(cropperRef.current?.cropper.getCroppedCanvas().toDataURL())
+      // 크롭해서 잘른데이터
+      dispatch( updateImage(cropperRef.current?.cropper.getCroppedCanvas().toDataURL())
       );
       setImage(null);
     }

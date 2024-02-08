@@ -1,7 +1,7 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
 interface SelectedFileState {
-  selectedFile: File | null;
+  selectedFile: any;
   isLoading: boolean;
 }
 
@@ -14,7 +14,7 @@ const selectedFileSlice = createSlice({
   name: "selectedFile",
   initialState,
   reducers: {
-    setSelectedFile: (state, action: PayloadAction<File | null>) => {
+    setSelectedFile: (state, action: PayloadAction<any>) => {
       state.selectedFile = action.payload;
     },
     resetSelectedFile: (state) => {
