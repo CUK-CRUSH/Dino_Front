@@ -1,8 +1,6 @@
 import React, { useEffect } from "react";
 import { EditProfileDTO } from "types/Admin";
-import { useLocation } from "react-router-dom";
 import "../../../styles/Admin/style.css";
-import useCopyToClipboard from "@hooks/useCopyToClipboard/useCopyToClipboard";
 
 export const EditProfile = ({
   top,
@@ -10,7 +8,6 @@ export const EditProfile = ({
   openEditModal,
   closeOptionsModalOpen,
 }: EditProfileDTO) => {
-  const location = useLocation();
   const userId = Number(localStorage.getItem("userId"));
   const tokenId = Number(localStorage.getItem("tokenId"));
 
@@ -27,11 +24,6 @@ export const EditProfile = ({
       window.scrollTo(0, parseInt(scrollY || "0", 10) * -1);
     };
   }, []);
-
-  // 앞 주소 ex) https://localhost3000
-  const baseUrl = window.location.origin;
-
-  const { handleCopyToClipboard } = useCopyToClipboard();
 
   const handleShare = () => {
     if (navigator.share) {
