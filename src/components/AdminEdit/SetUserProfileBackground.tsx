@@ -26,15 +26,13 @@ const swalButton = Swal.mixin({
 });
 
 const SetUserProfileBackground = ({ aspectRatio, onCrop, earlyImage, profileBackgroundImage }: SetUserProfileBackgroundDTO) => {
-  // early 이미지는 맨처음에 받아오는 이미지 
+  // early 이미지는 맨처음에 받아오는 이미지
   // compressed는 수정한 후 이미지
-  const { profileBackgroundImageLoader } = useSelector((state: RootState) => state.imageLoader);
+  // const { profileBackgroundImageLoader } = useSelector((state: RootState) => state.imageLoader);
 
   const { deleteBackgroundImage } = useSelector(
-    (state: RootState) => state.userProfile
+      (state: RootState) => state.userProfile
   )
-
-  const isLoading = useSelector((state: RootState) => state.selectedFile.isLoading);
 
   const [isChange, setChange] = useState<boolean>(false);
 
@@ -70,7 +68,7 @@ const SetUserProfileBackground = ({ aspectRatio, onCrop, earlyImage, profileBack
             customClass: {
               title: "text-black text-[15px] font-bold",
               popup:
-                "h-[150px] w-[250px] text-center text-[15px] font-bold text-black",
+                  "h-[150px] w-[250px] text-center text-[15px] font-bold text-black",
             },
           });
         }
@@ -79,79 +77,79 @@ const SetUserProfileBackground = ({ aspectRatio, onCrop, earlyImage, profileBack
   }
 
   return (
-    <UserImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
+      <UserImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
 
-      <div className="h-52 bg-black bg-opacity-70 mb-[-35px] relative cursor-pointer  ">
-        {profileBackgroundImageLoader ?
+        <div className="h-52 bg-black bg-opacity-70 mb-[-35px] relative cursor-pointer  ">
+          {/* {profileBackgroundImageLoader ?
         <div className="relative bg-black">
           <Img src={Spinner} alt='spinner' className="absolute" />
-        </div>
-          : !isChange && earlyImage ? (    // If earlyImage is available
-            <div className="relative w-full h-full">
-              {deleteBackgroundImage ?
-                <Img className="absolute bottom-2 right-2" src={camera} alt="x" />
-                :
-                <>
-                  <Img
-                    src={earlyImage}
-                    alt="User Profile"
-                    loader={<img src={Spinner} alt="loading" />}
+        </div> */}
+          { !isChange && earlyImage ? (    // If earlyImage is available
+              <div className="relative w-full h-full">
+                {deleteBackgroundImage ?
+                    <Img className="absolute bottom-2 right-2" src={camera} alt="x" />
+                    :
+                    <>
+                      <Img
+                          src={earlyImage}
+                          alt="User Profile"
+                          loader={<img src={Spinner} alt="loading" />}
 
-                    className="w-full h-full object-cover object-center "
-                  />
-                  <div className="absolute right-2 -bottom-3 z-20">
-                    <Img
-                      src={garbage}
-                      alt="Overlay"
-                      className="w-[25px] h-full "
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDeleteClick();
-                      }}
-                    />
-                  </div>
-                </>
-              }
+                          className="w-full h-full object-cover object-center "
+                      />
+                      <div className="absolute right-2 -bottom-3 z-20">
+                        <Img
+                            src={garbage}
+                            alt="Overlay"
+                            className="w-[25px] h-full "
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDeleteClick();
+                            }}
+                        />
+                      </div>
+                    </>
+                }
 
-            </div>
+              </div>
           ) : profileBackgroundImage ? (
-            <div className="relative w-full h-full">
-              {deleteBackgroundImage ?
-                <Img className="absolute bottom-2 right-2" src={camera} alt="x" />
-                :
-                <>
-                  <Img
-                    src={profileBackgroundImage}
-                    alt="User Profile"
-                    loader={<img src={Spinner} alt="loading" />}
-                    className="w-full h-full object-cover object-center "
-                  />
-                  <div className="absolute right-2 -bottom-3 z-20">
-                    <Img
-                      src={garbage}
-                      alt="Overlay"
-                      className="w-[25px] h-full"
-                      loader={<img src={Spinner} alt="loading" />}
+              <div className="relative w-full h-full">
+                {deleteBackgroundImage ?
+                    <Img className="absolute bottom-2 right-2" src={camera} alt="x" />
+                    :
+                    <>
+                      <Img
+                          src={profileBackgroundImage}
+                          alt="User Profile"
+                          loader={<img src={Spinner} alt="loading" />}
+                          className="w-full h-full object-cover object-center "
+                      />
+                      <div className="absolute right-2 -bottom-3 z-20">
+                        <Img
+                            src={garbage}
+                            alt="Overlay"
+                            className="w-[25px] h-full"
+                            loader={<img src={Spinner} alt="loading" />}
 
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDeleteClick();
-                      }}
-                    />
-                  </div>
-                </>
-              }
+                            onClick={(e) => {
+                              e.stopPropagation();
+                              handleDeleteClick();
+                            }}
+                        />
+                      </div>
+                    </>
+                }
 
-            </div>
+              </div>
           ) : (
-            // If neither earlyImage nor compressedImage is available
-            <div className="h-full flex items-center justify-center text-center cursor-pointer">
+              // If neither earlyImage nor compressedImage is available
+              <div className="h-full flex items-center justify-center text-center cursor-pointer">
 
-              <Img className="absolute bottom-2 right-2" src={camera} alt="x" />
-            </div>
+                <Img className="absolute bottom-2 right-2" src={camera} alt="x" />
+              </div>
           )}
-      </div>
-    </UserImageCropper>
+        </div>
+      </UserImageCropper>
 
   )
 }
