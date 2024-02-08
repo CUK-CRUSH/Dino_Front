@@ -5,19 +5,23 @@ import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
 import { MusicInput } from "@components/Addmusic/MusicInput";
 import Swal from "sweetalert2";
-import MusicTitle from "@components/Addmusic/Title/MusicTitle";
 import AddBackButton from "@components/Addmusic/Button/AddBackButton";
 import { useTranslation } from "react-i18next";
 import { playAutoComplete } from "@api/AutoComplete/AutocompleteControl";
 import EditButton from "@components/Addmusic/Button/EditButton";
 import { patchMusicList } from "@api/music-controller/musicControl";
 import { useCookies } from "react-cookie";
+import { BsYoutube } from "react-icons/bs";
+import { GoArrowSwitch } from "react-icons/go";
+import { IoIosSearch } from "react-icons/io";
+import MusicTitle from "../Title/MusicTitle";
 
 const EditMusic: React.FC = () => {
   const { t } = useTranslation("AddMusic");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { musicId } = useParams();
+  const labels = useSelector((state: RootState) => state.labels);
   // recoil에서 id에 맞는 title, artist 가져옴(빈칸채우기)
 
   // 쿠키에서 유저 id 가져오기
@@ -42,6 +46,44 @@ const EditMusic: React.FC = () => {
     },
     []
   );
+
+  // 검색 토글에 따른 데이터
+
+  const [searchType, setSearchType] = useState<string>("title"); // title이냐 artist냐 와따리가따리 토글
+  const [searchClick, setSearchClick] = useState<boolean>(false); // 검색 버튼을 누름에 따라 나오는 데이터들
+
+  const toggleSearchType = () => {
+    setSearchType((prevType) => {
+      if (prevType === "title") {
+        dispatch(updateTitle("")); // artist 상태 초기화
+
+        return "artist";
+      } else {
+        dispatch(updateArtist("")); // title 상태 초기화
+
+        return "title";
+      }
+    });
+
+    setSearchClick(false);
+  };
+
+  const handleSearch = (e: React.FormEvent) => {
+    e.preventDefault();
+    window.open(
+      `https://www.youtube.com/results?search_query=${
+        searchType === "title" ? title : artist
+      }`,
+      "_blank"
+    );
+    setSearchClick(true);
+  };
+
+  const handleDefaultInput = () => {
+    setSearchClick((prevSearchClick) => !prevSearchClick);
+  };
+
+  //
 
   const musicData = useSelector((state: RootState) => state.musicAdd);
   const { title, artist, url } = musicData;
@@ -101,14 +143,14 @@ const EditMusic: React.FC = () => {
   }, [title, artist, fetchAutoComplete, dispatch, musicId]);
 
   return (
-    <div className="relative z-30 h-full w-full flex flex-col bg-black text-white py-10 text-[17px] leading-[18px]">
+    <div className="scrollbar-hide overflow-scroll relative z-30 h-full w-full flex flex-col bg-black text-white py-10 text-[17px] leading-[18px]">
       <AddBackButton handleBack={handleBack} />
-      <MusicTitle title={"음악 수정하기"} />
       <div className="space-y-8 mx-4">
+        <MusicTitle title={"음악 수정하기"} />
         <MusicInput
           type="text"
-          label={t("title")}
-          placeholder={t("title")}
+          label={labels.title}
+          placeholder={labels.title}
           value={title}
           required={true}
           onChange={handleTitleChange}
@@ -119,8 +161,8 @@ const EditMusic: React.FC = () => {
         />
         <MusicInput
           type="text"
-          label={t("artist")}
-          placeholder={t("artist")}
+          label={labels.artist}
+          placeholder={labels.artist}
           value={artist}
           required={true}
           onChange={handleArtistChange}
@@ -131,7 +173,7 @@ const EditMusic: React.FC = () => {
         />
         <MusicInput
           type="url"
-          label="URL"
+          label={labels.URL}
           placeholder="https://youtu.be"
           value={url}
           required={true}
