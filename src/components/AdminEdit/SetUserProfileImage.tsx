@@ -20,7 +20,7 @@ const swalButton = Swal.mixin({
     popup: "h-[120px] w-[250px] text-[10px] p-4 font-bold text-black rounded-2xl ",
     confirmButton: 'w-[90px] bg-white text-black border border-black rounded-full mx-2 px-4 py-2 cursor-pointer font-bold',
     cancelButton: "w-[90px]  bg-red-500 text-white rounded-full px-4 py-2 cursor-pointer ",
-    title : "text-sm"
+    title : "text-sm" 
   },
   buttonsStyling: false,
 });
@@ -57,67 +57,67 @@ const SetUserProfileImage = ({ aspectRatio, onCrop, earlyImage, profileImage }: 
   };
 
   return (
-      <UserImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
-        <div className="block w-16 h-16 mx-auto mb-2 relative cursor-pointer">
-          {/* {profileImageLoader  ? <Img src={Spinner} alt='spinner' /> : */}
-          {!isChange && earlyImage ? (
-              // When there is an earlyImage
-              <div className="relative w-full h-full">
-                <Img
-                    src={deleteProfileImage ? setDefaultImage : earlyImage}
-                    alt="User Profile"
-                    loader={<img src={Spinner} alt="loading" />}
-                    className={`w-full h-full object-cover object-center ${deleteProfileImage ? '' : 'rounded-full'}`}
-                />
-                <div className="absolute -right-2 bottom-0 ">
-                  <Img
-                      src={garbage}
-                      alt="Overlay"
-                      className="w-[25px] h-full "
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDeleteClick();
-                      }}
-                  />
-                </div>
-              </div>
-          ) : profileImage ? (
-              <div className="relative w-full h-full">
-                <Img
-                    src={deleteProfileImage ? setDefaultImage : profileImage}
-                    alt="User Profile"
-                    loader={<img src={Spinner} alt="loading" />}
-                    className={`w-full h-full object-cover object-center ${deleteProfileImage ? '' : 'rounded-full'}`}
-                />
-                <div className="absolute -right-2 bottom-0 ">
-                  <Img
-                      src={garbage}
-                      alt="Overlay"
-                      className="w-[25px] h-full"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        handleDeleteClick();
-                      }}
-                  />
-                </div>
-              </div>
-          ) : (
-              <>
-                <div className="absolute inset-0 bg-black bg-opacity-10 rounded-full" />
-                <Img
-                    src={setDefaultImage}
-                    alt="User Profile"
-                    className="w-full h-full object-cover object-center"
-                />
-                <Img
-                    src={camera}
-                    alt="Overlay"
-                    className="absolute top-0 left-[20px] w-[25px] h-full opacity-50"
-                />
-              </>
-          )}
-        </div>
-      </UserImageCropper>
+    <UserImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
+      <div className="block w-16 h-16 mx-auto mb-2 relative cursor-pointer">
+        {/* {profileImageLoader  ? <Img src={Spinner} alt='spinner' /> : */}
+         {!isChange && earlyImage ? (
+          // When there is an earlyImage
+          <div className="relative w-full h-full">
+            <Img
+              src={deleteProfileImage ? setDefaultImage : earlyImage}
+              alt="User Profile"
+              loader={<img src={Spinner} alt="loading" />}
+              className={`w-full h-full object-cover object-center ${deleteProfileImage ? '' : 'rounded-full'}`}
+            />
+            <div className="absolute -right-2 bottom-0 ">
+              <Img
+                src={garbage}
+                alt="Overlay"
+                className="w-[25px] h-full "
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDeleteClick();
+                }}
+              />
+            </div>
+          </div>
+        ) : profileImage ? (
+          <div className="relative w-full h-full">
+            <Img
+              src={deleteProfileImage ? setDefaultImage : profileImage}
+              alt="User Profile"
+              loader={<img src={Spinner} alt="loading" />}
+              className={`w-full h-full object-cover object-center ${deleteProfileImage ? '' : 'rounded-full'}`}
+            />
+            <div className="absolute -right-2 bottom-0 ">
+              <Img
+                src={garbage}
+                alt="Overlay"
+                className="w-[25px] h-full"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleDeleteClick();
+                }}
+              />
+            </div>
+          </div>
+        ) : (
+          <>
+            <div className="absolute inset-0 bg-black bg-opacity-10 rounded-full" />
+            <Img
+              src={setDefaultImage}
+              alt="User Profile"
+              className="w-full h-full object-cover object-center"
+            />
+            <Img
+              src={camera}
+              alt="Overlay"
+              className="absolute top-0 left-[20px] w-[25px] h-full opacity-50"
+            />
+          </>
+        )}
+      </div>
+    </UserImageCropper>
   );
 };
 

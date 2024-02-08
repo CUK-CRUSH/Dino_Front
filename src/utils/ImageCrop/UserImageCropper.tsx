@@ -77,16 +77,15 @@ const UserImageCropper = ({ children, aspectRatio, onCrop }: ImageCropsDTO) => {
               <div>
                 <Cropper
                   ref={cropperRef}
-                  aspectRatio={aspectRatio}
                   src={image}
                   viewMode={1}
-                  width={300}
-                  height={300}
                   background={false}
                   responsive
                   autoCropArea={1}
                   checkOrientation={false}
                   guides
+                  aspectRatio={aspectRatio}
+                  data={{ }}
                   className="bg-white overflow-hidden absolute w-[360px] h-[300px] border-2 border-white rounded-2xl top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 smartPhone:-translate-y-2/3 tablet:-translate-y-2/3"
                 />
               </div>
