@@ -54,7 +54,12 @@ export const MusicDataRow = ({
 
       const element = elementRefs.current[index];
       if (element) {
-        element.scrollIntoView({ behavior: "smooth", block: "start" });
+        const youtubeElement = element.querySelector(".youtube-class-name"); // 유튜브 영상 컴포넌트를 감싸는 div 요소 선택
+        if (youtubeElement) {
+          youtubeElement.scrollIntoView({ behavior: "smooth", block: "start" });
+        } else {
+          element.scrollIntoView({ behavior: "smooth", block: "start" });
+        }
       }
 
       setSelectedVideoId(videoId);

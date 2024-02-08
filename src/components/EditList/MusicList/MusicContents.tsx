@@ -141,7 +141,7 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
           onClick={handleDeleteClick}
           className={`flex ml-2 mx-1 items-center absolute bottom-4 right-2`}
         >
-          <img className="cursor-" src={trashMusic} sizes="20" />
+          <img className="w-5 h-5" src={trashMusic} alt="trash" />
         </div>
       )}
 

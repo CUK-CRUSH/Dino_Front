@@ -3,7 +3,7 @@ import { updateArtist, updateTitle, updateUrl } from "@reducer/musicadd";
 import { RootState } from "@store/index";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { AddMusicInput } from "@components/Addmusic/AddMusicInput";
+import { MusicInput } from "@components/Addmusic/MusicInput";
 import Swal from "sweetalert2";
 import MusicTitle from "@components/Addmusic/Title/MusicTitle";
 import AddBackButton from "@components/Addmusic/Button/AddBackButton";
@@ -105,7 +105,7 @@ const EditMusic: React.FC = () => {
       <AddBackButton handleBack={handleBack} />
       <MusicTitle title={"음악 수정하기"} />
       <div className="space-y-8 mx-4">
-        <AddMusicInput
+        <MusicInput
           type="text"
           label={t("title")}
           placeholder={t("title")}
@@ -117,7 +117,7 @@ const EditMusic: React.FC = () => {
             dispatch(updateTitle(suggestion));
           }}
         />
-        <AddMusicInput
+        <MusicInput
           type="text"
           label={t("artist")}
           placeholder={t("artist")}
@@ -129,7 +129,7 @@ const EditMusic: React.FC = () => {
             dispatch(updateArtist(suggestion));
           }}
         />
-        <AddMusicInput
+        <MusicInput
           type="url"
           label="URL"
           placeholder="https://youtu.be"

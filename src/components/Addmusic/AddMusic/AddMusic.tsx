@@ -12,7 +12,7 @@ import { GoArrowSwitch } from "react-icons/go";
 import { RootState } from "@store/index";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { AddMusicInput } from "@components/Addmusic/AddMusicInput";
+import { MusicInput } from "@components/Addmusic/MusicInput";
 import Swal from "sweetalert2";
 import AddButton from "@components/Addmusic/Button/AddButton";
 import AddBackButton from "@components/Addmusic/Button/AddBackButton";
@@ -85,7 +85,7 @@ const AddMusic: React.FC = () => {
 
   const musicData = useSelector((state: RootState) => state.musicAdd);
   const { title, artist, url } = musicData;
-  console.log(title);
+
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(updateTitle(e.target.value));
   };
@@ -167,18 +167,28 @@ const AddMusic: React.FC = () => {
         {/* 검색 폼 */}
 
         <form onSubmit={handleSearch} className="relative my-4 ">
-          <input
+          <MusicInput
             type="text"
-            className="w-full h-[45px] rounded-xl p-2 bg-black border-[2px] border-white placeholder:text-white"
+            label=""
             placeholder={
               searchType === "title" ? "제목으로 검색" : "아티스트로 검색"
             }
             value={searchType === "title" ? title : artist}
+            required={true}
             onChange={
               searchType === "title" ? handleTitleChange : handleArtistChange
             }
+            suggestions={suggestions[searchType]}
+            onSuggestionClick={(suggestion: string) => {
+              dispatch(
+                searchType === "title"
+                  ? updateTitle(suggestion)
+                  : updateArtist(suggestion)
+              );
+            }}
           />
-          <button type="submit" className="absolute right-3 top-0 bottom-0">
+
+          <button type="submit" className="absolute right-3 bottom-3">
             <IoIosSearch color="white" size={30} />
           </button>
         </form>
@@ -198,7 +208,7 @@ const AddMusic: React.FC = () => {
 
       {searchClick && (
         <div className="space-y-8 mx-4">
-          <AddMusicInput
+          <MusicInput
             type="text"
             label={labels.title}
             placeholder={labels.title}
@@ -210,7 +220,7 @@ const AddMusic: React.FC = () => {
               dispatch(updateTitle(suggestion));
             }}
           />
-          <AddMusicInput
+          <MusicInput
             type="text"
             label={labels.artist}
             placeholder={labels.artist}
@@ -222,7 +232,7 @@ const AddMusic: React.FC = () => {
               dispatch(updateArtist(suggestion));
             }}
           />
-          <AddMusicInput
+          <MusicInput
             type="url"
             label={labels.URL}
             placeholder="https://youtu.be"

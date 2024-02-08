@@ -2,13 +2,14 @@ import { MusicInputDTO } from "types/Addmusic/AddMusic";
 import { MdCancel } from "react-icons/md";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { updateArtist, updateTitle, updateUrl } from "@reducer/musicadd";
 import { AnyAction } from "@reduxjs/toolkit";
-import { useSelector } from "react-redux";
 import { RootState } from "@store/index";
+import Swal from "sweetalert2";
+import "@styles/EditList/playList.css";
 
-export const AddMusicInput: React.FC<MusicInputDTO> = ({
+export const MusicInput: React.FC<MusicInputDTO> = ({
   label,
   placeholder,
   value,
@@ -23,6 +24,16 @@ export const AddMusicInput: React.FC<MusicInputDTO> = ({
   const wrapperRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
   const labels = useSelector((state: RootState) => state.labels);
+  const swalButton = Swal.mixin({
+    customClass: {
+      popup: "popup", // 전체
+      confirmButton: "confirmButton", // 취소
+      cancelButton: "cancelButton", // 삭제
+      title: "title", // 타이틀
+      htmlContainer: "htmlContainer", // 내용
+    },
+    buttonsStyling: false,
+  });
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -63,7 +74,12 @@ export const AddMusicInput: React.FC<MusicInputDTO> = ({
       const youtubeUrlPattern =
         /^(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?\/.+/;
       if (!youtubeUrlPattern.test(text)) {
-        alert("클립보드의 내용이 유튜브 링크가 아닙니다.");
+        swalButton.fire({
+          title: "유튜브 URL을 넣어주세요",
+          showCancelButton: true,
+          confirmButtonColor: "blue",
+          cancelButtonColor: "#d33",
+        });
         return;
       }
       onChange({
@@ -124,8 +140,9 @@ export const AddMusicInput: React.FC<MusicInputDTO> = ({
         value={value}
         required={required}
         onChange={handleChange}
+        maxLength={30}
         onKeyDown={(e) => {
-          if (e.key === "Enter" || e.key === "Tab" || e.keyCode === 13) {
+          if (e.key === "Enter" || e.key === "Tab" || e.key === "Escape") {
             setIsSuggestionsVisible(false);
           }
         }}
