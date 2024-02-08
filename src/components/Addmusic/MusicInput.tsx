@@ -76,9 +76,6 @@ export const MusicInput: React.FC<MusicInputDTO> = ({
       if (!youtubeUrlPattern.test(text)) {
         swalButton.fire({
           title: "유튜브 URL을 넣어주세요",
-          showCancelButton: true,
-          confirmButtonColor: "blue",
-          cancelButtonColor: "#d33",
         });
         return;
       }

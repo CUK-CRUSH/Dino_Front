@@ -9,7 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import ToastComponent from "@components/Toast/Toast";
 import { setToast } from "@reducer/Toast/toast";
 import { RootState } from "@store/index";
-import { updateArtist, updateTitle } from "@reducer/musicadd";
+import { updateArtist, updateTitle, updateUrl } from "@reducer/musicadd";
 import YouTube from "react-youtube";
 import { useRecoilValue } from "recoil";
 import { musicListState } from "@atoms/Musics/MusicList";
@@ -59,6 +59,7 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
     if (isEditing && musicData.id < 100000) {
       dispatch(updateTitle(musicData.title));
       dispatch(updateArtist(musicData.artist));
+      dispatch(updateUrl(musicData.url));
       navigate(`/user/${usernames}/${playlistId}/edit/${musicData.id}`);
     }
   };
