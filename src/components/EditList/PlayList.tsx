@@ -84,7 +84,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     playlistId,
     usernames,
     fetchPlaylist,
-    setPlaylistName,
+    setPlaylistName,uploadImage
   });
 
   useEffect(() => {
