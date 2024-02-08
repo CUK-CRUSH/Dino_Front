@@ -80,7 +80,7 @@ const SetUserProfileBackground = ({ aspectRatio, onCrop, earlyImage, profileBack
       <UserImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
 
         <div className="h-52 bg-black bg-opacity-70 mb-[-35px] relative cursor-pointer  ">
-          {/* {profileBackgroundImageLoader ?
+          {/* profileBackgroundImageLoader ?
         <div className="relative bg-black">
           <Img src={Spinner} alt='spinner' className="absolute" />
         </div> */}
