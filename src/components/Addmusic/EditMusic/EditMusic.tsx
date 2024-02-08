@@ -11,9 +11,6 @@ import { playAutoComplete } from "@api/AutoComplete/AutocompleteControl";
 import EditButton from "@components/Addmusic/Button/EditButton";
 import { patchMusicList } from "@api/music-controller/musicControl";
 import { useCookies } from "react-cookie";
-import { BsYoutube } from "react-icons/bs";
-import { GoArrowSwitch } from "react-icons/go";
-import { IoIosSearch } from "react-icons/io";
 import MusicTitle from "../Title/MusicTitle";
 
 const EditMusic: React.FC = () => {
@@ -46,44 +43,6 @@ const EditMusic: React.FC = () => {
     },
     []
   );
-
-  // 검색 토글에 따른 데이터
-
-  const [searchType, setSearchType] = useState<string>("title"); // title이냐 artist냐 와따리가따리 토글
-  const [searchClick, setSearchClick] = useState<boolean>(false); // 검색 버튼을 누름에 따라 나오는 데이터들
-
-  const toggleSearchType = () => {
-    setSearchType((prevType) => {
-      if (prevType === "title") {
-        dispatch(updateTitle("")); // artist 상태 초기화
-
-        return "artist";
-      } else {
-        dispatch(updateArtist("")); // title 상태 초기화
-
-        return "title";
-      }
-    });
-
-    setSearchClick(false);
-  };
-
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    window.open(
-      `https://www.youtube.com/results?search_query=${
-        searchType === "title" ? title : artist
-      }`,
-      "_blank"
-    );
-    setSearchClick(true);
-  };
-
-  const handleDefaultInput = () => {
-    setSearchClick((prevSearchClick) => !prevSearchClick);
-  };
-
-  //
 
   const musicData = useSelector((state: RootState) => state.musicAdd);
   const { title, artist, url } = musicData;
