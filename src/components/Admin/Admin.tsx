@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from "react";
-import AdminEditModal from "@pages/Admin/AdminEditModal";
 import { AddPlayList } from "@components/Admin/Button/AddPLayList";
 import UserProfileBackground from "./UserProfileBackgroundImage";
 import UserProfileImage from "./UserProfileImage";
@@ -14,7 +13,7 @@ import { useSelector } from "react-redux";
 import { RootState } from "@store/index";
 import Footer from "@components/Layout/footer";
 import { useCookies } from "react-cookie";
-import InduceButton from "@components/AdminEdit/Button/IndeceButton";
+// import InduceButton from "@components/AdminEdit/Button/IndeceButton";
 import Header from "@components/Layout/header";
 
 const AdminPage: React.FC = () => {
@@ -44,7 +43,7 @@ const AdminPage: React.FC = () => {
 
   const [isLoading, setIsLoding] = useState<boolean>(true);
 
-  const [induceLogin, setInduceLogin] = useState<boolean>(false);
+  const [, setInduceLogin] = useState<boolean>(false);
   // 쿠키
   const [cookies] = useCookies(["accessToken"]);
   
@@ -54,7 +53,7 @@ const AdminPage: React.FC = () => {
     } else {
       setInduceLogin(true);
     }
-  },[]);
+  },[cookies.accessToken]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -165,7 +164,7 @@ const AdminPage: React.FC = () => {
         <ToastComponent background="white" text="링크가 복사되었습니다." />
       )}
 
-      <div className="w-full bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px] -mt-[150px]">
+      <div className="w-full bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px] -mt-[20px]">
 
 
         {/* 프로필 이미지 */}

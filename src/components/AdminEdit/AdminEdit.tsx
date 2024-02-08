@@ -27,10 +27,9 @@ import { checkBadWord } from "@utils/checkBadWord/checkBadWord";
 import ToastComponent from "@components/Toast/Toast";
 import { useMemberDataUpdate } from "@hooks/useMemberDataUpdate";
 import { useHandleImageUpdates } from "@hooks/useHandleImageUpdates/useHandleImageUpdates";
-import useImageCompress from "@hooks/useImageCompress";
-import { setProfileBackgroundImageLoader, setProfileImageLoader } from "@reducer/imageLoader/imageLoader";
 import SetUserProfileNickname from "@components/AdminEdit/SetUserProfileNickname";
 import SetUserProfileIntroduction from "./SetUserProfileIntroduction";
+import useCompressedImage from "@hooks/useCompressImage/useCompressImage";
 
 interface AdminEditModalProps {
   onClose: () => void; // A function to close the modal
@@ -145,8 +144,8 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     }
   };
 
-  // useImageCompress를 사용합니다.
-  const { compressImage} = useImageCompress();
+
+
 // 프로필사진
  const [uploadUserProfileImage, setUploadUserProfileImage] = useState<
  string | null
@@ -155,8 +154,12 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 const handleUploadUserProfileImage = (image: string) =>
 setUploadUserProfileImage(image);
 
+const compressedImage = useCompressedImage();
+
+
 const handleCompressUserProfileImage = useCallback(async () => {
   if (!uploadUserProfileImage) return;
+
   // uploadUserProfileImage를 Blob 객체로 변환합니다.
   const response = await fetch(uploadUserProfileImage);
   const blob = await response.blob();
@@ -164,30 +167,30 @@ const handleCompressUserProfileImage = useCallback(async () => {
   // Blob 객체를 File 객체로 변환합니다.
   const file = new File([blob], uploadUserProfileImage, { type: "image/png" });
   // compressImage를 이용하여 이미지를 압축합니다.
-  const compressedImageResult = await compressImage(file);
-  dispatch(setProfileImageLoader(true));
 
-  if (compressedImageResult) {
-    const {  base64data } = compressedImageResult;
-    dispatch(setProfileImageLoader(false));
-
-    setUpdateMemberData((prevData) => ({
-      ...prevData,
-      profileImage: base64data,
-    }));
-  } 
+  compressedImage(file, 'profileImage', setUpdateMemberData);
 
   dispatch(setDeleteProfileImage(false));
-}, [uploadUserProfileImage, dispatch]);
+}, [uploadUserProfileImage, dispatch,compressedImage]);
 
-  useEffect(() => {
-    if (uploadUserProfileImage) {
-      handleCompressUserProfileImage();
-    }
-  }, [
-    uploadUserProfileImage,
-    handleCompressUserProfileImage,
-  ]);
+useEffect(() => {
+  if (uploadUserProfileImage) {
+    handleCompressUserProfileImage();
+  }
+}, [
+  uploadUserProfileImage,
+  handleCompressUserProfileImage
+]);
+
+
+  // useEffect(() => {
+  //   if (uploadUserProfileImage) {
+  //     handleCompressUserProfileImage();
+  //   }
+  // }, [
+  //   uploadUserProfileImage,
+  //   handleCompressUserProfileImage,
+  // ]);
   // 배경화면
   const [
     uploadUserProfileBackgroundImage,
@@ -207,21 +210,11 @@ const handleCompressUserProfileImage = useCallback(async () => {
   // Blob 객체를 File 객체로 변환합니다.
   const file = new File([blob], uploadUserProfileBackgroundImage, { type: "image/png" });
   // compressImage를 이용하여 이미지를 압축합니다.
-  dispatch(setProfileBackgroundImageLoader(true));
-  const compressedImageResult = await compressImage(file);
-  
-  if (compressedImageResult) {
-    const {  base64data } = compressedImageResult;
-    dispatch(setProfileBackgroundImageLoader(false));
 
-    setUpdateMemberData((prevData) => ({
-      ...prevData,
-      backgroundImage: base64data,
-    }));
-  } 
+  compressedImage(file,'backgroundImage',setUpdateMemberData);
 
     dispatch(setDeleteProfileBackgroundImage(false));
-  }, [uploadUserProfileBackgroundImage, dispatch]);
+  }, [uploadUserProfileBackgroundImage, dispatch,compressedImage]);
 
   useEffect(() => {
     if (uploadUserProfileBackgroundImage) {
@@ -229,7 +222,7 @@ const handleCompressUserProfileImage = useCallback(async () => {
     }
   }, [
     uploadUserProfileBackgroundImage,
-    handleCompressUserProfileBackgroundImage,
+    handleCompressUserProfileBackgroundImage
   ]);
 
   // 모달닫기
@@ -361,7 +354,7 @@ const handleCompressUserProfileImage = useCallback(async () => {
 
         {/* 배경화면 */}
         <SetUserProfileBackground
-          aspectRatio={1 / 1}
+          aspectRatio={390/240}
           onCrop={handleUploadUserProfileBackgroundImage}
           earlyImage={userData?.backgroundImageUrl}
           profileBackgroundImage={updateMemberData.backgroundImage}
@@ -398,4 +391,4 @@ const handleCompressUserProfileImage = useCallback(async () => {
   );
 };
 
-export default AdminEdit;
+export default AdminEdit

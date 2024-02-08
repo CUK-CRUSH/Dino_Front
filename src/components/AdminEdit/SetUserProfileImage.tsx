@@ -27,7 +27,7 @@ const swalButton = Swal.mixin({
 
 const SetUserProfileImage = ({ aspectRatio, onCrop, earlyImage, profileImage }: SetUserProfileImageDTO) => {
   // early 이미지는 맨처음에 받아오는 이미지 
-  const {profileImageLoader} = useSelector((state: RootState) => state.imageLoader);
+  // const {profileImageLoader} = useSelector((state: RootState) => state.imageLoader);
   const { deleteProfileImage } = useSelector((state: RootState) => state.userProfile);
   const [isChange, setChange] = useState(false);
 
@@ -59,7 +59,8 @@ const SetUserProfileImage = ({ aspectRatio, onCrop, earlyImage, profileImage }: 
   return (
     <UserImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
       <div className="block w-16 h-16 mx-auto mb-2 relative cursor-pointer">
-        {profileImageLoader  ? <Img src={Spinner} alt='spinner' /> : !isChange && earlyImage ? (
+        {/* {profileImageLoader  ? <Img src={Spinner} alt='spinner' /> : */}
+         {!isChange && earlyImage ? (
           // When there is an earlyImage
           <div className="relative w-full h-full">
             <Img
