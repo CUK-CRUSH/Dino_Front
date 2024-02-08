@@ -3,22 +3,22 @@ import { updateArtist, updateTitle, updateUrl } from "@reducer/musicadd";
 import { RootState } from "@store/index";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
-import { toggleShowInformation } from "@reducer/toggle/addMusicToggle";
-import { AddMusicInput } from "@components/Addmusic/AddMusicInput";
+import { MusicInput } from "@components/Addmusic/MusicInput";
 import Swal from "sweetalert2";
-import MusicTitle from "@components/Addmusic/Title/MusicTitle";
 import AddBackButton from "@components/Addmusic/Button/AddBackButton";
 import { useTranslation } from "react-i18next";
 import { playAutoComplete } from "@api/AutoComplete/AutocompleteControl";
 import EditButton from "@components/Addmusic/Button/EditButton";
 import { patchMusicList } from "@api/music-controller/musicControl";
 import { useCookies } from "react-cookie";
+import MusicTitle from "../Title/MusicTitle";
 
 const EditMusic: React.FC = () => {
   const { t } = useTranslation("AddMusic");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { musicId } = useParams();
+  const labels = useSelector((state: RootState) => state.labels);
   // recoil에서 id에 맞는 title, artist 가져옴(빈칸채우기)
 
   // 쿠키에서 유저 id 가져오기
@@ -58,14 +58,6 @@ const EditMusic: React.FC = () => {
   const handleURLChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     dispatch(updateUrl(e.target.value));
   };
-
-  const { showInformation } = useSelector(
-    (state: RootState) => state.addMusicInformationToggle
-  );
-
-  const handleInformationToggle = useCallback(() => {
-    dispatch(toggleShowInformation());
-  }, [dispatch]);
 
   const handleBack = useCallback(() => {
     dispatch(updateTitle(""));
@@ -107,27 +99,17 @@ const EditMusic: React.FC = () => {
   useEffect(() => {
     fetchAutoComplete("title", title);
     fetchAutoComplete("artist", artist);
-
-    navigator.clipboard.readText().then((clipText) => {
-      // 클립보드의 값이 YouTube URL인 경우에만 상태를 설정
-      if (
-        clipText.startsWith("https://www.youtube.com/") ||
-        clipText.startsWith("https://youtu.be/") ||
-        clipText.startsWith("https://youtube.com/")
-      ) {
-        dispatch(updateUrl(clipText));
-      }
-    });
   }, [title, artist, fetchAutoComplete, dispatch, musicId]);
 
   return (
-    <div className="relative z-30 h-full w-full flex flex-col bg-black text-white py-10 text-[17px] leading-[18px]">
+    <div className="scrollbar-hide overflow-scroll relative z-30 h-full w-full flex flex-col bg-black text-white py-10 text-[17px] leading-[18px]">
       <AddBackButton handleBack={handleBack} />
-      <MusicTitle title={"음악 수정하기"} />
       <div className="space-y-8 mx-4">
-        <AddMusicInput
-          label={t("title")}
-          placeholder={t("title")}
+        <MusicTitle title={"음악 수정하기"} />
+        <MusicInput
+          type="text"
+          label={labels.title}
+          placeholder={labels.title}
           value={title}
           required={true}
           onChange={handleTitleChange}
@@ -136,9 +118,10 @@ const EditMusic: React.FC = () => {
             dispatch(updateTitle(suggestion));
           }}
         />
-        <AddMusicInput
-          label={t("artist")}
-          placeholder={t("artist")}
+        <MusicInput
+          type="text"
+          label={labels.artist}
+          placeholder={labels.artist}
           value={artist}
           required={true}
           onChange={handleArtistChange}
@@ -147,15 +130,13 @@ const EditMusic: React.FC = () => {
             dispatch(updateArtist(suggestion));
           }}
         />
-        <AddMusicInput
-          label="URL"
+        <MusicInput
+          type="url"
+          label={labels.URL}
           placeholder="https://youtu.be"
           value={url}
           required={true}
           onChange={handleURLChange}
-          infoButton={true}
-          infoText={showInformation ? t("toggle") : ""}
-          infoToggleHandler={handleInformationToggle}
         />
 
         <EditButton handlePatch={handlePatchClick} plusText={t("edit")} />
