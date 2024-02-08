@@ -24,6 +24,9 @@ const AddMusic: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { musicId } = useParams();
+  const labels = useSelector((state: RootState) => state.labels);
+
+  // 자동완성
 
   const [suggestions, setSuggestions] = useState<{ [key: string]: string[] }>(
     {}
@@ -110,12 +113,14 @@ const AddMusic: React.FC = () => {
     }
 
     try {
-      dispatch(updateMusic({ title, artist, url }));
-      dispatch(saveMusic());
-      dispatch(updateTitle(""));
-      dispatch(updateArtist(""));
-      dispatch(updateUrl(""));
-      navigate(-1);
+      setTimeout(() => {
+        dispatch(updateMusic({ title, artist, url }));
+        dispatch(saveMusic());
+        dispatch(updateTitle(""));
+        dispatch(updateArtist(""));
+        dispatch(updateUrl(""));
+        navigate(-1);
+      }, 100);
     } catch (error) {
       Swal.fire({
         icon: "error",
@@ -195,8 +200,8 @@ const AddMusic: React.FC = () => {
         <div className="space-y-8 mx-4">
           <AddMusicInput
             type="text"
-            label={t("title")}
-            placeholder={t("title")}
+            label={labels.title}
+            placeholder={labels.title}
             value={title}
             required={true}
             onChange={handleTitleChange}
@@ -207,8 +212,8 @@ const AddMusic: React.FC = () => {
           />
           <AddMusicInput
             type="text"
-            label={t("artist")}
-            placeholder={t("artist")}
+            label={labels.artist}
+            placeholder={labels.artist}
             value={artist}
             required={true}
             onChange={handleArtistChange}
@@ -219,7 +224,7 @@ const AddMusic: React.FC = () => {
           />
           <AddMusicInput
             type="url"
-            label="URL"
+            label={labels.URL}
             placeholder="https://youtu.be"
             value={url}
             required={true}

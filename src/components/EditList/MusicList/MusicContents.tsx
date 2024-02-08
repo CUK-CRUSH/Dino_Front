@@ -1,5 +1,5 @@
 import { MusicDataRowContentProps } from "types/EditplayList";
-import { RiDeleteBin6Fill } from "react-icons/ri";
+import trashMusic from "@assets/PlayListImage/musicTrash.svg";
 import { useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import "@styles/EditList/playList.css";
@@ -141,10 +141,7 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
           onClick={handleDeleteClick}
           className={`flex ml-2 mx-1 items-center absolute bottom-4 right-2`}
         >
-          <RiDeleteBin6Fill
-            size={20}
-            className="text-[#FF0000] cursor-pointer"
-          />
+          <img className="cursor-" src={trashMusic} sizes="20" />
         </div>
       )}
 

@@ -5,6 +5,8 @@ import { useTranslation } from "react-i18next";
 import { useDispatch } from "react-redux";
 import { updateArtist, updateTitle, updateUrl } from "@reducer/musicadd";
 import { AnyAction } from "@reduxjs/toolkit";
+import { useSelector } from "react-redux";
+import { RootState } from "@store/index";
 
 export const AddMusicInput: React.FC<MusicInputDTO> = ({
   label,
@@ -20,6 +22,7 @@ export const AddMusicInput: React.FC<MusicInputDTO> = ({
   const [isSuggestionsVisible, setIsSuggestionsVisible] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
+  const labels = useSelector((state: RootState) => state.labels);
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -80,9 +83,9 @@ export const AddMusicInput: React.FC<MusicInputDTO> = ({
   return (
     <div className="relative" ref={wrapperRef}>
       <div className="flex flex-row ">
-        <h3 className="text-[17px] leading-[18px] mb-3 mr-1">{label}</h3>
+        <h3 className="text-[17px] leading-[18px] mb-3 mr-1">{t(label)}</h3>
       </div>
-      {label === t("title") && (
+      {label === labels.title && (
         <button
           onClick={() => handleClear(() => updateTitle(""))}
           className="absolute top-[42px] right-3 text-[10px] bg-[#2E2E2E] p-1 rounded-lg"
@@ -90,7 +93,7 @@ export const AddMusicInput: React.FC<MusicInputDTO> = ({
           <MdCancel size={20} color="red" />
         </button>
       )}
-      {label === t("artist") && (
+      {label === labels.artist && (
         <button
           onClick={() => handleClear(() => updateArtist(""))}
           className="absolute top-[42px] right-3 text-[10px] bg-[#2E2E2E] p-1 rounded-lg"
@@ -98,10 +101,10 @@ export const AddMusicInput: React.FC<MusicInputDTO> = ({
           <MdCancel size={20} color="red" />
         </button>
       )}
-      {label === "URL" && (
+      {label === labels.URL && (
         <>
           <button
-            className="absolute -top-1 left-10 text-[10px] bg-[#2E2E2E] p-1 rounded-lg"
+            className="absolute -top-1 left-10 text-[10px] bg-[#2E2E2E] p-1 rounded-lg cursor-help"
             onClick={handleCopyClipBoard}
           >
             붙여넣기
