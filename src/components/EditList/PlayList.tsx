@@ -16,9 +16,10 @@ import { useParams } from "react-router-dom";
 import ToastComponent from "@components/Toast/Toast";
 import NotFound from "@pages/NotFound/NotFonud";
 import Footer from "@components/Layout/footer";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { playlistNameState } from "@atoms/Playlist/playlistName";
 import { getMemberUsername } from "@api/member-controller/memberController";
+import { musicListState } from "@atoms/Musics/MusicList";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
   const isEditing = useSelector(
@@ -33,7 +34,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
 
   const { username } = useParams<{ username: string | undefined }>();
   const setPlaylistName = useSetRecoilState(playlistNameState);
-  const [musicList, setMusicList] = useState<any>([]);
+  const [musicList, setMusicList] = useRecoilState(musicListState);
 
   const [hasError, setHasError] = useState<boolean>(false);
 
@@ -48,7 +49,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const fetchPlaylist = useCallback(async () => {
     // 항상 로컬 스토리지에서 username을 가져옴
 
-    console.log(username);
     try {
       const member = await getMemberUsername(username);
       const playlist = await getPlayList(username);
@@ -69,9 +69,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       console.error(error);
       setHasError(true);
     }
-  }, [playlistId, setPlaylistName, username]);
-
-  console.log(playlists);
+  }, [playlistId, setPlaylistName, username, setMusicList]);
 
   const {
     handleEditClick,
@@ -95,7 +93,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   if (hasError) {
     return <NotFound />;
   }
-  console.log(memberId);
   return (
     <div className="h-full w-full scrollbar-hide overflow-scroll flex flex-col bg-black text-white font-medium leading-[18px]">
       {!isEditing && (
@@ -131,20 +128,19 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       <MusicTitle isEditing={isEditing} />
       <MusicDataRow
         isEditing={isEditing}
-        musicList={musicList}
         playlistId={playlistId}
         usernames={usernames}
         token={token}
         fetchPlaylist={fetchPlaylist}
       />
-      {isEditing && musicList.data?.length < 9 && (
+      {isEditing && musicList.data?.length + musicData.musics.length < 9 && (
         <PlusButton
           playlists={playlists}
           usernames={usernames}
           playlistId={playlistId}
         />
       )}
-      <Footer bgColor="black" />{" "}
+      <Footer bgColor="black" />
       {toast === "editPlayList" && (
         <ToastComponent
           background="white"

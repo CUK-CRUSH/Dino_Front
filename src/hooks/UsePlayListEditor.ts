@@ -2,16 +2,17 @@ import { useDispatch, useSelector } from "react-redux";
 import {
   updateArtist,
   updateTitle,
-  updateURL,
+  updateUrl,
   updateImage,
   resetIsSaved,
+  clearMusic,
 } from "@reducer/musicadd";
 import { setIsEditing } from "@reducer/editPlayList/isEdit";
 import {
   deletePlayList,
   putPlayList,
 } from "@api/playlist-controller/playlistControl";
-import { postMusicList } from "@api/music-controller/musicControl";
+import { postMultipleMusicList } from "@api/music-controller/musicControl";
 import { useNavigate } from "react-router-dom";
 import { setToast } from "@reducer/Toast/toast";
 import { RootState } from "@store/index";
@@ -116,18 +117,33 @@ export const UsePlayListEditor = ({
       }
 
       // 이미지 저장이 완료된 후에 음악 추가를 진행하도록 변경
-      if (musicData && musicData.title && musicData.artist && musicData.url) {
-        await postMusicList(
-          id,
-          musicData.title,
-          musicData.artist,
-          musicData.url,
-          token
-        );
-        dispatch(updateTitle(""));
-        dispatch(updateArtist(""));
-        dispatch(updateURL(""));
-        dispatch(updateImage(null));
+
+      try {
+        if (musicData && musicData.musics && musicData.musics.length > 0) {
+          await postMultipleMusicList(id, musicData.musics, token);
+          dispatch(clearMusic());
+          dispatch(updateImage(null));
+        }
+      } catch (error: any) {
+        if (error.response && error.response.status === 400) {
+          swalButton.fire({
+            title: "URL 형식을 어긋났습니다.",
+            html: "유튜브 영상링크가 포함된 URL을 입력해주세요.",
+            showCancelButton: true,
+            confirmButtonColor: "blue",
+            cancelButtonColor: "#d33",
+          });
+        } else if (error.response && error.response.status === 500) {
+          swalButton.fire({
+            title: "음악 추가에 실패했습니다.",
+            html: "타이틀 혹은 아티스트명은 50글자 이하만 가능합니다.",
+            showCancelButton: true,
+            confirmButtonColor: "blue",
+            cancelButtonColor: "#d33",
+          });
+        }
+
+        console.error(error);
       }
     }
 
@@ -145,11 +161,12 @@ export const UsePlayListEditor = ({
   const handleCancelClick = () => {
     dispatch(updateTitle(""));
     dispatch(updateArtist(""));
-    dispatch(updateURL(""));
+    dispatch(updateUrl(""));
     dispatch(updateImage(null));
     dispatch(setSelectedFile(null));
     dispatch(setIsEditing(false));
     dispatch(resetIsSaved());
+    dispatch(clearMusic());
   };
 
   //플리삭제

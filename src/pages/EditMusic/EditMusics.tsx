@@ -1,7 +1,7 @@
-import AddMusic from "@components/Addmusic/AddMusic";
+import EditMusic from "@components/Addmusic/EditMusic/EditMusic";
 
 const EditMusics = () => {
-  return <AddMusic />;
+  return <EditMusic />;
 };
 
 export default EditMusics;

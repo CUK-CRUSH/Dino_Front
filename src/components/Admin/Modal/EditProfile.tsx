@@ -37,7 +37,7 @@ export const EditProfile = ({
     handleCopyToClipboard(text);
   };
 
-  console.log(userId, tokenId);
+  // console.log(userId, tokenId);
   return (
     <div
       onClick={closeOptionsModalOpen}

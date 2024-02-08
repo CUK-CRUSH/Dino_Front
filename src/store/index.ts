@@ -8,13 +8,12 @@ import musicadd from "@reducer/musicadd";
 import userProfileReducer from "@reducer/Admin/userProfileSlice";
 import isEdit from "@reducer/editPlayList/isEdit";
 import addMusicInformationToggle from "@reducer/toggle/addMusicToggle";
-import playlistReducer from "@reducer/editPlayList/setPlaylist";
 import setProfile from "@reducer/setProfile/setProfile";
 import editMusicListToggle from "@reducer/editMusic/editMusic";
 import toast from "../reducer/Toast/toast";
-import musicDataReducer from "@reducer/editMusic/editMusicData";
 import selectedFileReducer from "@reducer/editPlayList/Image/isImageCompress";
 import userIdReducer from "@reducer/Admin/userId";
+import labelsReducer from "@reducer/AddMusic/labelSlice";
 
 const persistConfig = {
   key: "editMusicsToggle",
@@ -32,14 +31,12 @@ export const store = configureStore({
     userProfile: userProfileReducer,
     editPlaylistToggle: isEdit,
     addMusicInformationToggle: addMusicInformationToggle,
-    playlist: playlistReducer,
     setProfile: setProfile,
     editMusicsToggle: persistedReducer,
     toast: toast,
-    musicDataReducer: musicDataReducer,
     selectedFile: selectedFileReducer,
-
     userId: userIdReducer,
+    labels: labelsReducer,
   },
 });
 
