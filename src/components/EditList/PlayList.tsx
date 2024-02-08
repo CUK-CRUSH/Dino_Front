@@ -69,7 +69,8 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       console.error(error);
       setHasError(true);
     }
-  }, [playlistId, setPlaylistName, username, setMusicList]);
+    /* eslint-disable react-hooks/exhaustive-deps */
+  }, [setMusicList]);
 
   const {
     handleEditClick,
@@ -124,6 +125,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         isEditing={isEditing}
         playlistId={playlistId}
         token={token}
+        fetchPlaylist={fetchPlaylist}
       />
       <MusicTitle isEditing={isEditing} />
       <MusicDataRow

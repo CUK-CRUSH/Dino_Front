@@ -20,6 +20,7 @@ const ShowImage = ({
   isEditing,
   playlistId,
   token,
+  fetchPlaylist,
 }: ShowImageDTO) => {
   const { t } = useTranslation("Edit");
 
@@ -57,6 +58,7 @@ const ShowImage = ({
     if (result.dismiss === Swal.DismissReason.cancel) {
       try {
         await deletePlayListImage(playlist.id, token);
+        fetchPlaylist();
       } catch (error) {
         console.log(error);
         swalButton.fire({
@@ -64,7 +66,7 @@ const ShowImage = ({
         });
       }
     }
-  }, [playlist, token, swalButton]);
+  }, [playlist, token, swalButton, fetchPlaylist]);
   // console.log(reduxImage);
 
   const renderImage = (imageSrc: string) => (
