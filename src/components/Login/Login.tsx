@@ -1,6 +1,6 @@
 // @ts-ignore
 
-import mylist2 from "@assets/Mylist2.png";
+import mylist2 from "@assets/Mylist2.svg";
 import googlelogo from "@assets/Google logo.png";
 // import facebook from "@assets/facebook-3 logo.png";
 import kakao from "@assets/Kakao.svg";
