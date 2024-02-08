@@ -1,8 +1,8 @@
 export interface UpdateMemberParams {
   username?: string;
   introduction?: string | null;
-  profileImage?: string | null;
-  backgroundImage?: string | null;
+  profileImage?: any;
+  backgroundImage?: any;
   deleteProfileImage? : boolean;
   deleteBackgroundImage? : boolean;
   cookies?: string;
@@ -10,7 +10,7 @@ export interface UpdateMemberParams {
 }
 
 export interface EditButtonDTO {
-  save: (updateMemberData: UpdateMemberParams) => void;
+  save: ((updateMemberData: UpdateMemberParams) => void) ;
   cancel : () => void;
   updateMemberData: UpdateMemberParams;
   }
@@ -18,7 +18,6 @@ export interface EditButtonDTO {
 export interface SetUserProfileBackgroundDTO {
   aspectRatio: number;
   onCrop: (image: string) => void;
-  isCompressLoading?: boolean;
   earlyImage?: string | null;
   profileBackgroundImage? : string | null;
 
@@ -27,13 +26,21 @@ export interface SetUserProfileBackgroundDTO {
 export interface SetUserProfileImageDTO {
   aspectRatio: number;
   onCrop: (image: string) => void;
-  isCompressLoading?: boolean;
   earlyImage?: string | null;
   profileImage? : string | null;
 
 }
 
-export interface SetUserProfileInfoDTO {
+export interface SetUserProfileNicknameDTO {
+  placeholder : string;
+  maxlength : number;
+  name : string | undefined;
+  value : string | undefined
+  onChange? : (e: { target: { name: any; value: any; }; }) => void; 
+  nicknameValidation? : boolean;
+}
+
+export interface SetUserProfileIntroductionDTO {
   placeholder : string;
   maxlength : number;
   name : string | undefined;
