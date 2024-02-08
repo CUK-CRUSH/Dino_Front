@@ -7,10 +7,10 @@ import { MusicLength } from "./MusicLength";
 import InfiniteScroll from "react-infinite-scroller";
 import { musicListState } from "@atoms/Musics/MusicList";
 import { useRecoilValue } from "recoil";
+import SkeltonMusics from "@components/EditList/Skeleton/MusicSkeleton";
 
 export interface MusicDataDTO {
   isEditing: boolean;
-
   playlistId: string | undefined;
   usernames: string | null;
   token: string;
@@ -30,6 +30,7 @@ export const MusicDataRow = ({
   );
   const musicList = useRecoilValue(musicListState);
   const [width, setWidth] = useState(0);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const musicData = useSelector((state: RootState) => state.musicAdd);
   const { isSaved } = useSelector((state: RootState) => state.musicAdd);
@@ -77,12 +78,20 @@ export const MusicDataRow = ({
       setSelectedVideoId(null);
       setSelectedVideoIndex(null);
     }
+    const delay = 500;
+    const timeoutId = setTimeout(() => {
+      setIsLoading(false);
+    }, delay);
+
+    return () => clearTimeout(timeoutId);
   }, [isEditing]);
   return (
     <InfiniteScroll className="h-[50%]" pageStart={0} loadMore={loadMore}>
       <div className="h-[80%] scrollbar-hide overflow-scroll text-[17px] flex justify-center ">
         <div className="w-full mx-2 my-[44px] ">
-          {musicList?.data?.length > 0 ? (
+          {isLoading ? (
+            <SkeltonMusics customMargin={10} />
+          ) : musicList?.data?.length > 0 ? (
             musicList.data.map((musicItem: any, index: number) => (
               <div
                 key={musicItem.id}
