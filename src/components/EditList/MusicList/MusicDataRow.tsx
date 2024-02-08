@@ -88,7 +88,7 @@ export const MusicDataRow = ({
   return (
     <InfiniteScroll className="h-[50%]" pageStart={0} loadMore={loadMore}>
       <div className="h-[80%] scrollbar-hide overflow-scroll text-[17px] flex justify-center ">
-        <div className="w-full mx-2 my-[44px] ">
+        <div className="w-full mx-2 my-[40px] ">
           {isLoading ? (
             <SkeltonMusics customMargin={10} />
           ) : musicList?.data?.length > 0 ? (
