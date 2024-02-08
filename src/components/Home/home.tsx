@@ -34,11 +34,11 @@ const HomeComponent = () => {
         <div className={"divdiv flex flex-col items-center justify-center gap-4"}>
           <img src={mainGraphic} alt="Main Graphic"/>
           <div className={"h-[44px]"}></div>
-          <div className="flex flex-row w-[360px] h-[58px] bg-neutral-200 rounded-[30px] justify-center items-center">
             <Link to={"/login"}>
+          <div className="flex flex-row w-[360px] h-[58px] bg-neutral-200 rounded-[30px] justify-center items-center">
               <div className="text-[15px] font-normal font-['Pretendard']"><b>마이리스트 만들기</b></div>
-            </Link>
           </div>
+            </Link>
 
           <div className={"h-[30px]"}></div>
 
