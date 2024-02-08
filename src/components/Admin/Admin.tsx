@@ -63,9 +63,6 @@ const AdminPage: React.FC = () => {
         if (userDataResult.data?.id) {
           localStorage.setItem("userId", userDataResult.data.id.toString());
         }
-        if (Date.now() / 1000 > Number(localStorage.getItem("exp"))) {
-          localStorage.removeItem("tokenId");
-        }
       } catch (error) {
         console.error("Error fetching user data:", error);
       }
