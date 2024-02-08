@@ -66,7 +66,7 @@ const ShowImage = ({
         });
       }
     }
-  }, [playlist, token, swalButton]);
+  }, [playlist, token, swalButton, fetchPlaylist]);
   // console.log(reduxImage);
 
   const renderImage = (imageSrc: string) => (
