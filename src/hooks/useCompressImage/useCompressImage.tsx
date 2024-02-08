@@ -7,7 +7,8 @@ import { UpdateMemberParams } from "types/AdminEdit";
 const useCompressedImage = () => {
   const { compressImage } = useImageCompress();
   const dispatch = useDispatch();
-
+  
+/* eslint-disable react-hooks/exhaustive-deps */
   const compressedImage = useCallback(async (file: File, type: string, setUpdateMemberData: React.Dispatch<React.SetStateAction<UpdateMemberParams>>) => {
     const compressedImageResult = await compressImage(file);
 
