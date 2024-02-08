@@ -12,7 +12,7 @@ export const MusicTitle = ({ isEditing }: MusicTitleProps) => {
     setPlaylistName(e.target.value);
   };
   return (
-    <h2 className="my-4 mx-6 text-[25px] text-shadow-title font-bold leading-5">
+    <h2 className="mt-6 my-[8px] mx-6 text-[25px] text-shadow-title font-bold leading-5">
       {isEditing ? (
         <input
           type="text"

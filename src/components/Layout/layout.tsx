@@ -32,8 +32,12 @@ const Layout: React.FC<LayoutDTO> = ({ children }) => {
     if (prevPathSplit.length === 4 && currPathSplit.length === 3) {
       resetEditingState();
     }
+    if (Date.now() / 1000 > Number(localStorage.getItem("exp"))) {
+      localStorage.removeItem("tokenId");
+    }
   }, [location.pathname, prevLocation.pathname, resetEditingState]);
-
+  console.log(Date.now() / 1000);
+  console.log(Number(localStorage.getItem("exp")));
   return (
     <div className="overflow-hidden  scrollbar-hide bg-[#111111]">
       <div className="h-full w-full max-h-full flex justify-center">
