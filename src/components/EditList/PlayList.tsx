@@ -16,9 +16,10 @@ import { useParams } from "react-router-dom";
 import ToastComponent from "@components/Toast/Toast";
 import NotFound from "@pages/NotFound/NotFonud";
 import Footer from "@components/Layout/footer";
-import { useSetRecoilState } from "recoil";
+import { useRecoilState, useSetRecoilState } from "recoil";
 import { playlistNameState } from "@atoms/Playlist/playlistName";
 import { getMemberUsername } from "@api/member-controller/memberController";
+import { musicListState } from "@atoms/Musics/MusicList";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
   const isEditing = useSelector(
@@ -33,7 +34,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
 
   const { username } = useParams<{ username: string | undefined }>();
   const setPlaylistName = useSetRecoilState(playlistNameState);
-  const [musicList, setMusicList] = useState<any>([]);
+  const [musicList, setMusicList] = useRecoilState(musicListState);
 
   const [hasError, setHasError] = useState<boolean>(false);
 
@@ -92,8 +93,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   if (hasError) {
     return <NotFound />;
   }
-  // console.log(musicData);
-  // console.log(musicList);
   return (
     <div className="h-full w-full scrollbar-hide overflow-scroll flex flex-col bg-black text-white font-medium leading-[18px]">
       {!isEditing && (
@@ -129,7 +128,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       <MusicTitle isEditing={isEditing} />
       <MusicDataRow
         isEditing={isEditing}
-        musicList={musicList}
         playlistId={playlistId}
         usernames={usernames}
         token={token}

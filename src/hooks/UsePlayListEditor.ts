@@ -136,7 +136,7 @@ export const UsePlayListEditor = ({
         } else if (error.response && error.response.status === 500) {
           swalButton.fire({
             title: "음악 추가에 실패했습니다.",
-            html: "타이틀 혹은 아티스트명은 30글자 이하만 가능합니다.",
+            html: "타이틀 혹은 아티스트명은 50글자 이하만 가능합니다.",
             showCancelButton: true,
             confirmButtonColor: "blue",
             cancelButtonColor: "#d33",

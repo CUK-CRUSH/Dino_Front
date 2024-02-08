@@ -1,15 +1,16 @@
 import "@styles/EditList/playList.css";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { MusicDataRowContent } from "./MusicContents";
-import Youtube from "react-youtube";
 import { useSelector } from "react-redux";
 import { RootState } from "@store/index";
 import { MusicLength } from "./MusicLength";
 import InfiniteScroll from "react-infinite-scroller";
+import { musicListState } from "@atoms/Musics/MusicList";
+import { useRecoilValue } from "recoil";
 
 export interface MusicDataDTO {
   isEditing: boolean;
-  musicList: any;
+
   playlistId: string | undefined;
   usernames: string | null;
   token: string;
@@ -18,7 +19,6 @@ export interface MusicDataDTO {
 
 export const MusicDataRow = ({
   isEditing,
-  musicList,
   playlistId,
   usernames,
   token,
@@ -28,6 +28,7 @@ export const MusicDataRow = ({
   const [selectedVideoIndex, setSelectedVideoIndex] = useState<number | null>(
     null
   );
+  const musicList = useRecoilValue(musicListState);
   const [width, setWidth] = useState(0);
 
   const musicData = useSelector((state: RootState) => state.musicAdd);
@@ -77,7 +78,6 @@ export const MusicDataRow = ({
       setSelectedVideoIndex(null);
     }
   }, [isEditing]);
-
   return (
     <InfiniteScroll className="h-[50%]" pageStart={0} loadMore={loadMore}>
       <div className="h-[80%] scrollbar-hide overflow-scroll text-[17px] flex justify-center ">
@@ -102,22 +102,13 @@ export const MusicDataRow = ({
                   token={token}
                   setWidth={setWidth}
                   fetchPlaylist={fetchPlaylist}
+                  selectedVideoId={selectedVideoId}
+                  width={width}
+                  selectedVideoIndex={selectedVideoIndex}
+                  index={index}
+                  setSelectedVideoId={setSelectedVideoId}
+                  setSelectedVideoIndex={setSelectedVideoIndex}
                 />
-                {!isEditing &&
-                  selectedVideoId &&
-                  selectedVideoIndex === index && (
-                    <Youtube
-                      videoId={selectedVideoId}
-                      opts={{
-                        width: `${width}`,
-                        height: "300",
-                        playerVars: {
-                          autoplay: 1,
-                          modestbranding: 1,
-                        },
-                      }}
-                    />
-                  )}
               </div>
             ))
           ) : (
@@ -151,6 +142,12 @@ export const MusicDataRow = ({
                 token={token}
                 setWidth={setWidth}
                 fetchPlaylist={fetchPlaylist}
+                selectedVideoId={selectedVideoId}
+                width={width}
+                selectedVideoIndex={selectedVideoIndex}
+                index={index}
+                setSelectedVideoId={setSelectedVideoId}
+                setSelectedVideoIndex={setSelectedVideoIndex}
               />
             ))}
         </div>

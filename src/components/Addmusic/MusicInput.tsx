@@ -140,7 +140,7 @@ export const MusicInput: React.FC<MusicInputDTO> = ({
         value={value}
         required={required}
         onChange={handleChange}
-        maxLength={30}
+        maxLength={50}
         onKeyDown={(e) => {
           if (e.key === "Enter" || e.key === "Tab" || e.key === "Escape") {
             setIsSuggestionsVisible(false);
