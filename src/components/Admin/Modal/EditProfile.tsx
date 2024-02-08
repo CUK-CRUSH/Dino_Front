@@ -33,10 +33,20 @@ export const EditProfile = ({
 
   const { handleCopyToClipboard } = useCopyToClipboard();
 
-  const handleClick = (text: string) => {
-    handleCopyToClipboard(text);
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator
+        .share({
+          title: "MyList",
+          text: "Check out MyList!",
+          url: window.location.href,
+        })
+        .then(() => console.log("Successful share"))
+        .catch((error) => console.log("Error sharing", error));
+    } else {
+      console.log("Web Share API is not supported in your browser.");
+    }
   };
-
   // console.log(userId, tokenId);
   return (
     <div
@@ -59,9 +69,9 @@ export const EditProfile = ({
 
             <button
               className="block text-black hover:bg-gray-300 p-2 w-full text-center"
-              onClick={() => handleClick(`${baseUrl}${location.pathname}`)}
+              onClick={() => handleShare()}
             >
-              링크 복사하기
+              링크 공유하기
               {/* Copy Link */}
             </button>
           </div>
