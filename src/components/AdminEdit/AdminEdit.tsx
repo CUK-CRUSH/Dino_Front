@@ -31,6 +31,7 @@ import SetUserProfileNickname from "@components/AdminEdit/SetUserProfileNickname
 import SetUserProfileIntroduction from "./SetUserProfileIntroduction";
 import useCompressedImage from "@hooks/useCompressImage/useCompressImage";
 import convertUrlToBlobFile from "@utils/convertFile/convertFile";
+import useHandleUploadImage from "@hooks/useHandleUploadImage/useHandleUploadImage";
 
 interface AdminEditModalProps {
   onClose: () => void; // A function to close the modal
@@ -168,14 +169,7 @@ const handleCompressUserProfileImage = useCallback(async () => {
   dispatch(setDeleteProfileImage(false));
 }, [uploadUserProfileImage, dispatch,compressedImage]);
 
-useEffect(() => {
-  if (uploadUserProfileImage) {
-    handleCompressUserProfileImage();
-  }
-}, [
-  uploadUserProfileImage,
-  handleCompressUserProfileImage
-]);
+  useHandleUploadImage(uploadUserProfileImage, handleCompressUserProfileImage);
 
   // 배경화면
   const [
@@ -196,14 +190,7 @@ useEffect(() => {
     dispatch(setDeleteProfileBackgroundImage(false));
   }, [uploadUserProfileBackgroundImage, dispatch,compressedImage]);
 
-  useEffect(() => {
-    if (uploadUserProfileBackgroundImage) {
-      handleCompressUserProfileBackgroundImage();
-    }
-  }, [
-    uploadUserProfileBackgroundImage,
-    handleCompressUserProfileBackgroundImage
-  ]);
+  useHandleUploadImage(uploadUserProfileBackgroundImage, handleCompressUserProfileBackgroundImage);
 
   // 모달닫기
   const close = () => {
