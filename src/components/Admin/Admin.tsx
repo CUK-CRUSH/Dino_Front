@@ -17,6 +17,7 @@ import { useCookies } from "react-cookie";
 import Header from "@components/Layout/header";
 
 const AdminPage: React.FC = () => {
+
   const tokenId = Number(localStorage.getItem("tokenId"));
   const userId = Number(localStorage.getItem("userId"));
   const getDefaultMember = (): getMemberDTO => ({
@@ -45,14 +46,14 @@ const AdminPage: React.FC = () => {
   const [, setInduceLogin] = useState<boolean>(false);
   // 쿠키
   const [cookies] = useCookies(["accessToken"]);
-
-  useEffect(() => {
-    if (!cookies.accessToken) {
+  
+  useEffect(()=>{
+    if(!cookies.accessToken){
       setInduceLogin(false);
     } else {
       setInduceLogin(true);
     }
-  }, [cookies.accessToken]);
+  },[cookies.accessToken]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,6 +63,9 @@ const AdminPage: React.FC = () => {
         setUserdata(userDataResult.data);
         if (userDataResult.data?.id) {
           localStorage.setItem("userId", userDataResult.data.id.toString());
+        }
+        if (Date.now() / 1000 > Number(localStorage.getItem("exp"))) {
+          localStorage.removeItem("accessToken");
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -114,6 +118,7 @@ const AdminPage: React.FC = () => {
   const { toast } = useSelector((state: RootState) => state.toast);
 
   return (
+
     <div className="relative w-full h-full mx-auto scrollbar-hide overflow-scroll flex flex-col justify-between bg-neutral-900">
       <Header />
 
@@ -122,7 +127,7 @@ const AdminPage: React.FC = () => {
       />
       {/* 로그인 여부 */}
       {/* {!induceLogin ? <InduceButton /> : <></>} */}
-
+      
       {/* 플레이리스트 생성 성공 토스트 */}
 
       {toast === "add" && (
@@ -160,6 +165,8 @@ const AdminPage: React.FC = () => {
       )}
 
       <div className="w-full bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px] -mt-[180px]">
+
+
         {/* 프로필 이미지 */}
         <div className=" flex items-center flex-col z-10">
           <UserProfileImage userProfileImage={userData?.profileImageUrl} />
@@ -176,16 +183,18 @@ const AdminPage: React.FC = () => {
           ))}
 
         {!isLoading &&
-        userId === tokenId &&
-        tokenId &&
-        playlistData?.length !== undefined &&
-        playlistData.length < 4 ? (
+          userId === tokenId &&
+          tokenId &&
+          playlistData?.length !== undefined &&
+          playlistData.length < 4 ? (
           <AddPlayList />
         ) : (
           <></>
         )}
+
       </div>
       <Footer bgColor="neutral-900" />
+
     </div>
   );
 };

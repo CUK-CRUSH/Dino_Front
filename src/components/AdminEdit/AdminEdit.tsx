@@ -354,7 +354,7 @@ useEffect(() => {
 
         {/* 배경화면 */}
         <SetUserProfileBackground
-          aspectRatio={390/240}
+          aspectRatio={1}
           onCrop={handleUploadUserProfileBackgroundImage}
           earlyImage={userData?.backgroundImageUrl}
           profileBackgroundImage={updateMemberData.backgroundImage}
