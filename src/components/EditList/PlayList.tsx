@@ -22,6 +22,8 @@ import { getMemberUsername } from "@api/member-controller/memberController";
 import { musicListState } from "@atoms/Musics/MusicList";
 import { userNameState } from "@atoms/Playlist/username";
 import { playlistIdState } from "@atoms/Playlist/playlistId";
+import { memberIdState } from "@atoms/Playlist/memberId";
+import { tokenState } from "@atoms/Playlist/token";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
   const isEditing = useSelector(
@@ -30,7 +32,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const musicData = useSelector((state: RootState) => state.musicAdd);
 
   const [uploadImage, setUploadImage] = useState<string | null>(null);
-  const [memberId, setMemberId] = useState<number | null>(null);
+  const setMemberId = useSetRecoilState(memberIdState);
   const [playlists, setPlaylists] = useState<any[]>([]);
 
   // 유저이름
@@ -53,8 +55,8 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const { toast } = useSelector((state: RootState) => state.toast);
   // 쿠키에서 유저 id 가져오기
   const [cookies] = useCookies(["accessToken"]);
-  const token = cookies.accessToken;
 
+  const setToken = useSetRecoilState(tokenState);
   const handleUploadImage = (image: string) => setUploadImage(image);
   const fetchPlaylist = useCallback(async () => {
     // 항상 로컬 스토리지에서 username을 가져옴
@@ -89,7 +91,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     handleDeleteClick,
   } = UsePlayListEditor({
     playlists,
-    token,
     fetchPlaylist,
     setPlaylistName,
     uploadImage,
@@ -97,6 +98,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
 
   useEffect(() => {
     setPlaylistId(Number(playlistId));
+    setToken(cookies.accessToken);
     fetchPlaylist();
   }, [fetchPlaylist, setPlaylistId, playlistId]);
 
@@ -109,10 +111,8 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         <MainEditButton
           playlists={playlists}
           uploadImage={uploadImage}
-          token={token}
           fetchPlaylist={fetchPlaylist}
           setPlaylistName={setPlaylistName}
-          memberId={memberId}
         />
       )}
       {isEditing && (
@@ -129,16 +129,11 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         onCrop={handleUploadImage}
         playlists={playlists}
         isEditing={isEditing}
-        token={token}
         fetchPlaylist={fetchPlaylist}
       />
 
       <MusicTitle isEditing={isEditing} />
-      <MusicDataRow
-        isEditing={isEditing}
-        token={token}
-        fetchPlaylist={fetchPlaylist}
-      />
+      <MusicDataRow isEditing={isEditing} fetchPlaylist={fetchPlaylist} />
       {isEditing && musicList.data?.length + musicData.musics.length < 9 && (
         <PlusButton playlists={playlists} />
       )}

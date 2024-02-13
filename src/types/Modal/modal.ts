@@ -4,7 +4,6 @@ export interface CustomModalDTO {
   onRequestClose: () => void;
   compressedImage: string | null;
   playlists: any[];
-  token: string;
   playlistName: string;
   fetchPlaylist: () => void;
   setPlaylistName: (value: string) => void;

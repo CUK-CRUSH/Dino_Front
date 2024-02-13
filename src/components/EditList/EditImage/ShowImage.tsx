@@ -15,14 +15,13 @@ import Spinner from "@assets/Spinner/Spinner.svg";
 import LikeButton from "@components/Likes/LikeButton";
 import { playlistIdState } from "@atoms/Playlist/playlistId";
 import { useRecoilValue } from "recoil";
+import { tokenState } from "@atoms/Playlist/token";
 
 const ShowImage = ({
   aspectRatio,
   onCrop,
   playlists,
   isEditing,
-
-  token,
   fetchPlaylist,
 }: ShowImageDTO) => {
   const { t } = useTranslation("Edit");
@@ -31,6 +30,7 @@ const ShowImage = ({
     (state: RootState) => state.selectedFile.isLoading
   );
   const playlistId = useRecoilValue(playlistIdState);
+  const token = useRecoilValue(tokenState);
   const swalButton = Swal.mixin({
     customClass: {
       popup: "popup", // 전체

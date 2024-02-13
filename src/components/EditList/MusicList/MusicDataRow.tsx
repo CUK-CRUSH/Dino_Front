@@ -11,15 +11,10 @@ import SkeltonMusics from "@components/EditList/Skeleton/MusicSkeleton";
 
 export interface MusicDataDTO {
   isEditing: boolean;
-  token: string;
   fetchPlaylist: () => void;
 }
 
-export const MusicDataRow = ({
-  isEditing,
-  token,
-  fetchPlaylist,
-}: MusicDataDTO) => {
+export const MusicDataRow = ({ isEditing, fetchPlaylist }: MusicDataDTO) => {
   const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
   const [selectedVideoIndex, setSelectedVideoIndex] = useState<number | null>(
     null
@@ -102,7 +97,6 @@ export const MusicDataRow = ({
                   musicData={musicItem}
                   order={index + 1}
                   isEditing={isEditing}
-                  token={token}
                   setWidth={setWidth}
                   fetchPlaylist={fetchPlaylist}
                   selectedVideoId={selectedVideoId}
@@ -140,7 +134,6 @@ export const MusicDataRow = ({
                 }}
                 order={1 + index + musicList?.data?.length}
                 isEditing={isEditing}
-                token={token}
                 setWidth={setWidth}
                 fetchPlaylist={fetchPlaylist}
                 selectedVideoId={selectedVideoId}

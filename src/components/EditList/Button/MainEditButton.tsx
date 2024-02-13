@@ -1,3 +1,4 @@
+import { memberIdState } from "@atoms/Playlist/memberId";
 import { playlistNameState } from "@atoms/Playlist/playlistName";
 import CustomModal from "@utils/Modal/Modal";
 import { useCallback, useState } from "react";
@@ -8,19 +9,15 @@ import { useRecoilValue } from "recoil";
 type MainEditButtonProps = {
   playlists: any[];
   uploadImage: string | null;
-  token: string;
   fetchPlaylist: () => void;
   setPlaylistName: (name: string) => void;
-  memberId: number | null;
 };
 
 export const MainEditButton = ({
   playlists,
   uploadImage,
-  token,
   fetchPlaylist,
   setPlaylistName,
-  memberId,
 }: MainEditButtonProps) => {
   const playlistName = useRecoilValue(playlistNameState);
 
@@ -28,6 +25,7 @@ export const MainEditButton = ({
   const [modalOpen, setModalOpen] = useState(false);
 
   const tokenId = Number(localStorage.getItem("tokenId"));
+  const memberId = useRecoilValue(memberIdState);
 
   const handleBack = useCallback(() => {
     navigate(-1);
@@ -42,8 +40,6 @@ export const MainEditButton = ({
     compressedImage: null,
     playlists,
     uploadImage,
-    token,
-
     fetchPlaylist,
     setPlaylistName,
     playlistName,

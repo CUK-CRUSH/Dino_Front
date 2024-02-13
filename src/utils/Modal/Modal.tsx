@@ -37,7 +37,6 @@ export default function CustomModal({
   uploadImage,
   compressedImage,
   playlists,
-  token,
   fetchPlaylist,
   setPlaylistName,
 }: Readonly<CustomModalDTO>) {
@@ -51,8 +50,6 @@ export default function CustomModal({
     handleDeleteClick,
   } = UsePlayListEditor({
     playlists,
-    token,
-
     fetchPlaylist,
     setPlaylistName,
   });

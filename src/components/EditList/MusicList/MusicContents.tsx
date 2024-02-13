@@ -15,12 +15,12 @@ import { useRecoilValue } from "recoil";
 import { musicListState } from "@atoms/Musics/MusicList";
 import { userNameState } from "@atoms/Playlist/username";
 import { playlistIdState } from "@atoms/Playlist/playlistId";
+import { tokenState } from "@atoms/Playlist/token";
 
 export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   musicData,
   order,
   isEditing,
-  token,
   setWidth,
   fetchPlaylist,
   selectedVideoId,
@@ -54,6 +54,7 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
 
   const usernames = useRecoilValue(userNameState);
   const playlistId = useRecoilValue(playlistIdState);
+  const token = useRecoilValue(tokenState);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
