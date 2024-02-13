@@ -26,6 +26,10 @@ const Recommendation = () => {
     fetchData();
   }, []);
 
+  const handleOnClick = (username: string, id: number) => {
+    navigate(`/user/${username}/${id}`);
+    window.location.reload();
+  };
   return (
     <div className="flex justify-center flex-col mx-5 w-[390px]">
       <p className="mb-2">✨추천 플레이리스트</p>
@@ -42,9 +46,9 @@ const Recommendation = () => {
       >
         {data.map((item) => (
           <div
-            className="mr-3"
+            className="mr-3 cursor-pointer"
             key={item.id}
-            onClick={() => navigate(`/user/${item.username}/${item.id}`)}
+            onClick={() => handleOnClick(item.username, item.id)}
           >
             <img
               className="cursor-pointer"
