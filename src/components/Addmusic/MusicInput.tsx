@@ -1,5 +1,4 @@
 import { MusicInputDTO } from "types/Addmusic/AddMusic";
-import { MdCancel } from "react-icons/md";
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
@@ -7,6 +6,7 @@ import { updateArtist, updateTitle, updateUrl } from "@reducer/musicadd";
 import { AnyAction } from "@reduxjs/toolkit";
 import { RootState } from "@store/index";
 import Swal from "sweetalert2";
+import Cancel from "@assets/AddMusic/DeleteMusic.svg";
 import "@styles/EditList/playList.css";
 
 export const MusicInput: React.FC<MusicInputDTO> = ({
@@ -101,17 +101,17 @@ export const MusicInput: React.FC<MusicInputDTO> = ({
       {label === labels.title && (
         <button
           onClick={() => handleClear(() => updateTitle(""))}
-          className="absolute top-[42px] right-3 text-[10px] bg-[#2E2E2E] p-1 rounded-lg"
+          className="absolute top-[42px] right-3 text-[10px] bg-[#2E2E2E] p-1 rounded-2xl"
         >
-          <MdCancel size={20} color="red" />
+          <img src={Cancel} alt="cancel" />
         </button>
       )}
       {label === labels.artist && (
         <button
           onClick={() => handleClear(() => updateArtist(""))}
-          className="absolute top-[42px] right-3 text-[10px] bg-[#2E2E2E] p-1 rounded-lg"
+          className="absolute top-[42px] right-3 text-[10px] bg-[#2E2E2E] p-1 rounded-2xl"
         >
-          <MdCancel size={20} color="red" />
+          <img src={Cancel} alt="cancel" />
         </button>
       )}
       {label === labels.URL && (
@@ -124,9 +124,9 @@ export const MusicInput: React.FC<MusicInputDTO> = ({
           </button>
           <button
             onClick={() => handleClear(() => updateUrl(""))}
-            className="absolute top-[42px] right-3 text-[10px] bg-[#2E2E2E] p-1 rounded-lg"
+            className="absolute top-[42px] right-3 text-[10px] bg-[#2E2E2E] p-1 rounded-2xl"
           >
-            <MdCancel size={20} color="red" />
+            <img src={Cancel} alt="cancel" />
           </button>
         </>
       )}

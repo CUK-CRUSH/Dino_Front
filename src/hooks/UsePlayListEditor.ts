@@ -34,7 +34,7 @@ interface UsePlayListEditorProps {
   usernames: string | null;
   fetchPlaylist: () => void;
   setPlaylistName: (value: string) => void;
-  uploadImage?:string|null;
+  uploadImage?: string | null;
 }
 
 export const UsePlayListEditor = ({
@@ -45,14 +45,11 @@ export const UsePlayListEditor = ({
   usernames,
   fetchPlaylist,
   setPlaylistName,
-  uploadImage
+  uploadImage,
 }: UsePlayListEditorProps) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const selectedFileState = useSelector(
-  //   (state: RootState) => state.selectedFile
-  // );
-  // const selectedFile = selectedFileState.selectedFile;
+
   const { compressImage } = useImageCompress();
   const isLoading = useSelector(
     (state: RootState) => state.selectedFile.isLoading

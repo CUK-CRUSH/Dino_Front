@@ -6,9 +6,9 @@ import {
   updateTitle,
   updateUrl,
 } from "@reducer/musicadd";
-import { BsYoutube } from "react-icons/bs";
-import { IoIosSearch } from "react-icons/io";
-import { GoArrowSwitch } from "react-icons/go";
+import YoutubeIcon from "@assets/AddMusic/Youtube.svg";
+import Search from "@assets/AddMusic/Search.svg";
+import Switch from "@assets/AddMusic/Switch.svg";
 import { RootState } from "@store/index";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -146,7 +146,7 @@ const AddMusic: React.FC = () => {
       <div className="mt-14 mx-4">
         <div className="flex flex-row mb-5 text-[18px]">
           <button className="mr-2">
-            <BsYoutube color="red" size={22} />
+            <img src={YoutubeIcon} alt="Youtube" />
           </button>
 
           <p className="mt-[2px]">유튜브에서 음악 검색하기</p>
@@ -160,7 +160,8 @@ const AddMusic: React.FC = () => {
             <p className=" text-[12px] ">
               {searchType === "title" ? "제목으로 검색" : "아티스트로 검색"}
             </p>
-            <GoArrowSwitch color="white" size={32} />
+
+            <img src={Switch} alt="Switch" />
           </button>
         </div>
 
@@ -188,8 +189,8 @@ const AddMusic: React.FC = () => {
             }}
           />
 
-          <button type="submit" className="absolute right-3 bottom-3">
-            <IoIosSearch color="white" size={30} />
+          <button type="submit" className="absolute right-4 bottom-4">
+            <img src={Search} alt="Search" />
           </button>
         </form>
         <div className="mb-10">

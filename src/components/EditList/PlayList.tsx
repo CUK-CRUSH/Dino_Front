@@ -128,6 +128,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         token={token}
         fetchPlaylist={fetchPlaylist}
       />
+
       <MusicTitle isEditing={isEditing} />
       <MusicDataRow
         isEditing={isEditing}

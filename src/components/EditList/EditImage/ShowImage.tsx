@@ -12,6 +12,7 @@ import Camera from "@assets/PlayListImage/camera.svg";
 import { useCallback } from "react";
 import { Img } from "react-image";
 import Spinner from "@assets/Spinner/Spinner.svg";
+import LikeButton from "@components/Likes/LikeButton";
 
 const ShowImage = ({
   aspectRatio,
@@ -121,17 +122,20 @@ const ShowImage = ({
   );
 
   return (
-    <div className="h-1/3 smartPhone:h-[28%] tabletMini:h-[20%] tablet:h-[18%] relative rounded-b-3xl bg-white ">
-      {isLoading ? (
-        <Img src={Spinner} alt="Spinner" />
-      ) : isEditing ? (
-        renderImageControls(reduxImage || playlist?.thumbnailUrl || null)
-      ) : reduxImage || playlist?.thumbnailUrl ? (
-        renderImage(reduxImage || playlist?.thumbnailUrl || "")
-      ) : (
-        renderNoImage()
-      )}
-    </div>
+    <>
+      <div className="relative h-1/3 smartPhone:h-[28%] tabletMini:h-[20%] tablet:h-[18%] rounded-b-3xl bg-white ">
+        {isLoading ? (
+          <Img src={Spinner} alt="Spinner" />
+        ) : isEditing ? (
+          renderImageControls(reduxImage || playlist?.thumbnailUrl || null)
+        ) : reduxImage || playlist?.thumbnailUrl ? (
+          renderImage(reduxImage || playlist?.thumbnailUrl || "")
+        ) : (
+          renderNoImage()
+        )}
+        <LikeButton />
+      </div>
+    </>
   );
 };
 
