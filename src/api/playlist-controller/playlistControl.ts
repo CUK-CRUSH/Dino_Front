@@ -132,3 +132,38 @@ export const deletePlayListImage = async (
     throw error;
   }
 };
+
+// 좋아요 추가하기
+export const postLike = async (playlistId: number, cookies?: string) => {
+  try {
+    const response = await axiosInstance.post(
+      `/api/v1/playlist/${playlistId}/like`,
+      {
+        headers: {
+          Authorization: `Bearer ${cookies}`,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+export const deleteLike = async (playlistId: string, cookies?: string) => {
+  try {
+    const response = await axiosInstance.delete(
+      `/api/v1/playlist/${playlistId}/like`,
+      {
+        headers: {
+          Authorization: `Bearer ${cookies}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

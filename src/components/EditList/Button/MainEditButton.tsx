@@ -1,9 +1,10 @@
 import { memberIdState } from "@atoms/Playlist/memberId";
 import { playlistNameState } from "@atoms/Playlist/playlistName";
+import { userNameState } from "@atoms/Playlist/username";
 import CustomModal from "@utils/Modal/Modal";
 import { useCallback, useState } from "react";
 import { FaAngleLeft, FaEllipsisVertical } from "react-icons/fa6";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 
 type MainEditButtonProps = {
@@ -26,9 +27,12 @@ export const MainEditButton = ({
 
   const tokenId = Number(localStorage.getItem("tokenId"));
   const memberId = useRecoilValue(memberIdState);
+  const { username: paramUsername } = useParams<{
+    username: string | undefined;
+  }>();
 
   const handleBack = useCallback(() => {
-    navigate(-1);
+    navigate(`/user/${paramUsername}`);
   }, [navigate]);
 
   const handleModalToggle = useCallback(() => {
