@@ -9,7 +9,6 @@ type MainEditButtonProps = {
   playlists: any[];
   uploadImage: string | null;
   token: string;
-  musicData: any;
   fetchPlaylist: () => void;
   setPlaylistName: (name: string) => void;
   memberId: number | null;
@@ -19,7 +18,6 @@ export const MainEditButton = ({
   playlists,
   uploadImage,
   token,
-  musicData,
   fetchPlaylist,
   setPlaylistName,
   memberId,
@@ -45,7 +43,7 @@ export const MainEditButton = ({
     playlists,
     uploadImage,
     token,
-    musicData,
+
     fetchPlaylist,
     setPlaylistName,
     playlistName,

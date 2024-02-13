@@ -38,7 +38,6 @@ export default function CustomModal({
   compressedImage,
   playlists,
   token,
-  musicData,
   fetchPlaylist,
   setPlaylistName,
 }: Readonly<CustomModalDTO>) {
@@ -53,7 +52,7 @@ export default function CustomModal({
   } = UsePlayListEditor({
     playlists,
     token,
-    musicData,
+
     fetchPlaylist,
     setPlaylistName,
   });

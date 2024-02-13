@@ -31,7 +31,6 @@ import { playlistIdState } from "@atoms/Playlist/playlistId";
 interface UsePlayListEditorProps {
   playlists: any[];
   token: string;
-  musicData: any;
   fetchPlaylist: () => void;
   setPlaylistName: (value: string) => void;
   uploadImage?: string | null;
@@ -40,7 +39,6 @@ interface UsePlayListEditorProps {
 export const UsePlayListEditor = ({
   playlists,
   token,
-  musicData,
   fetchPlaylist,
   setPlaylistName,
   uploadImage,
@@ -49,6 +47,8 @@ export const UsePlayListEditor = ({
   const navigate = useNavigate();
   const usernames = useRecoilValue(userNameState);
   const playlistId = useRecoilValue(playlistIdState);
+
+  const musicData = useSelector((state: RootState) => state.musicAdd);
 
   const { compressImage } = useImageCompress();
   const isLoading = useSelector(

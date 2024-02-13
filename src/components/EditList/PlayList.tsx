@@ -90,7 +90,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   } = UsePlayListEditor({
     playlists,
     token,
-    musicData,
     fetchPlaylist,
     setPlaylistName,
     uploadImage,
@@ -111,7 +110,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
           playlists={playlists}
           uploadImage={uploadImage}
           token={token}
-          musicData={musicData}
           fetchPlaylist={fetchPlaylist}
           setPlaylistName={setPlaylistName}
           memberId={memberId}
