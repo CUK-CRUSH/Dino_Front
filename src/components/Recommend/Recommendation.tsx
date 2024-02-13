@@ -3,7 +3,7 @@ import { useNavigate } from "react-router-dom";
 import { getRecommendation } from "@api/Recommendation/recommendationControl";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
-import NoImage from "@assets/Kakao.svg";
+import Noimage from "@assets/noimage.jpg";
 
 interface PlayListDTO {
   id: number;
@@ -51,8 +51,8 @@ const Recommendation = () => {
             onClick={() => handleOnClick(item.username, item.id)}
           >
             <img
-              className="cursor-pointer"
-              src={item.thumbnailUrl || NoImage} // default.jpg는 기본 이미지 경로입니다.
+              className="cursor-pointer w-[105px] h-[105px] "
+              src={item.thumbnailUrl ? item.thumbnailUrl : Noimage} // default.jpg는 기본 이미지 경로입니다.
               alt={item.playlistName}
             />
             <p>{item.playlistName}</p>

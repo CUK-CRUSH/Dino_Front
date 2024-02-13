@@ -1,6 +1,5 @@
 import { memberIdState } from "@atoms/Playlist/memberId";
 import { playlistNameState } from "@atoms/Playlist/playlistName";
-import { userNameState } from "@atoms/Playlist/username";
 import CustomModal from "@utils/Modal/Modal";
 import { useCallback, useState } from "react";
 import { FaAngleLeft, FaEllipsisVertical } from "react-icons/fa6";
