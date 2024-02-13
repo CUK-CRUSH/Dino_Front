@@ -91,59 +91,55 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   }, [])
 
   const onChangeInput = async (e: { target: { name: any; value: any } }) => {
+
     const { name, value } = e.target;
-
-    setInput({
-      ...input,
-      [name]: value,
-    });
-
-    setUpdateMemberData({
-      ...updateMemberData,
-      [name]: value,
-    });
+  
+    // input과 updateMemberData를 한 번에 업데이트
+    const updatedData = { ...input, [name]: value };
+    setInput(updatedData);
+    setUpdateMemberData(updatedData);
+  
     if (name === "username") {
-
-      if (value) {
-        try {
-          const checkNicknameBack = await getNicknameAvailable(value, token);
-          if (
-            !checkBadWord(value) &&
-            checkNickname(value) &&
-            checkNicknameBack.status === 200
-          ) {
-            dispatch(setProfileUsername(value));
-            setNicknameValidation(true);
-          } else if (input.username === userData?.username) {
-            setNicknameValidation(true);
-          } else if (!checkNickname(value)) {
-            setNicknameValidation(false);
-          } else if (checkBadWord(value)) {
-            setNicknameValidation(false);
-          }
-        } catch (error: any) {
-          // If the status is 400, simply skip the error
-          if (error.response && error.response.status === 400) {
-            setNicknameValidation(false);
-            // 닉네임을 수정하고 같은 닉네임일때
-            if (value === userData?.username) {
-              setNicknameValidation(true);
-              setUpdateMemberData((prevData) => ({
-                ...prevData,
-                username: "",
-              }));
-              return;
-            }
-
-          } else {
-            console.error("Error checking nickname:", error);
-          }
-        }
+      handleUsernameChange(value);
+    } else if (name === "introduction" ) {
+      setUpdateMemberData((prevData) => ({ ...prevData, introduction: value }));
+     
+    }
+  };
+  
+  const handleUsernameChange = async (value: string) => {
+    if (!value) {
+      setNicknameValidation(false);
+      return;
+    }
+  
+    try {
+      const checkNicknameBack = await getNicknameAvailable(value, token);
+      const isValidNickname =
+        !checkBadWord(value) && checkNickname(value) && checkNicknameBack.status === 200;
+      const isCurrentUsername = input.username === userData?.username;
+  
+      if (isValidNickname || isCurrentUsername) {
+        dispatch(setProfileUsername(value));
+        setNicknameValidation(true);
       } else {
         setNicknameValidation(false);
       }
-    } else if (name === "introduction") {
-      dispatch(setProfileIntroduction(value));
+    } catch (error: any) {
+      handleErrorOnUsernameChange(error, value);
+    }
+  };
+  
+  const handleErrorOnUsernameChange = (error: any, value: string) => {
+    if (error.response && error.response.status === 400) {
+      setNicknameValidation(false);
+  
+      if (value === userData?.username) {
+        setNicknameValidation(true);
+        setUpdateMemberData((prevData) => ({ ...prevData, username: "" }));
+      }
+    } else {
+      console.error("Error checking nickname:", error);
     }
   };
 
@@ -214,7 +210,9 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   // 열고닫기
   const [isOpen, setIsOpen] = useState(true);
 
+  // 취소
   const cancel = () => {
+
     dispatch(setDeleteProfileImage(false));
     dispatch(setDeleteProfileBackgroundImage(false));
 
@@ -238,13 +236,17 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
   const handleMember = async (data: UpdateMemberParams) => {
 
+    if (input.introduction === '' && data?.introduction !== input.introduction) {
+      data.introduction = input.introduction;
+    }
+
     await new Promise((resolve) => setTimeout(resolve, 300));
 
     if (nicknameValidation) {
       const code = await updateMember(data);
       // 이후에 code를 이용한 로직을 이어서 작성하면 됩니다.
-
       if (code.status === 200) {
+        dispatch(setProfileIntroduction(updateMemberData.introduction));
 
         handleImageUpdates({
           uploadUserProfileImage: uploadUserProfileImage,

@@ -118,7 +118,6 @@ const AdminPage: React.FC = () => {
 
   // 권한부여
   const authority = useCompareToken(userData?.id);
-  console.log(authority)
 
   return (
 
