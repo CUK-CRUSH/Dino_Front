@@ -6,7 +6,7 @@ import logo from "@assets/Header/logo.svg";
 import { Img } from "react-image";
 import { Link } from "react-router-dom";
 
-const Header = () => {
+const Header = ({ authority } : { authority? : boolean }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const openEditModal = () => {
@@ -66,6 +66,7 @@ const Header = () => {
           left={optionsModalPosition.left}
           openEditModal={openEditModal}
           closeOptionsModalOpen={closeOptionsModal}
+          authority={authority}
         />
       )}
 

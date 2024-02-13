@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import useWindowSizeCustom from "@hooks/useWindowSizeCustom";
 import "../../styles/Admin/style.css";
@@ -30,6 +30,9 @@ import { useHandleImageUpdates } from "@hooks/useHandleImageUpdates/useHandleIma
 import SetUserProfileNickname from "@components/AdminEdit/SetUserProfileNickname";
 import SetUserProfileIntroduction from "./SetUserProfileIntroduction";
 import useCompressedImage from "@hooks/useCompressImage/useCompressImage";
+import convertUrlToBlobFile from "@utils/convertFile/convertFile";
+import useHandleUploadImage from "@hooks/useHandleUploadImage/useHandleUploadImage";
+import useCompressHandleImage from "@hooks/useCompressHandleImage/useCompressHandleImage";
 
 interface AdminEditModalProps {
   onClose: () => void; // A function to close the modal
@@ -88,172 +91,56 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   }, [])
 
   const onChangeInput = async (e: { target: { name: any; value: any } }) => {
+
     const { name, value } = e.target;
-
-    setInput({
-      ...input,
-      [name]: value,
-    });
-
-    setUpdateMemberData({
-      ...updateMemberData,
-      [name]: value,
-    });
+  
+    // input과 updateMemberData를 한 번에 업데이트
+    const updatedData = { ...input, [name]: value };
+    setInput(updatedData);
+    setUpdateMemberData(updatedData);
+  
     if (name === "username") {
-
-      if (value) {
-        try {
-          const checkNicknameBack = await getNicknameAvailable(value, token);
-          if (
-            !checkBadWord(value) &&
-            checkNickname(value) &&
-            checkNicknameBack.status === 200
-          ) {
-            dispatch(setProfileUsername(value));
-            setNicknameValidation(true);
-          } else if (input.username === userData?.username) {
-            setNicknameValidation(true);
-          } else if (!checkNickname(value)) {
-            setNicknameValidation(false);
-          } else if (checkBadWord(value)) {
-            setNicknameValidation(false);
-          }
-        } catch (error: any) {
-          // If the status is 400, simply skip the error
-          if (error.response && error.response.status === 400) {
-            setNicknameValidation(false);
-            // 닉네임을 수정하고 같은 닉네임일때
-            if (value === userData?.username) {
-              setNicknameValidation(true);
-              setUpdateMemberData((prevData) => ({
-                ...prevData,
-                username: "",
-              }));
-              return;
-            }
-
-          } else {
-            console.error("Error checking nickname:", error);
-          }
-        }
+      handleUsernameChange(value);
+    } else if (name === "introduction" ) {
+      setUpdateMemberData((prevData) => ({ ...prevData, introduction: value }));
+     
+    }
+  };
+  
+  const handleUsernameChange = async (value: string) => {
+    if (!value) {
+      setNicknameValidation(false);
+      return;
+    }
+  
+    try {
+      const checkNicknameBack = await getNicknameAvailable(value, token);
+      const isValidNickname =
+        !checkBadWord(value) && checkNickname(value) && checkNicknameBack.status === 200;
+      const isCurrentUsername = input.username === userData?.username;
+  
+      if (isValidNickname || isCurrentUsername) {
+        dispatch(setProfileUsername(value));
+        setNicknameValidation(true);
       } else {
         setNicknameValidation(false);
       }
-    } else if (name === "introduction") {
-      dispatch(setProfileIntroduction(value));
+    } catch (error: any) {
+      handleErrorOnUsernameChange(error, value);
     }
   };
-
-
-
-// 프로필사진
- const [uploadUserProfileImage, setUploadUserProfileImage] = useState<
- string | null
->(null);
-
-const handleUploadUserProfileImage = (image: string) =>
-setUploadUserProfileImage(image);
-
-const compressedImage = useCompressedImage();
-
-
-const handleCompressUserProfileImage = useCallback(async () => {
-  if (!uploadUserProfileImage) return;
-
-  // uploadUserProfileImage를 Blob 객체로 변환합니다.
-  const response = await fetch(uploadUserProfileImage);
-  const blob = await response.blob();
-
-  // Blob 객체를 File 객체로 변환합니다.
-  const file = new File([blob], uploadUserProfileImage, { type: "image/png" });
-  // compressImage를 이용하여 이미지를 압축합니다.
-
-  compressedImage(file, 'profileImage', setUpdateMemberData);
-
-  dispatch(setDeleteProfileImage(false));
-}, [uploadUserProfileImage, dispatch,compressedImage]);
-
-useEffect(() => {
-  if (uploadUserProfileImage) {
-    handleCompressUserProfileImage();
-  }
-}, [
-  uploadUserProfileImage,
-  handleCompressUserProfileImage
-]);
-
-
-  // useEffect(() => {
-  //   if (uploadUserProfileImage) {
-  //     handleCompressUserProfileImage();
-  //   }
-  // }, [
-  //   uploadUserProfileImage,
-  //   handleCompressUserProfileImage,
-  // ]);
-  // 배경화면
-  const [
-    uploadUserProfileBackgroundImage,
-    setUploadUserProfileBackgroundImage,
-  ] = useState<string | null>(null);
-
-  const handleUploadUserProfileBackgroundImage = (image: string) =>
-    setUploadUserProfileBackgroundImage(image);
-
-  const handleCompressUserProfileBackgroundImage = useCallback(async () => {
-    if (!uploadUserProfileBackgroundImage) return;
-
-   // uploadUserProfileImage를 Blob 객체로 변환합니다.
-  const response = await fetch(uploadUserProfileBackgroundImage);
-  const blob = await response.blob();
-
-  // Blob 객체를 File 객체로 변환합니다.
-  const file = new File([blob], uploadUserProfileBackgroundImage, { type: "image/png" });
-  // compressImage를 이용하여 이미지를 압축합니다.
-
-  compressedImage(file,'backgroundImage',setUpdateMemberData);
-
-    dispatch(setDeleteProfileBackgroundImage(false));
-  }, [uploadUserProfileBackgroundImage, dispatch,compressedImage]);
-
-  useEffect(() => {
-    if (uploadUserProfileBackgroundImage) {
-      handleCompressUserProfileBackgroundImage();
-    }
-  }, [
-    uploadUserProfileBackgroundImage,
-    handleCompressUserProfileBackgroundImage
-  ]);
-
-  // 모달닫기
-  const close = () => {
-    onClose(); // Close the modal without saving changes
-  };
-
-  const { windowSize } = useWindowSizeCustom();
-  // 사이즈 390 보다 크면 모달창 크기 고정
-  const [size, setSize] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (windowSize.width > 390) {
-      setSize(true);
+  
+  const handleErrorOnUsernameChange = (error: any, value: string) => {
+    if (error.response && error.response.status === 400) {
+      setNicknameValidation(false);
+  
+      if (value === userData?.username) {
+        setNicknameValidation(true);
+        setUpdateMemberData((prevData) => ({ ...prevData, username: "" }));
+      }
     } else {
-      setSize(false);
+      console.error("Error checking nickname:", error);
     }
-  }, [windowSize.width]);
-
-  // 열고닫기
-  const [isOpen, setIsOpen] = useState(true);
-
-  const cancel = () => {
-    dispatch(setDeleteProfileImage(false));
-    dispatch(setDeleteProfileBackgroundImage(false));
-
-    setIsOpen(!isOpen);
-    // 애니메이션 용 타이머
-    setTimeout(() => {
-      close();
-    }, 900);
   };
 
   // 초깃값
@@ -276,6 +163,66 @@ useEffect(() => {
     deleteBackgroundImage: deleteBackgroundImage,
   });
 
+  // 프로필사진
+  const [uploadUserProfileImage, setUploadUserProfileImage] = useState<
+    string | null
+  >(null);
+
+  const handleUploadUserProfileImage = (image: string) =>
+    setUploadUserProfileImage(image);
+
+  const compressedImage = useCompressedImage();
+
+  const handleProfileImageCompress = useCompressHandleImage(uploadUserProfileImage, convertUrlToBlobFile, compressedImage, setUpdateMemberData, setDeleteProfileImage, 'profileImage');
+
+  useHandleUploadImage(uploadUserProfileImage, handleProfileImageCompress);
+
+  // 배경화면
+  const [
+    uploadUserProfileBackgroundImage,
+    setUploadUserProfileBackgroundImage,
+  ] = useState<string | null>(null);
+
+  const handleUploadUserProfileBackgroundImage = (image: string) =>
+    setUploadUserProfileBackgroundImage(image);
+
+  const handleProfileBackgroundImageCompress = useCompressHandleImage(uploadUserProfileBackgroundImage, convertUrlToBlobFile, compressedImage, setUpdateMemberData, setDeleteProfileBackgroundImage, 'backgroundImage');
+
+  useHandleUploadImage(uploadUserProfileBackgroundImage, handleProfileBackgroundImageCompress);
+
+  // 모달닫기
+  const close = () => {
+    onClose(); // Close the modal without saving changes
+  };
+
+  const { windowSize } = useWindowSizeCustom();
+  // 사이즈 390 보다 크면 모달창 크기 고정
+  const [size, setSize] = useState<boolean>(false);
+
+  useEffect(() => {
+    if (windowSize.width > 390) {
+      setSize(true);
+    } else {
+      setSize(false);
+    }
+  }, [windowSize.width]);
+
+  // 열고닫기
+  const [isOpen, setIsOpen] = useState(true);
+
+  // 취소
+  const cancel = () => {
+
+    dispatch(setDeleteProfileImage(false));
+    dispatch(setDeleteProfileBackgroundImage(false));
+
+    setIsOpen(!isOpen);
+    // 애니메이션 용 타이머
+    setTimeout(() => {
+      close();
+    }, 900);
+  };
+
   useMemberDataUpdate({ setUpdateMemberData, deleteProfileImage, deleteBackgroundImage });
 
   const navigate = useNavigate();
@@ -289,9 +236,8 @@ useEffect(() => {
 
   const handleMember = async (data: UpdateMemberParams) => {
 
-    // 저장하고 같은 닉네임을 저장할때
-    if (updateMemberData.username === input.username) {
-      setNicknameValidation(true);
+    if (input.introduction === '' && data?.introduction !== input.introduction) {
+      data.introduction = input.introduction;
     }
 
     await new Promise((resolve) => setTimeout(resolve, 300));
@@ -299,15 +245,16 @@ useEffect(() => {
     if (nicknameValidation) {
       const code = await updateMember(data);
       // 이후에 code를 이용한 로직을 이어서 작성하면 됩니다.
-
       if (code.status === 200) {
+        dispatch(setProfileIntroduction(updateMemberData.introduction));
 
-        handleImageUpdates({ 
+        handleImageUpdates({
           uploadUserProfileImage: uploadUserProfileImage,
           deleteProfileImage: deleteProfileImage,
           uploadUserProfileBackgroundImage: uploadUserProfileBackgroundImage,
           deleteBackgroundImage: deleteBackgroundImage
         });
+        dispatch(setToast("profile"));
 
         navigate(`/user/${code.data.username}`);
       }
@@ -354,7 +301,7 @@ useEffect(() => {
 
         {/* 배경화면 */}
         <SetUserProfileBackground
-          aspectRatio={390/240}
+          aspectRatio={1}
           onCrop={handleUploadUserProfileBackgroundImage}
           earlyImage={userData?.backgroundImageUrl}
           profileBackgroundImage={updateMemberData.backgroundImage}

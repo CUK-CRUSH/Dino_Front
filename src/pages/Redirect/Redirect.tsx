@@ -25,11 +25,8 @@ const Redirect = () => {
 
   const decodedToken = useDecodedJWT(cookies.accessToken);
   const id = Number(decodedToken?.sub);
-  const exp = decodedToken?.exp;
 
   const dispatch = useDispatch();
-  localStorage.setItem("tokenId", id.toString());
-  localStorage.setItem("exp", exp);
 
   useEffect(() => {
     const redirectAfterFetch = async () => {
@@ -40,16 +37,13 @@ const Redirect = () => {
 
         try {
           if (id !== null) {
-            // Check if tokenId is not null before calling getMember
             const getUserData = await getMember(id);
             console.log(getUserData);
 
             if (success && !getUserData.data.username) {
-              // Handle the case where username is not present
               dispatch(setToast("login"));
               navigate("/login/validation");
             } else {
-              // Handle the case where username is present
               dispatch(setToast("login"));
               navigate(`/user/${getUserData.data.username}`);
             }
@@ -58,9 +52,7 @@ const Redirect = () => {
           console.error("Error fetching member:", error);
         }
       } else {
-        // Handle the case where decodedToken is not present
         console.error("Decoded token is not present");
-        // You may want to add additional handling for this case if necessary
       }
     };
 

@@ -15,10 +15,10 @@ import Footer from "@components/Layout/footer";
 import { useCookies } from "react-cookie";
 // import InduceButton from "@components/AdminEdit/Button/IndeceButton";
 import Header from "@components/Layout/header";
+import useCompareToken from "@hooks/useCompareToken/useCompareToken";
 
 const AdminPage: React.FC = () => {
-  const tokenId = Number(localStorage.getItem("tokenId"));
-  const userId = Number(localStorage.getItem("userId"));
+
   const getDefaultMember = (): getMemberDTO => ({
     backgroundImageUrl: null,
     id: undefined,
@@ -45,14 +45,14 @@ const AdminPage: React.FC = () => {
   const [, setInduceLogin] = useState<boolean>(false);
   // 쿠키
   const [cookies] = useCookies(["accessToken"]);
-
-  useEffect(() => {
-    if (!cookies.accessToken) {
+  
+  useEffect(()=>{
+    if(!cookies.accessToken){
       setInduceLogin(false);
     } else {
       setInduceLogin(true);
     }
-  }, [cookies.accessToken]);
+  },[cookies.accessToken]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,6 +62,9 @@ const AdminPage: React.FC = () => {
         setUserdata(userDataResult.data);
         if (userDataResult.data?.id) {
           localStorage.setItem("userId", userDataResult.data.id.toString());
+        }
+        if (Date.now() / 1000 > Number(localStorage.getItem("exp"))) {
+          localStorage.removeItem("accessToken");
         }
       } catch (error) {
         console.error("Error fetching user data:", error);
@@ -113,16 +116,20 @@ const AdminPage: React.FC = () => {
   // 토스트
   const { toast } = useSelector((state: RootState) => state.toast);
 
+  // 권한부여
+  const authority = useCompareToken(userData?.id);
+
   return (
+
     <div className="relative w-full h-full mx-auto scrollbar-hide overflow-scroll flex flex-col justify-between bg-neutral-900">
-      <Header />
+      <Header authority={authority} />
 
       <UserProfileBackground
         userBackgroundImage={userData?.backgroundImageUrl}
       />
       {/* 로그인 여부 */}
       {/* {!induceLogin ? <InduceButton /> : <></>} */}
-
+      
       {/* 플레이리스트 생성 성공 토스트 */}
 
       {toast === "add" && (
@@ -160,6 +167,8 @@ const AdminPage: React.FC = () => {
       )}
 
       <div className="w-full bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px] -mt-[180px]">
+
+
         {/* 프로필 이미지 */}
         <div className=" flex items-center flex-col z-10">
           <UserProfileImage userProfileImage={userData?.profileImageUrl} />
@@ -176,16 +185,17 @@ const AdminPage: React.FC = () => {
           ))}
 
         {!isLoading &&
-        userId === tokenId &&
-        tokenId &&
-        playlistData?.length !== undefined &&
-        playlistData.length < 4 ? (
+          authority &&
+          playlistData?.length !== undefined &&
+          playlistData.length < 4 ? (
           <AddPlayList />
         ) : (
           <></>
         )}
+
       </div>
       <Footer bgColor="neutral-900" />
+
     </div>
   );
 };
