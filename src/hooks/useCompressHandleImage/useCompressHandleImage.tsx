@@ -9,9 +9,16 @@ interface useCompressUserImageProps {
   compressedImage: (file: File, type: string, setUpdateMemberData: React.Dispatch<React.SetStateAction<UpdateMemberParams>>) => void;
   setUpdateMemberData: Dispatch<SetStateAction<UpdateMemberParams>>;
   setDeleteImage: ActionCreatorWithPayload<any, any>;
+  type: string;
 }
 
-const useCompressHandleImage = ({ uploadUserImage, convertUrlToBlobFile, compressedImage, setUpdateMemberData, setDeleteImage }: useCompressUserImageProps) => {
+const useCompressHandleImage = (
+  uploadUserImage: string | null, convertUrlToBlobFile: (url: string) => Promise<File>,
+  compressedImage: (file: File, type: string, setUpdateMemberData: React.Dispatch<React.SetStateAction<UpdateMemberParams>>) => void,
+  setUpdateMemberData: Dispatch<SetStateAction<UpdateMemberParams>>,
+  setDeleteImage: any,
+  type: string) => {
+
   const dispatch = useDispatch();
 
   const handleCompressUserProfileBackgroundImage = useCallback(async () => {
@@ -19,7 +26,7 @@ const useCompressHandleImage = ({ uploadUserImage, convertUrlToBlobFile, compres
 
     const file = convertUrlToBlobFile(uploadUserImage);
 
-    compressedImage(await file, 'backgroundImage', setUpdateMemberData);
+    compressedImage(await file, type, setUpdateMemberData);
 
     dispatch(setDeleteImage(false));
   }, [uploadUserImage, dispatch, compressedImage]);

@@ -147,51 +147,39 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     }
   };
 
-// 초깃값
-const {
-  username,
-  profileImage,
-  profileBackgroundImage,
-  introduction,
-  deleteProfileImage,
-  deleteBackgroundImage,
-} = useSelector((state: RootState) => state.userProfile);
-const [updateMemberData, setUpdateMemberData] = useState<UpdateMemberParams>({
-  // 입력없을때 닉네임 통과
-  username: username || "", // Use the directly obtained value
-  introduction: introduction,
-  profileImage: profileImage,
-  backgroundImage: profileBackgroundImage,
-  cookies: token,
-  deleteProfileImage: deleteProfileImage,
-  deleteBackgroundImage: deleteBackgroundImage,
-});
+  // 초깃값
+  const {
+    username,
+    profileImage,
+    profileBackgroundImage,
+    introduction,
+    deleteProfileImage,
+    deleteBackgroundImage,
+  } = useSelector((state: RootState) => state.userProfile);
+  const [updateMemberData, setUpdateMemberData] = useState<UpdateMemberParams>({
+    // 입력없을때 닉네임 통과
+    username: username || "", // Use the directly obtained value
+    introduction: introduction,
+    profileImage: profileImage,
+    backgroundImage: profileBackgroundImage,
+    cookies: token,
+    deleteProfileImage: deleteProfileImage,
+    deleteBackgroundImage: deleteBackgroundImage,
+  });
 
-// 프로필사진
- const [uploadUserProfileImage, setUploadUserProfileImage] = useState<
- string | null
->(null);
+  // 프로필사진
+  const [uploadUserProfileImage, setUploadUserProfileImage] = useState<
+    string | null
+  >(null);
 
-const handleUploadUserProfileImage = (image: string) =>
-setUploadUserProfileImage(image);
+  const handleUploadUserProfileImage = (image: string) =>
+    setUploadUserProfileImage(image);
 
-const compressedImage = useCompressedImage();
+  const compressedImage = useCompressedImage();
 
-// const handleProfileCompress = useCompressHandleImage({uploadUserProfileImage, convertUrlToBlobFile, compressedImage, setUpdateMemberData,setDeleteProfileImage});
+  const handleProfileImageCompress = useCompressHandleImage(uploadUserProfileImage, convertUrlToBlobFile, compressedImage, setUpdateMemberData, setDeleteProfileImage, 'profileImage');
 
-const handleCompressUserProfileImage = useCallback(async () => {
-  if (!uploadUserProfileImage) return;
-
-  // uploadUserProfileImage를 Blob 객체로 변환합니다.
-  const file = convertUrlToBlobFile(uploadUserProfileImage);
-  
-  // compressImage를 이용하여 이미지를 압축합니다.
-  compressedImage(await file, 'profileImage', setUpdateMemberData);
-
-  dispatch(setDeleteProfileImage(false));
-}, [uploadUserProfileImage, dispatch,compressedImage]);
-
-  useHandleUploadImage(uploadUserProfileImage, handleCompressUserProfileImage);
+  useHandleUploadImage(uploadUserProfileImage, handleProfileImageCompress);
 
   // 배경화면
   const [
@@ -202,17 +190,9 @@ const handleCompressUserProfileImage = useCallback(async () => {
   const handleUploadUserProfileBackgroundImage = (image: string) =>
     setUploadUserProfileBackgroundImage(image);
 
-  const handleCompressUserProfileBackgroundImage = useCallback(async () => {
-    if (!uploadUserProfileBackgroundImage) return;
+  const handleProfileBackgroundImageCompress = useCompressHandleImage(uploadUserProfileBackgroundImage, convertUrlToBlobFile, compressedImage, setUpdateMemberData, setDeleteProfileBackgroundImage, 'backgroundImage');
 
-    const file = convertUrlToBlobFile(uploadUserProfileBackgroundImage);
-
-    compressedImage(await file,'backgroundImage',setUpdateMemberData);
-
-    dispatch(setDeleteProfileBackgroundImage(false));
-  }, [uploadUserProfileBackgroundImage, dispatch,compressedImage]);
-
-  useHandleUploadImage(uploadUserProfileBackgroundImage, handleCompressUserProfileBackgroundImage);
+  useHandleUploadImage(uploadUserProfileBackgroundImage, handleProfileBackgroundImageCompress);
 
   // 모달닫기
   const close = () => {
@@ -245,8 +225,6 @@ const handleCompressUserProfileImage = useCallback(async () => {
     }, 900);
   };
 
-  
-
   useMemberDataUpdate({ setUpdateMemberData, deleteProfileImage, deleteBackgroundImage });
 
   const navigate = useNavigate();
@@ -268,7 +246,7 @@ const handleCompressUserProfileImage = useCallback(async () => {
 
       if (code.status === 200) {
 
-        handleImageUpdates({ 
+        handleImageUpdates({
           uploadUserProfileImage: uploadUserProfileImage,
           deleteProfileImage: deleteProfileImage,
           uploadUserProfileBackgroundImage: uploadUserProfileBackgroundImage,
