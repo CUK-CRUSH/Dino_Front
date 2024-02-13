@@ -1,5 +1,86 @@
+import { useCallback } from "react";
+import { FaAngleLeft } from "react-icons/fa6";
+import { useNavigate } from "react-router-dom";
+
 const LikeList = () => {
-  return null;
+  const navigate = useNavigate();
+  const handleBack = useCallback(() => {
+    navigate(-1);
+  }, [navigate]);
+  return (
+    <div className="h-full w-full scrollbar-hide overflow-scroll flex flex-col bg-white text-black font-medium leading-[18px]">
+      <header className="flex h-[5%] smartPhoneXs:h-[3.5%] smartPhone:h-[3.5%] tabletMini:h-[3%] tablet:h-[3%] items-center justify-between m-3 text-[19px] border-b-[1px] border-[#EFEFEF]">
+        <button
+          type="button"
+          onClick={handleBack}
+          className="text-white self-start mt-2"
+        >
+          <FaAngleLeft size={24} color="black" />
+        </button>
+        <p className="text-center mx-auto">타이틀 넘겨주기</p>
+      </header>
+
+      {/* 이만큼 API가져와서 Mapping */}
+      <main className="flex items-center justify-between p-4 mt-5">
+        <div className="flex items-center">
+          <img
+            src="프로필 이미지 URL"
+            alt="프로필 이미지"
+            className="w-14 h-14 rounded-full"
+          />
+          <div className="ml-4">
+            <h2 className="text-lg font-bold">No Name</h2>
+            <p className="text-sm text-gray-500">Nooo....Nameeee.....</p>
+          </div>
+        </div>
+        <button
+          onClick={() => {} /* 프로필 바로가기 기능 구현 */}
+          className="px-4 py-2 text-sm bg-black text-white rounded-2xl"
+        >
+          프로필
+        </button>
+      </main>
+      <main className="flex items-center justify-between p-4">
+        <div className="flex items-center">
+          <img
+            src="프로필 이미지 URL"
+            alt="프로필 이미지"
+            className="w-14 h-14 rounded-full"
+          />
+          <div className="ml-4">
+            <h2 className="text-lg font-bold">No Name</h2>
+            <p className="text-sm text-gray-500">Nooo....Nameeee.....</p>
+          </div>
+        </div>
+        <button
+          onClick={() => {} /* 프로필 바로가기 기능 구현 */}
+          className="px-4 py-2 text-sm bg-black text-white rounded-2xl"
+        >
+          프로필
+        </button>
+      </main>
+      <main className="flex items-center justify-between p-4">
+        <div className="flex items-center">
+          <img
+            src="프로필 이미지 URL"
+            alt="프로필 이미지"
+            className="w-14 h-14 rounded-full"
+          />
+          <div className="ml-4">
+            <h2 className="text-lg font-bold">No Name</h2>
+            <p className="text-sm text-gray-500">Nooo....Nameeee.....</p>
+          </div>
+        </div>
+        <button
+          onClick={() => {} /* 프로필 바로가기 기능 구현 */}
+          className="px-4 py-2 text-sm bg-black text-white rounded-2xl"
+        >
+          프로필
+        </button>
+      </main>
+      {/*  */}
+    </div>
+  );
 };
 
 export default LikeList;

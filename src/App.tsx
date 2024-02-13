@@ -47,7 +47,10 @@ function App() {
                 path="user/:username/:playlistId/edit/:musicId"
                 element={<EditMusic />}
               />
-              <Route path="user/:username/playlistId/like" element={<Like />} />
+              <Route
+                path="user/:username/:playlistId/like"
+                element={<Like />}
+              />
               <Route path="/redirect" element={<Redirect />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
