@@ -15,11 +15,10 @@ import Footer from "@components/Layout/footer";
 import { useCookies } from "react-cookie";
 // import InduceButton from "@components/AdminEdit/Button/IndeceButton";
 import Header from "@components/Layout/header";
+import useCompareToken from "@hooks/useCompareToken/useCompareToken";
 
 const AdminPage: React.FC = () => {
 
-  const tokenId = Number(localStorage.getItem("tokenId"));
-  const userId = Number(localStorage.getItem("userId"));
   const getDefaultMember = (): getMemberDTO => ({
     backgroundImageUrl: null,
     id: undefined,
@@ -117,10 +116,14 @@ const AdminPage: React.FC = () => {
   // 토스트
   const { toast } = useSelector((state: RootState) => state.toast);
 
+  // 권한부여
+  const authority = useCompareToken(userData?.id);
+  console.log(authority)
+
   return (
 
     <div className="relative w-full h-full mx-auto scrollbar-hide overflow-scroll flex flex-col justify-between bg-neutral-900">
-      <Header />
+      <Header authority={authority} />
 
       <UserProfileBackground
         userBackgroundImage={userData?.backgroundImageUrl}
@@ -183,8 +186,7 @@ const AdminPage: React.FC = () => {
           ))}
 
         {!isLoading &&
-          userId === tokenId &&
-          tokenId &&
+          authority &&
           playlistData?.length !== undefined &&
           playlistData.length < 4 ? (
           <AddPlayList />

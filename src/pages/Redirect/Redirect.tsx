@@ -25,11 +25,8 @@ const Redirect = () => {
 
   const decodedToken = useDecodedJWT(cookies.accessToken);
   const id = Number(decodedToken?.sub);
-  const exp = decodedToken?.exp;
 
   const dispatch = useDispatch();
-  localStorage.setItem("tokenId", id.toString());
-  localStorage.setItem("exp", exp);
 
   useEffect(() => {
     const redirectAfterFetch = async () => {
