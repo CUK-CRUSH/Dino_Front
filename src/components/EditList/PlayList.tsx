@@ -33,6 +33,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const [usernames, setUsername] = useState<string | null>(null);
 
   const { username } = useParams<{ username: string | undefined }>();
+
   const setPlaylistName = useSetRecoilState(playlistNameState);
   const [musicList, setMusicList] = useRecoilState(musicListState);
 

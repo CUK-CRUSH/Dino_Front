@@ -14,16 +14,18 @@ const LikeButton = () => {
     dispatch(setIsLikeToggle(!isLikeToggle));
   };
   return (
-    <div
-      onClick={handleLikeToggle}
-      className="absolute -bottom-4 left-4 inline-flex justify-around items-center w-[70px] h-[36px] bg-[#EA4335] rounded-[30px] border-[4px] border-white z-20"
-    >
-      <img
-        className="w-6 h-6"
-        src={isLikeToggle ? AfterLike : BeforeLike}
-        alt="Like button"
-      />
-      <span className="mr-2">0</span>
+    <div className="absolute -bottom-5 left-4 bg-black inline-flex justify-between items-center px-1 w-[110px] h-[42px] rounded-[30px] z-20">
+      <div className="bg-[#EA4335] p-1 rounded-full">
+        <img
+          className="w-6 h-6"
+          onClick={handleLikeToggle}
+          src={isLikeToggle ? AfterLike : BeforeLike}
+          alt="Like button"
+        />
+      </div>
+      <div className="mr-5">
+        <span>100</span>
+      </div>
     </div>
   );
 };
