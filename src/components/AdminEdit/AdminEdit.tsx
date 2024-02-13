@@ -32,6 +32,7 @@ import SetUserProfileIntroduction from "./SetUserProfileIntroduction";
 import useCompressedImage from "@hooks/useCompressImage/useCompressImage";
 import convertUrlToBlobFile from "@utils/convertFile/convertFile";
 import useHandleUploadImage from "@hooks/useHandleUploadImage/useHandleUploadImage";
+import useCompressHandleImage from "@hooks/useCompressHandleImage/useCompressHandleImage";
 
 interface AdminEditModalProps {
   onClose: () => void; // A function to close the modal
@@ -146,6 +147,26 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     }
   };
 
+// 초깃값
+const {
+  username,
+  profileImage,
+  profileBackgroundImage,
+  introduction,
+  deleteProfileImage,
+  deleteBackgroundImage,
+} = useSelector((state: RootState) => state.userProfile);
+const [updateMemberData, setUpdateMemberData] = useState<UpdateMemberParams>({
+  // 입력없을때 닉네임 통과
+  username: username || "", // Use the directly obtained value
+  introduction: introduction,
+  profileImage: profileImage,
+  backgroundImage: profileBackgroundImage,
+  cookies: token,
+  deleteProfileImage: deleteProfileImage,
+  deleteBackgroundImage: deleteBackgroundImage,
+});
+
 // 프로필사진
  const [uploadUserProfileImage, setUploadUserProfileImage] = useState<
  string | null
@@ -156,6 +177,7 @@ setUploadUserProfileImage(image);
 
 const compressedImage = useCompressedImage();
 
+// const handleProfileCompress = useCompressHandleImage({uploadUserProfileImage, convertUrlToBlobFile, compressedImage, setUpdateMemberData,setDeleteProfileImage});
 
 const handleCompressUserProfileImage = useCallback(async () => {
   if (!uploadUserProfileImage) return;
@@ -223,25 +245,7 @@ const handleCompressUserProfileImage = useCallback(async () => {
     }, 900);
   };
 
-  // 초깃값
-  const {
-    username,
-    profileImage,
-    profileBackgroundImage,
-    introduction,
-    deleteProfileImage,
-    deleteBackgroundImage,
-  } = useSelector((state: RootState) => state.userProfile);
-  const [updateMemberData, setUpdateMemberData] = useState<UpdateMemberParams>({
-    // 입력없을때 닉네임 통과
-    username: username || "", // Use the directly obtained value
-    introduction: introduction,
-    profileImage: profileImage,
-    backgroundImage: profileBackgroundImage,
-    cookies: token,
-    deleteProfileImage: deleteProfileImage,
-    deleteBackgroundImage: deleteBackgroundImage,
-  });
+  
 
   useMemberDataUpdate({ setUpdateMemberData, deleteProfileImage, deleteBackgroundImage });
 
