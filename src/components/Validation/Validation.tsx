@@ -3,9 +3,10 @@ import Fanfare from "../../assets/Validation/Fanfare.svg";
 import Check from "../../assets/Validation/Check.svg";
 import not from "../../assets/Validation/not.svg";
 import { BsFillExclamationCircleFill } from "react-icons/bs";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import {
+  getMember,
   getNicknameAvailable,
   updateMember,
 } from "@api/member-controller/memberController";
@@ -17,6 +18,7 @@ import { useDispatch } from "react-redux";
 import { setToast } from "@reducer/Toast/toast";
 import { checkBadWord } from "@utils/checkBadWord/checkBadWord";
 import { UpdateMemberParams } from "types/AdminEdit";
+import useDecodedJWT from "@hooks/useDecodedJWT";
 
 const ValidationProps = () => {
   const navigate = useNavigate();
@@ -113,6 +115,32 @@ const checkNickname = (nickname: string) => {
   const { toast } = useSelector(
     (state: RootState) => state.toast
   );
+  
+  const decodedToken = useDecodedJWT(cookies.accessToken);
+  const id = Number(decodedToken?.sub);
+
+  useEffect(() => {
+    /* eslint-disable react-hooks/exhaustive-deps */
+    if (decodedToken) {
+      (async () => {
+        try {
+          if (id !== null) {
+            const getUserData = await getMember(id);
+            console.log(getUserData);
+  
+            if (getUserData.data.username) {
+              dispatch(setToast("login"));
+              navigate(`/user/${getUserData.data.username}`);
+            }
+          }
+        } catch (error) {
+          console.error("Error fetching member:", error);
+        }
+      })();
+    } else {
+      console.error("Decoded token is not present");
+    }
+  }, []);
 
     return (
     <div className="w-full h-full relative bg-white flex flex-col align-middle items-center">

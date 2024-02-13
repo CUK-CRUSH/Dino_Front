@@ -7,6 +7,7 @@ export interface EditProfileDTO {
   left : number;
   openEditModal : () => void;
   closeOptionsModalOpen : () => void;
+  authority? : boolean;
 }
 
 export interface UserBackgroundImageDTO{

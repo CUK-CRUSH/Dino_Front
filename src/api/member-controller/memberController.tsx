@@ -91,10 +91,8 @@ export const updateMember = async ({
       formData.append("username", username);
     }
 
-    if (introduction) {
       formData.append("introduction", introduction);
-    }
-
+    
     if (profileImage) {
       const binaryData = Uint8Array.from(
         atob(profileImage.split(",")[1]),

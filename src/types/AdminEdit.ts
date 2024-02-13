@@ -1,8 +1,8 @@
 export interface UpdateMemberParams {
   username?: string;
-  introduction?: string | null;
-  profileImage?: any;
-  backgroundImage?: any;
+  introduction?: any;
+  profileImage?: string | null;
+  backgroundImage?: string | null;
   deleteProfileImage? : boolean;
   deleteBackgroundImage? : boolean;
   cookies?: string;

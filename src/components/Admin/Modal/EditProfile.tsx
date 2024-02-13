@@ -7,9 +7,8 @@ export const EditProfile = ({
   left,
   openEditModal,
   closeOptionsModalOpen,
+  authority
 }: EditProfileDTO) => {
-  const userId = Number(localStorage.getItem("userId"));
-  const tokenId = Number(localStorage.getItem("tokenId"));
 
   // 스크롤 방지이벤트
   useEffect(() => {
@@ -39,7 +38,7 @@ export const EditProfile = ({
       console.log("Web Share API is not supported in your browser.");
     }
   };
-  // console.log(userId, tokenId);
+
   return (
     <div
       onClick={closeOptionsModalOpen}
@@ -48,7 +47,7 @@ export const EditProfile = ({
       <div className="fixed" style={{ top: top, left: left }}>
         <div className={`relative w-40 p-0 bg-white rounded-[10px] shadow-lg `}>
           <div className="p-1">
-            {userId === tokenId && tokenId && (
+            {authority && (
               <div
                 className="block text-black hover:bg-gray-300 p-2 w-full text-center cursor-pointer"
                 onClick={openEditModal}

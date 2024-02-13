@@ -1,4 +1,5 @@
 import { playlistNameState } from "@atoms/Playlist/playlistName";
+import useCompareToken from "@hooks/useCompareToken/useCompareToken";
 import CustomModal from "@utils/Modal/Modal";
 import { useCallback, useState } from "react";
 import { FaAngleLeft, FaEllipsisVertical } from "react-icons/fa6";
@@ -14,7 +15,7 @@ type MainEditButtonProps = {
   usernames: string | null;
   fetchPlaylist: () => void;
   setPlaylistName: (name: string) => void;
-  memberId: number | null;
+  memberId?: number | null;
 };
 
 export const MainEditButton = ({
@@ -31,8 +32,6 @@ export const MainEditButton = ({
   const playlistName = useRecoilValue(playlistNameState);
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
-
-  const tokenId = Number(localStorage.getItem("tokenId"));
 
   const handleBack = useCallback(() => {
     navigate(-1);
@@ -55,13 +54,17 @@ export const MainEditButton = ({
     setPlaylistName,
     playlistName,
   };
+  
+  // 권한부여
+  const authority = useCompareToken(memberId);
+  
   return (
     <div className="flex h-[5%] smartPhoneXs:h-[3.5%] smartPhone:h-[3.5%] tabletMini:h-[3%] tablet:h-[3%] items-center justify-between m-3 text-[19px]">
       <button type="button" onClick={handleBack} className="text-white">
         <FaAngleLeft size={24} />
       </button>
 
-      {memberId === tokenId && tokenId && (
+      {authority && (
         <>
           <p className="text-center">플레이리스트</p>
           <button

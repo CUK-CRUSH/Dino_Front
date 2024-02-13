@@ -46,7 +46,8 @@ export const PlayList = ({ playlist }: { playlist: getPlaylistDTO }) => {
               {playlist.thumbnailUrl ? (
                 <img className="mx-auto w-[150px] h-full rounded-[13px]" src={playlist.thumbnailUrl} alt='x' />
               ) : (
-                <div style={{ background: '#2E2E2E' }} className="mx-auto w-[150px] h-full rounded-[13px]" />
+                // <div className="mx-auto w-[150px] h-full rounded-[13px] bg-gradient-to-b from-[#2e2e2e] to-[#545454]" />
+                <div className="mx-auto w-[150px] h-full rounded-[13px] bg-[#2e2e2e]" />
               )}
               <div className="w-full text-left text-zinc-300 font-medium font-['Noto Sans'] absolute -bottom-10 ">
                 <span className="text-[15px] text-white align-top">{playlist.playlistName}</span>
