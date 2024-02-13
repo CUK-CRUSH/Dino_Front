@@ -254,6 +254,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
           uploadUserProfileBackgroundImage: uploadUserProfileBackgroundImage,
           deleteBackgroundImage: deleteBackgroundImage
         });
+        dispatch(setToast("profile"));
 
         navigate(`/user/${code.data.username}`);
       }
