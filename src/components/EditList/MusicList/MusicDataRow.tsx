@@ -12,7 +12,6 @@ import SkeltonMusics from "@components/EditList/Skeleton/MusicSkeleton";
 export interface MusicDataDTO {
   isEditing: boolean;
   playlistId: string | undefined;
-  usernames: string | null;
   token: string;
   fetchPlaylist: () => void;
 }
@@ -20,7 +19,6 @@ export interface MusicDataDTO {
 export const MusicDataRow = ({
   isEditing,
   playlistId,
-  usernames,
   token,
   fetchPlaylist,
 }: MusicDataDTO) => {
@@ -106,7 +104,6 @@ export const MusicDataRow = ({
                   musicData={musicItem}
                   order={index + 1}
                   playlistId={playlistId}
-                  usernames={usernames}
                   isEditing={isEditing}
                   token={token}
                   setWidth={setWidth}
@@ -146,7 +143,6 @@ export const MusicDataRow = ({
                 }}
                 order={1 + index + musicList?.data?.length}
                 playlistId={playlistId}
-                usernames={usernames}
                 isEditing={isEditing}
                 token={token}
                 setWidth={setWidth}

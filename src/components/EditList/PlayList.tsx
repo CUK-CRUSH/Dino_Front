@@ -20,6 +20,7 @@ import { useRecoilState, useSetRecoilState } from "recoil";
 import { playlistNameState } from "@atoms/Playlist/playlistName";
 import { getMemberUsername } from "@api/member-controller/memberController";
 import { musicListState } from "@atoms/Musics/MusicList";
+import { userNameState } from "@atoms/Playlist/username";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
   const isEditing = useSelector(
@@ -30,9 +31,11 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const [uploadImage, setUploadImage] = useState<string | null>(null);
   const [memberId, setMemberId] = useState<number | null>(null);
   const [playlists, setPlaylists] = useState<any[]>([]);
-  const [usernames, setUsername] = useState<string | null>(null);
 
-  const { username } = useParams<{ username: string | undefined }>();
+  const { username: paramUsername } = useParams<{
+    username: string | undefined;
+  }>();
+  const setUsernames = useSetRecoilState(userNameState);
 
   const setPlaylistName = useSetRecoilState(playlistNameState);
   const [musicList, setMusicList] = useRecoilState(musicListState);
@@ -51,12 +54,12 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     // 항상 로컬 스토리지에서 username을 가져옴
 
     try {
-      const member = await getMemberUsername(username);
-      const playlist = await getPlayList(username);
+      const member = await getMemberUsername(paramUsername);
+      const playlist = await getPlayList(paramUsername);
       const musicAPIData = await getMusicList(Number(playlistId));
 
       setMemberId(member.data.id);
-      setUsername(username || null);
+      setUsernames(paramUsername || "");
       setPlaylists(playlist.data);
       setMusicList(musicAPIData);
 
@@ -83,7 +86,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     token,
     musicData,
     playlistId,
-    usernames,
     fetchPlaylist,
     setPlaylistName,
     uploadImage,
@@ -105,7 +107,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
           token={token}
           musicData={musicData}
           playlistId={playlistId}
-          usernames={usernames}
           fetchPlaylist={fetchPlaylist}
           setPlaylistName={setPlaylistName}
           memberId={memberId}
@@ -134,16 +135,11 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       <MusicDataRow
         isEditing={isEditing}
         playlistId={playlistId}
-        usernames={usernames}
         token={token}
         fetchPlaylist={fetchPlaylist}
       />
       {isEditing && musicList.data?.length + musicData.musics.length < 9 && (
-        <PlusButton
-          playlists={playlists}
-          usernames={usernames}
-          playlistId={playlistId}
-        />
+        <PlusButton playlists={playlists} playlistId={playlistId} />
       )}
       <Footer bgColor="black" />
       {toast === "editPlayList" && (

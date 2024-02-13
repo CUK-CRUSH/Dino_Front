@@ -11,7 +11,6 @@ type MainEditButtonProps = {
   token: string;
   musicData: any;
   playlistId: string | undefined;
-  usernames: string | null;
   fetchPlaylist: () => void;
   setPlaylistName: (name: string) => void;
   memberId: number | null;
@@ -23,12 +22,12 @@ export const MainEditButton = ({
   token,
   musicData,
   playlistId,
-  usernames,
   fetchPlaylist,
   setPlaylistName,
   memberId,
 }: MainEditButtonProps) => {
   const playlistName = useRecoilValue(playlistNameState);
+
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
 
@@ -50,7 +49,7 @@ export const MainEditButton = ({
     token,
     musicData,
     playlistId,
-    usernames,
+
     fetchPlaylist,
     setPlaylistName,
     playlistName,

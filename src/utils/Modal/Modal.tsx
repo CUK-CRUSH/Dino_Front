@@ -40,7 +40,6 @@ export default function CustomModal({
   token,
   musicData,
   playlistId,
-  usernames,
   fetchPlaylist,
   setPlaylistName,
 }: Readonly<CustomModalDTO>) {
@@ -57,7 +56,6 @@ export default function CustomModal({
     token,
     musicData,
     playlistId,
-    usernames,
     fetchPlaylist,
     setPlaylistName,
   });

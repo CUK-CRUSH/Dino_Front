@@ -25,13 +25,13 @@ import Swal from "sweetalert2";
 import "@styles/EditList/playList.css";
 import { useRecoilValue } from "recoil";
 import { playlistNameState } from "@atoms/Playlist/playlistName";
+import { userNameState } from "@atoms/Playlist/username";
 
 interface UsePlayListEditorProps {
   playlists: any[];
   token: string;
   musicData: any;
   playlistId: string | undefined;
-  usernames: string | null;
   fetchPlaylist: () => void;
   setPlaylistName: (value: string) => void;
   uploadImage?: string | null;
@@ -42,13 +42,13 @@ export const UsePlayListEditor = ({
   token,
   musicData,
   playlistId,
-  usernames,
   fetchPlaylist,
   setPlaylistName,
   uploadImage,
 }: UsePlayListEditorProps) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+  const usernames = useRecoilValue(userNameState);
 
   const { compressImage } = useImageCompress();
   const isLoading = useSelector(

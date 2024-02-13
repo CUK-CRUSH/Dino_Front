@@ -13,12 +13,12 @@ import { updateArtist, updateTitle, updateUrl } from "@reducer/musicadd";
 import YouTube from "react-youtube";
 import { useRecoilValue } from "recoil";
 import { musicListState } from "@atoms/Musics/MusicList";
+import { userNameState } from "@atoms/Playlist/username";
 
 export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   musicData,
   order,
   playlistId,
-  usernames,
   isEditing,
   token,
   setWidth,
@@ -51,6 +51,8 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   const musicList = useRecoilValue(musicListState);
   const musicList_Length = musicList.data.length;
   //
+
+  const usernames = useRecoilValue(userNameState);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
