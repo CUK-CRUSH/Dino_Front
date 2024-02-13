@@ -72,7 +72,7 @@ export const MusicInput: React.FC<MusicInputDTO> = ({
     try {
       const text = await navigator.clipboard.readText();
       const youtubeUrlPattern =
-        /^(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?\/.+/;
+        /^(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?\/.+\??.*/;
       if (!youtubeUrlPattern.test(text)) {
         swalButton.fire({
           title: "유튜브 URL을 넣어주세요",
