@@ -24,6 +24,7 @@ import { userNameState } from "@atoms/Playlist/username";
 import { playlistIdState } from "@atoms/Playlist/playlistId";
 import { memberIdState } from "@atoms/Playlist/memberId";
 import { tokenState } from "@atoms/Playlist/token";
+import Recommendation from "@components/Recommend/Recommendation";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
   const isEditing = useSelector(
@@ -137,6 +138,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       {isEditing && musicList.data?.length + musicData.musics.length < 9 && (
         <PlusButton playlists={playlists} />
       )}
+      <Recommendation />
       <Footer bgColor="black" />
       {toast === "editPlayList" && (
         <ToastComponent
