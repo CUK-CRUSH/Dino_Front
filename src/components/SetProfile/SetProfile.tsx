@@ -1,4 +1,4 @@
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import Progress from "./Progress";
 import Skip from "./Skip";
 import Text from "./Text";
@@ -10,6 +10,7 @@ import SetProfileIntroduction from "./Setter/SetProfileIntroduction";
 import { setProfileBackgroundImage, setProfileImage, setProfileIntroduction } from "@reducer/setProfile/setProfile";
 import { useDispatch } from "react-redux";
 import Next from "./Next";
+import { getMemberUsername } from "@api/member-controller/memberController";
 
 export const SetProfilePage = () => {
   // 프로필 설정 단계
@@ -104,6 +105,29 @@ export const SetProfilePage = () => {
 
     dispatch(setProfileIntroduction(value));
   };
+
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    /* eslint-disable react-hooks/exhaustive-deps */
+    if (username) {
+      (async () => {
+        try {
+          if (true) {
+            const getUserData = await getMemberUsername(username);
+            console.log(getUserData.data)
+            if (getUserData.data.backgroundImageUrl !== null || getUserData.data.profileImageUrl !== null || getUserData.data.introduction !== null) {
+              navigate(`/user/${getUserData.data.username}`);
+            }
+          }
+        } catch (error) {
+          console.error("Error fetching member:", error);
+        }
+      })();
+    } else {
+      console.error("Decoded token is not present");
+    }
+  }, []);
 
   return (
     <div className="w-full h-full relative bg-white flex flex-col align-middle items-center">
