@@ -21,6 +21,7 @@ import { playlistNameState } from "@atoms/Playlist/playlistName";
 import { getMemberUsername } from "@api/member-controller/memberController";
 import { musicListState } from "@atoms/Musics/MusicList";
 import { userNameState } from "@atoms/Playlist/username";
+import { playlistIdState } from "@atoms/Playlist/playlistId";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
   const isEditing = useSelector(
@@ -32,17 +33,22 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const [memberId, setMemberId] = useState<number | null>(null);
   const [playlists, setPlaylists] = useState<any[]>([]);
 
+  // 유저이름
   const { username: paramUsername } = useParams<{
     username: string | undefined;
   }>();
   const setUsernames = useSetRecoilState(userNameState);
+  //
 
   const setPlaylistName = useSetRecoilState(playlistNameState);
   const [musicList, setMusicList] = useRecoilState(musicListState);
 
   const [hasError, setHasError] = useState<boolean>(false);
 
+  // 플레이리스트 아이디
   const { playlistId } = useParams<{ playlistId: string }>();
+  const setPlaylistId = useSetRecoilState(playlistIdState);
+  //
 
   const { toast } = useSelector((state: RootState) => state.toast);
   // 쿠키에서 유저 id 가져오기
@@ -85,15 +91,15 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     playlists,
     token,
     musicData,
-    playlistId,
     fetchPlaylist,
     setPlaylistName,
     uploadImage,
   });
 
   useEffect(() => {
+    setPlaylistId(Number(playlistId));
     fetchPlaylist();
-  }, [fetchPlaylist]);
+  }, [fetchPlaylist, setPlaylistId, playlistId]);
 
   if (hasError) {
     return <NotFound />;
@@ -106,7 +112,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
           uploadImage={uploadImage}
           token={token}
           musicData={musicData}
-          playlistId={playlistId}
           fetchPlaylist={fetchPlaylist}
           setPlaylistName={setPlaylistName}
           memberId={memberId}
@@ -126,7 +131,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         onCrop={handleUploadImage}
         playlists={playlists}
         isEditing={isEditing}
-        playlistId={playlistId}
         token={token}
         fetchPlaylist={fetchPlaylist}
       />
@@ -134,12 +138,11 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       <MusicTitle isEditing={isEditing} />
       <MusicDataRow
         isEditing={isEditing}
-        playlistId={playlistId}
         token={token}
         fetchPlaylist={fetchPlaylist}
       />
       {isEditing && musicList.data?.length + musicData.musics.length < 9 && (
-        <PlusButton playlists={playlists} playlistId={playlistId} />
+        <PlusButton playlists={playlists} />
       )}
       <Footer bgColor="black" />
       {toast === "editPlayList" && (

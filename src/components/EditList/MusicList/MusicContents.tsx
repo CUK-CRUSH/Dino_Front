@@ -14,11 +14,11 @@ import YouTube from "react-youtube";
 import { useRecoilValue } from "recoil";
 import { musicListState } from "@atoms/Musics/MusicList";
 import { userNameState } from "@atoms/Playlist/username";
+import { playlistIdState } from "@atoms/Playlist/playlistId";
 
 export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   musicData,
   order,
-  playlistId,
   isEditing,
   token,
   setWidth,
@@ -53,6 +53,7 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   //
 
   const usernames = useRecoilValue(userNameState);
+  const playlistId = useRecoilValue(playlistIdState);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();

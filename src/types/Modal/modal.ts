@@ -7,7 +7,6 @@ export interface CustomModalDTO {
   token: string;
   playlistName: string;
   musicData: any;
-  playlistId: string | undefined;
   fetchPlaylist: () => void;
   setPlaylistName: (value: string) => void;
 }

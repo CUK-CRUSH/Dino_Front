@@ -26,12 +26,12 @@ import "@styles/EditList/playList.css";
 import { useRecoilValue } from "recoil";
 import { playlistNameState } from "@atoms/Playlist/playlistName";
 import { userNameState } from "@atoms/Playlist/username";
+import { playlistIdState } from "@atoms/Playlist/playlistId";
 
 interface UsePlayListEditorProps {
   playlists: any[];
   token: string;
   musicData: any;
-  playlistId: string | undefined;
   fetchPlaylist: () => void;
   setPlaylistName: (value: string) => void;
   uploadImage?: string | null;
@@ -41,7 +41,6 @@ export const UsePlayListEditor = ({
   playlists,
   token,
   musicData,
-  playlistId,
   fetchPlaylist,
   setPlaylistName,
   uploadImage,
@@ -49,6 +48,7 @@ export const UsePlayListEditor = ({
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const usernames = useRecoilValue(userNameState);
+  const playlistId = useRecoilValue(playlistIdState);
 
   const { compressImage } = useImageCompress();
   const isLoading = useSelector(
@@ -190,7 +190,7 @@ export const UsePlayListEditor = ({
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           // '삭제' 버튼을 눌렀을 때 실행할 코드를 여기에 작성합니다.
           try {
-            await deletePlayList(playlistId ?? "", token);
+            await deletePlayList(String(playlistId ?? 0), token);
             navigate(`/user/${usernames}`);
           } catch (error) {
             console.log(error);

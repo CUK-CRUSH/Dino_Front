@@ -13,13 +13,15 @@ import { useCallback } from "react";
 import { Img } from "react-image";
 import Spinner from "@assets/Spinner/Spinner.svg";
 import LikeButton from "@components/Likes/LikeButton";
+import { playlistIdState } from "@atoms/Playlist/playlistId";
+import { useRecoilValue } from "recoil";
 
 const ShowImage = ({
   aspectRatio,
   onCrop,
   playlists,
   isEditing,
-  playlistId,
+
   token,
   fetchPlaylist,
 }: ShowImageDTO) => {
@@ -28,7 +30,7 @@ const ShowImage = ({
   const isLoading = useSelector(
     (state: RootState) => state.selectedFile.isLoading
   );
-
+  const playlistId = useRecoilValue(playlistIdState);
   const swalButton = Swal.mixin({
     customClass: {
       popup: "popup", // 전체

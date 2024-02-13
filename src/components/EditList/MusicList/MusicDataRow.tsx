@@ -11,14 +11,12 @@ import SkeltonMusics from "@components/EditList/Skeleton/MusicSkeleton";
 
 export interface MusicDataDTO {
   isEditing: boolean;
-  playlistId: string | undefined;
   token: string;
   fetchPlaylist: () => void;
 }
 
 export const MusicDataRow = ({
   isEditing,
-  playlistId,
   token,
   fetchPlaylist,
 }: MusicDataDTO) => {
@@ -103,7 +101,6 @@ export const MusicDataRow = ({
                 <MusicDataRowContent
                   musicData={musicItem}
                   order={index + 1}
-                  playlistId={playlistId}
                   isEditing={isEditing}
                   token={token}
                   setWidth={setWidth}
@@ -142,7 +139,6 @@ export const MusicDataRow = ({
                   id: Date.now() + index, // 고유한 id를 부여합니다.
                 }}
                 order={1 + index + musicList?.data?.length}
-                playlistId={playlistId}
                 isEditing={isEditing}
                 token={token}
                 setWidth={setWidth}
