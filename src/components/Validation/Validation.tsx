@@ -17,9 +17,11 @@ import { useDispatch } from "react-redux";
 import { setToast } from "@reducer/Toast/toast";
 import { checkBadWord } from "@utils/checkBadWord/checkBadWord";
 import { UpdateMemberParams } from "types/AdminEdit";
+import {useTranslation} from "react-i18next";
 
 const ValidationProps = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation("Validation");
 
   // 유효상태
   const [nicknameValidation, setNicknameValidation] = useState<boolean>(false);
@@ -116,25 +118,25 @@ const checkNickname = (nickname: string) => {
 
     return (
     <div className="w-full h-full relative bg-white flex flex-col align-middle items-center">
-      {toast === 'login' && <ToastComponent background="black" text="로그인 성공 ! " /> }
-      {toast === 'duplicate' && <ToastComponent background="black" text="이미 존재하는 닉네임입니다 ! " /> }
+      {toast === 'login' && <ToastComponent background="black" text={t("success")} /> }
+      {toast === 'duplicate' && <ToastComponent background="black" text={t("fail")} /> }
 
       <div className="text-center text-black text-xl font-semibold font-['Noto Sans'] my-10">
         <img className="mx-auto mt-16 mb-10" src={Fanfare} alt="Fanfare" />
-        환영합니다 !
+        {t("welcome")}
         <br />
-        사용하실 닉네임을 작성해주세요 !
+        {t("nickname")}
         <br />
         <span className="text-slate-400 inline-flex items-center text-xs font-semibold leading-4 tracking-normal text-center my-1">
           <BsFillExclamationCircleFill className="mr-1" />
-          닉네임은 3~30 자의 영문,숫자만 사용가능합니다.
+          {t("ristriction")}
         </span>
       </div>
       <div className="w-11/12 mb-4 flex flex-col items-center relative focus:border-slate-300">
         <input
           type="text"
           onChange={(e) => onChange(e)}
-          placeholder={"닉네임"}
+          placeholder={t("nicknamePlaceholder")}
           className=" w-11/12 p-2 pr-12 border 1px bg-white rounded-3xl text-center border-slate-200	focus:outline-none "
         />
         <div className="absolute right-10 top-3">
@@ -150,14 +152,14 @@ const checkNickname = (nickname: string) => {
         <div
           className="absolute bottom-0 -left-0 p-4 w-full bg-[#b6b6b6] text-white flex items-center justify-center overflow-hidden"
         >
-          계속하기 
+          {t("next")}
         </div>
         :
         <div
           className="absolute bottom-0 -left-0 p-4 w-full bg-[#000000] text-white flex items-center justify-center overflow-hidden"
           onClick={() => handleMember(updateMemberData)}
-        > 
-          계속하기 
+        >
+          {t("next")}
         </div>
       }
     </div>
