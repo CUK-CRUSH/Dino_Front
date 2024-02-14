@@ -10,7 +10,7 @@ import ShowImage from "@components/EditList/EditImage/ShowImage";
 import { MainEditButton } from "@components/EditList/Button/MainEditButton";
 import { MusicTitle } from "@components/EditList/MusicList/MusicTitle";
 import { useCookies } from "react-cookie";
-import { getPlayList } from "@api/playlist-controller/playlistControl";
+import { getSinglePlayList } from "@api/playlist-controller/playlistControl";
 import { getMusicList } from "@api/music-controller/musicControl";
 import { useParams } from "react-router-dom";
 import ToastComponent from "@components/Toast/Toast";
@@ -42,7 +42,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   }>();
   const setUsernames = useSetRecoilState(userNameState);
   //
-
+  // console.log(playlists);
   const setPlaylistName = useSetRecoilState(playlistNameState);
   const [musicList, setMusicList] = useRecoilState(musicListState);
 
@@ -64,27 +64,22 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
 
     try {
       const member = await getMemberUsername(paramUsername);
-      const playlist = await getPlayList(paramUsername);
-      const musicAPIData = await getMusicList(Number(playlistId));
-
       setMemberId(member.data.id);
       setUsernames(paramUsername || "");
-      setPlaylists(playlist.data);
-      setMusicList(musicAPIData);
 
-      const selectedPlaylist = playlist.data.find(
-        (pl: any) => pl.id === Number(playlistId)
-      );
-      if (selectedPlaylist) {
-        setPlaylistName(selectedPlaylist.playlistName);
-      }
+      const playlist = await getSinglePlayList(Number(playlistId));
+      setPlaylists(playlist.data);
+      setPlaylistName(playlist.data.playlistName);
+
+      const musicAPIData = await getMusicList(Number(playlistId));
+
+      setMusicList(musicAPIData);
     } catch (error) {
       console.error(error);
       setHasError(true);
     }
     /* eslint-disable react-hooks/exhaustive-deps */
-  }, [setMusicList]);
-
+  }, []);
   const {
     handleEditClick,
     handleSaveClick,
@@ -100,12 +95,14 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   useEffect(() => {
     setPlaylistId(Number(playlistId));
     setToken(cookies.accessToken);
+
     fetchPlaylist();
-  }, [fetchPlaylist, setPlaylistId, playlistId]);
+  }, [playlistId, fetchPlaylist, setPlaylistId]);
 
   if (hasError) {
     return <NotFound />;
   }
+  console.log(playlistId);
 
   return (
     <div className="h-full w-full scrollbar-hide overflow-scroll flex flex-col bg-black text-white font-medium leading-[18px]">

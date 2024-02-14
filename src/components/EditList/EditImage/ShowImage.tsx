@@ -13,7 +13,6 @@ import { useCallback } from "react";
 import { Img } from "react-image";
 import Spinner from "@assets/Spinner/Spinner.svg";
 import LikeButton from "@components/Likes/LikeButton";
-import { playlistIdState } from "@atoms/Playlist/playlistId";
 import { useRecoilValue } from "recoil";
 import { tokenState } from "@atoms/Playlist/token";
 
@@ -29,7 +28,7 @@ const ShowImage = ({
   const isLoading = useSelector(
     (state: RootState) => state.selectedFile.isLoading
   );
-  const playlistId = useRecoilValue(playlistIdState);
+
   const token = useRecoilValue(tokenState);
   const swalButton = Swal.mixin({
     customClass: {
@@ -41,9 +40,7 @@ const ShowImage = ({
     },
     buttonsStyling: false,
   });
-  const playlist = playlists.find(
-    (playlist: any) => playlist?.id === Number(playlistId)
-  );
+
   const { image: reduxImage } = useSelector(
     (state: RootState) => state.musicAdd
   );
@@ -60,7 +57,7 @@ const ShowImage = ({
 
     if (result.dismiss === Swal.DismissReason.cancel) {
       try {
-        await deletePlayListImage(playlist.id, token);
+        await deletePlayListImage(playlists.id, token);
         fetchPlaylist();
       } catch (error) {
         console.log(error);
@@ -69,7 +66,7 @@ const ShowImage = ({
         });
       }
     }
-  }, [playlist, token, swalButton, fetchPlaylist]);
+  }, [playlists, token, swalButton, fetchPlaylist]);
   // console.log(reduxImage);
 
   const renderImage = (imageSrc: string) => (
@@ -90,7 +87,7 @@ const ShowImage = ({
               <img src={Camera} alt="Camera" width={32} height={32} />
             </button>
           </ImageCropper>
-          {playlist?.thumbnailUrl && (
+          {playlists?.thumbnailUrl && (
             <button
               className="absolute top-4 left-1/2 transform -translate-x-1/2"
               onClick={handleDeleteImage}
@@ -129,9 +126,9 @@ const ShowImage = ({
         {isLoading ? (
           <Img src={Spinner} alt="Spinner" />
         ) : isEditing ? (
-          renderImageControls(reduxImage || playlist?.thumbnailUrl || null)
-        ) : reduxImage || playlist?.thumbnailUrl ? (
-          renderImage(reduxImage || playlist?.thumbnailUrl || "")
+          renderImageControls(reduxImage || playlists?.thumbnailUrl || null)
+        ) : reduxImage || playlists?.thumbnailUrl ? (
+          renderImage(reduxImage || playlists?.thumbnailUrl || "")
         ) : (
           renderNoImage()
         )}

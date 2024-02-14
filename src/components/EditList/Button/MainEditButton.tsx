@@ -4,7 +4,7 @@ import useCompareToken from "@hooks/useCompareToken/useCompareToken";
 import CustomModal from "@utils/Modal/Modal";
 import { useCallback, useState } from "react";
 import { FaAngleLeft, FaEllipsisVertical } from "react-icons/fa6";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 
 type MainEditButtonProps = {
@@ -25,16 +25,11 @@ export const MainEditButton = ({
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
 
-  const tokenId = Number(localStorage.getItem("tokenId"));
   const memberId = useRecoilValue(memberIdState);
-  const { username: paramUsername } = useParams<{
-    username: string | undefined;
-  }>();
 
   const handleBack = useCallback(() => {
-    navigate(`/user/${paramUsername}`);
+    navigate(-1);
   }, [navigate]);
-
   const handleModalToggle = useCallback(() => {
     setModalOpen((prev) => !prev);
   }, []);

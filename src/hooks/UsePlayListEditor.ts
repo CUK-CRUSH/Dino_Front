@@ -30,7 +30,7 @@ import { playlistIdState } from "@atoms/Playlist/playlistId";
 import { tokenState } from "@atoms/Playlist/token";
 
 interface UsePlayListEditorProps {
-  playlists: any[];
+  playlists: any;
   fetchPlaylist: () => void;
   setPlaylistName: (value: string) => void;
   uploadImage?: string | null;
@@ -87,12 +87,8 @@ export const UsePlayListEditor = ({
   };
 
   const handleSaveClick = async (compressedImage: string | null) => {
-    const playlist = playlists.find(
-      (playlist: any) => playlist?.id === Number(playlistId)
-    );
-
-    if (playlist) {
-      const id = playlist.id;
+    if (playlists) {
+      const id = playlists.id;
 
       if (uploadImage) {
         const response = await fetch(uploadImage);
