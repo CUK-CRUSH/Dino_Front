@@ -2,6 +2,7 @@ import { RootState } from "@store/index";
 import { useSelector } from "react-redux";
 import { UserBackgroundImageDTO } from "types/Admin"
 import { Img } from "react-image";
+import setDefaultBackgroundImage from "@assets/Admin/setDefaultBackgroundImage.svg";
 
 const UserProfileBackground = ({ userBackgroundImage }: UserBackgroundImageDTO) => {
   const { profileBackgroundImage } = useSelector(
@@ -14,15 +15,19 @@ const UserProfileBackground = ({ userBackgroundImage }: UserBackgroundImageDTO) 
         <Img
           src={profileBackgroundImage} 
           alt="Selected"
-          className="h-full w-full object-cover"
+          className="h-[250px] w-full object-cover"
         />) : 
         userBackgroundImage ? (
           <Img
             src={userBackgroundImage}
             alt="Selected"
-            className="h-full w-full object-cover"
+            className="h-[250px] w-full object-cover"
           />
-        ) : <div className="w-full h-[300px] bg-white"/>}
+        ) : <Img
+        src={setDefaultBackgroundImage}
+        alt="Selected"
+        className="h-[250px] w-full object-cover"
+      />}
     </div>
   );
 };
