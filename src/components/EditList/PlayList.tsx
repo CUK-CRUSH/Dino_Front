@@ -79,7 +79,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       setHasError(true);
     }
     /* eslint-disable react-hooks/exhaustive-deps */
-  }, []);
+  }, [setMusicList]);
   const {
     handleEditClick,
     handleSaveClick,

@@ -69,7 +69,7 @@ export const MusicDataRow = ({ isEditing, fetchPlaylist }: MusicDataDTO) => {
       setSelectedVideoId(null);
       setSelectedVideoIndex(null);
     }
-    const delay = 300;
+    const delay = 200;
     const timeoutId = setTimeout(() => {
       setIsLoading(false);
     }, delay);

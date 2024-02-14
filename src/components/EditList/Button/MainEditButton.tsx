@@ -27,9 +27,11 @@ export const MainEditButton = ({
 
   const memberId = useRecoilValue(memberIdState);
 
-  const handleBack = useCallback(() => {
+  const handleBack = () => {
     navigate(-1);
-  }, [navigate]);
+    setTimeout(() => window.location.reload(), 100);
+  };
+
   const handleModalToggle = useCallback(() => {
     setModalOpen((prev) => !prev);
   }, []);
