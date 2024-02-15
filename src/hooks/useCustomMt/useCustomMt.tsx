@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 export default function useCustomMt(length: number | undefined, authority: boolean) {
   const [marginTopClass, setMarginTopClass] = useState<string | undefined>();
 
-  console.log(length,authority)
   useEffect(() => {
     let marginTopClassValue;
 
@@ -21,7 +20,6 @@ export default function useCustomMt(length: number | undefined, authority: boole
       }
     } else {
       const marginTop = length;
-      console.log(marginTop)
 
       if (marginTop === 0) {
         marginTopClassValue = '-mt-[100px]';

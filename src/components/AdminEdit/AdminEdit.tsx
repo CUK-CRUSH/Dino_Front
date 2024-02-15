@@ -90,58 +90,65 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     }));
   }, [])
 
+  
+
   const onChangeInput = async (e: { target: { name: any; value: any } }) => {
+    
 
     const { name, value } = e.target;
-  
-    // input과 updateMemberData를 한 번에 업데이트
-    const updatedData = { ...input, [name]: value };
-    setInput(updatedData);
-    setUpdateMemberData(updatedData);
-  
+    console.log(name,value)
+    setInput({
+      ...input,
+      [name]: value,
+    });
+
+    setUpdateMemberData({
+      ...updateMemberData,
+      [name]: value,
+    });
     if (name === "username") {
-      handleUsernameChange(value);
-    } else if (name === "introduction" ) {
-      setUpdateMemberData((prevData) => ({ ...prevData, introduction: value }));
-     
-    }
-  };
-  
-  const handleUsernameChange = async (value: string) => {
-    if (!value) {
-      setNicknameValidation(false);
-      return;
-    }
-  
-    try {
-      const checkNicknameBack = await getNicknameAvailable(value, token);
-      const isValidNickname =
-        !checkBadWord(value) && checkNickname(value) && checkNicknameBack.status === 200;
-      const isCurrentUsername = input.username === userData?.username;
-  
-      if (isValidNickname || isCurrentUsername) {
-        dispatch(setProfileUsername(value));
-        setNicknameValidation(true);
+
+      if (value) {
+        try {
+          const checkNicknameBack = await getNicknameAvailable(value, token);
+          if (
+            !checkBadWord(value) &&
+            checkNickname(value) &&
+            checkNicknameBack.status === 200
+          ) {
+            dispatch(setProfileUsername(value));
+            setNicknameValidation(true);
+          } else if (input.username === userData?.username) {
+            setNicknameValidation(true);
+          } else if (!checkNickname(value)) {
+            setNicknameValidation(false);
+          } else if (checkBadWord(value)) {
+            setNicknameValidation(false);
+          }
+        } catch (error: any) {
+          // If the status is 400, simply skip the error
+          if (error.response && error.response.status === 400) {
+            setNicknameValidation(false);
+            // 닉네임을 수정하고 같은 닉네임일때
+            if (value === userData?.username) {
+              setNicknameValidation(true);
+              setUpdateMemberData((prevData) => ({
+                ...prevData,
+                username: "",
+              }));
+              return;
+            }
+
+          } else {
+            console.error("Error checking nickname:", error);
+          }
+        }
       } else {
         setNicknameValidation(false);
       }
-    } catch (error: any) {
-      handleErrorOnUsernameChange(error, value);
     }
   };
-  
-  const handleErrorOnUsernameChange = (error: any, value: string) => {
-    if (error.response && error.response.status === 400) {
-      setNicknameValidation(false);
-  
-      if (value === userData?.username) {
-        setNicknameValidation(true);
-        setUpdateMemberData((prevData) => ({ ...prevData, username: "" }));
-      }
-    } else {
-      console.error("Error checking nickname:", error);
-    }
-  };
+
 
   // 초깃값
   const {
@@ -234,12 +241,21 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     }
   }, [nicknameValidation, dispatch]);
 
-  const handleMember = async (data: UpdateMemberParams) => {
-
-    if (input.introduction === '' && data?.introduction !== input.introduction) {
-      data.introduction = input.introduction;
+  const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+    if (event.key === 'Backspace') {
+      // 입력이 없고 
+      if (!input.introduction) {
+        setUpdateMemberData((prevData) => ({
+          ...prevData,
+          introduction: "",
+        }));
+        dispatch(setProfileIntroduction(""));
+      }
     }
+  };
 
+  const handleMember = async (data: UpdateMemberParams) => {
+    
     await new Promise((resolve) => setTimeout(resolve, 300));
 
     if (nicknameValidation) {
@@ -324,7 +340,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
           onChange={onChangeInput}
           nicknameValidation={nicknameValidation}
         />
-
+        
         {/* 한줄소개 */}
         <SetUserProfileIntroduction
           placeholder="한줄소개"
@@ -332,7 +348,9 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
           name="introduction"
           value={userData?.introduction}
           onChange={onChangeInput}
+          handleKeyDown={handleKeyDown}
         />
+
       </div>
     </div>
   );

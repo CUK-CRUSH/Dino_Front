@@ -122,7 +122,6 @@ const AdminPage: React.FC = () => {
 
   // margin Top
   const marginTop = useCustomMt(playlistData?.length,authority);
-  console.log(marginTop)
   return (
 
     <div className="relative w-full h-full mx-auto scrollbar-hide overflow-scroll flex flex-col justify-between bg-neutral-900">
@@ -197,9 +196,7 @@ const AdminPage: React.FC = () => {
         ) : (
           <></>
         )}
-                 
-
-</div>
+        </div>
       </div>
       <Footer bgColor="neutral-900" />
 
