@@ -10,7 +10,7 @@ const UserProfileImage = ({ userProfileImage }: UserProfileImageDTO) => {
   );
 
   return (
-    <div className="w-[75px] h-[75px] mt-[-35px] rounded-full overflow-hidden">
+    <div className="w-[75px] h-[75px] -mt-[35px] rounded-full overflow-hidden">
       {profileImage ? (
         <Img src={profileImage} alt="User Profile" className="w-full object-cover" />
       ) : deleteProfileImage ? (
