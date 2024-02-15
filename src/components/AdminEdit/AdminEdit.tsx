@@ -96,7 +96,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     
 
     const { name, value } = e.target;
-    console.log(name,value)
+    
     setInput({
       ...input,
       [name]: value,
