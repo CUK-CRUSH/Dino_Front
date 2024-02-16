@@ -51,7 +51,7 @@ const Recommendation = () => {
             onClick={() => handleOnClick(item.username, item.id)}
           >
             <img
-              className="cursor-pointer w-[105px] h-[105px] "
+              className="cursor-pointer w-[105px] h-[105px] rounded-lg object-cover"
               src={item.thumbnailUrl ? item.thumbnailUrl : Noimage} // default.jpg는 기본 이미지 경로입니다.
               alt={item.playlistName}
             />
