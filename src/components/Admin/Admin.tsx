@@ -81,7 +81,7 @@ const AdminPage: React.FC = () => {
     }, delay);
 
     return () => clearTimeout(timeoutId);
-  }, [username]);
+  }, [username,dispatch]);
 
   const { deleteProfileImage, deleteBackgroundImage } = useSelector(
     (state: RootState) => state.userProfile
