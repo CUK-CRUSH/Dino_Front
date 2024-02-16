@@ -9,7 +9,7 @@ export const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   async (config) => {
     // 요청 전에 accessToken이 유효한지 확인
-    const accessToken = localStorage.getItem('accessToken');
+    const accessToken = Cookies.get('accessToken');
     if (accessToken) {
       // accessToken이 유효하면 Authorization 헤더에 추가
       config.headers.Authorization = `Bearer ${accessToken}`;
@@ -36,8 +36,8 @@ axiosInstance.interceptors.response.use(
         .then(response => {
           Cookies.set('accessToken', response.data.data.access_token);
           console.log('토큰을 새로 발급 중입니다...');
-
           originalRequest.headers.Authorization = `Bearer ${response.data.data.access_token}`;
+      
           return axiosInstance(originalRequest);
         })
         .catch(error => {
