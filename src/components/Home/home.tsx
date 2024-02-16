@@ -1,150 +1,51 @@
 import { Link } from "react-router-dom";
-import sloagan from "@assets/slogan2.png";
-import mylist1 from "@assets/Mylist 1.png";
-import cd from "@assets/Group 31.png";
-import elipse from "@assets/Ellipse 1.png";
-
+import mainGraphic from "@assets/main_graphic.svg";
+import Mylist from "@assets/Mylist 1.svg";
 const HomeComponent = () => {
+// This is the HomeComponent that has been fixed.
   return (
-    <div className="w-full h-full absolute">
-      <div className="origin-top-left rotate-[-150deg] w-[254px] h-[254px] left-[383.97px] top-[481px] absolute">
-        <div className="w-[254px] h-[254px] left-0 top-0 absolute origin-top-left rotate-[-150deg] bg-white rounded-full" />
-        <div className="w-[49px] h-[49px] left-[-38.20px] top-[-139.83px] absolute origin-top-left rotate-[-150deg] bg-black rounded-full" />
-      </div>
-      <div className={"h-[30px]"}></div>
-      <div className={"flex flex-row items-center align-middle justify-center"}>
-        <img className={"w-[50px] ml-1"} src={cd} alt={cd} />
-        <img className="w-24 h-7" src={mylist1} alt={mylist1} />
+      <div className="w-full h-full scrollbar-hide overflow-scroll">
+        <div className={"h-[30px]"}></div>
+        <div className={"flex flex-row-reverse justify-between align-middle"}>
+          <div className="w-[91px] h-[34px] m-4 bg-neutral-700 rounded-[9px] flex items-center">
+            <svg xmlns="http://www.w3.org/2000/svg" width="23" height="23" viewBox="0 0 23 23" fill="none"
+                 className={"ml-1"}>
+              <g clip-path="url(#clip0_1_10)">
+                <path
+                    d="M1.91667 11.5C1.91667 16.7929 6.20713 21.0833 11.5 21.0833C16.7929 21.0833 21.0833 16.7929 21.0833 11.5C21.0833 6.20712 16.7929 1.91666 11.5 1.91666C6.20713 1.91666 1.91667 6.20712 1.91667 11.5Z"
+                    stroke="white" stroke-width="1.875" stroke-linecap="round" stroke-linejoin="round"/>
+                <path
+                    d="M12.4583 1.96457C12.4583 1.96457 15.3333 5.74999 15.3333 11.5C15.3333 17.25 12.4583 21.0354 12.4583 21.0354M10.5417 21.0354C10.5417 21.0354 7.66667 17.25 7.66667 11.5C7.66667 5.74999 10.5417 1.96457 10.5417 1.96457M2.52042 14.8542H20.4796M2.52042 8.14582H20.4796"
+                    stroke="white" stroke-width="1.875" stroke-linecap="round" stroke-linejoin="round"/>
+              </g>
+              <defs>
+                <clipPath id="clip0_1_10">
+                  <rect width="23" height="23" fill="white"/>
+                </clipPath>
+              </defs>
+            </svg>
+            <div className={"w-[4px]"}></div>
+            <div><p className={"text-amber-50"}>한국어</p></div>
+          </div>
+          <div className={"grow"}></div>
+          <img className={"m-4"} src={Mylist} alt="Mylist"/>
+        </div>
+        <div className={"h-[38px]"}></div>
+        <div className={"divdiv flex flex-col items-center justify-center gap-4"}>
+          <img src={mainGraphic} alt="Main Graphic"/>
+          <div className={"h-[44px]"}></div>
+            <Link to={"/login"}>
+          <div className="flex flex-row w-[360px] h-[58px] bg-neutral-200 rounded-[30px] justify-center items-center">
+              <div className="text-[15px] font-normal font-['Pretendard']"><b>마이리스트 만들기</b></div>
+          </div>
+            </Link>
 
-        <div className={"grow"}></div>
-        <div className="flex flex-row w-[145px] pr mr-1 h-[35px] bg-neutral-200 rounded-[30px] justify-center items-center">
-          <div className="text-neutral-900 text-sm font-semibold font-['Noto Sans']">
-            <Link to={"/login"}>Login</Link>
-          </div>
-          <div className={"w-[10px]"}></div>
-          <div className="flex flex-row justify-center items-center w-[76px] h-[35px] bg-white rounded-[30px] shadow z-40 ">
-            <p className="text-neutral-900 text-sm font-semibold font-['Noto Sans']">
-              Sign up
-            </p>
-          </div>
+          <div className={"h-[30px]"}></div>
+
+
+          <div className={"h-[38px]"}></div>
         </div>
       </div>
-
-      <img
-        className="w-64 h-[307px] left-[15px] top-[179px] absolute"
-        src={sloagan}
-        alt={sloagan}
-      />
-      <img
-        src={elipse}
-        className=" left-[15px] top-[730px] absolute"
-        alt={elipse}
-      />
-      <div className="left-[68.3px] top-[737px] absolute origin-top-left rotate-[14.83deg] text-center text-black text-xl font-semibold font-['Noto Sans']">
-        Share your playlist
-      </div>
-
-      <div className="w-[262px] h-[262px] pl-[19px] pr-5 pt-5 pb-[19.01px] left-[206px] top-[524px] absolute justify-center items-center inline-flex">
-        <div className="animate-rotate w-[223px] h-[222.99px] relative">
-          <div className="w-[10.10px] h-[45.45px] left-[30.98px] top-[34.92px] absolute origin-top-left rotate-[-43.96deg] text-black text-xl font-semibold font-['Noto Sans']">
-            !
-          </div>
-          <div className="w-[0px] h-[45.45px] left-[21.88px] top-[45.73px] absolute origin-top-left rotate-[-50.70deg] text-black text-xl font-semibold font-['Noto Sans']">
-            {" "}
-          </div>
-          <div className="w-[15.15px] h-[45.45px] left-[14.18px] top-[57.80px] absolute origin-top-left rotate-[-58.14deg] text-black text-xl font-semibold font-['Noto Sans']">
-            t
-          </div>
-          <div className="w-[16.84px] h-[45.45px] left-[6.75px] top-[74.08px] absolute origin-top-left rotate-[-66.59deg] text-black text-xl font-semibold font-['Noto Sans']">
-            s
-          </div>
-          <div className="w-[10.10px] h-[45.45px] left-[3.75px] top-[84.54px] absolute origin-top-left rotate-[-73.82deg] text-black text-xl font-semibold font-['Noto Sans']">
-            i
-          </div>
-          <div className="w-[10.10px] h-[45.45px] left-[1.85px] top-[93.82px] absolute origin-top-left rotate-[-78.71deg] text-black text-xl font-semibold font-['Noto Sans']">
-            l
-          </div>
-          <div className="w-[18.52px] h-[45.45px] left-[0.21px] top-[113.36px] absolute origin-top-left rotate-[-86.67deg] text-black text-xl font-semibold font-['Noto Sans']">
-            y
-          </div>
-          <div className="w-[20.20px] h-[45.45px] left-[2.84px] top-[135.79px] absolute origin-top-left rotate-[-98.07deg] text-black text-xl font-semibold font-['Noto Sans']">
-            a
-          </div>
-          <div className="w-[10.10px] h-[45.45px] left-[6.19px] top-[146.83px] absolute origin-top-left rotate-[-106.38deg] text-black text-xl font-semibold font-['Noto Sans']">
-            l
-          </div>
-          <div className="w-[21.89px] h-[45.45px] left-[15.89px] top-[168.83px] absolute origin-top-left rotate-[-115.70deg] text-black text-xl font-semibold font-['Noto Sans']">
-            p
-          </div>
-          <div className="w-[0px] h-[45.45px] left-[25.63px] top-[182.14px] absolute origin-top-left rotate-[-126.34deg] text-black text-xl font-semibold font-['Noto Sans']">
-            {" "}
-          </div>
-          <div className="w-[15.15px] h-[45.45px] left-[35.67px] top-[192.84px] absolute origin-top-left rotate-[-133.89deg] text-black text-xl font-semibold font-['Noto Sans']">
-            r
-          </div>
-          <div className="w-[21.89px] h-[45.45px] left-[54.64px] top-[207.41px] absolute origin-top-left rotate-[-144.27deg] text-black text-xl font-semibold font-['Noto Sans']">
-            u
-          </div>
-          <div className="w-[21.89px] h-[45.45px] left-[78.84px] top-[218.17px] absolute origin-top-left rotate-[-157.73deg] text-black text-xl font-semibold font-['Noto Sans']">
-            o
-          </div>
-          <div className="w-[18.52px] h-[45.45px] left-[100.72px] top-[222.41px] absolute origin-top-left rotate-[-170.12deg] text-black text-xl font-semibold font-['Noto Sans']">
-            y
-          </div>
-          <div className="w-[0px] h-[45.45px] left-[116.38px] top-[222.69px] absolute origin-top-left rotate-[-179.40deg] text-black text-xl font-semibold font-['Noto Sans']">
-            {" "}
-          </div>
-          <div className="w-[20.20px] h-[45.45px] left-[138.31px] top-[219.76px] absolute origin-top-left rotate-[170.78deg] text-black text-xl font-semibold font-['Noto Sans']">
-            e
-          </div>
-          <div className="w-[15.15px] h-[45.45px] left-[153.53px] top-[214.60px] absolute origin-top-left rotate-[160.94deg] text-black text-xl font-semibold font-['Noto Sans']">
-            r
-          </div>
-          <div className="w-[20.20px] h-[45.45px] left-[172.68px] top-[204.76px] absolute origin-top-left rotate-[151.28deg] text-black text-xl font-semibold font-['Noto Sans']">
-            a
-          </div>
-          <div className="w-[21.89px] h-[45.45px] left-[192.12px] top-[188.73px] absolute origin-top-left rotate-[138.81deg] text-black text-xl font-semibold font-['Noto Sans']">
-            h
-          </div>
-          <div className="w-[18.52px] h-[45.45px] left-[206.83px] top-[169.53px] absolute origin-top-left rotate-[126.05deg] text-black text-xl font-semibold font-['Noto Sans']">
-            S
-          </div>
-          <div className="w-[0px] h-[45.45px] left-[213.98px] top-[155.16px] absolute origin-top-left rotate-[116.14deg] text-black text-xl font-semibold font-['Noto Sans']">
-            {" "}
-          </div>
-          <div className="w-[21.89px] h-[45.45px] left-[221.41px] top-[131.41px] absolute origin-top-left rotate-[105.48deg] text-black text-xl font-semibold font-['Noto Sans']">
-            d
-          </div>
-          <div className="w-[21.89px] h-[45.45px] left-[223px] top-[105.64px] absolute origin-top-left rotate-[91.98deg] text-black text-xl font-semibold font-['Noto Sans']">
-            n
-          </div>
-          <div className="w-[20.20px] h-[45.45px] left-[219.28px] top-[82.70px] absolute origin-top-left rotate-[79.52deg] text-black text-xl font-semibold font-['Noto Sans']">
-            a
-          </div>
-          <div className="w-[0px] h-[45.45px] left-[213.92px] top-[67.76px] absolute origin-top-left rotate-[69.89deg] text-black text-xl font-semibold font-['Noto Sans']">
-            {" "}
-          </div>
-          <div className="w-[20.20px] h-[45.45px] left-[203.42px] top-[48.28px] absolute origin-top-left rotate-[60.07deg] text-black text-xl font-semibold font-['Noto Sans']">
-            e
-          </div>
-          <div className="w-[15.15px] h-[45.45px] left-[193.45px] top-[36.14px] absolute origin-top-left rotate-[50.34deg] text-black text-xl font-semibold font-['Noto Sans']">
-            t
-          </div>
-          <div className="w-[20.20px] h-[45.45px] left-[177.59px] top-[21.69px] absolute origin-top-left rotate-[40.79deg] text-black text-xl font-semibold font-['Noto Sans']">
-            a
-          </div>
-          <div className="w-[20.20px] h-[45.45px] left-[157.37px] top-[9.87px] absolute origin-top-left rotate-[28.87deg] text-black text-xl font-semibold font-['Noto Sans']">
-            e
-          </div>
-          <div className="w-[15.15px] h-[45.45px] left-[142.21px] top-[4.54px] absolute origin-top-left rotate-[19.03deg] text-black text-xl font-semibold font-['Noto Sans']">
-            r
-          </div>
-          <div className="w-[21.89px] h-[45.45px] left-[116.37px] top-0 absolute origin-top-left rotate-[7.93deg] text-black text-xl font-semibold font-['Noto Sans']">
-            C
-          </div>
-        </div>
-      </div>
-    </div>
   );
 };
 
