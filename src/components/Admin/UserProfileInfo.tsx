@@ -21,7 +21,6 @@ const UserProfileInfo = ({ username, introText }: UserProfileInfoDTO) => {
   const { introduction } = useSelector(
     (state: RootState) => state.userProfile
   );
-
   return (
     <div className="w-full ">
       <div className="w-full text-center text-white text-[25px] font-bold font-['Noto Sans'] leading-[18px] mx-auto mt-[20px] min-h-[20px]">

@@ -17,6 +17,8 @@ import { useCookies } from "react-cookie";
 import Header from "@components/Layout/header";
 import useCompareToken from "@hooks/useCompareToken/useCompareToken";
 import useCustomMt from "@hooks/useCustomMt/useCustomMt";
+import { useDispatch } from "react-redux";
+import { setProfileIntroduction } from "@reducer/Admin/userProfileSlice";
 
 const AdminPage: React.FC = () => {
 
@@ -46,7 +48,7 @@ const AdminPage: React.FC = () => {
   const [, setInduceLogin] = useState<boolean>(false);
   // 쿠키
   const [cookies] = useCookies(["accessToken"]);
-  
+  const dispatch = useDispatch();
   useEffect(()=>{
     if(!cookies.accessToken){
       setInduceLogin(false);
@@ -61,6 +63,7 @@ const AdminPage: React.FC = () => {
         const userDataResult = await getMemberUsername(username);
 
         setUserdata(userDataResult.data);
+        dispatch(setProfileIntroduction(userDataResult.data.introduction))
         if (userDataResult.data?.id) {
           localStorage.setItem("userId", userDataResult.data.id.toString());
         }
@@ -178,7 +181,7 @@ const AdminPage: React.FC = () => {
         
           <UserProfileInfo
             username={userData?.username}
-            introText={userData?.introduction}
+            // introText={userData?.introduction}
           />
           
         </div>

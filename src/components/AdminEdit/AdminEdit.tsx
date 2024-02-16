@@ -87,10 +87,9 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     setUpdateMemberData((prevData) => ({
       ...prevData,
       username: "",
+      introduction: '',
     }));
   }, [])
-
-  
 
   const onChangeInput = async (e: { target: { name: any; value: any } }) => {
     
@@ -146,6 +145,8 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
       } else {
         setNicknameValidation(false);
       }
+    }  else if (name === "introduction") {
+      dispatch(setProfileIntroduction(value));
     }
   };
 
@@ -162,14 +163,13 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   const [updateMemberData, setUpdateMemberData] = useState<UpdateMemberParams>({
     // 입력없을때 닉네임 통과
     username: username || "", // Use the directly obtained value
-    introduction: introduction,
+    introduction: introduction ,
     profileImage: profileImage,
     backgroundImage: profileBackgroundImage,
     cookies: token,
     deleteProfileImage: deleteProfileImage,
     deleteBackgroundImage: deleteBackgroundImage,
   });
-
   // 프로필사진
   const [uploadUserProfileImage, setUploadUserProfileImage] = useState<
     string | null
@@ -219,7 +219,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
   // 취소
   const cancel = () => {
-
+    dispatch(setProfileIntroduction(userData?.introduction));
     dispatch(setDeleteProfileImage(false));
     dispatch(setDeleteProfileBackgroundImage(false));
 
@@ -241,29 +241,32 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     }
   }, [nicknameValidation, dispatch]);
 
+  const [backSpace,setBackSpace] = useState<boolean>(false);
+
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    if (event.key === 'Backspace') {
+    if (!input.introduction) {
       // 입력이 없고
-      if (!input.introduction) {
+      if (event.key === 'Backspace') {
+        setBackSpace(true);
         setUpdateMemberData((prevData) => ({
           ...prevData,
           introduction: "",
         }));
         dispatch(setProfileIntroduction(""));
       }
-    }
+    } 
   };
 
   const handleMember = async (data: UpdateMemberParams) => {
-    
     await new Promise((resolve) => setTimeout(resolve, 300));
+
+    if(!input.introduction && !backSpace){
+      data.introduction = userData?.introduction;
+    }
 
     if (nicknameValidation) {
       const code = await updateMember(data);
-      // 이후에 code를 이용한 로직을 이어서 작성하면 됩니다.
       if (code.status === 200) {
-        console.log(code)
-        dispatch(setProfileIntroduction(updateMemberData.introduction));
 
         handleImageUpdates({
           uploadUserProfileImage: uploadUserProfileImage,
