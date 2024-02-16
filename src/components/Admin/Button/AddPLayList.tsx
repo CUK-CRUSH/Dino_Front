@@ -43,7 +43,7 @@ export const AddPlayList = () => {
   }
 
   return (
-    <div style={{ marginLeft: `${customMargin}px`, marginRight: `${customMargin}px` }} className="inline-block h-[150px] mt-[15px] relative">
+    <div style={{ marginLeft: `${customMargin}px`, marginRight: `${customMargin}px` }} className="inline-block h-[150px] mt-[10px] relative">
 
       <button onClick={() => handleAddPlaylist(title, titleImage, token)} style={{ background: '#2E2E2E' }} className="w-[150px] h-[150px] rounded-[13px] font-light text-zinc-300 text-4xl ">
 
