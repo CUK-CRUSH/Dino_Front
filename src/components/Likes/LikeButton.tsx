@@ -1,5 +1,6 @@
 import BeforeLike from "@assets/Like/BeforeLike.svg";
 import AfterLike from "@assets/Like/AfterLike.svg";
+import "@styles/EditList/playList.css";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { userNameState } from "@atoms/Playlist/username";
@@ -10,8 +11,20 @@ import {
 } from "@api/playlist-controller/playlistControl";
 import { useCallback, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
+import Swal from "sweetalert2";
 
 const LikeButton = () => {
+  const swalButton = Swal.mixin({
+    customClass: {
+      popup: "popup", // 전체
+      confirmButton: "confirmButton", // 취소
+      cancelButton: "cancelButton", // 삭제
+      title: "title", // 타이틀
+      htmlContainer: "htmlContainer", // 내용
+    },
+    buttonsStyling: false,
+  });
+
   const navigate = useNavigate();
   const username = useRecoilValue(userNameState);
   ///
@@ -24,6 +37,15 @@ const LikeButton = () => {
   const [isLike, setIsLike] = useState<boolean>(false);
 
   const handleLikeToggle = async () => {
+    if (!token) {
+      swalButton.fire({
+        title: "로그인 필요한 서비스입니다.",
+        text: "로그인이 하시겠습니까?",
+        confirmButtonText: "취소",
+        cancelButtonText: "로그인",
+      });
+      return;
+    }
     try {
       if (isLike) {
         await deleteLike(Number(playlistId), token);
