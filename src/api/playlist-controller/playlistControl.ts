@@ -53,9 +53,18 @@ export const postPlayList = async (
 };
 
 // 유저의 플레이리스트  단일 조회하기
-export const getSinglePlayList = async (playlistId: number) => {
+export const getSinglePlayList = async (
+  playlistId: number,
+  cookies?: string
+) => {
   try {
-    const response = await axiosInstance.get(`/api/v1/playlist/${playlistId}`);
+    const response = cookies
+      ? await axiosInstance.get(`/api/v1/playlist/${playlistId}`, {
+          headers: {
+            Authorization: `Bearer ${cookies}`,
+          },
+        })
+      : await axiosInstance.get(`/api/v1/playlist/${playlistId}`);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -149,6 +158,7 @@ export const postLike = async (playlistId: number, cookies?: string) => {
   try {
     const response = await axiosInstance.post(
       `/api/v1/playlist/${playlistId}/like`,
+      null,
       {
         headers: {
           Authorization: `Bearer ${cookies}`,

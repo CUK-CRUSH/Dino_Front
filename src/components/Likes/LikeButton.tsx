@@ -1,41 +1,57 @@
 import BeforeLike from "@assets/Like/BeforeLike.svg";
 import AfterLike from "@assets/Like/AfterLike.svg";
-import { useDispatch } from "react-redux";
-import { useSelector } from "react-redux";
-import { RootState } from "@store/index";
-import { setIsLikeToggle } from "@reducer/Likes/likeToggle";
 import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import { userNameState } from "@atoms/Playlist/username";
-import { tokenState } from "@atoms/Playlist/token";
-import { deleteLike, postLike } from "@api/playlist-controller/playlistControl";
+import {
+  deleteLike,
+  getSinglePlayList,
+  postLike,
+} from "@api/playlist-controller/playlistControl";
+import { useCallback, useEffect, useState } from "react";
+import { useCookies } from "react-cookie";
 
 const LikeButton = () => {
-  const dispatch = useDispatch();
   const navigate = useNavigate();
   const username = useRecoilValue(userNameState);
   ///
   const { playlistId } = useParams<{ playlistId: string }>();
-  const token = useRecoilValue(tokenState);
 
-  const isLikeToggle = useSelector(
-    (state: RootState) => state.likes.isLikeToggle
-  );
+  const [cookies] = useCookies(["accessToken"]);
+  const token = cookies.accessToken;
+
+  const [likeCount, setLikeCount] = useState<number>(0);
+  const [isLike, setIsLike] = useState<boolean>(false);
 
   const handleLikeToggle = async () => {
-    if (isLikeToggle) {
-      deleteLike(Number(playlistId), token);
-      dispatch(setIsLikeToggle(!isLikeToggle));
-    } else {
-      console.log(token);
-      postLike(Number(playlistId), token);
-      dispatch(setIsLikeToggle(!isLikeToggle));
+    try {
+      if (isLike) {
+        await deleteLike(Number(playlistId), token);
+      } else {
+        await postLike(Number(playlistId), token);
+      }
+      fetchPlaylist();
+    } catch (error) {
+      console.error(error);
     }
   };
+
+  const fetchPlaylist = useCallback(async () => {
+    try {
+      const playlist = await getSinglePlayList(Number(playlistId), token);
+      setIsLike(playlist.data.isLike);
+      setLikeCount(playlist.data.likeCount);
+    } catch (error) {
+      console.error(error);
+    }
+  }, [playlistId, token]);
 
   const handleNavigate = () => {
     navigate(`/user/${username}/${playlistId}/like`);
   };
+  useEffect(() => {
+    fetchPlaylist();
+  }, [fetchPlaylist]);
 
   return (
     <div className="absolute -bottom-5 left-4 bg-black inline-flex justify-between items-center px-1 w-[110px] h-[42px] rounded-[30px] z-20">
@@ -43,12 +59,12 @@ const LikeButton = () => {
         <img
           className="w-6 h-6"
           onClick={handleLikeToggle}
-          src={isLikeToggle ? AfterLike : BeforeLike}
+          src={isLike ? AfterLike : BeforeLike}
           alt="Like button"
         />
       </div>
       <div onClick={handleNavigate} className="mr-5">
-        <span>0</span>
+        <span>{likeCount}</span>
       </div>
     </div>
   );

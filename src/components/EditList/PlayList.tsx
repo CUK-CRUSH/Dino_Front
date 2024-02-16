@@ -42,7 +42,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   }>();
   const setUsernames = useSetRecoilState(userNameState);
   //
-  // console.log(playlists);
+
   const setPlaylistName = useSetRecoilState(playlistNameState);
   const [musicList, setMusicList] = useRecoilState(musicListState);
 
@@ -58,28 +58,32 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const [cookies] = useCookies(["accessToken"]);
 
   const setToken = useSetRecoilState(tokenState);
+
   const handleUploadImage = (image: string) => setUploadImage(image);
+
   const fetchPlaylist = useCallback(async () => {
     // 항상 로컬 스토리지에서 username을 가져옴
-
     try {
-      const member = await getMemberUsername(paramUsername);
-      setMemberId(member.data.id);
-      setUsernames(paramUsername || "");
+      if (cookies.accessToken) {
+        const member = await getMemberUsername(paramUsername);
+        setMemberId(member.data.id);
+        setUsernames(paramUsername || "");
 
-      const playlist = await getSinglePlayList(Number(playlistId));
-      setPlaylists(playlist.data);
-      setPlaylistName(playlist.data.playlistName);
+        const playlist = await getSinglePlayList(Number(playlistId));
+        setPlaylists(playlist.data);
+        setPlaylistName(playlist.data.playlistName);
 
-      const musicAPIData = await getMusicList(Number(playlistId));
+        const musicAPIData = await getMusicList(Number(playlistId));
 
-      setMusicList(musicAPIData);
+        setMusicList(musicAPIData);
+      }
     } catch (error) {
       console.error(error);
       setHasError(true);
     }
     /* eslint-disable react-hooks/exhaustive-deps */
   }, [setMusicList]);
+
   const {
     handleEditClick,
     handleSaveClick,
@@ -102,7 +106,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   if (hasError) {
     return <NotFound />;
   }
-  console.log(playlistId);
 
   return (
     <div className="h-full w-full scrollbar-hide overflow-scroll flex flex-col bg-black text-white font-medium leading-[18px]">
