@@ -11,7 +11,7 @@ export default function useCustomMt(length: number | undefined, authority: boole
       if(marginTop === 0 ){
         marginTopClassValue = '-mt-[100px]';
       } else if (marginTop && marginTop >= 1 && marginTop < 2) {
-        marginTopClassValue = '-mt-[95px]';
+        marginTopClassValue = '-mt-[40px]';
       } 
       else if (marginTop && marginTop >= 2 && marginTop <= 3) {
         marginTopClassValue = '-mt-[40px]';
@@ -24,7 +24,7 @@ export default function useCustomMt(length: number | undefined, authority: boole
       if (marginTop === 0) {
         marginTopClassValue = '-mt-[100px]';
       } else if (marginTop && marginTop >= 1 && marginTop <= 2) {
-        marginTopClassValue = '-mt-[95px]';
+        marginTopClassValue = '-mt-[40px]';
       } else {
         marginTopClassValue = '-mt-[40px]';
       }

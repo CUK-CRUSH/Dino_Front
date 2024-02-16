@@ -21,10 +21,9 @@ const UserProfileInfo = ({ username, introText }: UserProfileInfoDTO) => {
   const { introduction } = useSelector(
     (state: RootState) => state.userProfile
   );
-
   return (
     <div className="w-full ">
-      <div className="w-full text-center text-white text-[25px] font-bold font-['Noto Sans'] leading-[18px] mx-auto mt-[19px]">
+      <div className="w-full text-center text-white text-[25px] font-bold font-['Noto Sans'] leading-[18px] mx-auto mt-[20px] min-h-[20px]">
         {isLoading ?
           <div className="flex items-center justify-center">
             <Skeleton width="120px" height="20px" background="#2E2E2E" />
@@ -35,7 +34,7 @@ const UserProfileInfo = ({ username, introText }: UserProfileInfoDTO) => {
           </React.Fragment>
         }
       </div>
-      <div className="text-center text-white text-[15px] font-medium font-['Noto Sans'] mx-auto leading-[18px] mt-[19px]">
+      <div className=" text-center text-white text-[15px] font-medium font-['Noto Sans'] mx-auto leading-[18px] mt-[20px] min-h-[20px]">
         {isLoading ? (
           <div className="flex items-center justify-center">
             <Skeleton width="200px" height="20px" background="#2E2E2E" />

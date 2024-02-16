@@ -1,4 +1,4 @@
-import  { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useWindowSizeCustom from "../../../hooks/useWindowSizeCustom";
 import { getPlaylistDTO } from "types/Admin";
@@ -26,7 +26,7 @@ export const PlayList = ({ playlist }: { playlist: getPlaylistDTO }) => {
         setCustomMargin((windowSize.width / 2 - 151) / 2);
       } else if (windowSize.width >= 430) {
         setCustomMargin((390 / 2 - 151) / 2);
-      } else if (windowSize.width >= 390 && windowSize.width <= 400 ) {
+      } else if (windowSize.width >= 390 && windowSize.width <= 400) {
         setCustomMargin((390 / 2 - 151) / 2);
       }
       else if (windowSize.width < 390) {
@@ -40,19 +40,18 @@ export const PlayList = ({ playlist }: { playlist: getPlaylistDTO }) => {
       {isLoading ? (
         <SkeltonPlaylist customMargin={customMargin} />
       ) : (
-        <div style={{ marginLeft: `${customMargin}px`, marginRight: `${customMargin}px` }} className="inline-block h-[150px] my-[42px] relative">
+        <div style={{ marginLeft: `${customMargin}px`, marginRight: `${customMargin}px` }} className="relative inline-block min-h-[220px] mt-[5px]">
           <Link to={`${playlist.id}`}>
-            <button className="w-[150px] h-[150px] rounded-[13px] font-light text-zinc-300 text-4xl">
+            <button className="w-[150px] h-[150px]  rounded-[13px] font-light text-zinc-300 text-4xl">
               {playlist.thumbnailUrl ? (
                 <img className="mx-auto w-[150px] h-full rounded-[13px]" src={playlist.thumbnailUrl} alt='x' />
               ) : (
-                // <div className="mx-auto w-[150px] h-full rounded-[13px] bg-gradient-to-b from-[#2e2e2e] to-[#545454]" />
                 <div className="mx-auto w-[150px] h-full rounded-[13px] bg-[#2e2e2e]" />
               )}
-              <div className="w-full text-left text-zinc-300 font-medium font-['Noto Sans'] absolute -bottom-10 ">
+              <div className="w-full min-h-[30px] text-left text-zinc-300 font-medium absolute leading-6 whitespace-normal break-words">
                 <span className="text-[15px] text-white align-top">{playlist.playlistName}</span>
                 <span className="text-[3px] text-white align-super ml-1">●</span>
-                <span className="text-[10px] text-white align-top">  {playlist.numberOfMusics} </span>
+                <span className="text-[12px] text-white align-top">  {playlist.numberOfMusics} </span>
               </div>
             </button>
           </Link>
