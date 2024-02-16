@@ -17,9 +17,6 @@ export interface MusicDataRowContentProps {
   musicData: MusicContentDTO;
   isEditing: boolean;
   order: number;
-  playlistId: string | undefined;
-  usernames: string | null;
-  token: string;
   setWidth: (width: number) => void;
   fetchPlaylist: () => void;
   selectedVideoId: string | null;
@@ -36,9 +33,7 @@ export interface ShowImageDTO {
   aspectRatio: number;
   onCrop: (image: string) => void;
   playlists: any;
-  token: string;
   isEditing: boolean;
-  playlistId: string | undefined;
   fetchPlaylist: () => void;
 }
 

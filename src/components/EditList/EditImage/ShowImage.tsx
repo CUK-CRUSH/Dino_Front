@@ -12,14 +12,15 @@ import Camera from "@assets/PlayListImage/camera.svg";
 import { useCallback } from "react";
 import { Img } from "react-image";
 import Spinner from "@assets/Spinner/Spinner.svg";
+import LikeButton from "@components/Likes/LikeButton";
+import { useRecoilValue } from "recoil";
+import { tokenState } from "@atoms/Playlist/token";
 
 const ShowImage = ({
   aspectRatio,
   onCrop,
   playlists,
   isEditing,
-  playlistId,
-  token,
   fetchPlaylist,
 }: ShowImageDTO) => {
   const { t } = useTranslation("Edit");
@@ -28,6 +29,7 @@ const ShowImage = ({
     (state: RootState) => state.selectedFile.isLoading
   );
 
+  const token = useRecoilValue(tokenState);
   const swalButton = Swal.mixin({
     customClass: {
       popup: "popup", // 전체
@@ -38,9 +40,7 @@ const ShowImage = ({
     },
     buttonsStyling: false,
   });
-  const playlist = playlists.find(
-    (playlist: any) => playlist?.id === Number(playlistId)
-  );
+
   const { image: reduxImage } = useSelector(
     (state: RootState) => state.musicAdd
   );
@@ -57,7 +57,7 @@ const ShowImage = ({
 
     if (result.dismiss === Swal.DismissReason.cancel) {
       try {
-        await deletePlayListImage(playlist.id, token);
+        await deletePlayListImage(playlists.id, token);
         fetchPlaylist();
       } catch (error) {
         console.log(error);
@@ -66,7 +66,7 @@ const ShowImage = ({
         });
       }
     }
-  }, [playlist, token, swalButton, fetchPlaylist]);
+  }, [playlists, token, swalButton, fetchPlaylist]);
   // console.log(reduxImage);
 
   const renderImage = (imageSrc: string) => (
@@ -87,7 +87,7 @@ const ShowImage = ({
               <img src={Camera} alt="Camera" width={32} height={32} />
             </button>
           </ImageCropper>
-          {playlist?.thumbnailUrl && (
+          {playlists?.thumbnailUrl && (
             <button
               className="absolute top-4 left-1/2 transform -translate-x-1/2"
               onClick={handleDeleteImage}
@@ -121,17 +121,20 @@ const ShowImage = ({
   );
 
   return (
-    <div className="h-1/3 smartPhone:h-[28%] tabletMini:h-[20%] tablet:h-[18%] relative rounded-b-3xl bg-white ">
-      {isLoading ? (
-        <Img src={Spinner} alt="Spinner" />
-      ) : isEditing ? (
-        renderImageControls(reduxImage || playlist?.thumbnailUrl || null)
-      ) : reduxImage || playlist?.thumbnailUrl ? (
-        renderImage(reduxImage || playlist?.thumbnailUrl || "")
-      ) : (
-        renderNoImage()
-      )}
-    </div>
+    <>
+      <div className="relative h-1/3 smartPhone:h-[28%] tabletMini:h-[20%] tablet:h-[18%] rounded-b-3xl bg-white ">
+        {isLoading ? (
+          <Img src={Spinner} alt="Spinner" />
+        ) : isEditing ? (
+          renderImageControls(reduxImage || playlists?.thumbnailUrl || null)
+        ) : reduxImage || playlists?.thumbnailUrl ? (
+          renderImage(reduxImage || playlists?.thumbnailUrl || "")
+        ) : (
+          renderNoImage()
+        )}
+        <LikeButton />
+      </div>
+    </>
   );
 };
 

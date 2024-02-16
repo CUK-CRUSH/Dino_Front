@@ -1,21 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import { FaCirclePlus } from "react-icons/fa6";
 import { useTranslation } from "react-i18next";
+import { useRecoilValue } from "recoil";
+import { userNameState } from "@atoms/Playlist/username";
 
 export const PlusButton: React.FC<{
-  playlists: any[];
-  usernames: string | null;
-  playlistId: string | undefined;
-}> = ({ playlists, usernames, playlistId }) => {
+  playlists: any;
+}> = ({ playlists }) => {
   const navigate = useNavigate();
+  const usernames = useRecoilValue(userNameState);
   const handleAddMusicClick = () => {
-    const currentPlaylist = playlists.find(
-      (pl: any) => pl?.id === Number(playlistId)
-    );
-
-    if (currentPlaylist) {
-      navigate(`/user/${usernames}/${currentPlaylist.id}/edit`);
-    }
+    navigate(`/user/${usernames}/${playlists.id}/edit`);
   };
   const { t } = useTranslation("Edit");
   return (
