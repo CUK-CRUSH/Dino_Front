@@ -31,7 +31,7 @@ const Recommendation = () => {
     window.location.reload();
   };
   return (
-    <div className="flex justify-center flex-col mx-5 w-[390px]">
+    <div className="flex justify-center flex-col mx-5 w-[370px]">
       <p className="mb-2">✨추천 플레이리스트</p>
       <Carousel
         showArrows={false}
