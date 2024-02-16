@@ -189,3 +189,15 @@ export const deleteLike = async (playlistId: number, cookies?: string) => {
     throw error;
   }
 };
+
+export const getLikeList = async (playlistId: number) => {
+  try {
+    const response = await axiosInstance.get(
+      `/api/v1/playlist/${playlistId}/like`
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
