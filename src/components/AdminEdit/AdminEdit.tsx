@@ -96,7 +96,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     
 
     const { name, value } = e.target;
-    
+
     setInput({
       ...input,
       [name]: value,
@@ -243,7 +243,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
   const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
     if (event.key === 'Backspace') {
-      // 입력이 없고 
+      // 입력이 없고
       if (!input.introduction) {
         setUpdateMemberData((prevData) => ({
           ...prevData,
@@ -262,6 +262,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
       const code = await updateMember(data);
       // 이후에 code를 이용한 로직을 이어서 작성하면 됩니다.
       if (code.status === 200) {
+        console.log(code)
         dispatch(setProfileIntroduction(updateMemberData.introduction));
 
         handleImageUpdates({

@@ -170,10 +170,10 @@ const AdminPage: React.FC = () => {
       )}
 
       {/* 검은화면 */}
-      <div className={`w-full h-auto ${marginTop}`}>
+      <div className={`w-full ${marginTop}`}>
 
         {/* 프로필 이미지 */}
-        <div className={`min-h-[120px] flex items-center flex-col z-10 bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px] ` }>
+        <div className={`flex items-center flex-col z-10 bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px] ` }>
           <UserProfileImage userProfileImage={userData?.profileImageUrl} />
         
           <UserProfileInfo
@@ -182,7 +182,7 @@ const AdminPage: React.FC = () => {
           />
           
         </div>
-        <div className={`bg-neutral-900 min-h-[235px] rounded-tl-[30px] rounded-tr-[30px]`}>
+        <div className={`bg-neutral-900 min-h-[468px] rounded-tl-[30px] rounded-tr-[30px]`}>
         {playlistData &&
           playlistData.map((playlist: getPlaylistDTO, index: number) => (
             <PlayList key={playlist.id} playlist={playlist} />
