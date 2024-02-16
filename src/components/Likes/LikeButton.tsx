@@ -38,12 +38,21 @@ const LikeButton = () => {
 
   const handleLikeToggle = async () => {
     if (!token) {
-      swalButton.fire({
-        title: "로그인 필요한 서비스입니다.",
-        text: "로그인이 하시겠습니까?",
-        confirmButtonText: "취소",
-        cancelButtonText: "로그인",
-      });
+      swalButton
+        .fire({
+          title: "로그인 필요한 서비스입니다.",
+          text: "로그인이 하시겠습니까?",
+          showCancelButton: true,
+          confirmButtonColor: "blue",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "취소",
+          cancelButtonText: "로그인",
+        })
+        .then((result) => {
+          if (result.isDismissed) {
+            navigate("/login");
+          }
+        });
       return;
     }
     try {

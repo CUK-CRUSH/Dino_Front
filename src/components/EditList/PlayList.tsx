@@ -64,19 +64,17 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const fetchPlaylist = useCallback(async () => {
     // 항상 로컬 스토리지에서 username을 가져옴
     try {
-      if (cookies.accessToken) {
-        const member = await getMemberUsername(paramUsername);
-        setMemberId(member.data.id);
-        setUsernames(paramUsername || "");
+      const member = await getMemberUsername(paramUsername);
+      setMemberId(member.data.id);
+      setUsernames(paramUsername || "");
 
-        const playlist = await getSinglePlayList(Number(playlistId));
-        setPlaylists(playlist.data);
-        setPlaylistName(playlist.data.playlistName);
+      const playlist = await getSinglePlayList(Number(playlistId));
+      setPlaylists(playlist.data);
+      setPlaylistName(playlist.data.playlistName);
 
-        const musicAPIData = await getMusicList(Number(playlistId));
+      const musicAPIData = await getMusicList(Number(playlistId));
 
-        setMusicList(musicAPIData);
-      }
+      setMusicList(musicAPIData);
     } catch (error) {
       console.error(error);
       setHasError(true);

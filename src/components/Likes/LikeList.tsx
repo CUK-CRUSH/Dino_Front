@@ -3,6 +3,8 @@ import { useCallback, useEffect, useState } from "react";
 import { FaAngleLeft } from "react-icons/fa6";
 import { useNavigate, useParams } from "react-router-dom";
 import Noimage from "@assets/noimage.jpg";
+import { useRecoilValue } from "recoil";
+import { playlistNameState } from "@atoms/Playlist/playlistName";
 
 const UserProfile = ({ user }: any) => {
   const navigate = useNavigate();
@@ -41,6 +43,8 @@ const LikeList = () => {
 
   const [users, setUsers] = useState([]);
 
+  const playlistName = useRecoilValue(playlistNameState);
+
   useEffect(() => {
     const fetchLikeList = async () => {
       try {
@@ -66,7 +70,7 @@ const LikeList = () => {
         >
           <FaAngleLeft size={24} color="black" />
         </button>
-        <p className="text-center mx-auto">타이틀 넘겨주기</p>
+        <p className="text-center mx-auto">{playlistName}</p>
       </header>
 
       {/* 이만큼 API가져와서 Mapping */}
