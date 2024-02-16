@@ -107,7 +107,7 @@ const AddMusic: React.FC = () => {
     ) {
       Swal.fire({
         icon: "warning",
-        title: `이 "${url}"은 사용할 수 없어요`,
+        title: t("urlerror"),
       });
 
       return;
@@ -125,17 +125,17 @@ const AddMusic: React.FC = () => {
     } catch (error) {
       Swal.fire({
         icon: "error",
-        text: "Url형식이 맞지않아요",
+        text: t("urlerror"),
       });
     }
-  }, [navigate, url, dispatch, artist, title]);
+  }, [navigate, url, dispatch, artist, title, t]);
 
   const handleBack = useCallback(() => {
     dispatch(updateTitle(""));
     dispatch(updateArtist(""));
     dispatch(updateUrl(""));
     navigate(-1);
-  }, [navigate, dispatch]);
+  }, [navigate, dispatch, t]);
 
   useEffect(() => {
     fetchAutoComplete("title", title);
@@ -150,7 +150,7 @@ const AddMusic: React.FC = () => {
             <BsYoutube color="red" size={22} />
           </button>
 
-          <p className="mt-[2px]">유튜브에서 음악 검색하기</p>
+          <p className="mt-[2px]">{t("search")}</p>
         </div>
         {/* 검색 타입 토글 버튼 */}
         <div className="flex w-[177px] h-[50px] items-center bg-[#2E2E2E] p-2 rounded-2xl ">
@@ -159,7 +159,7 @@ const AddMusic: React.FC = () => {
             className="flex w-[160px] items-center justify-between"
           >
             <p className=" text-[12px] ">
-              {searchType === "title" ? "제목으로 검색" : "아티스트로 검색"}
+              {searchType === "title" ? t("titlesearch") : t("artistsearch")}
             </p>
             <GoArrowSwitch color="white" size={32} />
           </button>
@@ -172,7 +172,7 @@ const AddMusic: React.FC = () => {
             type="text"
             label=""
             placeholder={
-              searchType === "title" ? "제목으로 검색" : "아티스트로 검색"
+              searchType === "title" ? t("titlesearch") : t("artistsearch")
             }
             value={searchType === "title" ? title : artist}
             required={true}
@@ -195,12 +195,12 @@ const AddMusic: React.FC = () => {
         </form>
         <div className="mb-10">
           <p className="text-[12px] ml-1">
-            검색 하지 않고 바로 입력하고 싶다면?{" "}
+            {t("directinputdesc")}{" "}
             <button
               className="border-b-[1px] border-white"
               onClick={handleDefaultInput}
             >
-              직접 입력하기
+              {t("directinput")}
             </button>
           </p>
         </div>

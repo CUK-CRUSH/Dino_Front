@@ -24,7 +24,7 @@ export const postMusicList = async (
   cookies?: string
 ) => {
   if (!playlistId || !title || !artist || !url) {
-    throw new Error("모든 항목을 입력해주세요.");
+    throw new Error("Input all items.");
   }
   try {
     const response = await axiosInstance.post(
@@ -55,7 +55,7 @@ export const postMultipleMusicList = async (
   cookies?: string
 ) => {
   if (!playlistId || !musicList || musicList.length === 0) {
-    throw new Error("모든 항목을 입력해주세요.");
+    throw new Error("Input all items.");
   }
   try {
     const response = await axiosInstance.post(
@@ -102,7 +102,7 @@ export const patchMusicList = async (
   cookies?: string
 ) => {
   if (!musicId || !title || !artist || !url) {
-    throw new Error("모든 항목을 입력해주세요.");
+    throw new Error("Input all items.");
   }
   try {
     const response = await axiosInstance.patch(

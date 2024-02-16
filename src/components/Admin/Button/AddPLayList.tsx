@@ -4,9 +4,11 @@ import useWindowSizeCustom from "../../../hooks/useWindowSizeCustom";
 import { postPlayList } from "@api/playlist-controller/playlistControl";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import {useTranslation} from "react-i18next";
+
 export const AddPlayList = () => {
   const { windowSize, isMobile } = useWindowSizeCustom();
-
+  const { t } = useTranslation("AddPlayList");
   const [customMargin, setCustomMargin] = useState<number>(0);
 
   useEffect(() => {
@@ -50,7 +52,7 @@ export const AddPlayList = () => {
         <img className="mx-auto mt-[0px] w-[33px] h-full" src={plus} alt="Plus Icon" />
 
         <div className="absolute bottom-1 left-0 right-0 text-center text-zinc-300 text-[12px] font-medium font-['Noto Sans']">
-          새로운 플레이리스트
+            {t("newplaylist")}
         </div>
       </button>
     </div>
