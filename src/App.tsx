@@ -16,6 +16,7 @@ const Validation = loadable(() => import("@pages/Validation/validation"));
 const AddMusic = loadable(() => import("@pages/AddMusic/addMusic"));
 const EditMusic = loadable(() => import("@pages/EditMusic/EditMusics"));
 const Redirect = loadable(() => import("@pages/Redirect/Redirect"));
+const Like = loadable(() => import("@pages/Likes/Like"));
 const NotFound = loadable(() => import("@pages/NotFound/NotFonud"));
 
 function App() {
@@ -45,6 +46,10 @@ function App() {
               <Route
                 path="user/:username/:playlistId/edit/:musicId"
                 element={<EditMusic />}
+              />
+              <Route
+                path="user/:username/:playlistId/like"
+                element={<Like />}
               />
               <Route path="/redirect" element={<Redirect />} />
               <Route path="*" element={<NotFound />} />

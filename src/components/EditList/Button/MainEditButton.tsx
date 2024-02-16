@@ -1,3 +1,4 @@
+import { memberIdState } from "@atoms/Playlist/memberId";
 import { playlistNameState } from "@atoms/Playlist/playlistName";
 import useCompareToken from "@hooks/useCompareToken/useCompareToken";
 import CustomModal from "@utils/Modal/Modal";
@@ -9,33 +10,27 @@ import { useRecoilValue } from "recoil";
 type MainEditButtonProps = {
   playlists: any[];
   uploadImage: string | null;
-  token: string;
-  musicData: any;
-  playlistId: string | undefined;
-  usernames: string | null;
   fetchPlaylist: () => void;
   setPlaylistName: (name: string) => void;
-  memberId?: number | null;
 };
 
 export const MainEditButton = ({
   playlists,
   uploadImage,
-  token,
-  musicData,
-  playlistId,
-  usernames,
   fetchPlaylist,
   setPlaylistName,
-  memberId,
 }: MainEditButtonProps) => {
   const playlistName = useRecoilValue(playlistNameState);
+
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
 
-  const handleBack = useCallback(() => {
+  const memberId = useRecoilValue(memberIdState);
+
+  const handleBack = () => {
     navigate(-1);
-  }, [navigate]);
+    setTimeout(() => window.location.reload(), 100);
+  };
 
   const handleModalToggle = useCallback(() => {
     setModalOpen((prev) => !prev);
@@ -46,18 +41,14 @@ export const MainEditButton = ({
     compressedImage: null,
     playlists,
     uploadImage,
-    token,
-    musicData,
-    playlistId,
-    usernames,
     fetchPlaylist,
     setPlaylistName,
     playlistName,
   };
-  
+
   // 권한부여
   const authority = useCompareToken(memberId);
-  
+
   return (
     <div className="flex h-[5%] smartPhoneXs:h-[3.5%] smartPhone:h-[3.5%] tabletMini:h-[3%] tablet:h-[3%] items-center justify-between m-3 text-[19px]">
       <button type="button" onClick={handleBack} className="text-white">

@@ -25,34 +25,31 @@ import Swal from "sweetalert2";
 import "@styles/EditList/playList.css";
 import { useRecoilValue } from "recoil";
 import { playlistNameState } from "@atoms/Playlist/playlistName";
+import { userNameState } from "@atoms/Playlist/username";
+import { playlistIdState } from "@atoms/Playlist/playlistId";
+import { tokenState } from "@atoms/Playlist/token";
 
 interface UsePlayListEditorProps {
-  playlists: any[];
-  token: string;
-  musicData: any;
-  playlistId: string | undefined;
-  usernames: string | null;
+  playlists: any;
   fetchPlaylist: () => void;
   setPlaylistName: (value: string) => void;
-  uploadImage?:string|null;
+  uploadImage?: string | null;
 }
 
 export const UsePlayListEditor = ({
   playlists,
-  token,
-  musicData,
-  playlistId,
-  usernames,
   fetchPlaylist,
   setPlaylistName,
-  uploadImage
+  uploadImage,
 }: UsePlayListEditorProps) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  // const selectedFileState = useSelector(
-  //   (state: RootState) => state.selectedFile
-  // );
-  // const selectedFile = selectedFileState.selectedFile;
+  const usernames = useRecoilValue(userNameState);
+  const playlistId = useRecoilValue(playlistIdState);
+  const token = useRecoilValue(tokenState);
+
+  const musicData = useSelector((state: RootState) => state.musicAdd);
+
   const { compressImage } = useImageCompress();
   const isLoading = useSelector(
     (state: RootState) => state.selectedFile.isLoading
@@ -90,12 +87,8 @@ export const UsePlayListEditor = ({
   };
 
   const handleSaveClick = async (compressedImage: string | null) => {
-    const playlist = playlists.find(
-      (playlist: any) => playlist?.id === Number(playlistId)
-    );
-
-    if (playlist) {
-      const id = playlist.id;
+    if (playlists) {
+      const id = playlists.id;
 
       if (uploadImage) {
         const response = await fetch(uploadImage);
@@ -193,7 +186,7 @@ export const UsePlayListEditor = ({
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           // '삭제' 버튼을 눌렀을 때 실행할 코드를 여기에 작성합니다.
           try {
-            await deletePlayList(playlistId ?? "", token);
+            await deletePlayList(String(playlistId ?? 0), token);
             navigate(`/user/${usernames}`);
           } catch (error) {
             console.log(error);

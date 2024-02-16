@@ -1,6 +1,6 @@
 import { axiosInstance } from "@api/axiosInstance";
 
-// 유저의 플레이리스트 조회하기
+// 유저의 플레이리스트 전체 조회하기
 export const getPlayList = async (username: string | undefined) => {
   try {
     const response = await axiosInstance.get(
@@ -45,6 +45,26 @@ export const postPlayList = async (
     });
     console.log(response);
 
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+// 유저의 플레이리스트  단일 조회하기
+export const getSinglePlayList = async (
+  playlistId: number,
+  cookies?: string
+) => {
+  try {
+    const response = cookies
+      ? await axiosInstance.get(`/api/v1/playlist/${playlistId}`, {
+          headers: {
+            Authorization: `Bearer ${cookies}`,
+          },
+        })
+      : await axiosInstance.get(`/api/v1/playlist/${playlistId}`);
     return response.data;
   } catch (error) {
     console.log(error);
@@ -125,6 +145,55 @@ export const deletePlayListImage = async (
           Authorization: `Bearer ${cookies}`,
         },
       }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+// 좋아요 추가하기
+export const postLike = async (playlistId: number, cookies?: string) => {
+  try {
+    const response = await axiosInstance.post(
+      `/api/v1/playlist/${playlistId}/like`,
+      null,
+      {
+        headers: {
+          Authorization: `Bearer ${cookies}`,
+        },
+      }
+    );
+
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const deleteLike = async (playlistId: number, cookies?: string) => {
+  try {
+    const response = await axiosInstance.delete(
+      `/api/v1/playlist/${playlistId}/like`,
+      {
+        headers: {
+          Authorization: `Bearer ${cookies}`,
+        },
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+export const getLikeList = async (playlistId: number) => {
+  try {
+    const response = await axiosInstance.get(
+      `/api/v1/playlist/${playlistId}/like`
     );
     return response.data;
   } catch (error) {

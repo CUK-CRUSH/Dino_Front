@@ -11,19 +11,10 @@ import SkeltonMusics from "@components/EditList/Skeleton/MusicSkeleton";
 
 export interface MusicDataDTO {
   isEditing: boolean;
-  playlistId: string | undefined;
-  usernames: string | null;
-  token: string;
   fetchPlaylist: () => void;
 }
 
-export const MusicDataRow = ({
-  isEditing,
-  playlistId,
-  usernames,
-  token,
-  fetchPlaylist,
-}: MusicDataDTO) => {
+export const MusicDataRow = ({ isEditing, fetchPlaylist }: MusicDataDTO) => {
   const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
   const [selectedVideoIndex, setSelectedVideoIndex] = useState<number | null>(
     null
@@ -78,7 +69,7 @@ export const MusicDataRow = ({
       setSelectedVideoId(null);
       setSelectedVideoIndex(null);
     }
-    const delay = 500;
+    const delay = 200;
     const timeoutId = setTimeout(() => {
       setIsLoading(false);
     }, delay);
@@ -105,10 +96,7 @@ export const MusicDataRow = ({
                 <MusicDataRowContent
                   musicData={musicItem}
                   order={index + 1}
-                  playlistId={playlistId}
-                  usernames={usernames}
                   isEditing={isEditing}
-                  token={token}
                   setWidth={setWidth}
                   fetchPlaylist={fetchPlaylist}
                   selectedVideoId={selectedVideoId}
@@ -145,10 +133,7 @@ export const MusicDataRow = ({
                   id: Date.now() + index, // 고유한 id를 부여합니다.
                 }}
                 order={1 + index + musicList?.data?.length}
-                playlistId={playlistId}
-                usernames={usernames}
                 isEditing={isEditing}
-                token={token}
                 setWidth={setWidth}
                 fetchPlaylist={fetchPlaylist}
                 selectedVideoId={selectedVideoId}

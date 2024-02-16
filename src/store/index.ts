@@ -14,13 +14,23 @@ import toast from "../reducer/Toast/toast";
 import selectedFileReducer from "@reducer/editPlayList/Image/isImageCompress";
 import userIdReducer from "@reducer/Admin/userId";
 import labelsReducer from "@reducer/AddMusic/labelSlice";
+import likeReducer from "@reducer/Likes/likeToggle";
 
 const persistConfig = {
   key: "editMusicsToggle",
   storage,
 };
 
+const likeTogglePersistConfig = {
+  key: "likeToggle",
+  storage,
+};
+
 const persistedReducer = persistReducer(persistConfig, editMusicListToggle);
+const likeTogglePersistedReducer = persistReducer(
+  likeTogglePersistConfig,
+  likeReducer
+);
 
 export const store = configureStore({
   reducer: {
@@ -37,6 +47,7 @@ export const store = configureStore({
     selectedFile: selectedFileReducer,
     userId: userIdReducer,
     labels: labelsReducer,
+    likes: likeTogglePersistedReducer,
   },
 });
 
