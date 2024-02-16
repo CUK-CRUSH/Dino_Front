@@ -173,7 +173,7 @@ const AdminPage: React.FC = () => {
       )}
 
       {/* 검은화면 */}
-      <div className={`w-full ${marginTop}`}>
+      <div className={`w-full -mt-[40px]`}>
 
         {/* 프로필 이미지 */}
         <div className={`flex items-center flex-col z-10 bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px] ` }>
