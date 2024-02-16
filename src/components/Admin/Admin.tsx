@@ -16,6 +16,9 @@ import { useCookies } from "react-cookie";
 // import InduceButton from "@components/AdminEdit/Button/IndeceButton";
 import Header from "@components/Layout/header";
 import useCompareToken from "@hooks/useCompareToken/useCompareToken";
+import useCustomMt from "@hooks/useCustomMt/useCustomMt";
+import { useDispatch } from "react-redux";
+import { setProfileIntroduction } from "@reducer/Admin/userProfileSlice";
 
 const AdminPage: React.FC = () => {
 
@@ -45,7 +48,7 @@ const AdminPage: React.FC = () => {
   const [, setInduceLogin] = useState<boolean>(false);
   // 쿠키
   const [cookies] = useCookies(["accessToken"]);
-  
+  const dispatch = useDispatch();
   useEffect(()=>{
     if(!cookies.accessToken){
       setInduceLogin(false);
@@ -60,6 +63,7 @@ const AdminPage: React.FC = () => {
         const userDataResult = await getMemberUsername(username);
 
         setUserdata(userDataResult.data);
+        dispatch(setProfileIntroduction(userDataResult.data.introduction))
         if (userDataResult.data?.id) {
           localStorage.setItem("userId", userDataResult.data.id.toString());
         }
@@ -77,7 +81,7 @@ const AdminPage: React.FC = () => {
     }, delay);
 
     return () => clearTimeout(timeoutId);
-  }, [username]);
+  }, [username,dispatch]);
 
   const { deleteProfileImage, deleteBackgroundImage } = useSelector(
     (state: RootState) => state.userProfile
@@ -119,6 +123,8 @@ const AdminPage: React.FC = () => {
   // 권한부여
   const authority = useCompareToken(userData?.id);
 
+  // margin Top
+  const marginTop = useCustomMt(playlistData?.length,authority);
   return (
 
     <div className="relative w-full h-full mx-auto scrollbar-hide overflow-scroll flex flex-col justify-between bg-neutral-900">
@@ -166,19 +172,20 @@ const AdminPage: React.FC = () => {
         <ToastComponent background="white" text="링크가 복사되었습니다." />
       )}
 
-      <div className="w-full bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px] -mt-[180px]">
-
+      {/* 검은화면 */}
+      <div className={`w-full ${marginTop}`}>
 
         {/* 프로필 이미지 */}
-        <div className=" flex items-center flex-col z-10">
+        <div className={`flex items-center flex-col z-10 bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px] ` }>
           <UserProfileImage userProfileImage={userData?.profileImageUrl} />
+        
+          <UserProfileInfo
+            username={userData?.username}
+            // introText={userData?.introduction}
+          />
+          
         </div>
-
-        <UserProfileInfo
-          username={userData?.username}
-          introText={userData?.introduction}
-        />
-
+        <div className={`bg-neutral-900 min-h-[468px] rounded-tl-[30px] rounded-tr-[30px]`}>
         {playlistData &&
           playlistData.map((playlist: getPlaylistDTO, index: number) => (
             <PlayList key={playlist.id} playlist={playlist} />
@@ -192,7 +199,7 @@ const AdminPage: React.FC = () => {
         ) : (
           <></>
         )}
-
+        </div>
       </div>
       <Footer bgColor="neutral-900" />
 

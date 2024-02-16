@@ -24,7 +24,7 @@ export interface UserProfileImageDTO{
 
 export interface UserProfileInfoDTO{
   username : string | undefined;
-  introText : string | undefined;
+  introText? : string | undefined;
 }
 
 export interface getMemberDTO {

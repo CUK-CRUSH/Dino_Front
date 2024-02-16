@@ -46,4 +46,5 @@ export interface SetUserProfileIntroductionDTO {
   name : string | undefined;
   value : string | undefined
   onChange? : (e: { target: { name: any; value: any; }; }) => void; 
+  handleKeyDown : (event: React.KeyboardEvent<HTMLInputElement>) => void;
 }
