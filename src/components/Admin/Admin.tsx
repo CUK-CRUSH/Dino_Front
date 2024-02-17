@@ -16,7 +16,6 @@ import { useCookies } from "react-cookie";
 // import InduceButton from "@components/AdminEdit/Button/IndeceButton";
 import Header from "@components/Layout/header";
 import useCompareToken from "@hooks/useCompareToken/useCompareToken";
-import useCustomMt from "@hooks/useCustomMt/useCustomMt";
 import { useDispatch } from "react-redux";
 import { setProfileIntroduction } from "@reducer/Admin/userProfileSlice";
 
@@ -123,8 +122,6 @@ const AdminPage: React.FC = () => {
   // 권한부여
   const authority = useCompareToken(userData?.id);
 
-  // margin Top
-  const marginTop = useCustomMt(playlistData?.length,authority);
   return (
 
     <div className="relative w-full h-full mx-auto scrollbar-hide overflow-scroll flex flex-col justify-between bg-neutral-900">

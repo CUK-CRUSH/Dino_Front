@@ -10,8 +10,8 @@ axiosInstance.interceptors.request.use(
   async (config) => {
     // 요청 전에 accessToken이 유효한지 확인
     const accessToken = Cookies.get('accessToken');
-    if (accessToken) {
-      // accessToken이 유효하면 Authorization 헤더에 추가
+    if (accessToken && config.url && !config.url.endsWith('/login/token/reissue')) {
+      // accessToken이 유효하고, 요청이 토큰 재발급 요청이 아니라면 Authorization 헤더에 추가
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
     return config;
@@ -20,6 +20,7 @@ axiosInstance.interceptors.request.use(
     return Promise.reject(error);
   }
 );
+
 // axios 응답 후에 실행되는 interceptor
 axiosInstance.interceptors.response.use(
   (response) => {
@@ -32,8 +33,10 @@ axiosInstance.interceptors.response.use(
       originalRequest._retry = true;
 
       const refreshToken = localStorage.getItem('refreshToken');
+      
       axiosInstance.post('/login/token/reissue', { refreshToken })
         .then(response => {
+          
           Cookies.set('accessToken', response.data.data.access_token);
           console.log('토큰을 새로 발급 중입니다...');
           originalRequest.headers.Authorization = `Bearer ${response.data.data.access_token}`;
@@ -41,7 +44,7 @@ axiosInstance.interceptors.response.use(
           return axiosInstance(originalRequest);
         })
         .catch(error => {
-          console.log('에러가 발생했습니다:', error);
+          console.log('리스레시 토큰이 만료되었습니다.');
           
             window.location.href = '/login';
           
