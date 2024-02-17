@@ -10,10 +10,12 @@ axiosInstance.interceptors.request.use(
   async (config) => {
     // 요청 전에 accessToken이 유효한지 확인
     const accessToken = Cookies.get('accessToken');
-    if (accessToken && config.url && !config.url.endsWith('/login/token/reissue')) {
-      // accessToken이 유효하고, 요청이 토큰 재발급 요청이 아니라면 Authorization 헤더에 추가
+    if (accessToken && config.headers['Require-Auth']) {
+      // accessToken이 유효하고, 요청에 'Require-Auth' 헤더가 있다면 Authorization 헤더에 추가
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
+    // 'Require-Auth' 헤더는 실제 요청에는 필요하지 않으므로 삭제
+    delete config.headers['Require-Auth'];
     return config;
   },
   (error) => {
