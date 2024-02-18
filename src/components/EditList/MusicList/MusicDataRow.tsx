@@ -4,7 +4,6 @@ import { MusicDataRowContent } from "./MusicContents";
 import { useSelector } from "react-redux";
 import { RootState } from "@store/index";
 import { MusicLength } from "./MusicLength";
-import InfiniteScroll from "react-infinite-scroller";
 import { musicListState } from "@atoms/Musics/MusicList";
 import { useRecoilValue } from "recoil";
 import SkeltonMusics from "@components/EditList/Skeleton/MusicSkeleton";
@@ -60,9 +59,6 @@ export const MusicDataRow = ({ isEditing, fetchPlaylist }: MusicDataDTO) => {
     },
     [selectedVideoIndex]
   );
-  const loadMore = useCallback(() => {
-    // TODO: Implement loadMore function
-  }, []);
 
   useEffect(() => {
     if (isEditing) {
