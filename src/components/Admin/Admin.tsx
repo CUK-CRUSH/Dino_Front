@@ -15,6 +15,9 @@ import Footer from "@components/Layout/footer";
 import { useCookies } from "react-cookie";
 // import InduceButton from "@components/AdminEdit/Button/IndeceButton";
 import Header from "@components/Layout/header";
+import {useTranslation} from "react-i18next";
+
+
 
 const AdminPage: React.FC = () => {
   const tokenId = Number(localStorage.getItem("tokenId"));
@@ -113,6 +116,8 @@ const AdminPage: React.FC = () => {
   // 토스트
   const { toast } = useSelector((state: RootState) => state.toast);
 
+  const {t} = useTranslation("AdminAdmin");
+
   return (
     <div className="relative w-full h-full mx-auto scrollbar-hide overflow-scroll flex flex-col justify-between bg-neutral-900">
       <Header />
@@ -128,21 +133,21 @@ const AdminPage: React.FC = () => {
       {toast === "add" && (
         <ToastComponent
           background="white"
-          text="새로운 플레이리스트 생성이 완료되었습니다 !"
+          text={t("newplaylist")}
         />
       )}
 
       {/* 로그인 성공 토스트 */}
 
       {toast === "login" && (
-        <ToastComponent background="white" text="로그인 성공 ! " />
+        <ToastComponent background="white" text={t("login")} />
       )}
       {/* 프로필 성공 토스트 */}
 
       {toast === "profile" && (
         <ToastComponent
           background="white"
-          text="프로필이 정상적으로 수정되었습니다 !"
+          text={t("profile")}
         />
       )}
 
@@ -150,13 +155,13 @@ const AdminPage: React.FC = () => {
       {toast === "not_profile" && (
         <ToastComponent
           background="white"
-          text="프로필이 수정을 실패했습니다 !"
+          text={t("profilefail")}
         />
       )}
       {/* 복사 성공 토스트 */}
 
       {toast === "copy" && (
-        <ToastComponent background="white" text="링크가 복사되었습니다." />
+        <ToastComponent background="white" text={t("link")} />
       )}
 
       <div className="w-full bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px] -mt-[180px]">
