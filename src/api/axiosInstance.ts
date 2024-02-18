@@ -39,7 +39,7 @@ axiosInstance.interceptors.response.use(
       axiosInstance.post('/login/token/reissue', { refreshToken })
         .then(response => {
           
-          Cookies.set('accessToken', response.data.data.access_token);
+          Cookies.set('accessToken', response.data.data.access_token, { expires: 1/144 });
           console.log('토큰을 새로 발급 중입니다...');
           originalRequest.headers.Authorization = `Bearer ${response.data.data.access_token}`;
       
