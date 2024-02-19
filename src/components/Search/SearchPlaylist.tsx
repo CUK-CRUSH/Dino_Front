@@ -12,8 +12,8 @@ interface SearchPlaylistProps {
 
 const SearchPlaylist: React.FC<SearchPlaylistProps> = ({ searchResults }) => {
   return (
-    <div>
-      <div className="flex justify-between">
+    <div className="mt-10">
+      <div className="flex justify-between ">
         <span className="flex justify-start">플레이리스트</span>
         <span className="flex justify-end">  더보기</span>
       </div>
@@ -28,6 +28,7 @@ const SearchPlaylist: React.FC<SearchPlaylistProps> = ({ searchResults }) => {
         showIndicators={false}
         interval={2000}
         swipeScrollTolerance={50}
+        className="mt-5"
       >
         {searchResults && searchResults.map((playlist) => (
           <div className="flex flex-col justify-center items-center" key={playlist.id}>
