@@ -6,7 +6,8 @@ export const getPlayList = async (username: string | undefined) => {
     const response = await axiosInstance.get(
       `/api/v1/playlist/user/${username}`
     );
-    return response.data;
+    if (response) { return response.data; }
+    else { return }
   } catch (error) {
     console.log(error);
     throw error;
@@ -43,9 +44,9 @@ export const postPlayList = async (
         Authorization: `Bearer ${cookies}`,
       },
     });
-    console.log(response);
 
-    return response.data;
+    if (response) { return response.data; }
+    else { return }
   } catch (error) {
     console.log(error);
     throw error;
@@ -65,7 +66,8 @@ export const getSinglePlayList = async (
           },
         })
       : await axiosInstance.get(`/api/v1/playlist/${playlistId}`);
-    return response.data;
+    if (response) { return response.data; }
+    else { return }
   } catch (error) {
     console.log(error);
     throw error;
@@ -83,7 +85,8 @@ export const deletePlayList = async (playlistId: string, cookies?: string) => {
         },
       }
     );
-    return response.data;
+    if (response) { return response.data; }
+    else { return }
   } catch (error) {
     console.log(error);
     throw error;
@@ -125,7 +128,8 @@ export const putPlayList = async (
       }
     );
 
-    return response.data;
+    if (response) { return response.data; }
+    else { return }
   } catch (error) {
     console.log(error);
     throw error;
@@ -146,7 +150,8 @@ export const deletePlayListImage = async (
         },
       }
     );
-    return response.data;
+    if (response) { return response.data; }
+    else { return }
   } catch (error) {
     console.log(error);
     throw error;
@@ -166,7 +171,8 @@ export const postLike = async (playlistId: number, cookies?: string) => {
       }
     );
 
-    return response.data;
+    if (response) { return response.data; }
+    else { return }
   } catch (error) {
     console.log(error);
     throw error;
@@ -183,7 +189,8 @@ export const deleteLike = async (playlistId: number, cookies?: string) => {
         },
       }
     );
-    return response.data;
+    if (response) { return response.data; }
+    else { return }
   } catch (error) {
     console.log(error);
     throw error;
@@ -195,7 +202,8 @@ export const getLikeList = async (playlistId: number) => {
     const response = await axiosInstance.get(
       `/api/v1/playlist/${playlistId}/like`
     );
-    return response.data;
+    if (response) { return response.data; }
+    else { return }
   } catch (error) {
     console.log(error);
     throw error;

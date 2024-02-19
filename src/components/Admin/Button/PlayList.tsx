@@ -40,7 +40,7 @@ export const PlayList = ({ playlist }: { playlist: getPlaylistDTO }) => {
       {isLoading ? (
         <SkeltonPlaylist customMargin={customMargin} />
       ) : (
-        <div style={{ marginLeft: `${customMargin}px`, marginRight: `${customMargin}px` }} className="relative inline-block min-h-[220px] mt-[5px]">
+        <div style={{ marginLeft: `${customMargin}px`, marginRight: `${customMargin}px` }} className="relative inline-block min-h-[200px] mt-[10px]">
           <Link to={`${playlist.id}`}>
             <button className="w-[150px] h-[150px]  rounded-[13px] font-light text-zinc-300 text-4xl">
               {playlist.thumbnailUrl ? (
@@ -48,7 +48,7 @@ export const PlayList = ({ playlist }: { playlist: getPlaylistDTO }) => {
               ) : (
                 <div className="mx-auto w-[150px] h-full rounded-[13px] bg-[#2e2e2e]" />
               )}
-              <div className="w-full min-h-[30px] text-left text-zinc-300 font-medium absolute leading-6 whitespace-normal break-words">
+              <div className="w-full min-h-[50px] text-left text-zinc-300 font-medium absolute leading-6 whitespace-normal break-words">
                 <span className="text-[15px] text-white align-top">{playlist.playlistName}</span>
                 <span className="text-[3px] text-white align-super ml-1">●</span>
                 <span className="text-[12px] text-white align-top">  {playlist.numberOfMusics} </span>

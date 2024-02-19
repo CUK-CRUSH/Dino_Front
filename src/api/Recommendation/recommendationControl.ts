@@ -4,7 +4,8 @@ import { axiosInstance } from "@api/axiosInstance";
 export const getRecommendation = async () => {
   try {
     const response = await axiosInstance.get(`/api/v1/recommendation`);
-    return response.data;
+    if (response) { return response.data; }
+    else { return }
   } catch (error) {
     console.log(error);
     throw error;

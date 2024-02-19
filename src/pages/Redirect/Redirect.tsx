@@ -12,7 +12,10 @@ const fetchData = async (setCookie: any) => {
   const refreshToken = params.get("refresh_token");
 
   if (accessToken && refreshToken) {
-    setCookie("accessToken", accessToken, { path: "/" }); // Set accessToken in cookies
+    const date = new Date();
+    date.setMinutes(date.getMinutes() + 10); // Set the date 10 minutes from now
+
+    setCookie("accessToken", accessToken, { path: "/", expires: date }); // Set accessToken in cookies
     localStorage.setItem("refreshToken", refreshToken); // Set refreshToken in local storage
     return true; // tokens are successfully set
   }

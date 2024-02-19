@@ -9,7 +9,8 @@ export const getMember = async (id: number) => {
       //   Authorization: `Bearer ${cookies}`,
       // },
     });
-    return response.data;
+    if (response) { return response.data; }
+    else { return }
   } catch (error) {
     console.log(error);
     throw error;
@@ -27,7 +28,8 @@ export const getMemberUsername = async (username: string | undefined) => {
         // },
       }
     );
-    return response.data;
+    if (response) { return response.data; }
+    else { return }
   } catch (error) {
     console.log(error);
     throw error;
@@ -48,7 +50,8 @@ export const getNicknameAvailable = async (
         },
       }
     );
-    return response.data;
+    if (response) { return response.data; }
+    else { return }
   } catch (error) {
     throw error;
   }
@@ -62,7 +65,8 @@ export const getMemberMe = async (cookies?: string) => {
         Authorization: `Bearer ${cookies}`,
       },
     });
-    return response.data;
+    if (response) { return response.data; }
+    else { return }
   } catch (error) {
     throw error;
   }
@@ -81,18 +85,18 @@ export const updateMember = async ({
 }: UpdateMemberParams) => {
   try {
     const formData = new FormData();
-    if (deleteProfileImage){
-      formData.append("deleteProfileImage",deleteProfileImage.toString())
+    if (deleteProfileImage) {
+      formData.append("deleteProfileImage", deleteProfileImage.toString())
     }
-    if (deleteBackgroundImage){
-      formData.append("deleteBackgroundImage",deleteBackgroundImage.toString())
+    if (deleteBackgroundImage) {
+      formData.append("deleteBackgroundImage", deleteBackgroundImage.toString())
     }
     if (username) {
       formData.append("username", username);
     }
 
-      formData.append("introduction", introduction);
-    
+    formData.append("introduction", introduction);
+
     if (profileImage) {
       const binaryData = Uint8Array.from(
         atob(profileImage.split(",")[1]),
@@ -125,9 +129,11 @@ export const updateMember = async ({
         Authorization: `Bearer ${cookies}`,
       },
     });
-
-    return response.data;
-  } catch (error) {
+    console.log(response)
+    if (response) { return response.data; }
+    else { return }
+  }
+  catch (error) {
     throw error;
   }
 };

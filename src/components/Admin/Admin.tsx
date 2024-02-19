@@ -14,7 +14,6 @@ import { RootState } from "@store/index";
 import Footer from "@components/Layout/footer";
 import Header from "@components/Layout/header";
 import useCompareToken from "@hooks/useCompareToken/useCompareToken";
-import useCustomMt from "@hooks/useCustomMt/useCustomMt";
 import { useDispatch } from "react-redux";
 import { setProfileIntroduction } from "@reducer/Admin/userProfileSlice";
 import ShareImg from "@assets/Share.svg";
