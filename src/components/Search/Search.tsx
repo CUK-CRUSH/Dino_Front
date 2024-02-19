@@ -40,6 +40,7 @@ const SearchnPage: React.FC = () => {
 
       <SearchUser
         searchResults={searchResults?.data.members} />
+        
     </div>
   )
 }
