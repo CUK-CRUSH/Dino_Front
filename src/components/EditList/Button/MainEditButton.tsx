@@ -32,7 +32,8 @@ export const MainEditButton = ({
     navigate(-1);
 
     // 경로가 /user/{username}/{playlistId} 형태인지 확인
-    const isPlaylistPath = /\/user\/[^\/]+\/\d+/.test(path);
+    const isPlaylistPath = /\/user\/[^/]+\/\d+/.test(path);
+
     if (isPlaylistPath) {
       // 경로가 /user/{username}/{playlistId} 형태이면 페이지를 리로드
       setTimeout(() => window.location.reload(), 100);
