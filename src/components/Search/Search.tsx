@@ -11,7 +11,7 @@ const SearchnPage: React.FC = () => {
   // URL 파라미터 읽기
   const searchParams = new URLSearchParams(location.search);
   const query = searchParams.get('query');
-  
+
   const [searchResults, setSearchResults] = useState<searchResultsDTO>();
 
   useEffect(() => {
@@ -27,19 +27,19 @@ const SearchnPage: React.FC = () => {
     };
 
     fetchData();
-  }, [location.search]);
+  }, [location.search,query]);
 
-  return(
-<div className="w-full h-full relative bg-white flex flex-col justify-start p-4 font-PretendardMedium">
-      
+  return (
+    <div className="w-full h-full relative bg-white flex flex-col justify-start p-4 font-PretendardMedium">
+
       '{query}' 검색결과
-      
 
-      <SearchPlaylist 
-        searchResults={searchResults?.data.playlists}/>
 
-      <SearchUser 
-        searchResults={searchResults?.data.members}/> 
+      <SearchPlaylist
+        searchResults={searchResults?.data.playlists} />
+
+      <SearchUser
+        searchResults={searchResults?.data.members} />
     </div>
   )
 }
