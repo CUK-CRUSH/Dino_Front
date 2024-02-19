@@ -3,8 +3,6 @@ export interface LoadingDTO {
 }
 
 export interface EditProfileDTO {
-  top: number;
-  left: number;
   openEditModal: () => void;
   closeOptionsModalOpen: () => void;
   authority?: boolean;

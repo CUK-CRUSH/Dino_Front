@@ -3,13 +3,10 @@ import { EditProfileDTO } from "types/Admin";
 import "../../../styles/Admin/style.css";
 
 export const EditProfile = ({
-  top,
-  left,
   openEditModal,
   closeOptionsModalOpen,
-  authority
+  authority,
 }: EditProfileDTO) => {
-
   // 스크롤 방지이벤트
   useEffect(() => {
     document.body.style.cssText = `
@@ -44,7 +41,7 @@ export const EditProfile = ({
       onClick={closeOptionsModalOpen}
       className="fixed top-0 right-0 bottom-0 left-0 bg-white bg-opacity-0 z-50"
     >
-      <div className="fixed" style={{ top: top, left: left }}>
+      <div className="fixed">
         <div className={`relative w-40 p-0 bg-white rounded-[10px] shadow-lg `}>
           <div className="p-1">
             {authority && (

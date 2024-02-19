@@ -42,7 +42,7 @@ const OptionComponents = () => {
 
   const handleBack = useCallback(() => {
     navigate(`/user/${username}`);
-  }, [navigate]);
+  }, [navigate, username]);
 
   const handleShare = () => {
     if (navigator.share) {
@@ -91,7 +91,7 @@ const OptionComponents = () => {
           }
         }
       });
-  }, []);
+  }, [navigate, removeCookie, swalButton]);
 
   const handleNotion = () => {
     window.open(

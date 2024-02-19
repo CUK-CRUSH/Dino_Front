@@ -18,10 +18,6 @@ const Header = ({ authority, id }: { authority?: boolean; id?: number }) => {
   };
 
   // 옵션 모달 열기 이벤트
-  const [optionsModalPosition, setOptionsModalPosition] = useState<{
-    top: number;
-    left: number;
-  }>({ top: 0, left: 0 });
 
   const [isOptionsModalOpen, setOptionsModalOpen] = useState(false);
 
@@ -60,8 +56,6 @@ const Header = ({ authority, id }: { authority?: boolean; id?: number }) => {
       {/* ...설정창 펼치기 */}
       {isOptionsModalOpen && (
         <EditProfile
-          top={optionsModalPosition.top}
-          left={optionsModalPosition.left}
           openEditModal={openEditModal}
           closeOptionsModalOpen={closeOptionsModal}
           authority={authority}
