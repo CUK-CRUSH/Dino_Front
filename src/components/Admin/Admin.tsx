@@ -63,6 +63,7 @@ const AdminPage: React.FC = () => {
 
         setUserdata(userDataResult.data);
         dispatch(setProfileIntroduction(userDataResult.data.introduction))
+
         if (userDataResult.data?.id) {
           localStorage.setItem("userId", userDataResult.data.id.toString());
         }

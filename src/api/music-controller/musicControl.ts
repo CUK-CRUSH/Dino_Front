@@ -8,7 +8,8 @@ export const getMusicList = async (playlistId: number, page?: number) => {
       url += `?page=${page}`;
     }
     const response = await axiosInstance.get(url);
-    return response.data;
+    if (response) { return response.data; }
+    else { return }
   } catch (error) {
     console.log(error);
     throw error;
@@ -41,7 +42,8 @@ export const postMusicList = async (
       }
     );
 
-    return response.data;
+    if (response) { return response.data; }
+    else { return }
   } catch (error) {
     console.log(error);
     throw error;
@@ -68,7 +70,8 @@ export const postMultipleMusicList = async (
       }
     );
 
-    return response.data;
+    if (response) { return response.data; }
+    else { return }
   } catch (error) {
     console.log(error);
     throw error;
@@ -86,7 +89,8 @@ export const deleteMusicList = async (musicId: number, cookies?: string) => {
         },
       }
     );
-    return response.data;
+    if (response) { return response.data; }
+    else { return }
   } catch (error) {
     console.log(error);
     throw error;
@@ -119,7 +123,8 @@ export const patchMusicList = async (
       }
     );
 
-    return response.data;
+    if (response) { return response.data; }
+    else { return }
   } catch (error) {
     console.log(error);
     throw error;
