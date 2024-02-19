@@ -17,6 +17,7 @@ const AddMusic = loadable(() => import("@pages/AddMusic/addMusic"));
 const EditMusic = loadable(() => import("@pages/EditMusic/EditMusics"));
 const Redirect = loadable(() => import("@pages/Redirect/Redirect"));
 const Like = loadable(() => import("@pages/Likes/Like"));
+const Environment = loadable(() => import("@pages/Environment/Environment"));
 const NotFound = loadable(() => import("@pages/NotFound/NotFonud"));
 
 function App() {
@@ -51,6 +52,7 @@ function App() {
                 path="user/:username/:playlistId/like"
                 element={<Like />}
               />
+              <Route path="user/:username/env" element={<Environment />} />
               <Route path="/redirect" element={<Redirect />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
