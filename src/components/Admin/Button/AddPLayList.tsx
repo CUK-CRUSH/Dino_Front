@@ -4,6 +4,8 @@ import useWindowSizeCustom from "../../../hooks/useWindowSizeCustom";
 import { postPlayList } from "@api/playlist-controller/playlistControl";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setToast } from "@reducer/Toast/toast";
 export const AddPlayList = () => {
   const { windowSize, isMobile } = useWindowSizeCustom();
 
@@ -33,19 +35,26 @@ export const AddPlayList = () => {
   const [titleImage] = useState(null);
 
   const navigate = useNavigate();
-
-  const handleAddPlaylist = async (title : null, titleImage : null, token : string) => {
-    const post = await postPlayList(title,titleImage,token)
-    console.log(post)
-    if(post.status === 200) {
+  const dispatch = useDispatch();
+  
+  const handleAddPlaylist = async (title : null, titleImage: null, token : string) => {
+    const post = await postPlayList(title, titleImage, token);
+    console.log(post);
+    if (post && post.status === 200) {
+      dispatch(setToast("profile"));
       navigate(`${post.data.id}`)
+      
     }
-  }
+  };
+
+  const handleClick = () => {
+    handleAddPlaylist(title, titleImage, token);
+  };
 
   return (
-    <div style={{ marginLeft: `${customMargin}px`, marginRight: `${customMargin}px` }} className="inline-block h-[150px] my-[42px] relative">
+    <div style={{ marginLeft: `${customMargin}px`, marginRight: `${customMargin}px` }} className="inline-block h-[150px] mt-[10px] relative">
 
-      <button onClick={() => handleAddPlaylist(title, titleImage, token)} style={{ background: '#2E2E2E' }} className="w-[150px] h-[150px] rounded-[13px] border-2 border-zinc-300 font-light text-zinc-300 text-4xl ">
+      <button onClick={handleClick} style={{ background: '#2E2E2E' }} className="w-[150px] h-[150px] rounded-[13px] font-light text-zinc-300 text-4xl ">
 
         <img className="mx-auto mt-[0px] w-[33px] h-full" src={plus} alt="Plus Icon" />
 

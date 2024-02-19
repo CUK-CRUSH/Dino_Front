@@ -266,7 +266,8 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
     if (nicknameValidation) {
       const code = await updateMember(data);
-      if (code.status === 200) {
+      console.log(code)
+      if (code && code.status === 200) {
 
         handleImageUpdates({
           uploadUserProfileImage: uploadUserProfileImage,
