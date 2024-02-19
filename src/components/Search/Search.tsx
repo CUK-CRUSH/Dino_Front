@@ -32,7 +32,7 @@ const SearchnPage: React.FC = () => {
   return (
     <div className="w-full h-full relative bg-white flex flex-col justify-start p-4 font-PretendardMedium">
 
-      '{query}' 검색결과
+      <p className='text-xl'>'{query}' 검색결과</p>
 
 
       <SearchPlaylist

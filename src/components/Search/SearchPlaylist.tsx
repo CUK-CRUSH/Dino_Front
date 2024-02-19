@@ -31,16 +31,17 @@ const SearchPlaylist: React.FC<SearchPlaylistProps> = ({ searchResults }) => {
         className="mt-5"
       >
         {searchResults && searchResults.map((playlist) => (
-          <div className="flex flex-col justify-center items-center" key={playlist.id}>
+          <div className="flex flex-col justify-center items-center w-[105px]" key={playlist.id}>
             <img
               className="cursor-pointer w-[90px] h-[90px] rounded-lg object-cover "
               src={playlist.thumbnailUrl ? playlist.thumbnailUrl : Noimage} // default.jpg는 기본 이미지 경로입니다.
               alt="썸네일"
             />
-            <div className="w-[100px] text-left   whitespace-normal break-words">
+            <div className="w-[100px] text-left whitespace-normal break-words">
               <span>{playlist.name}</span></div>
           </div>
         ))}
+        
       </Carousel>
     </div>
   );
