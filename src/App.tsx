@@ -18,6 +18,7 @@ const EditMusic = loadable(() => import("@pages/EditMusic/EditMusics"));
 const Redirect = loadable(() => import("@pages/Redirect/Redirect"));
 const Like = loadable(() => import("@pages/Likes/Like"));
 const NotFound = loadable(() => import("@pages/NotFound/NotFonud"));
+const Unsign  = loadable(() => import("@pages/Unsign/Unsign"));
 
 function App() {
   return (
@@ -50,6 +51,10 @@ function App() {
               <Route
                 path="user/:username/:playlistId/like"
                 element={<Like />}
+              />
+              <Route
+                path="user/:username/unsign"
+                element={<Unsign />}
               />
               <Route path="/redirect" element={<Redirect />} />
               <Route path="*" element={<NotFound />} />
