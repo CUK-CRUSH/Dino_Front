@@ -17,6 +17,7 @@ const AddMusic = loadable(() => import("@pages/AddMusic/addMusic"));
 const EditMusic = loadable(() => import("@pages/EditMusic/EditMusics"));
 const Redirect = loadable(() => import("@pages/Redirect/Redirect"));
 const Like = loadable(() => import("@pages/Likes/Like"));
+const Search =loadable(() => import("@pages/Search/Search"));
 const NotFound = loadable(() => import("@pages/NotFound/NotFonud"));
 
 function App() {
@@ -52,6 +53,7 @@ function App() {
                 element={<Like />}
               />
               <Route path="/redirect" element={<Redirect />} />
+              <Route path="/search" element={<Search />} />
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Layout>
