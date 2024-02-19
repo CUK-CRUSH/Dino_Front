@@ -17,6 +17,8 @@ import useCompareToken from "@hooks/useCompareToken/useCompareToken";
 import useCustomMt from "@hooks/useCustomMt/useCustomMt";
 import { useDispatch } from "react-redux";
 import { setProfileIntroduction } from "@reducer/Admin/userProfileSlice";
+import ShareImg from "@assets/Share.svg";
+import { Img } from "react-image";
 
 const AdminPage: React.FC = () => {
   const getDefaultMember = (): getMemberDTO => ({
@@ -111,9 +113,25 @@ const AdminPage: React.FC = () => {
 
   // margin Top
   const marginTop = useCustomMt(playlistData?.length, authority);
+
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator
+        .share({
+          title: "MyList",
+          text: "Check out MyList!",
+          url: window.location.href,
+        })
+        .then(() => console.log("Successful share"))
+        .catch((error) => console.log("Error sharing", error));
+    } else {
+      console.log("Web Share API is not supported in your browser.");
+    }
+  };
+
   return (
     <div className="relative w-full h-full mx-auto scrollbar-hide overflow-scroll flex flex-col justify-between bg-neutral-900">
-      <Header authority={authority} />
+      <Header id={userData.id} authority={authority} />
 
       <UserProfileBackground
         userBackgroundImage={userData?.backgroundImageUrl}
@@ -161,15 +179,24 @@ const AdminPage: React.FC = () => {
       <div className={`w-full ${marginTop}`}>
         {/* 프로필 이미지 */}
         <div
-          className={`flex items-center flex-col z-10 bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px] `}
+          className={`flex relative items-center flex-col z-10 bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px] `}
         >
           <UserProfileImage userProfileImage={userData?.profileImageUrl} />
+          {userData.id && !authority && (
+            <Img
+              onClick={handleShare}
+              src={ShareImg}
+              alt="share"
+              className="w-6 h-6 absolute top-3 right-4 cursor-pointer"
+            />
+          )}
 
           <UserProfileInfo
             username={userData?.username}
             // introText={userData?.introduction}
           />
         </div>
+
         <div
           className={`bg-neutral-900 min-h-[468px] rounded-tl-[30px] rounded-tr-[30px]`}
         >

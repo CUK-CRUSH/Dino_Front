@@ -37,7 +37,7 @@ const Recommendation = () => {
       <p className="mb-2">✨추천 플레이리스트</p>
       {data.length > 0 ? (
         <Carousel
-          showArrows={false}
+          showArrows={true}
           swipeable={true}
           centerMode={true}
           centerSlidePercentage={30}

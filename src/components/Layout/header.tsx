@@ -6,7 +6,7 @@ import logo from "@assets/Header/logo.svg";
 import { Img } from "react-image";
 import { Link } from "react-router-dom";
 
-const Header = ({ authority }: { authority?: boolean }) => {
+const Header = ({ authority, id }: { authority?: boolean; id?: number }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const openEditModal = () => {
@@ -56,7 +56,7 @@ const Header = ({ authority }: { authority?: boolean }) => {
         />
       </Link>
       {/* ... 설정창 */}
-      {<OpenOption />}
+      {id && authority && <OpenOption />}
       {/* ...설정창 펼치기 */}
       {isOptionsModalOpen && (
         <EditProfile

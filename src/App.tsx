@@ -18,6 +18,7 @@ const EditMusic = loadable(() => import("@pages/EditMusic/EditMusics"));
 const Redirect = loadable(() => import("@pages/Redirect/Redirect"));
 const Like = loadable(() => import("@pages/Likes/Like"));
 const Environment = loadable(() => import("@pages/Environment/Environment"));
+const Prepare = loadable(() => import("@utils/Preparation"));
 const NotFound = loadable(() => import("@pages/NotFound/NotFonud"));
 
 function App() {
@@ -54,6 +55,8 @@ function App() {
               />
               <Route path="user/:username/env" element={<Environment />} />
               <Route path="/redirect" element={<Redirect />} />
+              <Route path="/unprepared" element={<Prepare />} />
+
               <Route path="*" element={<NotFound />} />
             </Routes>
           </Layout>
