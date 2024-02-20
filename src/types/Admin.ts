@@ -38,8 +38,10 @@ export interface getMemberDTO {
   }
   
 export interface getPlaylistDTO {
+  username? : string;
   id: number | undefined,
   playlistName : string,
   thumbnailUrl : string | null,
-  numberOfMusics : number,
+  numberOfMusics? : number,
   }
+

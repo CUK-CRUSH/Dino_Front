@@ -1,19 +1,10 @@
-export interface SearchPlaylistDTO {
-  top: number;
-}
-
-export interface SearchUserDTO {
-  top: number;
+export interface searchResultsDTO {
+  data: Data;
 }
 
 interface Data {
   members: Member[];
   playlists: Playlist[];
-}
-
-export interface searchResultsDTO {
-  data: Data;
-  // 필요한 추가적인 속성들을 아래에 추가하세요.
 }
 
 export interface Member {
@@ -25,6 +16,6 @@ export interface Member {
 
 export interface Playlist {
   id: number,
-  name: string,
+  playlistName: string,
   thumbnailUrl: string | null
 } 

@@ -38,7 +38,7 @@ const SearchPlaylist: React.FC<SearchPlaylistProps> = ({ searchResults }) => {
               alt="썸네일"
             />
             <div className="w-[100px] text-left whitespace-normal break-words">
-              <span>{playlist.name}</span></div>
+              <span>{playlist.playlistName}</span></div>
           </div>
         ))}
         

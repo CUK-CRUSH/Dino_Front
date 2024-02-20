@@ -109,6 +109,7 @@ const AdminPage: React.FC = () => {
       try {
         const playlistDataResult = await getPlayList(username);
         setPlaylistdata(playlistDataResult.data);
+        console.log(playlistDataResult.data)
       } catch (error) {
         console.error("Error fetching playlist data:", error);
       }
@@ -186,7 +187,7 @@ const AdminPage: React.FC = () => {
         <div className={`bg-neutral-900 min-h-[468px] rounded-tl-[30px] rounded-tr-[30px]`}>
         {playlistData &&
           playlistData.map((playlist: getPlaylistDTO, index: number) => (
-            <PlayList key={playlist.id} playlist={playlist} />
+            <PlayList key={playlist.id} playlist={playlist} fontColor="#fff" visible={true} />
           ))}
 
         {!isLoading &&

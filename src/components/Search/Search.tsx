@@ -5,7 +5,7 @@ import SearchUser from './SearchUser';
 import { getSearch } from '@api/search-controller/searchController';
 import { searchResultsDTO } from 'types/Search/Search';
 
-const SearchnPage: React.FC = () => {
+const SearchPage: React.FC = () => {
   const location = useLocation();
 
   // URL 파라미터 읽기
@@ -19,7 +19,6 @@ const SearchnPage: React.FC = () => {
     const fetchData = async () => {
       try {
         const searchResult = await getSearch(query);
-        console.log(searchResult)
         setSearchResults(searchResult);
       } catch (error) {
         console.error(error);
@@ -45,4 +44,4 @@ const SearchnPage: React.FC = () => {
   )
 }
 
-export default SearchnPage
+export default SearchPage
