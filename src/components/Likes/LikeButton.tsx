@@ -32,12 +32,14 @@ const LikeButton = () => {
 
   const [cookies] = useCookies(["accessToken"]);
   const token = cookies.accessToken;
+  const refreshToken = localStorage.getItem("refreshToken");
 
   const [likeCount, setLikeCount] = useState<number>(0);
   const [isLike, setIsLike] = useState<boolean>(false);
+  const [isLoading, setIsLoding] = useState<boolean>(true);
 
   const handleLikeToggle = async () => {
-    if (!token) {
+    if (!refreshToken) {
       swalButton
         .fire({
           title: "로그인 필요한 서비스입니다.",
@@ -81,7 +83,13 @@ const LikeButton = () => {
     navigate(`/user/${username}/${playlistId}/like`);
   };
   useEffect(() => {
-    fetchPlaylist();
+    const delay = 200;
+    const timeoutId = setTimeout(() => {
+      setIsLoding(false);
+      fetchPlaylist();
+    }, delay);
+
+    return () => clearTimeout(timeoutId);
   }, [fetchPlaylist]);
 
   return (
