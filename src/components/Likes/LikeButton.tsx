@@ -93,24 +93,26 @@ const LikeButton = () => {
   }, [fetchPlaylist]);
 
   return (
-    <div className="absolute -bottom-5 left-4 bg-black inline-flex justify-between items-center px-1 w-[110px] h-[42px] rounded-[30px] z-20">
-      <div className=" bg-[#EA4335] p-1 rounded-full w-1/3">
-        <img
-          className="w-6 h-6"
-          onClick={handleLikeToggle}
-          src={isLike ? AfterLike : BeforeLike}
-          alt="Like button"
-        />
+    !isLoading && (
+      <div className="absolute -bottom-5 left-4 bg-black inline-flex justify-between items-center px-1 w-[110px] h-[42px] rounded-[30px] z-20">
+        <div className=" bg-[#EA4335] p-1 rounded-full w-1/3">
+          <img
+            className="w-6 h-6"
+            onClick={handleLikeToggle}
+            src={isLike ? AfterLike : BeforeLike}
+            alt="Like button"
+          />
+        </div>
+        <div
+          onClick={handleNavigate}
+          className="flex items-center justify-center w-2/4"
+        >
+          <span className="text-center">
+            {likeCount < 1000 ? likeCount : "999+"}
+          </span>
+        </div>
       </div>
-      <div
-        onClick={handleNavigate}
-        className="flex items-center justify-center w-2/4"
-      >
-        <span className="text-center">
-          {likeCount < 1000 ? likeCount : "999+"}
-        </span>
-      </div>
-    </div>
+    )
   );
 };
 

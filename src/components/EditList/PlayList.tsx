@@ -22,7 +22,6 @@ import { getMemberUsername } from "@api/member-controller/memberController";
 import { musicListState } from "@atoms/Musics/MusicList";
 import { userNameState } from "@atoms/Playlist/username";
 import { playlistIdState } from "@atoms/Playlist/playlistId";
-import { memberIdState } from "@atoms/Playlist/memberId";
 import { tokenState } from "@atoms/Playlist/token";
 import Recommendation from "@components/Recommend/Recommendation";
 
