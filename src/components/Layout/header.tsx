@@ -21,26 +21,9 @@ const Header = ({ authority, id }: { authority?: boolean; id?: number }) => {
 
   const [isOptionsModalOpen, setOptionsModalOpen] = useState(false);
 
-  // const openOptionsModal = () => {
-  //   setOptionsModalOpen(true);
-  // };
-
   const closeOptionsModal = () => {
     setOptionsModalOpen(false);
   };
-
-  // // 옵션모달 열리는 창 위치
-  // const calculateOptionsModalPosition = (e: React.MouseEvent<EventTarget>) => {
-  //   const button = e.target as HTMLElement;
-  //   const rect = button.getBoundingClientRect();
-
-  //   setOptionsModalPosition({
-  //     top: rect.top + rect.height,
-  //     left: rect.left - 160 + rect.width,
-  //   });
-
-  //   openOptionsModal();
-  // };
 
   return (
     <header className="absolute w-full top-0 h-[100px] bg-transparent">
