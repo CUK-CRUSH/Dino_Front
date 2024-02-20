@@ -33,9 +33,10 @@ const SearchPage: React.FC = () => {
 
       <p className='text-xl'>'{query}' 검색결과</p>
 
-
       <SearchPlaylist
         searchResults={searchResults?.data.playlists} />
+      <div className='h-[50px]' />
+      <p className=' mb-3'> 유저 </p>   
 
       <SearchUserList
         searchResults={searchResults?.data.members} 

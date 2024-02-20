@@ -49,7 +49,7 @@ const SearchMemberDetail: React.FC = () => {
   return (
     <div className="w-full h-full relative bg-white scrollbar-hide overflow-scroll font-PretendardMedium ">
       <p className='p-4 text-xl'>'{query}' 검색결과 </p>
-      <p className='p-4 mb-3'> 유저 </p>   
+      <p className='p-4 '> 유저 </p>
 
       <SearchUserList
         searchResults={memberData}

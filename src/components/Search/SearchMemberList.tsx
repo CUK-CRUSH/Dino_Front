@@ -3,18 +3,17 @@ import defaultImage from "@assets/Admin/defaultImage.svg";
 
 interface SearchMemberProps {
   searchResults: Member[] | undefined;
-  username_fontSize: string;
-  introduction_fontSize: string;
-  size: string;
-  marginY: string;
+  username_fontSize : string;
+  introduction_fontSize : string;
+  size : string;
+  marginY : string;
 }
-const SearchMemberList: React.FC<SearchMemberProps> = ({ searchResults, size, marginY, username_fontSize, introduction_fontSize }) => {
+const SearchMemberList: React.FC<SearchMemberProps> = ({ searchResults,size, marginY,username_fontSize,introduction_fontSize}) => {
   return (
     <div >
-      <p className=' mb-3'> 유저 </p>
 
       {searchResults && searchResults.map((member) => (
-        <div className={`flex flex-row ml-5 `} style={{ marginBottom: marginY }} key={member.id}>
+        <div className={`flex flex-row ml-5 `} style={{ marginBottom: marginY }}  key={member.id}>
 
           <img
             className={`cursor-pointer w-[${size}] h-[${size}]  rounded-lg object-cover `}
