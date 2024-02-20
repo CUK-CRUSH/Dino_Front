@@ -14,11 +14,25 @@ export const getSearch = async (query : string | null) => {
     }
   };
 
-// 플레이리스트 초기 조회하기
+// 플레이리스트 조회하기
 export const getSearchPlaylist = async (query : string | null , page : any = '0') => {
   try {
     const response = await axiosInstance.get(
       `/api/v1/search/playlist?q=${query}&page=${page}`
+    );
+    if (response) { return response.data; }
+    else { return }
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+// 멤버 조회하기
+export const getSearchMember = async (query : string | null , page : any = '0') => {
+  try {
+    const response = await axiosInstance.get(
+      `/api/v1/search/member?q=${query}&page=${page}`
     );
     if (response) { return response.data; }
     else { return }

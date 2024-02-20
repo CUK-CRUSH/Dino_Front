@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import SearchPlaylist from './SearchPlaylist';
-import SearchUser from './SearchUser';
 import { getSearch } from '@api/search-controller/searchController';
 import { searchResultsDTO } from 'types/Search/Search';
+import SearchUserList from './SearchMemberList';
 
 const SearchPage: React.FC = () => {
   const location = useLocation();
@@ -37,8 +37,13 @@ const SearchPage: React.FC = () => {
       <SearchPlaylist
         searchResults={searchResults?.data.playlists} />
 
-      <SearchUser
-        searchResults={searchResults?.data.members} />
+      <SearchUserList
+        searchResults={searchResults?.data.members} 
+        username_fontSize='18px'
+        introduction_fontSize='15px'
+        size='60px'
+        marginY='10px'
+        />
         
     </div>
   )
