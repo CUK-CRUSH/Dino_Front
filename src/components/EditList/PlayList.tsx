@@ -22,7 +22,6 @@ import { getMemberUsername } from "@api/member-controller/memberController";
 import { musicListState } from "@atoms/Musics/MusicList";
 import { userNameState } from "@atoms/Playlist/username";
 import { playlistIdState } from "@atoms/Playlist/playlistId";
-import { memberIdState } from "@atoms/Playlist/memberId";
 import { tokenState } from "@atoms/Playlist/token";
 import Recommendation from "@components/Recommend/Recommendation";
 
@@ -33,7 +32,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const musicData = useSelector((state: RootState) => state.musicAdd);
 
   const [uploadImage, setUploadImage] = useState<string | null>(null);
-  const setMemberId = useSetRecoilState(memberIdState);
+  const [memberId, setMemberId] = useState<number>(99);
   const [playlists, setPlaylists] = useState<any[]>([]);
 
   // 유저이름
@@ -109,6 +108,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     <div className="h-full w-full scrollbar-hide overflow-scroll flex flex-col bg-black text-white font-medium leading-[18px]">
       {!isEditing && (
         <MainEditButton
+          memberId={memberId}
           playlists={playlists}
           uploadImage={uploadImage}
           fetchPlaylist={fetchPlaylist}

@@ -1,4 +1,3 @@
-import { memberIdState } from "@atoms/Playlist/memberId";
 import { playlistNameState } from "@atoms/Playlist/playlistName";
 import useCompareToken from "@hooks/useCompareToken/useCompareToken";
 import CustomModal from "@utils/Modal/Modal";
@@ -12,6 +11,7 @@ type MainEditButtonProps = {
   uploadImage: string | null;
   fetchPlaylist: () => void;
   setPlaylistName: (name: string) => void;
+  memberId: number | null | undefined;
 };
 
 export const MainEditButton = ({
@@ -19,17 +19,24 @@ export const MainEditButton = ({
   uploadImage,
   fetchPlaylist,
   setPlaylistName,
+  memberId,
 }: MainEditButtonProps) => {
   const playlistName = useRecoilValue(playlistNameState);
 
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
 
-  const memberId = useRecoilValue(memberIdState);
-
   const handleBack = () => {
+    const path = window.location.pathname;
     navigate(-1);
-    setTimeout(() => window.location.reload(), 100);
+
+    // 경로가 /user/{username}/{playlistId} 형태인지 확인
+    const isPlaylistPath = /\/user\/[^/]+\/\d+/.test(path);
+
+    if (isPlaylistPath) {
+      // 경로가 /user/{username}/{playlistId} 형태이면 페이지를 리로드
+      setTimeout(() => window.location.reload(), 100);
+    }
   };
 
   const handleModalToggle = useCallback(() => {

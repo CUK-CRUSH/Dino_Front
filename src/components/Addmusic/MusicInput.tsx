@@ -71,9 +71,11 @@ export const MusicInput: React.FC<MusicInputDTO> = ({
   const handleCopyClipBoard = useCallback(async () => {
     try {
       const text = await navigator.clipboard.readText();
-      const youtubeUrlPattern =
-        /^(http(s)?:\/\/)?((w){3}.)?youtu(be|.be)?(\.com)?\/.+\??.*/;
-      if (!youtubeUrlPattern.test(text)) {
+      if (
+        !text.startsWith("https://www.youtube.com/") &&
+        !text.startsWith("https://youtu.be/") &&
+        !text.startsWith("https://youtube.com/")
+      ) {
         swalButton.fire({
           title: "유튜브 URL을 넣어주세요",
         });
@@ -86,6 +88,7 @@ export const MusicInput: React.FC<MusicInputDTO> = ({
       console.error(e);
     }
   }, [onChange, swalButton]);
+
   const handleClear = useCallback(
     (action: () => AnyAction) => {
       dispatch(action());
