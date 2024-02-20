@@ -132,7 +132,7 @@ const ShowImage = ({
         ) : (
           renderNoImage()
         )}
-        <LikeButton />
+        <LikeButton id={playlists.id} />
       </div>
     </>
   );

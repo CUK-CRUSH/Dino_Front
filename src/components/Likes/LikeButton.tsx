@@ -13,7 +13,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import Swal from "sweetalert2";
 
-const LikeButton = () => {
+const LikeButton = (id: any) => {
   const swalButton = Swal.mixin({
     customClass: {
       popup: "popup", // 전체
@@ -51,7 +51,7 @@ const LikeButton = () => {
           cancelButtonText: "로그인",
         })
         .then((result) => {
-          if (result.isDismissed) {
+          if (result.dismiss === Swal.DismissReason.cancel) {
             navigate("/login");
           }
         });
@@ -92,7 +92,7 @@ const LikeButton = () => {
     return () => clearTimeout(timeoutId);
   }, [fetchPlaylist]);
 
-  return isLoading ? null : (
+  return id && isLoading ? null : (
     <div className="absolute -bottom-5 left-4 bg-black inline-flex justify-between items-center px-1 w-[110px] h-[42px] rounded-[30px] z-20">
       <div className=" bg-[#EA4335] p-1 rounded-full w-1/3">
         <img
