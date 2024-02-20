@@ -9,7 +9,8 @@ import Footer from '@components/Layout/footer';
 const SearchPlaylistDetail: React.FC = () => {
   const location = useLocation();
   const [ref, inView] = useInView();
-
+  const [count, setCount] = useState<number>(0);
+  const [isLast, setLast] = useState<boolean>(false);
   const [page, setPage] = useState(0); // 현재 페이지를 저장할 상태
 
   // URL 파라미터 읽기
@@ -18,42 +19,49 @@ const SearchPlaylistDetail: React.FC = () => {
 
   // 플레이리스트 데이터
   const [playlistData, setPlaylistdata] = useState<getPlaylistDTO[]>([]);
-  
-    // API 호출
-    const fetchData = async () => {
-      try {
-        const searchResult = await getSearchPlaylist(query,page);
-        setPlaylistdata([...playlistData, ...searchResult.data]); // 기존 데이터에 새로운 데이터를 추가
-        setPage((page) => page + 1);
-        console.log(searchResult)
-      } catch (error) {
-        console.error(error);
+
+  // API 호출
+  const fetchData = async () => {
+    try {
+      const searchResult = await getSearchPlaylist(query, page);
+      setPlaylistdata([...playlistData, ...searchResult.data]); // 기존 데이터에 새로운 데이터를 추가
+      setPage((page) => page + 1);
+      setCount(playlistData.length);
+      
+      if (count < 8) {
+        setLast(false);
+      } else {
+        setLast(true);
       }
-    };
+
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-   if (inView) {
-    
-   fetchData();
+    if (inView && !isLast) {
+
+      fetchData();
     }
-    }, [inView]);
+  }, [inView]);
 
   return (
     <div className="w-full h-full relative bg-white scrollbar-hide overflow-scroll font-PretendardMedium">
       <p className='p-4 text-xl'>'{query}' 검색결과 </p>
       <p className='p-4'> 플레이리스트 </p>
       {playlistData &&
-          playlistData.map((playlist: getPlaylistDTO, index: number) => (
-            <PlayList key={playlist.id} playlist={playlist} fontColor='#000' visible={true} />
-          ))}
-  	<div ref={ref} />
-    <div className='sticky bottom-0 w-full'>
-    <Footer bgColor="white" />
-    </div>
+        playlistData.map((playlist: getPlaylistDTO, index: number) => (
+          <PlayList key={playlist.id} playlist={playlist} fontColor='#000' visible={true} />
+        ))}
+      <div ref={ref} />
+      <div className='sticky bottom-0 w-full'>
+        <Footer bgColor="white" />
+      </div>
 
     </div>
-      )
+  )
 }
 
 export default SearchPlaylistDetail

@@ -9,6 +9,8 @@ const SearchMemberDetail: React.FC = () => {
   const location = useLocation();
   const [ref, inView] = useInView();
 
+  const [count, setCount] = useState<number>(0);
+  const [isLast, setLast] = useState<boolean>(false);
   const [page, setPage] = useState(0); // 현재 페이지를 저장할 상태
 
   // URL 파라미터 읽기
@@ -24,7 +26,13 @@ const SearchMemberDetail: React.FC = () => {
       const searchResult = await getSearchMember(query, page);
       setMemberdata([...memberData, ...searchResult.data]); // 기존 데이터에 새로운 데이터를 추가
       setPage((page) => page + 1);
-      console.log(searchResult)
+      setCount(memberData.length);
+      
+      if (count < 5) {
+        setLast(false);
+      } else {
+        setLast(true);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -32,7 +40,7 @@ const SearchMemberDetail: React.FC = () => {
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    if (inView) {
+    if (inView && !isLast) {
 
       fetchData();
     }
