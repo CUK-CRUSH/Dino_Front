@@ -12,15 +12,14 @@ import ToastComponent from "@components/Toast/Toast";
 import { useSelector } from "react-redux";
 import { RootState } from "@store/index";
 import Footer from "@components/Layout/footer";
-import { useCookies } from "react-cookie";
-// import InduceButton from "@components/AdminEdit/Button/IndeceButton";
 import Header from "@components/Layout/header";
 import useCompareToken from "@hooks/useCompareToken/useCompareToken";
 import { useDispatch } from "react-redux";
 import { setProfileIntroduction } from "@reducer/Admin/userProfileSlice";
+import ShareImg from "@assets/Share.svg";
+import { Img } from "react-image";
 
 const AdminPage: React.FC = () => {
-
   const getDefaultMember = (): getMemberDTO => ({
     backgroundImageUrl: null,
     id: undefined,
@@ -40,21 +39,10 @@ const AdminPage: React.FC = () => {
 
   const { username } = useParams<{ username: string | undefined }>();
 
-  localStorage.setItem("username", username ? username : "");
-
   const [isLoading, setIsLoding] = useState<boolean>(true);
 
-  const [, setInduceLogin] = useState<boolean>(false);
   // 쿠키
-  const [cookies] = useCookies(["accessToken"]);
   const dispatch = useDispatch();
-  useEffect(()=>{
-    if(!cookies.accessToken){
-      setInduceLogin(false);
-    } else {
-      setInduceLogin(true);
-    }
-  },[cookies.accessToken]);
 
   useEffect(() => {
     const fetchData = async () => {
@@ -62,8 +50,7 @@ const AdminPage: React.FC = () => {
         const userDataResult = await getMemberUsername(username);
 
         setUserdata(userDataResult.data);
-        dispatch(setProfileIntroduction(userDataResult.data.introduction))
-
+        dispatch(setProfileIntroduction(userDataResult.data.introduction));
         if (userDataResult.data?.id) {
           localStorage.setItem("userId", userDataResult.data.id.toString());
         }
@@ -81,7 +68,7 @@ const AdminPage: React.FC = () => {
     }, delay);
 
     return () => clearTimeout(timeoutId);
-  }, [username,dispatch]);
+  }, [username, dispatch]);
 
   const { deleteProfileImage, deleteBackgroundImage } = useSelector(
     (state: RootState) => state.userProfile
@@ -124,17 +111,33 @@ const AdminPage: React.FC = () => {
   // 권한부여
   const authority = useCompareToken(userData?.id);
 
-  return (
+  // margin Top
 
+  const handleShare = () => {
+    if (navigator.share) {
+      navigator
+        .share({
+          title: "MyList",
+          text: "Check out MyList!",
+          url: window.location.href,
+        })
+        .then(() => console.log("Successful share"))
+        .catch((error) => console.log("Error sharing", error));
+    } else {
+      console.log("Web Share API is not supported in your browser.");
+    }
+  };
+
+  return (
     <div className="relative w-full h-full mx-auto scrollbar-hide overflow-scroll flex flex-col justify-between bg-neutral-900">
-      <Header authority={authority} />
+      <Header id={userData.id} authority={authority} />
 
       <UserProfileBackground
         userBackgroundImage={userData?.backgroundImageUrl}
       />
       {/* 로그인 여부 */}
       {/* {!induceLogin ? <InduceButton /> : <></>} */}
-      
+
       {/* 플레이리스트 생성 성공 토스트 */}
 
       {toast === "add" && (
@@ -173,16 +176,24 @@ const AdminPage: React.FC = () => {
 
       {/* 검은화면 */}
       <div className={`w-full -mt-[40px]`}>
-
         {/* 프로필 이미지 */}
-        <div className={`flex items-center flex-col z-10 bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px] ` }>
+        <div
+          className={`flex relative items-center flex-col z-10 bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px] `}
+        >
           <UserProfileImage userProfileImage={userData?.profileImageUrl} />
-        
+          {userData.id && !authority && (
+            <Img
+              onClick={handleShare}
+              src={ShareImg}
+              alt="share"
+              className="w-6 h-6 absolute top-3 right-4 cursor-pointer"
+            />
+          )}
+
           <UserProfileInfo
             username={userData?.username}
             // introText={userData?.introduction}
           />
-          
         </div>
         <div className={`bg-neutral-900 min-h-[468px] rounded-tl-[30px] rounded-tr-[30px]`}>
         {playlistData &&
@@ -190,18 +201,17 @@ const AdminPage: React.FC = () => {
             <PlayList key={playlist.id} playlist={playlist} fontColor="#fff" visible={true} />
           ))}
 
-        {!isLoading &&
+          {!isLoading &&
           authority &&
           playlistData?.length !== undefined &&
           playlistData.length < 4 ? (
-          <AddPlayList />
-        ) : (
-          <></>
-        )}
+            <AddPlayList />
+          ) : (
+            <></>
+          )}
         </div>
       </div>
       <Footer bgColor="neutral-900" />
-
     </div>
   );
 };

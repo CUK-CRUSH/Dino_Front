@@ -4,7 +4,6 @@ import { MusicDataRowContent } from "./MusicContents";
 import { useSelector } from "react-redux";
 import { RootState } from "@store/index";
 import { MusicLength } from "./MusicLength";
-import InfiniteScroll from "react-infinite-scroller";
 import { musicListState } from "@atoms/Musics/MusicList";
 import { useRecoilValue } from "recoil";
 import SkeltonMusics from "@components/EditList/Skeleton/MusicSkeleton";
@@ -60,9 +59,6 @@ export const MusicDataRow = ({ isEditing, fetchPlaylist }: MusicDataDTO) => {
     },
     [selectedVideoIndex]
   );
-  const loadMore = useCallback(() => {
-    // TODO: Implement loadMore function
-  }, []);
 
   useEffect(() => {
     if (isEditing) {
@@ -77,8 +73,8 @@ export const MusicDataRow = ({ isEditing, fetchPlaylist }: MusicDataDTO) => {
     return () => clearTimeout(timeoutId);
   }, [isEditing]);
   return (
-    <InfiniteScroll className="h-[50%]" pageStart={0} loadMore={loadMore}>
-      <div className="h-[80%] scrollbar-hide overflow-scroll text-[17px] flex justify-center ">
+    <>
+      <div className="scrollbar-hide text-[17px] flex justify-center ">
         <div className="w-full mx-2 my-[40px] ">
           {isLoading ? (
             <SkeltonMusics customMargin={10} />
@@ -147,6 +143,6 @@ export const MusicDataRow = ({ isEditing, fetchPlaylist }: MusicDataDTO) => {
         </div>
       </div>
       <MusicLength musicList={musicList} />
-    </InfiniteScroll>
+    </>
   );
 };
