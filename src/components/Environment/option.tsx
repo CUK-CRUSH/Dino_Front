@@ -99,6 +99,10 @@ const OptionComponents = () => {
     );
   };
 
+  const handleUnsign = useCallback(() => {
+    navigate(`/user/${username}/unsign`);
+  }, [navigate]);
+
   const [userData, setUserdata] = useState<getMemberDTO>(getDefaultMember);
   const [isLoading, setIsLoding] = useState<boolean>(true);
 
@@ -214,7 +218,7 @@ const OptionComponents = () => {
               <button onClick={handleLogout}>로그아웃</button>
             </div>
             <div className="text-[#EA4335]">
-              <button>회원 탈퇴</button>
+              <button onClick={handleUnsign}>회원 탈퇴</button>
             </div>
           </main>
           <div className="h-[14px] bg-[#F8F8F8]" />
