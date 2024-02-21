@@ -1,13 +1,10 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import useWindowSizeCustom from "../../../hooks/useWindowSizeCustom";
 import { getPlaylistDTO } from "types/Admin";
-import SkeltonPlaylist from "../SkeltonPlaylist";
+import { useCustomMargin } from "@hooks/useCustomMargin/useCustomMargin";
 
 export const PlayList = ({ playlist, fontColor, visible }: { playlist: getPlaylistDTO, fontColor?: string, visible?: boolean }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
-  const { windowSize, isMobile } = useWindowSizeCustom();
-  const [customMargin, setCustomMargin] = useState<number>(0);
 
   const navigate = useNavigate();
 
@@ -20,22 +17,7 @@ export const PlayList = ({ playlist, fontColor, visible }: { playlist: getPlayli
     return () => clearTimeout(timeoutId);
   }, []);
 
-  useEffect(() => {
-    if (!isMobile) {
-      setCustomMargin((390 / 2 - 151) / 2);
-    } else {
-      if (windowSize.width > 400 && windowSize.width <= 429) {
-        setCustomMargin((windowSize.width / 2 - 151) / 2);
-      } else if (windowSize.width >= 430) {
-        setCustomMargin((390 / 2 - 151) / 2);
-      } else if (windowSize.width >= 390 && windowSize.width <= 400) {
-        setCustomMargin((390 / 2 - 151) / 2);
-      }
-      else if (windowSize.width < 390) {
-        setCustomMargin((windowSize.width / 2 - 151) / 2);
-      }
-    }
-  }, [windowSize.width, isMobile]);
+  const customMargin = useCustomMargin();
 
   const handleOnClick = (username: string | undefined, id: number | undefined) => {
     navigate(`/user/${username}/${id}`);
@@ -45,8 +27,7 @@ export const PlayList = ({ playlist, fontColor, visible }: { playlist: getPlayli
   return (
     <>
       {isLoading ? (
-        <SkeltonPlaylist customMargin={customMargin} />
-      ) : (
+<></>      ) : (
         <div style={{ marginLeft: `${customMargin}px`, marginRight: `${customMargin}px` }}
           className="relative inline-block min-h-[200px] mt-[10px]"
           onClick={() => handleOnClick(playlist.username, playlist.id)}

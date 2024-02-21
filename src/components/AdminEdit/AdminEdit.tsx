@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import useWindowSizeCustom from "@hooks/useWindowSizeCustom";
+import useWindowSizeCustom from "@hooks/useCustomMargin/useWindowSizeCustom";
 import "../../styles/Admin/style.css";
 import EditButton from "@components/AdminEdit/Button/EditButton";
 import SetUserProfileBackground from "@components/AdminEdit/SetUserProfileBackground";
