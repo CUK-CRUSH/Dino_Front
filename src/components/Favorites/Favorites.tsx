@@ -68,7 +68,7 @@ const FavoritesPage: React.FC = () => {
         </span>
         </div>
       </header>
-      
+
       <div className="inline">
       {playlistData &&
         playlistData.map((playlist: getPlaylistDTO, index: number) => (
