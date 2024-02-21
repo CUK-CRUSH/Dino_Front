@@ -1,16 +1,13 @@
 import { getFavoritesPlayList } from "@api/playlist-controller/playlistControl";
 import { PlayList } from "@components/Admin/Button/PlayList";
+import OptionHeader from "@components/Layout/optionHeader";
 
-import { useCallback, useEffect, useState } from "react";
+import {  useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import { FaAngleLeft } from "react-icons/fa6";
 import { useInView } from "react-intersection-observer";
-import { useNavigate, useParams } from "react-router-dom";
 import { getPlaylistDTO } from "types/Admin";
 
 const FavoritesPage: React.FC = () => {
-  const navigate = useNavigate();
-  const { username } = useParams<{ username: string | undefined }>();
   const [ref, inView] = useInView();
   const [count, setCount] = useState<number>(0);
   const [isLast, setLast] = useState<boolean>(false);
@@ -39,6 +36,7 @@ const FavoritesPage: React.FC = () => {
       console.error(error);
     }
   };
+
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (inView && !isLast) {
@@ -47,27 +45,9 @@ const FavoritesPage: React.FC = () => {
     }
   }, [inView]);
 
-  const handleBack = useCallback(() => {
-    navigate(`/user/${username}`);
-  }, [navigate, username]);
-
   return (
     <div className="h-full min-h-screen w-full scrollbar-hide overflow-scroll flex  flex-col bg-white text-black text-[15px] font-medium leading-[18px]">
-      <header className="relative h-[5%] smartPhoneXs:h-[3.5%] smartPhone:h-[3.5%] tabletMini:h-[3%] tablet:h-[3%] m-3 text-[19px] ">
-        <button
-          type="button"
-          onClick={handleBack}
-          className="text-white self-start mt-2"
-        >
-          <FaAngleLeft size={24} color="black" />
-        </button>
-        <div className="absolute top-5 left-1/2 transform -translate-x-1/2 -translate-y-1/2 font-PretendardMedium">
-
-        <span className="">
-        좋아요 목록
-        </span>
-        </div>
-      </header>
+      <OptionHeader text='좋아요한 목록' />
 
       <div className="inline">
       {playlistData &&
