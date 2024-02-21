@@ -51,10 +51,12 @@ const SearchPlaylistDetail: React.FC = () => {
     <div className="w-full h-full relative bg-white scrollbar-hide overflow-scroll font-PretendardMedium">
       <p className='p-4 text-xl'>'{query}' 검색결과 </p>
       <p className='p-4'> 플레이리스트 </p>
+
       {playlistData &&
         playlistData.map((playlist: getPlaylistDTO, index: number) => (
           <PlayList key={playlist.id} playlist={playlist} fontColor='#000' visible={true} />
         ))}
+        
       <div ref={ref} />
       <div className='sticky bottom-0 w-full'>
         <Footer bgColor="white" />

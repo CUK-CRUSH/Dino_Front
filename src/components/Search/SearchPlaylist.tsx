@@ -5,18 +5,24 @@ import Noimage from "@assets/noimage.jpg";
 
 import { Playlist } from "types/Search/Search";
 import { Carousel } from "react-responsive-carousel";
+import { Link } from "react-router-dom";
 
 interface SearchPlaylistProps {
   searchResults: Playlist[] | undefined;
+  query : string | null;
 }
 
-const SearchPlaylist: React.FC<SearchPlaylistProps> = ({ searchResults }) => {
+const SearchPlaylist: React.FC<SearchPlaylistProps> = ({ searchResults,query }) => {
   return (
     <div className="mt-10">
+
+      {/* 커모넌트화 */}
       <div className="flex justify-between ">
         <span className="flex justify-start">플레이리스트</span>
-        <span className="flex justify-end">  더보기</span>
+        <Link to={`/search/playlist?query=${query}`}><span className="flex justify-end">  더보기</span></Link>
+        
       </div>
+
       <Carousel
         showArrows={true} // 이 부분을 true로 바꿔주세요.
         centerMode={true}

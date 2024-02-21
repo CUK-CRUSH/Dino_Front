@@ -4,6 +4,7 @@ import { useInView } from 'react-intersection-observer';
 import { useEffect, useState } from 'react';
 import { getSearchMember } from '@api/search-controller/searchController';
 import { Member } from 'types/Search/Search';
+import Footer from '@components/Layout/footer';
 
 const SearchMemberDetail: React.FC = () => {
   const location = useLocation();
@@ -58,7 +59,9 @@ const SearchMemberDetail: React.FC = () => {
         size='60px'
         marginY='40px' />
       <div ref={ref} />
-
+      <div className='sticky bottom-0 w-full'>
+        <Footer bgColor="white" />
+      </div>
     </div>
   )
 }

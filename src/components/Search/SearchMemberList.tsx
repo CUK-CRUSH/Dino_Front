@@ -27,7 +27,7 @@ const SearchMemberList: React.FC<SearchMemberProps> = ({ searchResults,size, mar
 
         </div>
       ))}
-      <div className="flex justify-center">더보기</div>
+      
     </div>
   )
 }
