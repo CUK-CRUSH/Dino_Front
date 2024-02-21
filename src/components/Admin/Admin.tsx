@@ -32,7 +32,6 @@ const AdminPage: React.FC = () => {
   });
   // 유저데이터
   const [userData, setUserdata] = useState<getMemberDTO>(getDefaultMember);
-  const [playlistToggle, setPlaylistToggle] = useState<boolean>(true);
 
   // 플레이리스트 데이터
   const [playlistData, setPlaylistdata] = useState<
@@ -129,12 +128,6 @@ const AdminPage: React.FC = () => {
     }
   };
 
-  const handleChangePlaylistToggle = () => {
-    setPlaylistToggle(true);
-  };
-  const handleChangeVisitorToggle = () => {
-    setPlaylistToggle(false);
-  };
   return (
     <div className="relative w-full h-full mx-auto scrollbar-hide overflow-scroll flex flex-col justify-between bg-neutral-900">
       <Header id={userData.id} authority={authority} />
@@ -201,44 +194,27 @@ const AdminPage: React.FC = () => {
             username={userData?.username}
             // introText={userData?.introduction}
           />
-          <div className="flex flex-row text-white ">
-            <button
-              className="mr-2 border-b-[1px] border-white"
-              onClick={handleChangePlaylistToggle}
-            >
-              Playlist
-            </button>
-            <button
-              className="border-b-[1px] border-white"
-              onClick={handleChangeVisitorToggle}
-            >
-              Visitor
-            </button>
-          </div>
         </div>
 
         {/* 플레이리스트 */}
-        {playlistToggle ? (
-          <div
-            className={`bg-neutral-900 min-h-[468px] rounded-tl-[30px] rounded-tr-[30px]`}
-          >
-            {playlistData &&
-              playlistData.map((playlist: getPlaylistDTO, index: number) => (
-                <PlayList key={playlist.id} playlist={playlist} />
-              ))}
 
-            {!isLoading &&
-            authority &&
-            playlistData?.length !== undefined &&
-            playlistData.length < 4 ? (
-              <AddPlayList />
-            ) : (
-              <></>
-            )}
-          </div>
-        ) : (
-          <Visitor />
-        )}
+        <div
+          className={`bg-neutral-900 min-h-[468px] rounded-tl-[30px] rounded-tr-[30px]`}
+        >
+          {playlistData &&
+            playlistData.map((playlist: getPlaylistDTO, index: number) => (
+              <PlayList key={playlist.id} playlist={playlist} />
+            ))}
+
+          {!isLoading &&
+          authority &&
+          playlistData?.length !== undefined &&
+          playlistData.length < 4 ? (
+            <AddPlayList />
+          ) : (
+            <></>
+          )}
+        </div>
 
         {/* 여기까지 플레이리스트 */}
       </div>

@@ -13,11 +13,10 @@ const Unsign = () => {
   const [input, setInput] = useState("");
   const [buttonColor, setButtonColor] = useState("#D9D9D9");
   const navigate = useNavigate();
-  const { username } = useParams<{ username: string | undefined }>();
 
   const handleBack = useCallback(() => {
-    navigate(`user/${username}/env`);
-  }, [navigate, username]);
+    navigate(-1);
+  }, [navigate]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(event.target.value);

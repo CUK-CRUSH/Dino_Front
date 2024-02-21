@@ -12,7 +12,6 @@ import Camera from "@assets/PlayListImage/camera.svg";
 import { useCallback } from "react";
 import { Img } from "react-image";
 import Spinner from "@assets/Spinner/Spinner.svg";
-import LikeButton from "@components/Likes/LikeButton";
 import { useRecoilValue } from "recoil";
 import { tokenState } from "@atoms/Playlist/token";
 
@@ -121,20 +120,17 @@ const ShowImage = ({
   );
 
   return (
-    <>
-      <div className="relative h-1/3 smartPhone:h-[28%] tabletMini:h-[20%] tablet:h-[18%] rounded-b-3xl bg-white ">
-        {isLoading ? (
-          <Img src={Spinner} alt="Spinner" />
-        ) : isEditing ? (
-          renderImageControls(reduxImage || playlists?.thumbnailUrl || null)
-        ) : reduxImage || playlists?.thumbnailUrl ? (
-          renderImage(reduxImage || playlists?.thumbnailUrl || "")
-        ) : (
-          renderNoImage()
-        )}
-        <LikeButton id={playlists.id} />
-      </div>
-    </>
+    <div className="relative h-1/3 smartPhone:h-[28%] tabletMini:h-[20%] tablet:h-[18%] rounded-b-3xl bg-white ">
+      {isLoading ? (
+        <Img src={Spinner} alt="Spinner" />
+      ) : isEditing ? (
+        renderImageControls(reduxImage || playlists?.thumbnailUrl || null)
+      ) : reduxImage || playlists?.thumbnailUrl ? (
+        renderImage(reduxImage || playlists?.thumbnailUrl || "")
+      ) : (
+        renderNoImage()
+      )}
+    </div>
   );
 };
 

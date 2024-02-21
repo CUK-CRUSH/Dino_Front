@@ -75,11 +75,13 @@ export const deleteVisitor = async (
 export const patchVisitor = async (
   playlistId: number,
   guestbookId: number,
+  content: string,
   cookies?: string
 ) => {
   try {
-    const response = await axiosInstance.post(
+    const response = await axiosInstance.patch(
       `/api/v1/playlist/${playlistId}/guestbook/${guestbookId}`,
+      { content },
       {
         headers: {
           Authorization: `Bearer ${cookies}`,

@@ -24,6 +24,8 @@ import { userNameState } from "@atoms/Playlist/username";
 import { playlistIdState } from "@atoms/Playlist/playlistId";
 import { tokenState } from "@atoms/Playlist/token";
 import Recommendation from "@components/Recommend/Recommendation";
+import LikeButton from "@components/Likes/LikeButton";
+import VisitorButton from "@components/Visitor/VisitorButton";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
   const isEditing = useSelector(
@@ -66,7 +68,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       setMemberId(member.data.id);
       setUsernames(paramUsername || "");
 
-      // 1초 지연
+      // 0.3초 지연
       await new Promise((resolve) => setTimeout(resolve, 300));
 
       const playlist = await getSinglePlayList(Number(playlistId));
@@ -135,6 +137,10 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       />
 
       <MusicTitle isEditing={isEditing} />
+      <div className="flex flex-row">
+        <LikeButton id={playlistId} />
+        <VisitorButton id={playlistId} />
+      </div>
       <MusicDataRow isEditing={isEditing} fetchPlaylist={fetchPlaylist} />
       {isEditing && musicList.data?.length + musicData.musics.length < 9 && (
         <PlusButton playlists={playlists} />
