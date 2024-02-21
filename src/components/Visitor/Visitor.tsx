@@ -4,15 +4,20 @@ import {
   patchVisitor,
   postVisitor,
 } from "@api/visitor-controller/visitorControl";
+import "@styles/EditList/playList.css";
 import { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import SendChat from "@assets/Visitor/SendChat.svg";
 import SettingButton from "@assets/Visitor/Setting.svg";
 import "@styles/Admin/style.css";
 import useWindowSizeCustom from "@hooks/useWindowSizeCustom";
 import { useRecoilState } from "recoil";
 import { visitorUpdateState } from "@atoms/Visit/visitUpdate";
+import useCompareToken from "@hooks/useCompareToken/useCompareToken";
+import { useSelector } from "react-redux";
+import { RootState } from "@store/index";
+import Swal from "sweetalert2";
 
 interface VisitorData {
   id: number;
@@ -25,12 +30,25 @@ interface VisitorDTO {
 }
 
 const Visitor = ({ onClose }: VisitorDTO) => {
+  const swalButton = Swal.mixin({
+    customClass: {
+      popup: "popup", // 전체
+      confirmButton: "confirmButton", // 취소
+      cancelButton: "cancelButton", // 삭제
+      title: "title", // 타이틀
+      htmlContainer: "htmlContainer", // 내용
+    },
+    buttonsStyling: false,
+  });
+
+  const navigate = useNavigate();
   const [visitorData, setVisitorData] = useState<VisitorData[]>([]);
   const [content, setContent] = useState<string>("");
   // 열고닫기
   const [isOpen, setIsOpen] = useState(true);
   const [buttonOpen, setButtonOpen] = useState<{ [key: string]: boolean }>({});
 
+  const memberId = useSelector((state: RootState) => state.memberId);
   // 수정
   const [editMode, setEditMode] = useState<{ [key: string]: boolean }>({});
   const [editContent, setEditContent] = useState<{ [key: string]: string }>({});
@@ -48,6 +66,7 @@ const Visitor = ({ onClose }: VisitorDTO) => {
       }));
     }
   };
+
   const handleEditContent = (id: any, content: string) => {
     setEditContent((prevState) => ({
       ...prevState,
@@ -129,6 +148,24 @@ const Visitor = ({ onClose }: VisitorDTO) => {
 
   const handleSubmit = async (event: React.FormEvent) => {
     event.preventDefault();
+    if (!token) {
+      swalButton
+        .fire({
+          title: "로그인 필요한 서비스입니다.",
+          text: "로그인이 하시겠습니까?",
+          showCancelButton: true,
+          confirmButtonColor: "blue",
+          cancelButtonColor: "#d33",
+          confirmButtonText: "취소",
+          cancelButtonText: "로그인",
+        })
+        .then((result) => {
+          if (result.dismiss === Swal.DismissReason.cancel) {
+            navigate("/login");
+          }
+        });
+      return;
+    }
     try {
       await postVisitor(Number(playlistId), content, token);
       setContent("");
@@ -150,6 +187,8 @@ const Visitor = ({ onClose }: VisitorDTO) => {
   useEffect(() => {
     fetchVisitorData();
   }, []);
+
+  const authority = useCompareToken(memberId);
 
   return (
     <div
@@ -212,11 +251,14 @@ const Visitor = ({ onClose }: VisitorDTO) => {
                           onClick={() => toggleDropdown(visitor.id)}
                           className="relative cursor-pointer"
                         >
-                          <img
-                            src={SettingButton}
-                            alt="edit"
-                            className="cursor-pointer"
-                          />
+                          {authority && (
+                            <img
+                              src={SettingButton}
+                              alt="edit"
+                              className="cursor-pointer"
+                            />
+                          )}
+
                           {buttonOpen[visitor.id] && (
                             <ul className="absolute text-12px right-0 top-full mt-2 w-24 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5">
                               <li

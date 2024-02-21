@@ -26,15 +26,18 @@ import { tokenState } from "@atoms/Playlist/token";
 import Recommendation from "@components/Recommend/Recommendation";
 import LikeButton from "@components/Likes/LikeButton";
 import VisitorButton from "@components/Visitor/VisitorButton";
+import { useDispatch } from "react-redux";
+import { setMemberId } from "@reducer/editPlayList/isMemberId";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
+  const dispatch = useDispatch();
   const isEditing = useSelector(
     (state: RootState) => state.editPlaylistToggle.isEditing
   );
   const musicData = useSelector((state: RootState) => state.musicAdd);
 
   const [uploadImage, setUploadImage] = useState<string | null>(null);
-  const [memberId, setMemberId] = useState<number>(99);
+  const memberId = useSelector((state: RootState) => state.memberId);
   const [playlists, setPlaylists] = useState<any[]>([]);
 
   // 유저이름
@@ -65,12 +68,15 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const fetchPlaylist = useCallback(async () => {
     try {
       const member = await getMemberUsername(paramUsername);
-      setMemberId(member.data.id);
+
+      if (member) {
+        dispatch(setMemberId(member.data.id)); // memberId 저장
+      }
+
       setUsernames(paramUsername || "");
 
       // 0.3초 지연
       await new Promise((resolve) => setTimeout(resolve, 300));
-
       const playlist = await getSinglePlayList(Number(playlistId));
       setPlaylists(playlist.data);
       setPlaylistName(playlist.data.playlistName);
@@ -83,7 +89,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       setHasError(true);
     }
     /* eslint-disable react-hooks/exhaustive-deps */
-  }, [setMusicList]);
+  }, [setMusicList, paramUsername, dispatch]);
 
   const {
     handleEditClick,
@@ -102,7 +108,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     setToken(cookies.accessToken);
 
     fetchPlaylist();
-  }, [playlistId, fetchPlaylist, setPlaylistId]);
+  }, [playlistId, fetchPlaylist, setPlaylistId, cookies.accessToken, setToken]);
 
   if (hasError) {
     return <NotFound />;
