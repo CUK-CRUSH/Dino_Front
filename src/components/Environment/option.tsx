@@ -99,6 +99,10 @@ const OptionComponents = () => {
     );
   };
 
+  const handleFavorites = () => {
+    navigate('./favorites');
+  }
+
   const [userData, setUserdata] = useState<getMemberDTO>(getDefaultMember);
   const [isLoading, setIsLoding] = useState<boolean>(true);
 
@@ -208,7 +212,7 @@ const OptionComponents = () => {
           <div className="h-[14px] bg-[#F8F8F8]" />
           <main className="ml-3 text-[17px] font-semibold space-y-5 my-5">
             <div>
-              <button>좋아요 목록</button>
+              <button onClick={handleFavorites}> 좋아요 목록</button>
             </div>
             <div>
               <button onClick={handleLogout}>로그아웃</button>

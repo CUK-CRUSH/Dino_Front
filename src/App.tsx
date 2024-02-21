@@ -20,6 +20,8 @@ const Like = loadable(() => import("@pages/Likes/Like"));
 const Search =loadable(() => import("@pages/Search/Search"));
 const SearchPlaylistDetail =loadable(() => import("@pages/Search/SearchPlaylistDetail"));
 const SearchMemberDetail =loadable(() => import("@pages/Search/SearchMemberDetail"));
+const Favorites = loadable(() => import("@pages/Favorites/Favorites"));
+
 const Environment = loadable(() => import("@pages/Environment/Environment"));
 const Prepare = loadable(() => import("@utils/Preparation"));
 const NotFound = loadable(() => import("@pages/NotFound/NotFonud"));
@@ -57,10 +59,12 @@ function App() {
                 element={<Like />}
               />
               <Route path="user/:username/env" element={<Environment />} />
+              <Route path="/user/:username/env/favorites" element={<Favorites />} />
               <Route path="/redirect" element={<Redirect />} />
               <Route path="/search" element={<Search />} />
               <Route path="/search/playlist" element={<SearchPlaylistDetail />} />
               <Route path="/search/member" element={<SearchMemberDetail />} />
+
               <Route path="/unprepared" element={<Prepare />} />
 
               <Route path="*" element={<NotFound />} />
