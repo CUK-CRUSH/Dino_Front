@@ -32,7 +32,7 @@ const AdminPage: React.FC = () => {
   });
   // 유저데이터
   const [userData, setUserdata] = useState<getMemberDTO>(getDefaultMember);
-  const [playlistToggle, setPlaylistToggle] = useState<boolean>(false);
+  const [playlistToggle, setPlaylistToggle] = useState<boolean>(true);
 
   // 플레이리스트 데이터
   const [playlistData, setPlaylistdata] = useState<

@@ -61,11 +61,13 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const handleUploadImage = (image: string) => setUploadImage(image);
 
   const fetchPlaylist = useCallback(async () => {
-    // 항상 로컬 스토리지에서 username을 가져옴
     try {
       const member = await getMemberUsername(paramUsername);
       setMemberId(member.data.id);
       setUsernames(paramUsername || "");
+
+      // 1초 지연
+      await new Promise((resolve) => setTimeout(resolve, 300));
 
       const playlist = await getSinglePlayList(Number(playlistId));
       setPlaylists(playlist.data);
