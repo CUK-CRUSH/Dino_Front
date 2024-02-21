@@ -25,6 +25,7 @@ const Favorites = loadable(() => import("@pages/Favorites/Favorites"));
 const Environment = loadable(() => import("@pages/Environment/Environment"));
 const Prepare = loadable(() => import("@utils/Preparation"));
 const NotFound = loadable(() => import("@pages/NotFound/NotFonud"));
+const Unsign  = loadable(() => import("@pages/Unsign/Unsign"));
 
 function App() {
   return (
@@ -57,6 +58,10 @@ function App() {
               <Route
                 path="user/:username/:playlistId/like"
                 element={<Like />}
+              />
+              <Route
+                path="user/:username/unsign"
+                element={<Unsign />}
               />
               <Route path="user/:username/env" element={<Environment />} />
               <Route path="/user/:username/env/favorites" element={<Favorites />} />
