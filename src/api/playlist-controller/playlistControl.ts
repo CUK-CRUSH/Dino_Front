@@ -61,10 +61,10 @@ export const getSinglePlayList = async (
   try {
     const response = cookies
       ? await axiosInstance.get(`/api/v1/playlist/${playlistId}`, {
-          headers: {
-            Authorization: `Bearer ${cookies}`,
-          },
-        })
+        headers: {
+          Authorization: `Bearer ${cookies}`,
+        },
+      })
       : await axiosInstance.get(`/api/v1/playlist/${playlistId}`);
     if (response) { return response.data; }
     else { return }
@@ -202,6 +202,25 @@ export const getLikeList = async (playlistId: number) => {
     const response = await axiosInstance.get(
       `/api/v1/playlist/${playlistId}/like`
     );
+    if (response) { return response.data; }
+    else { return }
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+// 좋아요한 플레이리스트 조회
+export const getFavoritesPlayList = async (
+  cookies?: string,
+  page? : number
+) => {
+  try {
+    const response = await axiosInstance.get(`/api/v1/playlist/like`, {
+      headers: {
+        Authorization: `Bearer ${cookies}`,
+      },
+    })
     if (response) { return response.data; }
     else { return }
   } catch (error) {

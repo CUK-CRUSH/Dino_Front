@@ -4,7 +4,6 @@ import { useInView } from 'react-intersection-observer';
 import { useEffect, useState } from 'react';
 import { getSearchMember } from '@api/search-controller/searchController';
 import { Member } from 'types/Search/Search';
-import Footer from '@components/Layout/footer';
 
 const SearchMemberDetail: React.FC = () => {
   const location = useLocation();

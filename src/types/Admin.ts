@@ -42,5 +42,7 @@ export interface getPlaylistDTO {
   playlistName : string,
   thumbnailUrl : string | null,
   numberOfMusics? : number,
+  likeCount?: number,
+  isLike? : boolean,
   }
 

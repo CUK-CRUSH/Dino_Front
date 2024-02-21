@@ -4,7 +4,6 @@ import { getSearchPlaylist } from '@api/search-controller/searchController';
 import { PlayList } from '@components/Admin/Button/PlayList';
 import { getPlaylistDTO } from 'types/Admin';
 import { useInView } from 'react-intersection-observer';
-import Footer from '@components/Layout/footer';
 
 const SearchPlaylistDetail: React.FC = () => {
   const location = useLocation();
