@@ -72,6 +72,26 @@ export const getMemberMe = async (cookies?: string) => {
   }
 };
 
+//회원 탈퇴
+export const deleteAccount = async (cookies?: string) => {
+  try {
+    // Include the token in the Authorization header
+    const response = await axiosInstance.delete('/api/v1/member/me', {
+      headers: {
+        Authorization: `Bearer ${cookies}`
+      }
+    });
+
+    if (response.status === 200) {
+      console.log('Account deletion successful');
+    } else {
+      console.log('Account deletion failed');
+    }
+  } catch (error) {
+    console.error('Error:', error);
+  }
+};
+
 // 정보수정
 
 export const updateMember = async ({
