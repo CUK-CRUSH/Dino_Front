@@ -101,7 +101,7 @@ const OptionComponents = () => {
 
   const handleUnsign = useCallback(() => {
     navigate(`/user/${username}/unsign`);
-  }, [navigate]);
+  }, [navigate, username]);
 
   const [userData, setUserdata] = useState<getMemberDTO>(getDefaultMember);
   const [isLoading, setIsLoding] = useState<boolean>(true);

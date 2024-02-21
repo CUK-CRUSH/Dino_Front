@@ -16,8 +16,8 @@ const Unsign = () => {
   const { username } = useParams<{ username: string | undefined }>();
 
   const handleBack = useCallback(() => {
-    navigate(`/${username}/env`);
-  }, [navigate]);
+    navigate(`user/${username}/env`);
+  }, [navigate, username]);
 
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
     setInput(event.target.value);
@@ -89,7 +89,7 @@ const Unsign = () => {
           <FaAngleLeft size={24} color="black" />
         </button>
       </header>
-      <div className="flex-crow h-full">
+      <main className="h-full">
         <form onSubmit={handleSubmit} className="bg-gray-100 p-4">
           <h2 className="text-2xl font-bold mb-4">계정 삭제</h2>
           <p className="mb-2">계정이 삭제될 경우</p>
@@ -115,7 +115,7 @@ const Unsign = () => {
             계정 삭제
           </button>
         </form>
-      </div>
+      </main>
       <Footer bgColor="bg-gray-100" />
     </div>
   );
