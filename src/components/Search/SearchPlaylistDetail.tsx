@@ -48,7 +48,9 @@ const SearchPlaylistDetail: React.FC = () => {
   }, [inView]);
 
   return (
-    <div className="w-full h-full relative bg-white scrollbar-hide overflow-scroll font-PretendardMedium">
+    <div className="w-full h-full min-h-screen relative flex flex-col bg-white scrollbar-hide overflow-scroll font-PretendardMedium">
+      <main className='h-full pb-[80px] '> 
+
       <p className='p-4 text-xl'>'{query}' 검색결과 </p>
       <p className='p-4'> 플레이리스트 </p>
 
@@ -56,12 +58,10 @@ const SearchPlaylistDetail: React.FC = () => {
         playlistData.map((playlist: getPlaylistDTO, index: number) => (
           <PlayList key={playlist.id} playlist={playlist} fontColor='#000' visible={true} />
         ))}
-        
-      <div ref={ref} />
-      <div className='sticky bottom-0 w-full'>
-        <Footer bgColor="white" />
-      </div>
 
+        <div ref={ref} />
+      </main>
+      
     </div>
   )
 }

@@ -59,9 +59,7 @@ const SearchMemberDetail: React.FC = () => {
         size='60px'
         marginY='40px' />
       <div ref={ref} />
-      <div className='sticky bottom-0 w-full'>
-        <Footer bgColor="white" />
-      </div>
+      
     </div>
   )
 }
