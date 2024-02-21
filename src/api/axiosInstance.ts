@@ -36,7 +36,7 @@ axiosInstance.interceptors.response.use(
 
       const refreshToken = localStorage.getItem('refreshToken');
       
-      axiosInstance.post('/login/token/reissue', { refreshToken })
+      return axiosInstance.post('/login/token/reissue', { refreshToken })
         .then(response => {
           
           Cookies.set('accessToken', response.data.data.access_token, { expires: 1/144 });
@@ -57,3 +57,4 @@ axiosInstance.interceptors.response.use(
     }
   }
 );
+
