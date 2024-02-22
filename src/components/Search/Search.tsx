@@ -4,6 +4,8 @@ import SearchPlaylist from './SearchPlaylist';
 import { getSearch } from '@api/search-controller/searchController';
 import { searchResultsDTO } from 'types/Search/Search';
 import SearchUserList from './SearchMemberList';
+import OptionHeader from '@components/Layout/optionHeader';
+import SearchInput from './SearchInput';
 
 const SearchPage: React.FC = () => {
   const location = useLocation();
@@ -27,11 +29,14 @@ const SearchPage: React.FC = () => {
 
     fetchData();
   }, [location.search, query]);
+  console.log(query)
 
   return (
-    <div className="w-full h-full relative bg-white flex flex-col justify-start p-4 font-PretendardMedium">
+    <div className="w-full h-full relative bg-white flex flex-col justify-start scrollbar-hide overflow-scroll font-PretendardMedium">
 
-      <p className='text-xl'>'{query}' 검색결과</p>
+      <OptionHeader text="검색" />
+      <SearchInput />
+      <main className='p-4'>
 
       <SearchPlaylist
         searchResults={searchResults?.data.playlists}
@@ -51,6 +56,7 @@ const SearchPage: React.FC = () => {
       <Link to={`/search/member?query=${query}`}>
         <div className="flex justify-center">더보기</div>
       </Link>
+      </main>
     </div>
   )
 }
