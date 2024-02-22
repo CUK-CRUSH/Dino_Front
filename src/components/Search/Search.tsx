@@ -37,26 +37,30 @@ const SearchPage: React.FC = () => {
       <OptionHeader text="검색" />
       <SearchInput />
       <main className='p-4'>
-      {query ? <div className='text-[20px] font-PretendardSemiBold text-center'>'{query}' 검색 결과</div> : <></>}
+        {query ? <div className='text-[20px] font-PretendardSemiBold text-center'>'{query}' 검색 결과</div> : <></>}
 
-      <SearchPlaylist
-        searchResults={searchResults?.data.playlists}
-        query={query}
-      />
-      <div className='h-[50px]' />
+        <SearchPlaylist
+          searchResults={searchResults?.data.playlists}
+          query={query}
+        />
+        <div className='h-[50px]' />
 
-      <p className='font-PretendardSemiBold mb-3'> 유저 </p>
+        <p className='font-PretendardSemiBold mb-3'> 유저 </p>
 
-      <SearchUserList
-        searchResults={searchResults?.data.members}
-        username_fontSize='18px'
-        introduction_fontSize='15px'
-        size='60px'
-        marginY='10px'
-      />
-      <Link to={`/search/member?query=${query}`}>
-        <div className="flex justify-center">더보기</div>
-      </Link>
+        <SearchUserList
+          searchResults={searchResults?.data.members}
+          username_fontSize='18px'
+          introduction_fontSize='15px'
+          size='60px'
+          marginY='10px'
+        />
+        
+        {searchResults?.data.members.length ?
+          <Link to={`/search/member?query=${query}`}>
+            <div className="flex justify-center">더보기</div>
+          </Link>
+          : <></>
+        }
       </main>
     </div>
   )

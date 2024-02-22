@@ -9,18 +9,20 @@ import { Link } from "react-router-dom";
 
 interface SearchPlaylistProps {
   searchResults: Playlist[] | undefined;
-  query : string | null;
+  query: string | null;
 }
 
-const SearchPlaylist: React.FC<SearchPlaylistProps> = ({ searchResults,query }) => {
+const SearchPlaylist: React.FC<SearchPlaylistProps> = ({ searchResults, query }) => {
   return (
     <div className="mt-[15px]">
 
       {/* 커모넌트화 */}
       <div className="flex justify-between font-PretendardSemiBold">
         <span className="flex justify-start ">플레이리스트</span>
-        <Link to={`/search/playlist?query=${query}`}><span className="flex justify-end">  더보기</span></Link>
-        
+        {searchResults?.length ?
+          <Link to={`/search/playlist?query=${query}`}><span className="flex justify-end">  더보기</span></Link> : <></>
+        }
+
       </div>
 
       <Carousel
@@ -47,7 +49,7 @@ const SearchPlaylist: React.FC<SearchPlaylistProps> = ({ searchResults,query }) 
               <span>{playlist.playlistName}</span></div>
           </div>
         ))}
-        
+
       </Carousel>
     </div>
   );
