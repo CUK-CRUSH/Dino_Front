@@ -8,8 +8,7 @@ interface MyComponentProps {
 
 const SearchButton: React.FC<MyComponentProps> = ({ authority }) => {
   const navigate = useNavigate();
-  const { username } = useParams<{ username: string | undefined }>();
-  const handleNavigateEnv = () => {
+  const handleNavigateSearch = () => {
     navigate(`/search`);
   };
 
@@ -21,7 +20,7 @@ const SearchButton: React.FC<MyComponentProps> = ({ authority }) => {
     <div className={`w-[22px] h-[40px] ${authority ? 'right-[50px]' : 'right-[20px]'} top-[20px] absolute`}>
       <button
         className=" text-white text-3xl font-bold tracking-wider "
-        onClick={handleNavigateEnv}
+        onClick={handleNavigateSearch}
       >
         <img src={search} alt='' />
 
