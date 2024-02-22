@@ -15,7 +15,8 @@ export interface Member {
 }
 
 export interface Playlist {
-  id: number,
+  id: string,
+  username : string,
   playlistName: string,
   thumbnailUrl: string | null
 } 

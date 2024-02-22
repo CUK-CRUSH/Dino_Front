@@ -5,7 +5,7 @@ import Noimage from "@assets/noimage.jpg";
 
 import { Playlist } from "types/Search/Search";
 import { Carousel } from "react-responsive-carousel";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import hot from "@assets/Search/hot.svg";
 
 interface SearchPlaylistProps {
@@ -14,6 +14,12 @@ interface SearchPlaylistProps {
 }
 
 const SearchPlaylist: React.FC<SearchPlaylistProps> = ({ searchResults, query }) => {
+
+  const navigate = useNavigate();
+
+  const handleNavigate = (username : string, id : string) =>{
+    navigate(`/user/${username}/${id}`);
+  }
   return (
     <div className="mt-[15px]">
 
@@ -44,7 +50,7 @@ const SearchPlaylist: React.FC<SearchPlaylistProps> = ({ searchResults, query })
         className="mt-5"
       >
         {searchResults && searchResults.map((playlist) => (
-          <div className="flex flex-col justify-center items-center w-[105px]" key={playlist.id}>
+          <div className="flex flex-col justify-center items-center w-[105px] cursor-pointer" key={playlist.id} onClick={() => handleNavigate(playlist.username, playlist.id)}>
             <img
               className="cursor-pointer w-[90px] h-[90px] rounded-lg object-cover "
               src={playlist.thumbnailUrl ? playlist.thumbnailUrl : Noimage} // default.jpg는 기본 이미지 경로입니다.
