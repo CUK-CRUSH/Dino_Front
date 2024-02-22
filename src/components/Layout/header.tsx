@@ -5,6 +5,7 @@ import { useState } from "react";
 import logo from "@assets/Header/logo.svg";
 import { Img } from "react-image";
 import { Link } from "react-router-dom";
+import SearchButton from "@components/Admin/Button/SearchButton";
 
 const Header = ({ authority, id }: { authority?: boolean; id?: number }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -34,6 +35,8 @@ const Header = ({ authority, id }: { authority?: boolean; id?: number }) => {
           className="absolute top-[25px] left-[20px] cursor-pointer"
         />
       </Link>
+      {/* 돋보기 */}
+      <SearchButton authority={authority} />
       {/* ... 설정창 */}
       {id && authority && <OpenOption />}
       {/* ...설정창 펼치기 */}

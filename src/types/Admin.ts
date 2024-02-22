@@ -37,8 +37,12 @@ export interface getMemberDTO {
 }
 
 export interface getPlaylistDTO {
-  id: number | undefined;
-  playlistName: string;
-  thumbnailUrl: string | null;
-  numberOfMusics: number;
-}
+  username? : string;
+  id: number | undefined,
+  playlistName : string,
+  thumbnailUrl : string | null,
+  numberOfMusics? : number,
+  likeCount?: number,
+  isLike? : boolean,
+  }
+

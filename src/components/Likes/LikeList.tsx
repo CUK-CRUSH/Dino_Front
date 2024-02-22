@@ -12,7 +12,6 @@ const UserProfile = ({ user }: any) => {
   const handleProfileClick = useCallback(() => {
     navigate(`/user/${user.username}`);
   }, [navigate, user.username]);
-
   return (
     <main className="flex items-center justify-between p-4">
       <div className="flex items-center">

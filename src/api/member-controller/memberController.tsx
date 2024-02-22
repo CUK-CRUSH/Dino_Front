@@ -149,7 +149,6 @@ export const updateMember = async ({
         Authorization: `Bearer ${cookies}`,
       },
     });
-    console.log(response)
     if (response) { return response.data; }
     else { return }
   }

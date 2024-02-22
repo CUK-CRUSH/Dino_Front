@@ -18,6 +18,8 @@ import { useDispatch } from "react-redux";
 import { setProfileIntroduction } from "@reducer/Admin/userProfileSlice";
 import ShareImg from "@assets/Share.svg";
 import { Img } from "react-image";
+import SkeltonPlaylist from "./SkeltonPlaylist";
+import { useCustomMargin } from "@hooks/useCustomMargin/useCustomMargin";
 
 const AdminPage: React.FC = () => {
   const getDefaultMember = (): getMemberDTO => ({
@@ -29,6 +31,10 @@ const AdminPage: React.FC = () => {
     profileImageUrl: null,
     username: "",
   });
+  
+  // skelton margin
+  const customMargin = useCustomMargin();
+  
   // 유저데이터
   const [userData, setUserdata] = useState<getMemberDTO>(getDefaultMember);
 
@@ -194,16 +200,14 @@ const AdminPage: React.FC = () => {
             // introText={userData?.introduction}
           />
         </div>
+        <div className={`bg-neutral-900 min-h-[468px] rounded-tl-[30px] rounded-tr-[30px]`}>
+          
+        {isLoading && <SkeltonPlaylist customMargin={customMargin} /> }
 
-        {/* 플레이리스트 */}
-
-        <div
-          className={`bg-neutral-900 min-h-[468px] rounded-tl-[30px] rounded-tr-[30px]`}
-        >
-          {playlistData &&
-            playlistData.map((playlist: getPlaylistDTO, index: number) => (
-              <PlayList key={playlist.id} playlist={playlist} />
-            ))}
+        {playlistData &&
+          playlistData.map((playlist: getPlaylistDTO, index: number) => (
+            <PlayList key={playlist.id} playlist={playlist} fontColor="#fff" visible={true} />
+          ))}
 
           {!isLoading &&
           authority &&

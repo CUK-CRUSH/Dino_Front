@@ -41,7 +41,6 @@ const Redirect = () => {
         try {
           if (id !== null) {
             const getUserData = await getMember(id);
-            console.log(getUserData);
 
             if (success && !getUserData.data.username) {
               dispatch(setToast("login"));

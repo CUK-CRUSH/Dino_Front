@@ -1,6 +1,5 @@
 import { getMemberUsername } from "@api/member-controller/memberController";
 import { useCallback, useEffect, useState } from "react";
-import { FaAngleLeft } from "react-icons/fa6";
 import { useNavigate, useParams } from "react-router-dom";
 import { getMemberDTO } from "types/Admin";
 import NoImage from "@assets/noimage.jpg";
@@ -14,6 +13,7 @@ import Theme from "@assets/Environment/Theme.svg";
 import Footer from "@components/Layout/footer";
 import Swal from "sweetalert2";
 import { useCookies } from "react-cookie";
+import OptionHeader from "@components/Layout/optionHeader";
 
 const OptionComponents = () => {
   const swalButton = Swal.mixin({
@@ -39,10 +39,6 @@ const OptionComponents = () => {
   const navigate = useNavigate();
   const [, , removeCookie] = useCookies();
   const { username } = useParams<{ username: string | undefined }>();
-
-  const handleBack = useCallback(() => {
-    navigate(`/user/${username}`);
-  }, [navigate, username]);
 
   const handleShare = () => {
     if (navigator.share) {
@@ -99,6 +95,9 @@ const OptionComponents = () => {
     );
   };
 
+  const handleFavorites = () => {
+    navigate('./favorites');
+  }
   const handleUnsign = useCallback(() => {
     navigate(`/user/${username}/unsign`);
   }, [navigate, username]);
@@ -139,15 +138,7 @@ const OptionComponents = () => {
 
   return (
     <div className="h-full min-h-screen w-full scrollbar-hide overflow-scroll flex  flex-col bg-white text-black text-[15px] font-medium leading-[18px]">
-      <header className="flex h-[5%] smartPhoneXs:h-[3.5%] smartPhone:h-[3.5%] tabletMini:h-[3%] tablet:h-[3%] items-center justify-between m-3 text-[19px] border-b-[1px] border-[#EFEFEF]">
-        <button
-          type="button"
-          onClick={handleBack}
-          className="text-white self-start mt-2"
-        >
-          <FaAngleLeft size={24} color="black" />
-        </button>
-      </header>
+      <OptionHeader />
       {!isLoading && (
         <div className="flex-crow h-full">
           <main className="flex items-center justify-between p-4">
@@ -212,7 +203,7 @@ const OptionComponents = () => {
           <div className="h-[14px] bg-[#F8F8F8]" />
           <main className="ml-3 text-[17px] font-semibold space-y-5 my-5">
             <div>
-              <button>좋아요 목록</button>
+              <button onClick={handleFavorites}> 좋아요 목록</button>
             </div>
             <div>
               <button onClick={handleLogout}>로그아웃</button>
