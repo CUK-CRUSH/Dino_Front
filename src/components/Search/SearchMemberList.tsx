@@ -20,10 +20,11 @@ const SearchMemberList: React.FC<SearchMemberProps> = ({ searchResults,size, mar
     <div >
 
       {searchResults && searchResults.map((member) => (
-        <div className={`flex flex-row ml-5 `} style={{ marginBottom: marginY }}  key={member.id}>
+        <div className={`flex flex-row `} style={{ marginBottom: marginY }}  key={member.id}>
 
           <img
-            className={`cursor-pointer w-[${size}] h-[${size}]  rounded-lg object-cover `}
+            className={`cursor-pointer  rounded-lg object-cover `}
+            style={{ width: size, height: size }}
             src={member.profileImageUrl ? member.profileImageUrl : defaultImage} // default.jpg는 기본 이미지 경로입니다.
             alt="썸네일"
           />
