@@ -15,6 +15,7 @@ import selectedFileReducer from "@reducer/editPlayList/Image/isImageCompress";
 import userIdReducer from "@reducer/Admin/userId";
 import labelsReducer from "@reducer/AddMusic/labelSlice";
 import likeReducer from "@reducer/Likes/likeToggle";
+import memberIdReducer from "@reducer/editPlayList/isMemberId";
 
 const persistConfig = {
   key: "editMusicsToggle",
@@ -48,6 +49,7 @@ export const store = configureStore({
     userId: userIdReducer,
     labels: labelsReducer,
     likes: likeTogglePersistedReducer,
+    memberId: memberIdReducer,
   },
 });
 
