@@ -11,7 +11,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import SendChat from "@assets/Visitor/SendChat.svg";
 import SettingButton from "@assets/Visitor/Setting.svg";
 import "@styles/Admin/style.css";
-import useWindowSizeCustom from "@hooks/useWindowSizeCustom";
+import useWindowSizeCustom from "@hooks/useCustomMargin/useWindowSizeCustom";
 import { useRecoilState } from "recoil";
 import { visitorUpdateState } from "@atoms/Visit/visitUpdate";
 import useCompareToken from "@hooks/useCompareToken/useCompareToken";
