@@ -6,6 +6,7 @@ import Noimage from "@assets/noimage.jpg";
 import { Playlist } from "types/Search/Search";
 import { Carousel } from "react-responsive-carousel";
 import { Link } from "react-router-dom";
+import hot from "@assets/Search/hot.svg";
 
 interface SearchPlaylistProps {
   searchResults: Playlist[] | undefined;
@@ -18,7 +19,11 @@ const SearchPlaylist: React.FC<SearchPlaylistProps> = ({ searchResults, query })
 
       {/* 커모넌트화 */}
       <div className="flex justify-between font-PretendardSemiBold">
+        {!query ? 
+        <span className="flex justify-start "><img src={hot} /> &nbsp; 인기 플레이리스트</span>
+        :
         <span className="flex justify-start ">플레이리스트</span>
+        }
         {searchResults?.length ?
           <Link to={`/search/playlist?query=${query}`}><span className="flex justify-end">  더보기</span></Link> : <></>
         }

@@ -6,6 +6,7 @@ import { searchResultsDTO } from 'types/Search/Search';
 import SearchUserList from './SearchMemberList';
 import OptionHeader from '@components/Layout/optionHeader';
 import SearchInput from './SearchInput';
+import hot from "@assets/Search/hot.svg";
 
 const SearchPage: React.FC = () => {
   const location = useLocation();
@@ -45,7 +46,12 @@ const SearchPage: React.FC = () => {
         />
         <div className='h-[50px]' />
 
-        <p className='font-PretendardSemiBold mb-3'> 유저 </p>
+        {!query ? 
+                <span className="flex justify-start "><img src={hot} /> &nbsp; 인기 유저</span>
+
+      :<p className='font-PretendardSemiBold mb-3'> 유저 </p>  
+      }
+        
 
         <SearchUserList
           searchResults={searchResults?.data.members}
@@ -54,7 +60,7 @@ const SearchPage: React.FC = () => {
           size='60px'
           marginY='10px'
         />
-        
+
         {searchResults?.data.members.length ?
           <Link to={`/search/member?query=${query}`}>
             <div className="flex justify-center">더보기</div>
