@@ -1,11 +1,10 @@
-
 import React from "react";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Noimage from "@assets/noimage.jpg";
 
 import { Playlist } from "types/Search/Search";
 import { Carousel } from "react-responsive-carousel";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 interface SearchPlaylistProps {
   searchResults: Playlist[] | undefined;

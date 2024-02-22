@@ -1,6 +1,6 @@
 import { Member } from "types/Search/Search";
 import defaultImage from "@assets/Admin/defaultImage.svg";
-import {  useLocation, useNavigate } from "react-router-dom";
+import {  useNavigate } from "react-router-dom";
 
 interface SearchMemberProps {
   searchResults: Member[] | undefined;

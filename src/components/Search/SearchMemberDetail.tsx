@@ -5,6 +5,7 @@ import { useEffect, useState } from 'react';
 import { getSearchMember } from '@api/search-controller/searchController';
 import { Member } from 'types/Search/Search';
 import OptionHeader from '@components/Layout/optionHeader';
+import QueryText from './QueryText';
 
 const SearchMemberDetail: React.FC = () => {
   const location = useLocation();
@@ -51,7 +52,7 @@ const SearchMemberDetail: React.FC = () => {
     <div className="w-full h-full relative bg-white scrollbar-hide overflow-scroll font-PretendardMedium ">
       <OptionHeader text="검색" />
 
-      <div className='text-[18px] font-PretendardSemiBold text-center'>'{query}' 검색 결과</div>
+      {query && <QueryText query={query} />}
 
       <div className='p-4'>
         <p className='mb-[12px]'> 유저 </p>
@@ -63,7 +64,7 @@ const SearchMemberDetail: React.FC = () => {
           size='60px'
           marginY='40px' />
       </div>
-      
+
       <div ref={ref} />
 
     </div>

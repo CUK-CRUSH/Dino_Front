@@ -5,6 +5,7 @@ import { PlayList } from '@components/Admin/Button/PlayList';
 import { getPlaylistDTO } from 'types/Admin';
 import { useInView } from 'react-intersection-observer';
 import OptionHeader from '@components/Layout/optionHeader';
+import QueryText from './QueryText';
 
 const SearchPlaylistDetail: React.FC = () => {
   const location = useLocation();
@@ -53,7 +54,7 @@ const SearchPlaylistDetail: React.FC = () => {
 
       <main className='h-full pb-[80px] '>
 
-      <div className='text-[18px] font-PretendardSemiBold text-center'>'{query}' 검색 결과</div>
+      {query && <QueryText query={query} />}
       <p className='p-4'> 플레이리스트 </p>
 
         {playlistData &&

@@ -8,6 +8,7 @@ import OptionHeader from '@components/Layout/optionHeader';
 import SearchInput from './SearchInput';
 import hot from "@assets/Search/hot.svg";
 import NothingSearch from './NothingSearch';
+import QueryText from './QueryText';
 
 const SearchPage: React.FC = () => {
   const location = useLocation();
@@ -34,23 +35,22 @@ const SearchPage: React.FC = () => {
 
   return (
     <div className="w-full h-full relative bg-white flex flex-col justify-start scrollbar-hide overflow-scroll font-PretendardMedium">
-
       <OptionHeader text="검색" />
       <SearchInput />
       <main className='p-4'>
-        {query ? <div className='text-[18px] font-PretendardSemiBold text-center'>'{query}' 검색 결과</div> : <></>}
+        {query && <QueryText query={query} />}
 
-        {/* 플리 */}
-
+        {/* 플레이리스트 */}
         {!query ?
-          <span className="flex justify-start "><img src={hot} /> &nbsp; 인기 플레이리스트</span>
+          <span className="flex justify-start "><img src={hot} alt='x' /> &nbsp; 인기 플레이리스트</span>
           :
           <div className="flex justify-between font-PretendardSemiBold">
             <span className="flex justify-start ">플레이리스트</span>
-            {searchResults && searchResults?.data.playlists.length > 4 ?
+            {searchResults && searchResults.data.playlists.length > 4 ?
               <Link to={`/search/playlist?query=${query}`}><span className="flex justify-end">  더보기</span></Link> : <></>
             }
-          </div>}
+          </div>
+        }
 
         {!searchResults?.data.playlists.length ? <NothingSearch text='플레이리스트' /> :
           <SearchPlaylist
@@ -58,17 +58,17 @@ const SearchPage: React.FC = () => {
             query={query}
           />
         }
+
         {/* 여백 */}
         <div className='h-[50px]' />
 
         {/* 유저 */}
         {!query ?
-          <span className="flex justify-start "><img src={hot} /> &nbsp; 인기 유저</span>
-
+          <span className="flex justify-start "><img src={hot} alt='x' /> &nbsp; 인기 유저</span>
           : <p className='font-PretendardSemiBold mb-3'> 유저 </p>
         }
-        {!searchResults?.data.members.length ? <NothingSearch text='유저' /> :
 
+        {!searchResults?.data.members.length ? <NothingSearch text='유저' /> :
           <SearchMemberList
             searchResults={searchResults?.data.members}
             username_fontSize='18px'
@@ -78,7 +78,7 @@ const SearchPage: React.FC = () => {
           />
         }
 
-        {searchResults && searchResults?.data.members.length > 5 ?
+        {searchResults && searchResults.data.members.length > 5 ?
           <Link to={`/search/member?query=${query}`}>
             <div className="flex justify-center">더보기</div>
           </Link>
@@ -86,7 +86,7 @@ const SearchPage: React.FC = () => {
         }
       </main>
     </div>
-  )
-}
+  );
+};
 
-export default SearchPage
+export default SearchPage;
