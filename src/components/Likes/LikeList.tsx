@@ -74,9 +74,12 @@ const LikeList = () => {
       </header>
 
       {/* 이만큼 API가져와서 Mapping */}
-      {users.map((user: any) => (
-        <UserProfile key={user.id} user={user} />
-      ))}
+      {users.length > 0 ? (
+        users.map((user: any) => <UserProfile key={user.id} user={user} />)
+      ) : (
+        <p>좋아요가 없습니다.</p>
+      )}
+
       {/*  */}
     </div>
   );

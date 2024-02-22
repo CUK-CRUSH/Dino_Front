@@ -3,8 +3,9 @@ import useCompareToken from "@hooks/useCompareToken/useCompareToken";
 import CustomModal from "@utils/Modal/Modal";
 import { useCallback, useState } from "react";
 import { FaAngleLeft, FaEllipsisVertical } from "react-icons/fa6";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
+import Home from "@assets/Home.svg";
 
 type MainEditButtonProps = {
   playlists: any[];
@@ -25,6 +26,9 @@ export const MainEditButton = ({
 
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
+  const { username: paramUsername } = useParams<{
+    username: string | undefined;
+  }>();
 
   const handleBack = () => {
     const path = window.location.pathname;
@@ -37,6 +41,10 @@ export const MainEditButton = ({
       // 경로가 /user/{username}/{playlistId} 형태이면 페이지를 리로드
       setTimeout(() => window.location.reload(), 100);
     }
+  };
+
+  const handleUserHome = () => {
+    navigate(`/user/${paramUsername}`);
   };
 
   const handleModalToggle = useCallback(() => {
@@ -61,18 +69,20 @@ export const MainEditButton = ({
       <button type="button" onClick={handleBack} className="text-white">
         <FaAngleLeft size={24} />
       </button>
-
+      <div className="flex justify-center w-full mr-3">
+        <div onClick={handleUserHome} className="flex flex-row cursor-pointer">
+          <img className="mr-1" src={Home} alt="home" />
+          <p className="text-center">{paramUsername}</p>
+        </div>
+      </div>
       {authority && (
-        <>
-          <p className="text-center">플레이리스트</p>
-          <button
-            type="button"
-            onClick={handleModalToggle}
-            className="text-white"
-          >
-            <FaEllipsisVertical size={24} />
-          </button>
-        </>
+        <button
+          type="button"
+          onClick={handleModalToggle}
+          className="text-white"
+        >
+          <FaEllipsisVertical size={24} />
+        </button>
       )}
 
       <CustomModal {...modalProps} />

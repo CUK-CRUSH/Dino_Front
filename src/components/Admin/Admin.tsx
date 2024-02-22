@@ -195,6 +195,8 @@ const AdminPage: React.FC = () => {
           />
         </div>
 
+        {/* 플레이리스트 */}
+
         <div
           className={`bg-neutral-900 min-h-[468px] rounded-tl-[30px] rounded-tr-[30px]`}
         >
@@ -212,6 +214,8 @@ const AdminPage: React.FC = () => {
             <></>
           )}
         </div>
+
+        {/* 여기까지 플레이리스트 */}
       </div>
       <Footer bgColor="neutral-900" />
     </div>

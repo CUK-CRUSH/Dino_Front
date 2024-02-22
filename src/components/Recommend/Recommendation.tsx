@@ -4,6 +4,7 @@ import { getRecommendation } from "@api/Recommendation/recommendationControl";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import Noimage from "@assets/noimage.jpg";
+import { useCookies } from "react-cookie";
 
 interface PlayListDTO {
   id: number;
@@ -18,14 +19,17 @@ const Recommendation = () => {
 
   const navigate = useNavigate();
 
+  const [cookies] = useCookies(["accessToken"]);
+  const token = cookies.accessToken;
+
   useEffect(() => {
     const fetchData = async () => {
-      const res = await getRecommendation();
+      const res = await getRecommendation(token);
       setData(res.data);
     };
 
     fetchData();
-  }, [setData]);
+  }, [token, setData]);
 
   const handleOnClick = (username: string, id: number) => {
     navigate(`/user/${username}/${id}`);
