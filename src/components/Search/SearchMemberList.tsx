@@ -1,6 +1,6 @@
 import { Member } from "types/Search/Search";
 import defaultImage from "@assets/Admin/defaultImage.svg";
-import { Link, useLocation, useNavigate } from "react-router-dom";
+import {  useLocation, useNavigate } from "react-router-dom";
 
 interface SearchMemberProps {
   searchResults: Member[] | undefined;
@@ -11,11 +11,7 @@ interface SearchMemberProps {
 }
 const SearchMemberList: React.FC<SearchMemberProps> = ({ searchResults,size, marginY,username_fontSize,introduction_fontSize}) => {
 
-    const location = useLocation();
     const navigate = useNavigate();
-    // URL 파라미터 읽기
-    const searchParams = new URLSearchParams(location.search);
-    const query = searchParams.get('query');
 
     const handleNavigate = (username : string,) =>{
       navigate(`/user/${username}`);
@@ -24,7 +20,7 @@ const SearchMemberList: React.FC<SearchMemberProps> = ({ searchResults,size, mar
     <div >
 
       {searchResults && searchResults.map((member) => (
-        <div className={`flex flex-row cursor-pointer`} style={{ marginBottom: marginY }}  key={member.id} onClick={() => handleNavigate(member.username)}>
+        <div className={`flex flex-row cursor-pointer  `} style={{ marginBottom: marginY }}  key={member.id} onClick={() => handleNavigate(member.username)}>
 
           <img
             className={`  rounded-lg object-cover `}
@@ -39,12 +35,7 @@ const SearchMemberList: React.FC<SearchMemberProps> = ({ searchResults,size, mar
 
         </div>
       ))}
-      {searchResults && searchResults?.length >= 5 ?
-          <Link to={`/search/member?query=${query}`}>
-            <div className="flex justify-center">더보기</div>
-          </Link>
-          : <></>
-        }
+      
     </div>
   )
 }

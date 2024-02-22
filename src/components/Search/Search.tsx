@@ -38,7 +38,7 @@ const SearchPage: React.FC = () => {
       <OptionHeader text="검색" />
       <SearchInput />
       <main className='p-4'>
-        {query ? <div className='text-[20px] font-PretendardSemiBold text-center'>'{query}' 검색 결과</div> : <></>}
+        {query ? <div className='text-[18px] font-PretendardSemiBold text-center'>'{query}' 검색 결과</div> : <></>}
 
         {/* 플리 */}
 
@@ -78,6 +78,12 @@ const SearchPage: React.FC = () => {
           />
         }
 
+        {searchResults && searchResults?.data.members.length > 5 ?
+          <Link to={`/search/member?query=${query}`}>
+            <div className="flex justify-center">더보기</div>
+          </Link>
+          : <></>
+        }
       </main>
     </div>
   )

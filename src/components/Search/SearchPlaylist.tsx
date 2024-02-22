@@ -6,7 +6,6 @@ import Noimage from "@assets/noimage.jpg";
 import { Playlist } from "types/Search/Search";
 import { Carousel } from "react-responsive-carousel";
 import { Link, useNavigate } from "react-router-dom";
-import hot from "@assets/Search/hot.svg";
 
 interface SearchPlaylistProps {
   searchResults: Playlist[] | undefined;
@@ -21,14 +20,7 @@ const SearchPlaylist: React.FC<SearchPlaylistProps> = ({ searchResults, query })
     navigate(`/user/${username}/${id}`);
   }
   return (
-    <div className="mt-[15px]">
-
-      {/* 커모넌트화 */}
-      <div className="flex justify-between font-PretendardSemiBold">
-        
-
-
-      </div>
+    <div className="">
 
       <Carousel
         showArrows={true} // 이 부분을 true로 바꿔주세요.

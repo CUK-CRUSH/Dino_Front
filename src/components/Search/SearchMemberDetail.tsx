@@ -51,15 +51,19 @@ const SearchMemberDetail: React.FC = () => {
     <div className="w-full h-full relative bg-white scrollbar-hide overflow-scroll font-PretendardMedium ">
       <OptionHeader text="검색" />
 
-      <p className='p-4 text-xl'>'{query}' 검색결과 </p>
-      <p className='p-4 '> 유저 </p>
+      <div className='text-[18px] font-PretendardSemiBold text-center'>'{query}' 검색 결과</div>
 
-      <SearchUserList
-        searchResults={memberData}
-        username_fontSize='18px'
-        introduction_fontSize='15px'
-        size='60px'
-        marginY='40px' />
+      <div className='p-4'>
+        <p className='mb-[12px]'> 유저 </p>
+
+        <SearchUserList
+          searchResults={memberData}
+          username_fontSize='18px'
+          introduction_fontSize='15px'
+          size='60px'
+          marginY='40px' />
+      </div>
+      
       <div ref={ref} />
 
     </div>

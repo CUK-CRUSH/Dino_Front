@@ -1,5 +1,3 @@
-import OptionHeader from '@components/Layout/optionHeader';
-
 interface NothingSearchDTO {
   text: string;
 }

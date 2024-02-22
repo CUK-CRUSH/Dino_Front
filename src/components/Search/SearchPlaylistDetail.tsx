@@ -53,8 +53,8 @@ const SearchPlaylistDetail: React.FC = () => {
 
       <main className='h-full pb-[80px] '>
 
-        <p className='p-4 text-xl'>'{query}' 검색결과 </p>
-        <p className='p-4'> 플레이리스트 </p>
+      <div className='text-[18px] font-PretendardSemiBold text-center'>'{query}' 검색 결과</div>
+      <p className='p-4'> 플레이리스트 </p>
 
         {playlistData &&
           playlistData.map((playlist: getPlaylistDTO, index: number) => (
