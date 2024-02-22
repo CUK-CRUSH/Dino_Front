@@ -1,6 +1,6 @@
 import { Member } from "types/Search/Search";
 import defaultImage from "@assets/Admin/defaultImage.svg";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 interface SearchMemberProps {
   searchResults: Member[] | undefined;
@@ -12,18 +12,22 @@ interface SearchMemberProps {
 const SearchMemberList: React.FC<SearchMemberProps> = ({ searchResults,size, marginY,username_fontSize,introduction_fontSize}) => {
 
     const location = useLocation();
+    const navigate = useNavigate();
     // URL 파라미터 읽기
     const searchParams = new URLSearchParams(location.search);
     const query = searchParams.get('query');
 
+    const handleNavigate = (username : string,) =>{
+      navigate(`/user/${username}`);
+    }
   return (
     <div >
 
       {searchResults && searchResults.map((member) => (
-        <div className={`flex flex-row `} style={{ marginBottom: marginY }}  key={member.id}>
+        <div className={`flex flex-row cursor-pointer`} style={{ marginBottom: marginY }}  key={member.id} onClick={() => handleNavigate(member.username)}>
 
           <img
-            className={`cursor-pointer  rounded-lg object-cover `}
+            className={`  rounded-lg object-cover `}
             style={{ width: size, height: size }}
             src={member.profileImageUrl ? member.profileImageUrl : defaultImage} // default.jpg는 기본 이미지 경로입니다.
             alt="썸네일"
