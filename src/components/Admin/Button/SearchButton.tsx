@@ -10,7 +10,7 @@ const SearchButton: React.FC<MyComponentProps> = ({ authority }) => {
   const navigate = useNavigate();
   const { username } = useParams<{ username: string | undefined }>();
   const handleNavigateEnv = () => {
-    navigate(`/user/${username}/env`);
+    navigate(`/search`);
   };
 
   useEffect(()=>{
@@ -18,7 +18,7 @@ const SearchButton: React.FC<MyComponentProps> = ({ authority }) => {
   },[])
 
   return (
-    <div className={`w-[22px] h-[40px] right-[${authority ? '50px' : '20px'}] top-[20px] absolute`}>
+    <div className={`w-[22px] h-[40px] ${authority ? 'right-[50px]' : 'right-[20px]'} top-[20px] absolute`}>
       <button
         className=" text-white text-3xl font-bold tracking-wider "
         onClick={handleNavigateEnv}
