@@ -37,6 +37,7 @@ const SearchPage: React.FC = () => {
       <OptionHeader text="검색" />
       <SearchInput />
       <main className='p-4'>
+      {query ? <div className='text-[20px] font-PretendardSemiBold text-center'>'{query}' 검색 결과</div> : <></>}
 
       <SearchPlaylist
         searchResults={searchResults?.data.playlists}
@@ -44,7 +45,7 @@ const SearchPage: React.FC = () => {
       />
       <div className='h-[50px]' />
 
-      <p className=' mb-3'> 유저 </p>
+      <p className='font-PretendardSemiBold mb-3'> 유저 </p>
 
       <SearchUserList
         searchResults={searchResults?.data.members}

@@ -14,11 +14,11 @@ interface SearchPlaylistProps {
 
 const SearchPlaylist: React.FC<SearchPlaylistProps> = ({ searchResults,query }) => {
   return (
-    <div className="mt-10">
+    <div className="mt-[15px]">
 
       {/* 커모넌트화 */}
-      <div className="flex justify-between ">
-        <span className="flex justify-start">플레이리스트</span>
+      <div className="flex justify-between font-PretendardSemiBold">
+        <span className="flex justify-start ">플레이리스트</span>
         <Link to={`/search/playlist?query=${query}`}><span className="flex justify-end">  더보기</span></Link>
         
       </div>
