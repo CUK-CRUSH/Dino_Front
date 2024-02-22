@@ -7,6 +7,7 @@ import SearchMemberList from './SearchMemberList';
 import OptionHeader from '@components/Layout/optionHeader';
 import SearchInput from './SearchInput';
 import hot from "@assets/Search/hot.svg";
+import NothingSearch from './NothingSearch';
 
 const SearchPage: React.FC = () => {
   const location = useLocation();
@@ -39,27 +40,44 @@ const SearchPage: React.FC = () => {
       <main className='p-4'>
         {query ? <div className='text-[20px] font-PretendardSemiBold text-center'>'{query}' 검색 결과</div> : <></>}
 
-        <SearchPlaylist
-          searchResults={searchResults?.data.playlists}
-          query={query}
-        />
+        {/* 플리 */}
+
+        {!query ?
+          <span className="flex justify-start "><img src={hot} /> &nbsp; 인기 플레이리스트</span>
+          :
+          <div className="flex justify-between font-PretendardSemiBold">
+            <span className="flex justify-start ">플레이리스트</span>
+            {searchResults && searchResults?.data.playlists.length > 4 ?
+              <Link to={`/search/playlist?query=${query}`}><span className="flex justify-end">  더보기</span></Link> : <></>
+            }
+          </div>}
+
+        {!searchResults?.data.playlists.length ? <NothingSearch text='플레이리스트' /> :
+          <SearchPlaylist
+            searchResults={searchResults?.data.playlists}
+            query={query}
+          />
+        }
+        {/* 여백 */}
         <div className='h-[50px]' />
 
+        {/* 유저 */}
         {!query ?
           <span className="flex justify-start "><img src={hot} /> &nbsp; 인기 유저</span>
 
           : <p className='font-PretendardSemiBold mb-3'> 유저 </p>
         }
+        {!searchResults?.data.members.length ? <NothingSearch text='유저' /> :
 
-        <SearchMemberList
-          searchResults={searchResults?.data.members}
-          username_fontSize='18px'
-          introduction_fontSize='15px'
-          size='60px'
-          marginY='10px'
-        />
+          <SearchMemberList
+            searchResults={searchResults?.data.members}
+            username_fontSize='18px'
+            introduction_fontSize='15px'
+            size='60px'
+            marginY='10px'
+          />
+        }
 
-        
       </main>
     </div>
   )

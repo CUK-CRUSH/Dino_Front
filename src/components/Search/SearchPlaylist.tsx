@@ -25,14 +25,8 @@ const SearchPlaylist: React.FC<SearchPlaylistProps> = ({ searchResults, query })
 
       {/* 커모넌트화 */}
       <div className="flex justify-between font-PretendardSemiBold">
-        {!query ? 
-        <span className="flex justify-start "><img src={hot} /> &nbsp; 인기 플레이리스트</span>
-        :
-        <span className="flex justify-start ">플레이리스트</span>
-        }
-        {searchResults && searchResults?.length > 4 ?
-          <Link to={`/search/playlist?query=${query}`}><span className="flex justify-end">  더보기</span></Link> : <></>
-        }
+        
+
 
       </div>
 
