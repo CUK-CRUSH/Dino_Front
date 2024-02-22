@@ -91,7 +91,7 @@ const LikeButton = (id: any) => {
     return () => clearTimeout(timeoutId);
   }, [fetchPlaylist]);
 
-  return id && isLoading ? null : (
+  return !id && isLoading ? null : (
     <div className="bg-black inline-flex px-1  rounded-[30px] ml-4">
       <div className="p-1 rounded-full">
         <img

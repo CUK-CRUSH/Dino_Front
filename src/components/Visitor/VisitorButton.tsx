@@ -52,7 +52,7 @@ const VisitorButton = (id: any) => {
     /* eslint-disable react-hooks/exhaustive-deps */
   }, [visitorUpdate]);
 
-  return id && isLoading ? null : (
+  return !id && isLoading ? null : (
     <div className="bg-black inline-flex px-1  rounded-[30px] mx-4">
       <div className="p-1 rounded-full">
         <img
