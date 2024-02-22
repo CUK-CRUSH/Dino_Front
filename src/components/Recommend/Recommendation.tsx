@@ -29,7 +29,7 @@ const Recommendation = () => {
     };
 
     fetchData();
-  }, [setData]);
+  }, [token, setData]);
 
   const handleOnClick = (username: string, id: number) => {
     navigate(`/user/${username}/${id}`);

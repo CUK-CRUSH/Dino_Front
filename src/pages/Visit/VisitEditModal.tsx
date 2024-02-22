@@ -1,4 +1,3 @@
-import AdminEdit from "@components/AdminEdit/AdminEdit";
 import Visitor from "@components/Visitor/Visitor";
 
 interface VisitModalProps {

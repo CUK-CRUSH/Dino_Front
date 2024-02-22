@@ -4,7 +4,7 @@ import { useCookies } from "react-cookie";
 import { deleteAccount } from "@api/member-controller/memberController";
 import Swal from "sweetalert2";
 import "@styles/EditList/playList.css";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import emailjs from "emailjs-com";
 import { FaAngleLeft } from "react-icons/fa6";
 

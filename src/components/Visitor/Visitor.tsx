@@ -186,6 +186,7 @@ const Visitor = ({ onClose }: VisitorDTO) => {
 
   useEffect(() => {
     fetchVisitorData();
+    /* eslint-disable react-hooks/exhaustive-deps */
   }, []);
 
   const authority = useCompareToken(memberId);

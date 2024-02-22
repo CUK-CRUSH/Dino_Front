@@ -49,6 +49,7 @@ const VisitorButton = (id: any) => {
     }, delay);
     fetchVisitorData();
     return () => clearTimeout(timeoutId);
+    /* eslint-disable react-hooks/exhaustive-deps */
   }, [visitorUpdate]);
 
   return id && isLoading ? null : (

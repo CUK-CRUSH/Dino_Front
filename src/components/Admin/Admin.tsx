@@ -18,7 +18,6 @@ import { useDispatch } from "react-redux";
 import { setProfileIntroduction } from "@reducer/Admin/userProfileSlice";
 import ShareImg from "@assets/Share.svg";
 import { Img } from "react-image";
-import Visitor from "@components/Visitor/Visitor";
 
 const AdminPage: React.FC = () => {
   const getDefaultMember = (): getMemberDTO => ({
