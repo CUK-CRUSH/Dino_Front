@@ -1,5 +1,6 @@
 import { Member } from "types/Search/Search";
 import defaultImage from "@assets/Admin/defaultImage.svg";
+import { Link, useLocation } from "react-router-dom";
 
 interface SearchMemberProps {
   searchResults: Member[] | undefined;
@@ -9,6 +10,12 @@ interface SearchMemberProps {
   marginY : string;
 }
 const SearchMemberList: React.FC<SearchMemberProps> = ({ searchResults,size, marginY,username_fontSize,introduction_fontSize}) => {
+
+    const location = useLocation();
+    // URL 파라미터 읽기
+    const searchParams = new URLSearchParams(location.search);
+    const query = searchParams.get('query');
+
   return (
     <div >
 
@@ -27,7 +34,12 @@ const SearchMemberList: React.FC<SearchMemberProps> = ({ searchResults,size, mar
 
         </div>
       ))}
-      
+      {searchResults && searchResults?.length >= 5 ?
+          <Link to={`/search/member?query=${query}`}>
+            <div className="flex justify-center">더보기</div>
+          </Link>
+          : <></>
+        }
     </div>
   )
 }

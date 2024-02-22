@@ -3,7 +3,7 @@ import { Link, useLocation } from 'react-router-dom';
 import SearchPlaylist from './SearchPlaylist';
 import { getSearch } from '@api/search-controller/searchController';
 import { searchResultsDTO } from 'types/Search/Search';
-import SearchUserList from './SearchMemberList';
+import SearchMemberList from './SearchMemberList';
 import OptionHeader from '@components/Layout/optionHeader';
 import SearchInput from './SearchInput';
 import hot from "@assets/Search/hot.svg";
@@ -30,7 +30,6 @@ const SearchPage: React.FC = () => {
 
     fetchData();
   }, [location.search, query]);
-  console.log(query)
 
   return (
     <div className="w-full h-full relative bg-white flex flex-col justify-start scrollbar-hide overflow-scroll font-PretendardMedium">
@@ -46,14 +45,13 @@ const SearchPage: React.FC = () => {
         />
         <div className='h-[50px]' />
 
-        {!query ? 
-                <span className="flex justify-start "><img src={hot} /> &nbsp; 인기 유저</span>
+        {!query ?
+          <span className="flex justify-start "><img src={hot} /> &nbsp; 인기 유저</span>
 
-      :<p className='font-PretendardSemiBold mb-3'> 유저 </p>  
-      }
-        
+          : <p className='font-PretendardSemiBold mb-3'> 유저 </p>
+        }
 
-        <SearchUserList
+        <SearchMemberList
           searchResults={searchResults?.data.members}
           username_fontSize='18px'
           introduction_fontSize='15px'
@@ -61,12 +59,7 @@ const SearchPage: React.FC = () => {
           marginY='10px'
         />
 
-        {searchResults?.data.members.length ?
-          <Link to={`/search/member?query=${query}`}>
-            <div className="flex justify-center">더보기</div>
-          </Link>
-          : <></>
-        }
+        
       </main>
     </div>
   )

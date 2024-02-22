@@ -24,7 +24,7 @@ const SearchPlaylist: React.FC<SearchPlaylistProps> = ({ searchResults, query })
         :
         <span className="flex justify-start ">플레이리스트</span>
         }
-        {searchResults?.length ?
+        {searchResults && searchResults?.length > 4 ?
           <Link to={`/search/playlist?query=${query}`}><span className="flex justify-end">  더보기</span></Link> : <></>
         }
 
