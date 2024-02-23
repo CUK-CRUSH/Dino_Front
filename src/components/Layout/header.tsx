@@ -7,7 +7,7 @@ import { Img } from "react-image";
 import { Link } from "react-router-dom";
 import SearchButton from "@components/Admin/Button/SearchButton";
 
-const Header = ({ authority, id }: { authority?: boolean; id?: number }) => {
+const Header = ({ authority, id }: { authority?: boolean; id?: string }) => {
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const openEditModal = () => {
@@ -38,7 +38,7 @@ const Header = ({ authority, id }: { authority?: boolean; id?: number }) => {
       {/* 돋보기 */}
       <SearchButton authority={authority} />
       {/* ... 설정창 */}
-      {id && authority && <OpenOption />}
+      {id && authority && <OpenOption id={id} />}
       {/* ...설정창 펼치기 */}
       {isOptionsModalOpen && (
         <EditProfile

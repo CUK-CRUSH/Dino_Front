@@ -1,14 +1,21 @@
 import { useNavigate } from "react-router-dom";
 import { FaAngleLeft } from "react-icons/fa6";
+import { RootState } from "@store/index";
+import { useSelector } from "react-redux";
 interface OptionHeaderProps {
   text?: string;
 }
 
-const OptionHeader: React.FC<OptionHeaderProps> = ({ text }) => {
+const OptionHeader: React.FC<OptionHeaderProps> = ({ text}) => {
   const navigate = useNavigate();
-
+  const {    username   } = useSelector((state: RootState) => state.userProfile);
   const handleBack = () => {
-    navigate(-1);
+    if(username) {
+      navigate(`/user/${username}`)
+    } else {
+      navigate(-1);
+    }
+    
   }
 
   return (
