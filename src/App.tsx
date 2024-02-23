@@ -59,12 +59,12 @@ function App() {
                 path="user/:username/:playlistId/like"
                 element={<Like />}
               />
-              <Route
-                path="user/:username/unsign"
-                element={<Unsign />}
-              />
               <Route path="user/:username/env" element={<Environment />} />
               <Route path="/user/:username/env/favorites" element={<Favorites />} />
+              <Route
+                path="user/:username/env/unsign"
+                element={<Unsign />}
+              />
               <Route path="/redirect" element={<Redirect />} />
               <Route path="/search" element={<Search />} />
               <Route path="/search/playlist" element={<SearchPlaylistDetail />} />

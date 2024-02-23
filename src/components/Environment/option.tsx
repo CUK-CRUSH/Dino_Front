@@ -96,11 +96,11 @@ const OptionComponents = () => {
   };
 
   const handleFavorites = () => {
-    navigate('./favorites');
+    navigate('/favorites');
   }
   const handleUnsign = useCallback(() => {
-    navigate(`/user/${username}/unsign`);
-  }, [navigate, username]);
+    navigate(`/unsign`);
+  }, [navigate]);
 
   const [userData, setUserdata] = useState<getMemberDTO>(getDefaultMember);
   const [isLoading, setIsLoding] = useState<boolean>(true);
