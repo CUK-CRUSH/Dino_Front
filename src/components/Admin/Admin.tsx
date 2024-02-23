@@ -114,7 +114,7 @@ const AdminPage: React.FC = () => {
   const { toast } = useSelector((state: RootState) => state.toast);
 
   // 권한부여
-  const authority = useCompareToken(userData?.id);
+  const authority = useCompareToken(userData && userData?.id);
 
   // margin Top
 

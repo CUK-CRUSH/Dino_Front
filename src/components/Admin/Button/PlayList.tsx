@@ -29,10 +29,10 @@ export const PlayList = ({ playlist, fontColor, visible }: { playlist: getPlayli
       {isLoading ? (
 <></>      ) : (
         <div style={{ marginLeft: `${customMargin}px`, marginRight: `${customMargin}px` }}
-          className="relative inline-block min-h-[200px] mt-[10px]"
+          className="relative inline-block min-h-[200px] mt-[15px]"
           onClick={() => handleOnClick(playlist.username, playlist.id)}
         >
-          <button className="w-[150px] h-[150px]  rounded-[13px] font-light text-zinc-300 text-4xl ">
+          <div className="w-[150px] h-[150px] rounded-[13px] font-light text-zinc-300 text-4xl ">
             {playlist.thumbnailUrl ? (
               <img className="mx-auto w-[150px] h-full rounded-[13px]" src={playlist.thumbnailUrl} alt='x' />
             ) : (
@@ -44,7 +44,7 @@ export const PlayList = ({ playlist, fontColor, visible }: { playlist: getPlayli
               <span className={`text-[12px] text-[${fontColor}] align-top`}>  {playlist.numberOfMusics}곡 </span>
 
             </div>
-          </button>
+          </div>
         </div>
       )}
     </>

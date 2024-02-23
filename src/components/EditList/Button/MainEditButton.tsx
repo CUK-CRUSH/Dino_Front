@@ -12,7 +12,7 @@ type MainEditButtonProps = {
   uploadImage: string | null;
   fetchPlaylist: () => void;
   setPlaylistName: (name: string) => void;
-  memberId: number | null | undefined;
+  memberId: string | null | undefined;
 };
 
 export const MainEditButton = ({

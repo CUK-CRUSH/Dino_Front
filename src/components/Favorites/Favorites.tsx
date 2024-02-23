@@ -7,6 +7,7 @@ import { useCustomMargin } from "@hooks/useCustomMargin/useCustomMargin";
 import {  useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import { useInView } from "react-intersection-observer";
+import { useLocation } from "react-router-dom";
 import { getPlaylistDTO } from "types/Admin";
 
 const FavoritesPage: React.FC = () => {
@@ -21,11 +22,14 @@ const FavoritesPage: React.FC = () => {
   // 플레이리스트 데이터
   const [playlistData, setPlaylistdata] = useState<getPlaylistDTO[]>([]);
 
+  const location = useLocation();
+
   // API 호출
   const fetchData = async () => {
     try {
-      const playlistResult = await getFavoritesPlayList(token,page,setIsLoading);
-      setPlaylistdata(playlistResult.data); // 기존 데이터에 새로운 데이터를 추가
+      const playlistResult = await getFavoritesPlayList(location.state.username,token,page,setIsLoading);
+      setPlaylistdata([...playlistData, ...playlistResult.data]); // 기존 데이터에 새로운 데이터를 추가
+
       setPage((page) => page + 1);
       setCount(playlistData.length);
       

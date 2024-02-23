@@ -18,19 +18,20 @@ const SearchPage: React.FC = () => {
   const query = searchParams.get('query');
 
   const [searchResults, setSearchResults] = useState<searchResultsDTO>();
-
   useEffect(() => {
     // API 호출
     const fetchData = async () => {
       try {
-        const searchResult = await getSearch(query);
+        const searchResult = await getSearch(query?.trim());
         setSearchResults(searchResult);
       } catch (error) {
         console.error(error);
       }
     };
-
-    fetchData();
+    if(query?.trim()){
+      fetchData();
+    }
+    
   }, [location.search, query]);
 
   return (
@@ -38,10 +39,10 @@ const SearchPage: React.FC = () => {
       <OptionHeader text="검색" />
       <SearchInput />
       <main className='p-4'>
-        {query && <QueryText query={query} />}
+        {query?.trim() && <QueryText query={query} />}
 
         {/* 플레이리스트 */}
-        {!query ?
+        {!query?.trim() ?
           <span className="flex justify-start "><img src={hot} alt='x' /> &nbsp; 인기 플레이리스트</span>
           :
           <div className="flex justify-between font-PretendardSemiBold">
@@ -63,7 +64,7 @@ const SearchPage: React.FC = () => {
         <div className='h-[50px]' />
 
         {/* 유저 */}
-        {!query ?
+        {!query?.trim() ?
           <span className="flex justify-start "><img src={hot} alt='x' /> &nbsp; 인기 유저</span>
           : <p className='font-PretendardSemiBold mb-3'> 유저 </p>
         }

@@ -33,7 +33,6 @@ import useCompressedImage from "@hooks/useCompressImage/useCompressImage";
 import convertUrlToBlobFile from "@utils/convertFile/convertFile";
 import useHandleUploadImage from "@hooks/useHandleUploadImage/useHandleUploadImage";
 import useCompressHandleImage from "@hooks/useCompressHandleImage/useCompressHandleImage";
-import { useNavigate } from "react-router-dom";
 
 interface AdminEditModalProps {
   onClose: () => void; // A function to close the modal
@@ -46,7 +45,6 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   const [userData, setUserdata] = useState<getMemberDTO>();
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   // 유효상태
   const [nicknameValidation, setNicknameValidation] = useState<boolean>(true);
@@ -60,6 +58,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
         // Call the asynchronous function and await its result
         const userDataResult = await getMemberMe(cookies.accessToken);
         setUserdata(userDataResult.data);
+        console.log(userDataResult)
       } catch (error) {
         console.error("Error fetching user data:", error);
         // Handle errors appropriately
@@ -106,6 +105,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
       [name]: value,
     });
     if (name === "username") {
+      console.log(value)
       if (value) {
         try {
           const checkNicknameBack = await getNicknameAvailable(value, token);
@@ -159,7 +159,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   } = useSelector((state: RootState) => state.userProfile);
   const [updateMemberData, setUpdateMemberData] = useState<UpdateMemberParams>({
     // 입력없을때 닉네임 통과
-    username: username || "", // Use the directly obtained value
+    username: username , // Use the directly obtained value
     introduction: introduction,
     profileImage: profileImage,
     backgroundImage: profileBackgroundImage,
@@ -233,6 +233,8 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
   // 취소
   const cancel = () => {
+    
+    dispatch(setProfileUsername(userData?.username));
     dispatch(setProfileIntroduction(userData?.introduction));
     dispatch(setDeleteProfileImage(false));
     dispatch(setDeleteProfileBackgroundImage(false));
@@ -292,7 +294,6 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
         });
         dispatch(setToast("profile"));
 
-        navigate(`/user/${code.data.username}/env`);
       }
 
       setIsOpen(!isOpen);
