@@ -11,10 +11,11 @@ function useCompareToken(id: string | null | undefined) {
   const decodedRefeshToken = useDecodedJWT(refreshToken);
 
   useEffect(() => {
-    if (id && decodedRefeshToken && `'${id}'` === (decodedRefeshToken.sub)) {
+    if (id && decodedRefeshToken && `${id}` === (decodedRefeshToken.sub)) {
       setAuthority(true);
     }
   }, [id, decodedRefeshToken.sub]);
+
   return authority;
 }
 
