@@ -157,22 +157,7 @@ const AdminPage: React.FC = () => {
       {toast === "login" && (
         <ToastComponent background="white" text="로그인 성공 ! " />
       )}
-      {/* 프로필 성공 토스트 */}
 
-      {toast === "profile" && (
-        <ToastComponent
-          background="white"
-          text="프로필이 정상적으로 수정되었습니다 !"
-        />
-      )}
-
-      {/* 프로필 실패 토스트 */}
-      {toast === "not_profile" && (
-        <ToastComponent
-          background="white"
-          text="프로필이 수정을 실패했습니다 !"
-        />
-      )}
       {/* 복사 성공 토스트 */}
 
       {toast === "copy" && (

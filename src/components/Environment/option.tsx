@@ -14,6 +14,7 @@ import Footer from "@components/Layout/footer";
 import Swal from "sweetalert2";
 import { useCookies } from "react-cookie";
 import OptionHeader from "@components/Layout/optionHeader";
+import ToastComponent from "@components/Toast/Toast";
 
 const OptionComponents = () => {
   const swalButton = Swal.mixin({
@@ -40,6 +41,9 @@ const OptionComponents = () => {
   const [, , removeCookie] = useCookies();
   // 세션 아이디
   const id = sessionStorage.getItem('id');
+
+  // 토스트
+  const { toast } = useSelector((state: RootState) => state.toast);
 
   const handleShare = () => {
     if (navigator.share) {
@@ -99,7 +103,7 @@ const OptionComponents = () => {
   const handleFavorites = () => {
     navigate('./favorites', { state: { username: username ? username : userData.username } });
   }
-  
+
   const handleUnsign = useCallback(() => {
     navigate(`./unsign`);
   }, [navigate]);
@@ -136,11 +140,28 @@ const OptionComponents = () => {
     setIsEditModalOpen(false);
   };
 
-  const {profileImage,username,introduction} = useSelector((state: RootState) => state.userProfile);
+  const { profileImage, username, introduction } = useSelector((state: RootState) => state.userProfile);
 
   return (
     <div className="h-full min-h-screen w-full scrollbar-hide overflow-scroll flex  flex-col bg-white text-black text-[15px] font-medium leading-[18px]">
       <OptionHeader />
+      {/* 프로필 성공 토스트 */}
+
+      {toast === "profile" && (
+        <ToastComponent
+          background="black"
+          text="프로필이 정상적으로 수정되었습니다 !"
+        />
+      )}
+
+      {/* 프로필 실패 토스트 */}
+      {toast === "not_profile" && (
+        <ToastComponent
+          background="black"
+          text="프로필이 수정을 실패했습니다 !"
+        />
+      )}
+
       {!isLoading && (
         <div className="flex-crow h-full">
           <main className="flex items-center justify-between p-4">
@@ -150,16 +171,16 @@ const OptionComponents = () => {
                   profileImage
                     ? profileImage
                     : userData.profileImage
-                    ? userData.profileImage
-                    : userData.profileImageUrl
-                    ? userData.profileImageUrl
-                    : NoImage
+                      ? userData.profileImage
+                      : userData.profileImageUrl
+                        ? userData.profileImageUrl
+                        : NoImage
                 }
                 alt="프로필 이미지"
                 className="w-14 h-14 rounded-full"
               />
               <div className="ml-4">
-                <h2 className="text-lg font-bold">{username ? username :userData.username}</h2>
+                <h2 className="text-lg font-bold">{username ? username : userData.username}</h2>
                 <p className="text-sm text-gray-500">{introduction ? introduction : userData.introduction}</p>
               </div>
             </div>
