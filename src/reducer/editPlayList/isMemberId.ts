@@ -2,7 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const memberIdSlice = createSlice({
   name: "memberId",
-  initialState: -1,
+  initialState: '-1',
   reducers: {
     setMemberId: (state, action) => {
       return action.payload;

@@ -1,4 +1,4 @@
-import { getMemberUsername } from "@api/member-controller/memberController";
+import { getMember, getMemberUsername } from "@api/member-controller/memberController";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getMemberDTO } from "types/Admin";
@@ -14,6 +14,7 @@ import Footer from "@components/Layout/footer";
 import Swal from "sweetalert2";
 import { useCookies } from "react-cookie";
 import OptionHeader from "@components/Layout/optionHeader";
+import useDecodedJWT from "@hooks/useDecodedJWT";
 
 const OptionComponents = () => {
   const swalButton = Swal.mixin({
@@ -38,7 +39,8 @@ const OptionComponents = () => {
 
   const navigate = useNavigate();
   const [, , removeCookie] = useCookies();
-  const { username } = useParams<{ username: string | undefined }>();
+  // 세션 아이디
+  const id = sessionStorage.getItem('id');
 
   const handleShare = () => {
     if (navigator.share) {
@@ -99,7 +101,7 @@ const OptionComponents = () => {
     navigate('/favorites');
   }
   const handleUnsign = useCallback(() => {
-    navigate(`/unsign`);
+    navigate(`./unsign`);
   }, [navigate]);
 
   const [userData, setUserdata] = useState<getMemberDTO>(getDefaultMember);
@@ -108,7 +110,7 @@ const OptionComponents = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userDataResult = await getMemberUsername(username);
+        const userDataResult = await getMember(id);
 
         setUserdata(userDataResult.data);
       } catch (error) {
@@ -122,7 +124,7 @@ const OptionComponents = () => {
     }, delay);
 
     return () => clearTimeout(timeoutId);
-  }, [username]);
+  }, [id]);
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 

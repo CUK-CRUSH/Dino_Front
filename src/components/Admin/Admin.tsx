@@ -135,7 +135,7 @@ const AdminPage: React.FC = () => {
 
   return (
     <div className="relative w-full h-full mx-auto scrollbar-hide overflow-scroll flex flex-col justify-between bg-neutral-900">
-      <Header id={userData.id} authority={authority} />
+      <Header id={userData.id} authority={!authority} />
 
       <UserProfileBackground
         userBackgroundImage={userData?.backgroundImageUrl}

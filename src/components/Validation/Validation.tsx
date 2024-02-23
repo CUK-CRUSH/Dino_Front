@@ -117,7 +117,7 @@ const checkNickname = (nickname: string) => {
   );
   
   const decodedToken = useDecodedJWT(cookies.accessToken);
-  const id = Number(decodedToken?.sub);
+  const id = decodedToken?.sub;
 
   useEffect(() => {
     /* eslint-disable react-hooks/exhaustive-deps */

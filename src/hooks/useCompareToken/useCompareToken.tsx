@@ -1,7 +1,7 @@
 import useDecodedJWT from "@hooks/useDecodedJWT";
 import { useEffect, useState } from "react";
 
-function useCompareToken(id: number | null | undefined) {
+function useCompareToken(id: string | null | undefined) {
   const [authority, setAuthority] = useState<boolean>(false);
 
   // 리프레시 토큰 불러오기
@@ -11,11 +11,10 @@ function useCompareToken(id: number | null | undefined) {
   const decodedRefeshToken = useDecodedJWT(refreshToken);
 
   useEffect(() => {
-    if (id && decodedRefeshToken && id === Number(decodedRefeshToken.sub)) {
+    if (id && decodedRefeshToken && `'${id}'` === (decodedRefeshToken.sub)) {
       setAuthority(true);
     }
-  }, [id, decodedRefeshToken]);
-
+  }, [id, decodedRefeshToken.sub]);
   return authority;
 }
 
