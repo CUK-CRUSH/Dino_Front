@@ -98,8 +98,9 @@ const OptionComponents = () => {
   };
 
   const handleFavorites = () => {
-    navigate('./favorites');
+    navigate('./favorites', { state: { username: username ? username : userData.username } });
   }
+  
   const handleUnsign = useCallback(() => {
     navigate(`./unsign`);
   }, [navigate]);

@@ -296,7 +296,6 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
         });
         dispatch(setToast("profile"));
 
-        navigate(`/env`);
       }
 
       setIsOpen(!isOpen);
