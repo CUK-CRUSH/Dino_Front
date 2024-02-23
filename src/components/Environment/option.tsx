@@ -136,7 +136,7 @@ const OptionComponents = () => {
     setIsEditModalOpen(false);
   };
 
-  const profileImage = useSelector((state: RootState) => state.userProfile);
+  const {profileImage,username,introduction} = useSelector((state: RootState) => state.userProfile);
 
   return (
     <div className="h-full min-h-screen w-full scrollbar-hide overflow-scroll flex  flex-col bg-white text-black text-[15px] font-medium leading-[18px]">
@@ -147,8 +147,8 @@ const OptionComponents = () => {
             <div className="flex items-center">
               <img
                 src={
-                  profileImage?.profileImage
-                    ? profileImage?.profileImage
+                  profileImage
+                    ? profileImage
                     : userData.profileImage
                     ? userData.profileImage
                     : userData.profileImageUrl
@@ -159,8 +159,8 @@ const OptionComponents = () => {
                 className="w-14 h-14 rounded-full"
               />
               <div className="ml-4">
-                <h2 className="text-lg font-bold">{userData.username}</h2>
-                <p className="text-sm text-gray-500">{userData.introduction}</p>
+                <h2 className="text-lg font-bold">{username ? username :userData.username}</h2>
+                <p className="text-sm text-gray-500">{introduction ? introduction : userData.introduction}</p>
               </div>
             </div>
             <button
