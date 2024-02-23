@@ -8,7 +8,7 @@ const InfiniteDiv: React.FC<RefInterface> = ({view}) => {
 
   return (
     <React.Fragment>
-      <div className={``} ref={view} > 무한</div>
+      <div className={``} ref={view} />
     </React.Fragment>
   )
 
