@@ -1,4 +1,4 @@
-import ValidationProps from "@components/Validate/validation";
+import ValidationProps from "@components/Validation/Validation";
 
 const Validation = () => {
   return <ValidationProps />;

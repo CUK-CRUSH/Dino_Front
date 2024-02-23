@@ -1,0 +1,10 @@
+{
+  "cancle": "취소",
+  "save": "저장",
+  "list_edit": "리스트 수정",
+  "delete_playlist": "플레이리스트 삭제",
+  "plus_music": "곡 추가하기",
+  "representive_image": "대표 이미지 설정하기",
+  "alertTitle": "은 사용할 수 없는 URL이에요",
+  "alertMessage": "URL은 https://www.youtube.com/ 나 https://www.youtu.be/를 포함해야해요"
+}

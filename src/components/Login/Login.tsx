@@ -1,28 +1,24 @@
-import { Link } from "react-router-dom";
+// @ts-ignore
 
-import mylist2 from "@assets/Mylist2.png";
+import mylist2 from "@assets/Mylist2.svg";
 import googlelogo from "@assets/Google logo.png";
-import facebook from "@assets/facebook-3 logo.png";
-import { getLogin } from "@api/login/Login";
+// import facebook from "@assets/facebook-3 logo.png";
+import kakao from "@assets/Kakao.svg";
+import { useCookies } from "react-cookie";
 
+// 로그인 컴포넌트
 const LoginComponents = () => {
-  // 1. login/google의 header에서 Location 값을 가져온다.
-  // 2. Location으로 get요청을 보내서 토큰 값들을 갖고온다.
-  // const [accessToken, setAccessToken] = useState<string | null>(null);
-  const handleLogin = async (e: React.MouseEvent<HTMLButtonElement>) => {
-    e.preventDefault();
 
-    const loginData = await getLogin();
-    if (loginData) {
-      // setAccessToken(loginData.accessToken);
-      console.log("로그인 성공 : ", loginData.accessToken);
-    } else {
-      console.log("로그인 실패");
-    }
+  const [,,removeCookie] = useCookies();
+
+  const handleLogin = (link : string) => {
+    removeCookie('accessToken')
+    localStorage.removeItem("refreshToken");
+
+    window.location.href = `${process.env.REACT_APP_SERVER}/oauth2/authorization/${link}`;
   };
-
   return (
-    <div className="w-full h-full relative bg-white">
+    <div className="w-full h-full relative bg-white scrollbar-hide overflow-scroll">
       <div
         className={
           "flex flex-col items-center justify-items-center justify-self-center"
@@ -49,8 +45,12 @@ const LoginComponents = () => {
             fill="#121212"
           />
         </svg>
-        <br></br>
+        
+        <br />
         <img className="w-[179px] h-[55px]" src={mylist2} alt={mylist2} />
+        <br />
+        <br />
+        <br />
         <div className={"h-[100px]"}></div>
         <div className={"flex flex-row"}>
           <div className="w-[284px] h-[49px]">
@@ -71,13 +71,30 @@ const LoginComponents = () => {
               </svg>
               <div className="w-[10px]"></div>
               <div className=" text-white text-[15px] font-medium font-['Noto Sans']">
-                Log in with your social account
+                소셜 계정으로 3초만에 빠른 가입
               </div>
             </div>
           </div>
         </div>
-        <div className={"flex flex-row justify-center"}>
-          <button onClick={handleLogin}>
+        <div className={"flex flex-row justify-center my-2"}>
+          <button onClick={() => handleLogin('kakao')}>
+            <div className="w-full bg-white">
+            <div style={{background : '#FEE500'}} className="w-[360px] h-[58px] flex flex-row items-center justify-center rounded-[30px] border border-zinc-300">
+                <img
+                  src={kakao}
+                  alt={kakao}
+                  className={"w-[25px] h-[25px] align-middle"}
+                />
+                <div className={"w-[20px]"}></div>
+                <div className="flex flex-col items-center text-[17px] font-semibold font-['Noto Sans']">
+                  카카오로 로그인/회원가입
+                </div>
+              </div>
+            </div>
+          </button>
+        </div>
+        <div className={"flex flex-row justify-center my-2"}>
+          <button onClick={() => handleLogin('google')}>
             <div className="w-full bg-white">
               <div className="w-[360px] h-[58px] flex flex-row items-center justify-center rounded-[30px] border border-zinc-300">
                 <img
@@ -87,15 +104,14 @@ const LoginComponents = () => {
                 />
                 <div className={"w-[20px]"}></div>
                 <div className="flex flex-col items-center text-[17px] font-semibold font-['Noto Sans']">
-                  <div>Continue with Google</div>
+                  구글로 로그인/회원가입
                 </div>
               </div>
             </div>
           </button>
         </div>
-        <div className={"h-[10px]"}></div>
-        <div className={"flex flex-row justify-center"}>
-          <Link to={"/login/validation"}>
+        {/* <div className={"flex flex-row justify-center my-2"}>
+        <button onClick={() => handleLogin('facebook')}>
             <div className="w-full bg-white">
               <div className="w-[360px] h-[58px] flex flex-row items-center justify-center bg-white rounded-[30px] border border-zinc-300">
                 <img
@@ -105,15 +121,13 @@ const LoginComponents = () => {
                 ></img>
                 <div className={"w-[20px]"}></div>
                 <div className=" flex flex-col items-center text-center text-[17px] font-semibold font-['Noto Sans']">
-                  <div>Continue with Facebook</div>
+                  <div>페이스북으로 로그인/회원가입</div>
                 </div>
               </div>
             </div>
-          </Link>
-        </div>
+</button>        </div> */}
       </div>
     </div>
   );
 };
-
 export default LoginComponents;
