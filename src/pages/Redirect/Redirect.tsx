@@ -27,7 +27,7 @@ const Redirect = () => {
   const [cookies, setCookie] = useCookies(["accessToken"]);
 
   const decodedToken = useDecodedJWT(cookies.accessToken);
-  const id = Number(decodedToken?.sub);
+  const id = decodedToken?.sub;
 
   const dispatch = useDispatch();
 

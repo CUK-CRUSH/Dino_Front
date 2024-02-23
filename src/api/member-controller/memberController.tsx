@@ -2,7 +2,7 @@ import { axiosInstance } from "@api/axiosInstance";
 import { UpdateMemberParams } from "types/AdminEdit";
 
 // 특정 회원 정보 조회
-export const getMember = async (id: number) => {
+export const getMember = async (id: string | null) => {
   try {
     const response = await axiosInstance.get(`/api/v1/member/id/${id}`, {
       // headers: {
