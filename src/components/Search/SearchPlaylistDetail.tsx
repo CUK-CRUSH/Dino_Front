@@ -8,10 +8,11 @@ import OptionHeader from '@components/Layout/optionHeader';
 import QueryText from './QueryText';
 import SkeltonPlaylist from '@components/Admin/SkeltonPlaylist';
 import { useCustomMargin } from '@hooks/useCustomMargin/useCustomMargin';
+import InfiniteDiv from '@components/InfiniteDiv/InfiniteDiv';
 
 const SearchPlaylistDetail: React.FC = () => {
   const location = useLocation();
-  const [ref, inView] = useInView();
+  const [view, inView] = useInView();
   const [count, setCount] = useState<number>(0);
   const [isLast, setLast] = useState<boolean>(false);
   const [page, setPage] = useState(0); // 현재 페이지를 저장할 상태
@@ -69,8 +70,8 @@ const SearchPlaylistDetail: React.FC = () => {
           <PlayList key={playlist.id} playlist={playlist} fontColor='#000' visible={true} />
       ))}
 
-        <div ref={ref} />
       </main>
+      <InfiniteDiv view={view} />
 
     </div>
   )

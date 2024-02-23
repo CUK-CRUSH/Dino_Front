@@ -6,10 +6,11 @@ import { getSearchMember } from '@api/search-controller/searchController';
 import { Member } from 'types/Search/Search';
 import OptionHeader from '@components/Layout/optionHeader';
 import QueryText from './QueryText';
+import InfiniteDiv from '@components/InfiniteDiv/InfiniteDiv';
 
 const SearchMemberDetail: React.FC = () => {
   const location = useLocation();
-  const [ref, inView] = useInView();
+  const [view, inView] = useInView();
 
   const [count, setCount] = useState<number>(0);
   const [isLast, setLast] = useState<boolean>(false);
@@ -66,7 +67,7 @@ const SearchMemberDetail: React.FC = () => {
           
       </div>
 
-      <div ref={ref} />
+      <InfiniteDiv view={view} />
 
     </div>
   )
