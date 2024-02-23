@@ -61,8 +61,9 @@ const SearchMemberDetail: React.FC = () => {
           searchResults={memberData}
           username_fontSize='18px'
           introduction_fontSize='15px'
-          size='60px'
-          marginY='40px' />
+          size='50px'
+          marginY='10px' />
+          
       </div>
 
       <div ref={ref} />

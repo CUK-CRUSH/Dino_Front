@@ -1,7 +1,7 @@
 import { axiosInstance } from "@api/axiosInstance";
 
 // 플레이리스트 초기 조회하기
-export const getSearch = async (query : string | null) => {
+export const getSearch = async (query : string | undefined) => {
     try {
       const response = await axiosInstance.get(
         `/api/v1/search?q=${query}`

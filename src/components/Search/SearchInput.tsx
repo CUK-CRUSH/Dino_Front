@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import search from '@assets/Search/search.svg';
 import { useNavigate } from 'react-router-dom';
@@ -13,7 +14,9 @@ const SearchInput: React.FC = () => {
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
-    navigate(`?query=${searchQuery}`);
+    if (searchQuery.trim() !== '') {
+      navigate(`?query=${searchQuery}`);
+    }
   };
 
   return (

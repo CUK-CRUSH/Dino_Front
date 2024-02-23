@@ -33,7 +33,6 @@ import useCompressedImage from "@hooks/useCompressImage/useCompressImage";
 import convertUrlToBlobFile from "@utils/convertFile/convertFile";
 import useHandleUploadImage from "@hooks/useHandleUploadImage/useHandleUploadImage";
 import useCompressHandleImage from "@hooks/useCompressHandleImage/useCompressHandleImage";
-import { useNavigate } from "react-router-dom";
 
 interface AdminEditModalProps {
   onClose: () => void; // A function to close the modal
@@ -46,7 +45,6 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   const [userData, setUserdata] = useState<getMemberDTO>();
 
   const dispatch = useDispatch();
-  const navigate = useNavigate();
 
   // 유효상태
   const [nicknameValidation, setNicknameValidation] = useState<boolean>(true);

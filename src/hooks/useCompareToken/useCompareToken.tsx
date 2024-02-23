@@ -14,7 +14,7 @@ function useCompareToken(id: string | null | undefined) {
     if (id && decodedRefeshToken && `${id}` === (decodedRefeshToken.sub)) {
       setAuthority(true);
     }
-  }, [id, decodedRefeshToken.sub]);
+  }, [id, decodedRefeshToken]);
 
   return authority;
 }

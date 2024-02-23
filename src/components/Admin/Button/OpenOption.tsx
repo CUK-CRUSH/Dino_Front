@@ -1,6 +1,6 @@
 import setting from "@assets/Header/setting.svg";
 import { Img } from "react-image";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 interface OpenOptionProps {
   id: string;
 }

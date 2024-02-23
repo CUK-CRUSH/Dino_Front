@@ -1,6 +1,6 @@
-import { getMember, getMemberUsername } from "@api/member-controller/memberController";
+import { getMember } from "@api/member-controller/memberController";
 import { useCallback, useEffect, useState } from "react";
-import { useNavigate, useParams } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import { getMemberDTO } from "types/Admin";
 import NoImage from "@assets/noimage.jpg";
 import AdminEditModal from "@pages/Admin/AdminEditModal";
@@ -14,7 +14,6 @@ import Footer from "@components/Layout/footer";
 import Swal from "sweetalert2";
 import { useCookies } from "react-cookie";
 import OptionHeader from "@components/Layout/optionHeader";
-import useDecodedJWT from "@hooks/useDecodedJWT";
 
 const OptionComponents = () => {
   const swalButton = Swal.mixin({
