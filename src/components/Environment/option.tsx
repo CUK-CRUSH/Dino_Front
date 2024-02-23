@@ -98,7 +98,7 @@ const OptionComponents = () => {
   };
 
   const handleFavorites = () => {
-    navigate('/favorites');
+    navigate('./favorites');
   }
   const handleUnsign = useCallback(() => {
     navigate(`./unsign`);
