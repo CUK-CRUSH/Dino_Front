@@ -1,6 +1,7 @@
 import { getFavoritesPlayList } from "@api/playlist-controller/playlistControl";
 import { PlayList } from "@components/Admin/Button/PlayList";
 import SkeltonPlaylist from "@components/Admin/SkeltonPlaylist";
+import InfiniteDiv from "@components/InfiniteDiv/InfiniteDiv";
 import OptionHeader from "@components/Layout/optionHeader";
 import { useCustomMargin } from "@hooks/useCustomMargin/useCustomMargin";
 
@@ -11,7 +12,7 @@ import { useLocation } from "react-router-dom";
 import { getPlaylistDTO } from "types/Admin";
 
 const FavoritesPage: React.FC = () => {
-  const [ref, inView] = useInView();
+  const [view, inView] = useInView();
   const [count, setCount] = useState<number>(0);
   const [isLast, setLast] = useState<boolean>(false);
   const [page, setPage] = useState<number>(0); // 현재 페이지를 저장할 상태
@@ -66,7 +67,7 @@ const FavoritesPage: React.FC = () => {
           <PlayList key={playlist.id} playlist={playlist} fontColor='#000' visible={true} />
         ))}
         </div>
-        <div ref={ref} />
+        <InfiniteDiv view={view} />
 
     </div>
   );
