@@ -12,7 +12,6 @@ const UserProfile = ({ user }: any) => {
   const handleProfileClick = useCallback(() => {
     navigate(`/user/${user.username}`);
   }, [navigate, user.username]);
-
   return (
     <main className="flex items-center justify-between p-4">
       <div className="flex items-center">
@@ -74,9 +73,12 @@ const LikeList = () => {
       </header>
 
       {/* 이만큼 API가져와서 Mapping */}
-      {users.map((user: any) => (
-        <UserProfile key={user.id} user={user} />
-      ))}
+      {users.length > 0 ? (
+        users.map((user: any) => <UserProfile key={user.id} user={user} />)
+      ) : (
+        <p>좋아요가 없습니다.</p>
+      )}
+
       {/*  */}
     </div>
   );

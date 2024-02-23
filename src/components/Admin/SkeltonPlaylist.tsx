@@ -6,9 +6,10 @@ interface SkeltonPlaylistDTO {
 
 const SkeltonPlaylist = ({customMargin} : SkeltonPlaylistDTO) => {
   return (
-    <div className="inline-block h-[150px] mt-[42px] relative">
+    
+    <div className="inline-block h-[150px] relative">
 
-    {
+    { customMargin && 
       Array.from({ length: 4 }, (_, index) => (
         <div style={{ marginLeft: `${customMargin}px`, marginRight: `${customMargin}px` }} className={"inline-block"} key={index}>
           <Skeleton width="150px" height="150px" background="#2E2E2E" />

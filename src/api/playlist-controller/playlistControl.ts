@@ -6,7 +6,8 @@ export const getPlayList = async (username: string | undefined) => {
     const response = await axiosInstance.get(
       `/api/v1/playlist/user/${username}`
     );
-    return response.data;
+    if (response) { return response.data; }
+    else { return }
   } catch (error) {
     console.log(error);
     throw error;
@@ -43,9 +44,9 @@ export const postPlayList = async (
         Authorization: `Bearer ${cookies}`,
       },
     });
-    console.log(response);
 
-    return response.data;
+    if (response) { return response.data; }
+    else { return }
   } catch (error) {
     console.log(error);
     throw error;
@@ -60,12 +61,13 @@ export const getSinglePlayList = async (
   try {
     const response = cookies
       ? await axiosInstance.get(`/api/v1/playlist/${playlistId}`, {
-          headers: {
-            Authorization: `Bearer ${cookies}`,
-          },
-        })
+        headers: {
+          Authorization: `Bearer ${cookies}`,
+        },
+      })
       : await axiosInstance.get(`/api/v1/playlist/${playlistId}`);
-    return response.data;
+    if (response) { return response.data; }
+    else { return }
   } catch (error) {
     console.log(error);
     throw error;
@@ -83,7 +85,8 @@ export const deletePlayList = async (playlistId: string, cookies?: string) => {
         },
       }
     );
-    return response.data;
+    if (response) { return response.data; }
+    else { return }
   } catch (error) {
     console.log(error);
     throw error;
@@ -125,7 +128,8 @@ export const putPlayList = async (
       }
     );
 
-    return response.data;
+    if (response) { return response.data; }
+    else { return }
   } catch (error) {
     console.log(error);
     throw error;
@@ -146,7 +150,8 @@ export const deletePlayListImage = async (
         },
       }
     );
-    return response.data;
+    if (response) { return response.data; }
+    else { return }
   } catch (error) {
     console.log(error);
     throw error;
@@ -166,7 +171,8 @@ export const postLike = async (playlistId: number, cookies?: string) => {
       }
     );
 
-    return response.data;
+    if (response) { return response.data; }
+    else { return }
   } catch (error) {
     console.log(error);
     throw error;
@@ -183,7 +189,8 @@ export const deleteLike = async (playlistId: number, cookies?: string) => {
         },
       }
     );
-    return response.data;
+    if (response) { return response.data; }
+    else { return }
   } catch (error) {
     console.log(error);
     throw error;
@@ -195,9 +202,34 @@ export const getLikeList = async (playlistId: number) => {
     const response = await axiosInstance.get(
       `/api/v1/playlist/${playlistId}/like`
     );
-    return response.data;
+    if (response) { return response.data; }
+    else { return }
   } catch (error) {
     console.log(error);
+    throw error;
+  }
+};
+
+// 좋아요한 플레이리스트 조회
+export const getFavoritesPlayList = async (
+  cookies?: string,
+  page? : number,
+  setIsLoading?: (loading: boolean) => void
+) => {
+  try {
+    setIsLoading?.(true);  // 로딩 시작
+    const response = await axiosInstance.get(`/api/v1/playlist/like`, {
+      headers: {
+        Authorization: `Bearer ${cookies}`,
+      },
+      
+    })
+    setIsLoading?.(false);  // 로딩 완료
+    if (response) { return response.data; }
+    else { return }
+  } catch (error) {
+    console.log(error);
+    setIsLoading?.(false);  // 에러 발생시 로딩 완료
     throw error;
   }
 };

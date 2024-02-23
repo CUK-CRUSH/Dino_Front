@@ -13,7 +13,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import Swal from "sweetalert2";
 
-const LikeButton = () => {
+const LikeButton = (id: any) => {
   const swalButton = Swal.mixin({
     customClass: {
       popup: "popup", // 전체
@@ -35,6 +35,7 @@ const LikeButton = () => {
 
   const [likeCount, setLikeCount] = useState<number>(0);
   const [isLike, setIsLike] = useState<boolean>(false);
+  const [isLoading, setIsLoding] = useState<boolean>(true);
 
   const handleLikeToggle = async () => {
     if (!token) {
@@ -49,7 +50,7 @@ const LikeButton = () => {
           cancelButtonText: "로그인",
         })
         .then((result) => {
-          if (result.isDismissed) {
+          if (result.dismiss === Swal.DismissReason.cancel) {
             navigate("/login");
           }
         });
@@ -81,12 +82,18 @@ const LikeButton = () => {
     navigate(`/user/${username}/${playlistId}/like`);
   };
   useEffect(() => {
-    fetchPlaylist();
+    const delay = 200;
+    const timeoutId = setTimeout(() => {
+      setIsLoding(false);
+      fetchPlaylist();
+    }, delay);
+
+    return () => clearTimeout(timeoutId);
   }, [fetchPlaylist]);
 
-  return (
-    <div className="absolute -bottom-5 left-4 bg-black inline-flex justify-between items-center px-1 w-[110px] h-[42px] rounded-[30px] z-20">
-      <div className=" bg-[#EA4335] p-1 rounded-full w-1/3">
+  return !id && isLoading ? null : (
+    <div className="bg-black inline-flex px-1  rounded-[30px] ml-4">
+      <div className="p-1 rounded-full">
         <img
           className="w-6 h-6"
           onClick={handleLikeToggle}
@@ -94,11 +101,8 @@ const LikeButton = () => {
           alt="Like button"
         />
       </div>
-      <div
-        onClick={handleNavigate}
-        className="flex items-center justify-center w-2/4"
-      >
-        <span className="text-center">
+      <div onClick={handleNavigate} className="mx-2 mt-2">
+        <span className="text-center font-semibold">
           {likeCount < 1000 ? likeCount : "999+"}
         </span>
       </div>

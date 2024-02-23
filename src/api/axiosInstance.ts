@@ -9,11 +9,13 @@ export const axiosInstance = axios.create({
 axiosInstance.interceptors.request.use(
   async (config) => {
     // 요청 전에 accessToken이 유효한지 확인
-    const accessToken = localStorage.getItem("accessToken");
-    if (accessToken) {
-      // accessToken이 유효하면 Authorization 헤더에 추가
+    const accessToken = Cookies.get("accessToken");
+    if (accessToken && config.headers["Require-Auth"]) {
+      // accessToken이 유효하고, 요청에 'Require-Auth' 헤더가 있다면 Authorization 헤더에 추가
       config.headers.Authorization = `Bearer ${accessToken}`;
     }
+    // 'Require-Auth' 헤더는 실제 요청에는 필요하지 않으므로 삭제
+    delete config.headers["Require-Auth"];
     return config;
   },
   (error) => {
@@ -29,31 +31,32 @@ axiosInstance.interceptors.response.use(
   async (error) => {
     const originalRequest = error.config;
 
-    // 응답이 401 Unauthorized인 경우 refreshToken으로 accessToken 재발급
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
-      try {
-        const refreshToken = localStorage.getItem("refreshToken");
-        const response = await axiosInstance.post("/login/token/reissue", {
-          refreshToken,
+      const refreshToken = localStorage.getItem("refreshToken");
+
+      return axiosInstance
+        .post("/login/token/reissue", { refreshToken })
+        .then((response) => {
+          Cookies.set("accessToken", response.data.data.access_token, {
+            expires: 1 / 144,
+          });
+          console.log("토큰을 새로 발급 중입니다...");
+          originalRequest.headers.Authorization = `Bearer ${response.data.data.access_token}`;
+
+          return axiosInstance(originalRequest);
+        })
+        .catch((error) => {
+          console.log("리스레시 토큰이 만료되었습니다.");
+
+          window.location.href = "/login";
+
+          return Promise.reject(error);
         });
-        // 새로운 accessToken으로 localStorage 업데이트
-        Cookies.set("accessToken", response.data.data.access_token);
-        console.log("토큰을 새로 발급 중입니다...");
-
-        // 재발급된 accessToken으로 원래 요청 다시 보내기
-        originalRequest.headers.Authorization = `Bearer ${response.data.data.access_token}`;
-        return axiosInstance(originalRequest);
-      } catch (error) {
-        // refreshToken으로 재발급 실패 시 로그인 페이지로 이동 또는 오류 처리
-        console.log(error);
-        // 예: 로그인 페이지로 이동
-        window.location.href = "/login";
-        return Promise.reject(error);
-      }
+    } else {
+      return Promise.reject(error);
     }
-
-    return Promise.reject(error);
   }
 );
+

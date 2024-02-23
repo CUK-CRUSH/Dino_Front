@@ -27,14 +27,14 @@ const ToastComponent: React.FC<ToastComponentDTO> = ({ background, text }) => {
         <div
           className={`z-10 fixed left-1/2 transform -translate-x-1/2 bottom-10 p-4 text-[#000] bg-[#fff] rounded-2xl h-[40px] flex items-center`}
         >
-          <div className="text-center text-sm font-normal">{text}</div>
+          <div className="text-center text-xs">{text}</div>
         </div>
       )}
       {background === "black" && (
         <div
           className={`z-10 fixed left-1/2 transform -translate-x-1/2 bottom-20 p-4 text-[#fff] bg-[#000] bg-opacity-70 rounded-2xl h-[40px] flex items-center`}
         >
-          <div className="text-center text-sm font-normal">{text}</div>
+          <div className="text-center text-xs ">{text}</div>
         </div>
       )}
     </>
