@@ -18,5 +18,6 @@ export interface Playlist {
   id: string,
   username : string,
   playlistName: string,
-  thumbnailUrl: string | null
+  thumbnailUrl: string | null,
+  numberOfMusics: number,
 } 
