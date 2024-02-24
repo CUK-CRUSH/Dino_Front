@@ -2,14 +2,12 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getRecommendation } from "@api/Recommendation/recommendationControl";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import { Carousel } from "react-responsive-carousel";
 import Noimage from "@assets/noimage.jpg";
 import { useCookies } from "react-cookie";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
 import { Pagination } from 'swiper/modules';
-import {EffectCoverflow, Mousewheel, Navigation} from 'swiper/modules';
 
 interface PlayListDTO {
   id: number;
