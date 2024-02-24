@@ -31,7 +31,7 @@ const SearchMemberDetail: React.FC = () => {
       setPage((page) => page + 1);
       setCount(memberData.length);
 
-      if (count < 5) {
+      if (count < 10) {
         setLast(false);
       } else {
         setLast(true);
