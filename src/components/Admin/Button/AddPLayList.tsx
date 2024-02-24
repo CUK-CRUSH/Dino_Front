@@ -1,6 +1,5 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import plus from "../../../assets/Admin/plus.svg";
-import useWindowSizeCustom from "../../../hooks/useCustomMargin/useWindowSizeCustom";
 import { postPlayList } from "@api/playlist-controller/playlistControl";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
