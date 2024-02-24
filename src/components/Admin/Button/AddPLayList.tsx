@@ -52,16 +52,16 @@ export const AddPlayList = () => {
   };
 
   return (
-    <div style={{ marginLeft: `${customMargin}px`, marginRight: `${customMargin}px` }} className="inline-block h-[150px] mt-[10px] relative">
+    <div style={{ marginLeft: `${customMargin}px`, marginRight: `${customMargin}px` }} className="inline-block h-[200px] mt-[15px] relative">
 
-      <button onClick={handleClick} style={{ background: '#2E2E2E' }} className="w-[150px] h-[150px] rounded-[13px] font-light text-zinc-300 text-4xl ">
+      <div onClick={handleClick} style={{ background: '#2E2E2E' }} className="w-[150px] h-[150px] rounded-[13px] font-light text-zinc-300 text-4xl ">
 
         <img className="mx-auto mt-[0px] w-[33px] h-full" src={plus} alt="Plus Icon" />
 
-        <div className="absolute bottom-1 left-0 right-0 text-center text-zinc-300 text-[12px] font-medium font-['Noto Sans']">
+        <div className="absolute bottom-[55px] left-0 right-0 text-center text-zinc-300 text-[12px] font-medium font-['Noto Sans']">
           새로운 플레이리스트
         </div>
-      </button>
+      </div>
     </div>
   );
 };
