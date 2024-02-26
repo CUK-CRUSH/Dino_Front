@@ -65,7 +65,7 @@ export const MainEditButton = ({
   const authority = useCompareToken(memberId);
 
   return (
-    <div className="flex h-[5%] smartPhoneXs:h-[3.5%] smartPhone:h-[3.5%] tabletMini:h-[3%] tablet:h-[3%] items-center justify-between m-3 text-[19px]">
+    <div className="flex min-h-[3%] h-[5%] smartPhoneXs:h-[3.5%] smartPhone:h-[3.5%] tabletMini:h-[3%] tablet:h-[3%] items-center justify-between m-3 text-[19px]">
       <button type="button" onClick={handleBack} className="text-white">
         <FaAngleLeft size={24} />
       </button>

@@ -10,6 +10,7 @@ export const MusicTitle = ({ isEditing }: MusicTitleProps) => {
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPlaylistName(e.target.value);
+    sessionStorage.setItem("playlistName", e.target.value);
   };
 
   return (
