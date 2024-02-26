@@ -5,7 +5,7 @@ import { RootState } from "@store/index";
 import { useSelector } from "react-redux";
 import { Img } from "react-image";
 
-const SetProfileImage = ({ aspectRatio, onCrop, isCompressLoading }: SetProfileImageDTO ) => {
+const SetProfileImage = ({ aspectRatio, onCrop, }: SetProfileImageDTO ) => {
 
   const { profileImage } = useSelector(
     (state: RootState) => state.setProfile

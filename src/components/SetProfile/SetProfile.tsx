@@ -2,8 +2,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import Progress from "./Progress";
 import Skip from "./Skip";
 import Text from "./Text";
-import { useCallback, useEffect, useState } from "react";
-import useImageCompress from "@hooks/useImageCompress";
+import {  useEffect, useState } from "react";
 import SetProfileImage from "./Setter/SetProfileImage";
 import SetProfileBackgroundImage from "./Setter/SetProfileBackgroundImage";
 import SetProfileIntroduction from "./Setter/SetProfileIntroduction";
@@ -11,10 +10,14 @@ import { setProfileBackgroundImage, setProfileImage, setProfileIntroduction } fr
 import { useDispatch } from "react-redux";
 import Next from "./Next";
 import { getMemberUsername } from "@api/member-controller/memberController";
+import useCompressedImage from "@hooks/useCompressImage/useCompressImage";
+import useCompressHandleImage from "@hooks/useCompressHandleImage/useCompressHandleImage";
+import convertUrlToBlobFile from "@utils/convertFile/convertFile";
+import useHandleUploadImage from "@hooks/useHandleUploadImage/useHandleUploadImage";
 
 export const SetProfilePage = () => {
   // 프로필 설정 단계
-  const { username , step } = useParams<{ username? : string, step?: string }>();
+  const { username, step } = useParams<{ username?: string, step?: string }>();
   const parsedStep = parseInt(step || "1", 10);
   const dispatch = useDispatch();
   // 프로필사진
@@ -22,78 +25,56 @@ export const SetProfilePage = () => {
     string | null
   >(null);
 
-  const {
-    isLoading: isCompressUserProfileLoading,
-  } = useImageCompress();
+  useEffect(()=>{
+    dispatch(setProfileImage(uploadUserProfileImage))
+  },[uploadUserProfileImage,dispatch])
 
   const handleUploadUserProfileImage = (image: string) =>
     setUploadUserProfileImage(image);
 
-  const handleCompressUserProfileImage = useCallback(async () => {
-    if (!uploadUserProfileImage) return;
+  const compressedImage = useCompressedImage();
 
-    // const imageFile = dataURItoFile(uploadUserProfileImage);
+  const handleProfileImageCompress = useCompressHandleImage(
+    uploadUserProfileImage,
+    convertUrlToBlobFile,
+    compressedImage,
+    undefined,
+    undefined,
+    ""
+  );
 
-    // const compressedUserProfileImage = await compressUserProfileImage(
-    //   imageFile
-    // );
-
-    // if (!compressedUserProfileImage) return;
-    // const imageUrl = URL.createObjectURL(compressedUserProfileImage);
-    // setCompressedUserProfileImage(imageUrl);
-
-    dispatch(setProfileImage(uploadUserProfileImage));
-  }, [uploadUserProfileImage, dispatch]);
-
-  useEffect(() => {
-    if (uploadUserProfileImage) {
-      handleCompressUserProfileImage();
-    }
-  }, [uploadUserProfileImage, handleCompressUserProfileImage]);
+  useHandleUploadImage(uploadUserProfileImage, handleProfileImageCompress);
 
   // 배경화면
   const [
     uploadUserProfileBackgroundImage,
     setUploadUserProfileBackgroundImage,
   ] = useState<string | null>(null);
-  
-  const {
-    isLoading: isCompressUserProfileBackgroundLoading,
-  } = useImageCompress();
+
+  useEffect(()=>{
+    dispatch(setProfileBackgroundImage(uploadUserProfileBackgroundImage))
+  },[uploadUserProfileBackgroundImage,dispatch])
 
   const handleUploadUserProfileBackgroundImage = (image: string) =>
     setUploadUserProfileBackgroundImage(image);
 
-  const handleCompressUserProfileBackgroundImage = useCallback(async () => {
-    if (!uploadUserProfileBackgroundImage) return;
-
-    // const imageFile = dataURItoFile(uploadUserProfileBackgroundImage);
-    // const compressedUserProfileBackgroundImage =
-    //   await compressUserProfileBackgroundImage(imageFile);
-
-    // if (!compressedUserProfileBackgroundImage) return;
-    // const imageUrl = URL.createObjectURL(compressedUserProfileBackgroundImage);
-
-    // setCompressedUserProfileBackgroundImage(imageUrl);
-    dispatch(setProfileBackgroundImage(uploadUserProfileBackgroundImage));
-
-  }, [
+  const handleProfileBackgroundImageCompress = useCompressHandleImage(
     uploadUserProfileBackgroundImage,
-    dispatch
-  ]);
+    convertUrlToBlobFile,
+    compressedImage,
+    undefined,
+    undefined,
+    ""
+  );
 
-  useEffect(() => {
-    if (uploadUserProfileBackgroundImage) {
-      handleCompressUserProfileBackgroundImage();
-    }
-  }, [
+  useHandleUploadImage(
     uploadUserProfileBackgroundImage,
-    handleCompressUserProfileBackgroundImage,
-  ]);
+    handleProfileBackgroundImageCompress
+  );
 
   // 한줄소개
   const [input, setInput] = useState({
-    introduction: undefined,
+    introduction: '',
   });
 
   const onChangeInput = (e: { target: { name: any; value: any } }) => {
@@ -115,8 +96,9 @@ export const SetProfilePage = () => {
         try {
           if (true) {
             const getUserData = await getMemberUsername(username);
-            console.log(getUserData.data)
-            if (getUserData.data.backgroundImageUrl !== null || getUserData.data.profileImageUrl !== null || getUserData.data.introduction !== null) {
+            
+            // 접근 제한
+            if (getUserData.data.backgroundImageUrl !== null || getUserData.data.profileImageUrl !== null || getUserData.data.introduction !== '') {
               navigate(`/user/${getUserData.data.username}`);
             }
           }
@@ -131,7 +113,7 @@ export const SetProfilePage = () => {
 
   return (
     <div className="w-full h-full relative bg-white flex flex-col align-middle items-center">
-      <Skip 
+      <Skip
         step={parsedStep}
         username={username}
       />
@@ -140,25 +122,23 @@ export const SetProfilePage = () => {
       {parsedStep === 1 && <SetProfileImage
         aspectRatio={1 / 1}
         onCrop={handleUploadUserProfileImage}
-        isCompressLoading={isCompressUserProfileLoading} 
-        />}
-      {parsedStep === 2 && <SetProfileBackgroundImage 
+      />}
+      {parsedStep === 2 && <SetProfileBackgroundImage
         aspectRatio={1 / 1}
         onCrop={handleUploadUserProfileBackgroundImage}
-        isCompressLoading={isCompressUserProfileBackgroundLoading} 
-        />}
-      {parsedStep === 3 && <SetProfileIntroduction 
-          placeholder="한 줄 소개"
-          maxlength={999}
-          name="introduction"
-          value={''}
-          onChange={onChangeInput}/>}
+      />}
+      {parsedStep === 3 && <SetProfileIntroduction
+        placeholder="한 줄 소개"
+        maxlength={999}
+        name="introduction"
+        value={''}
+        onChange={onChangeInput} />}
 
-        <Next 
-          step={parsedStep}
-          username={username}
-            
-          />
+      <Next
+        step={parsedStep}
+        username={username}
+
+      />
     </div>
   );
 };

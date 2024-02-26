@@ -22,13 +22,11 @@ export interface TextDTO {
 export interface SetProfileImageDTO {
   aspectRatio: number;
   onCrop: (image: string) => void;
-  isCompressLoading: boolean;
 }
 
 export interface SetProfileBackgroundImageDTO {
   aspectRatio: number;
   onCrop: (image: string) => void;
-  isCompressLoading: boolean;
 }
 
 export interface SetUserProfileIntroductionDTO {
