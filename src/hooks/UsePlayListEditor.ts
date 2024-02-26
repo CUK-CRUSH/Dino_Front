@@ -164,6 +164,7 @@ export const UsePlayListEditor = ({
     dispatch(setIsEditing(false));
     dispatch(resetIsSaved());
     dispatch(clearMusic());
+    setPlaylistName(playlists.playlistName);
     sessionStorage.removeItem("playlistName");
   };
 

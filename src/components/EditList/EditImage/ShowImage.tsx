@@ -120,7 +120,7 @@ const ShowImage = ({
   );
 
   return (
-    <div className="relative h-1/3 smartPhone:h-[28%] tabletMini:h-[20%] tablet:h-[18%] rounded-b-3xl bg-white ">
+    <div className="min-h-[33%] relative h-1/3 smartPhone:h-[28%] tabletMini:h-[20%] tablet:h-[18%] rounded-b-3xl bg-white ">
       {isLoading ? (
         <Img src={Spinner} alt="Spinner" />
       ) : isEditing ? (
