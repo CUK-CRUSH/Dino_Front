@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Navigation, Mousewheel } from 'swiper/modules';
 import { getRecommendation } from "@api/Recommendation/recommendationControl";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import Noimage from "@assets/noimage.jpg";
@@ -41,26 +42,28 @@ const Recommendation = () => {
 
 
   return (
-      <div className="flex justify-center flex-col mx-5 ">
-        <p className="mb-2">✨추천 플레이리스트</p>
+      <div className="flex justify-center flex-col ">
+        <p className="mb-2">✨랜덤 플레이리스트</p>
+        <div style={{ width: '100%'}} className={"px-2.5"}>
         {data.length > 0 ? (
             <Swiper
-                modules={[Pagination]}
+                modules={[Pagination, Navigation, Mousewheel]}
                 grabCursor={true}
-                centeredSlides={true}
-                slidesPerView={4}
-                slidesOffsetBefore={0}
-                initialSlide={0} // Set the first slide as the initial slide
+                slidesPerView={3.5}
+                spaceBetween={10}
+                navigation
+                loop={false}
+                mousewheel
             >
               {data.map((item) => (
                   <SwiperSlide key={item.id}>
                     <div
-                        className="mr-3 cursor-pointer w-[6rem] h-[10rem] flex flex-col items-center"
+                        className="mr-3 cursor-pointer w-[5.5rem] h-[10rem] flex flex-col items-center"
                         onClick={() => handleOnClick(item.username, item.id)}
                     >
                       <div>
                         <img
-                            className="w-[6rem] h-[6rem] cursor-pointer rounded-lg object-cover"
+                            className="w-[5.5rem] h-[5.5rem] cursor-pointer rounded-lg object-cover"
                             src={item.thumbnailUrl ? item.thumbnailUrl : Noimage}
                             alt={item.playlistName}
                         />
@@ -73,8 +76,9 @@ const Recommendation = () => {
               ))}
             </Swiper>
         ) : (
-            <div>추천 플레이리스트가 없습니다.</div>
+            <div>랜덤 플레이리스트가 없습니다.</div>
         )}
+        </div>
       </div>
   );
 };
