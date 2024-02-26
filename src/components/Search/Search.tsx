@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import SearchPlaylist from './SearchPlaylist';
+import SearchPlaylist from './playlist/SearchPlaylist';
 import { getSearch } from '@api/search-controller/searchController';
 import { searchResultsDTO } from 'types/Search/Search';
-import SearchMemberList from './SearchMemberList';
+import SearchMemberList from './member/SearchMemberList';
 import OptionHeader from '@components/Layout/optionHeader';
-import SearchInput from './SearchInput';
+import SearchInput from './playlist/SearchInput';
 import hot from "@assets/Search/hot.svg";
-import NothingSearch from './NothingSearch';
-import QueryText from './QueryText';
+import NothingSearch from './playlist/NothingSearch';
+import QueryText from './playlist/QueryText';
 
 const SearchPage: React.FC = () => {
   const location = useLocation();
