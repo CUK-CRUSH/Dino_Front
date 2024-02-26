@@ -31,7 +31,7 @@ const SearchMemberDetail: React.FC = () => {
       setPage((page) => page + 1);
       setCount(memberData.length);
 
-      if (count < 8) {
+      if (count < 10) {
         setLast(false);
       } else {
         setLast(true);
@@ -63,7 +63,7 @@ const SearchMemberDetail: React.FC = () => {
           username_fontSize='18px'
           introduction_fontSize='15px'
           size='50px'
-          marginY='28px' />
+          marginY='20px' />
           
         <InfiniteDiv view={view} />
 

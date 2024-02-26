@@ -1,19 +1,15 @@
 import React from "react";
 
 interface RefInterface {
-  view : (node?: Element | null | undefined) => void;
+  view: (node?: Element | null | undefined) => void;
 }
 
-const InfiniteDiv: React.FC<RefInterface> = ({view}) => {
-
+const InfiniteDiv: React.FC<RefInterface> = ({ view }) => {
   return (
     <React.Fragment>
-      <div className={``} ref={view} />
+      <div className="bg-transparent h-1" ref={view} />
     </React.Fragment>
-  )
-
-
+  );
 };
 
-export default InfiniteDiv
-
+export default InfiniteDiv;

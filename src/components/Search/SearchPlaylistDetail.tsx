@@ -35,7 +35,7 @@ const SearchPlaylistDetail: React.FC = () => {
       setPage((page) => page + 1);
       setCount(playlistData.length);
 
-      if (count <= 8) {
+      if (count < 8) {
         setLast(false);
       } else {
         setLast(true);
@@ -69,9 +69,10 @@ const SearchPlaylistDetail: React.FC = () => {
         playlistData.map((playlist: getPlaylistDTO, index: number) => (
           <PlayList key={playlist.id} playlist={playlist} fontColor='#000' visible={true} />
       ))}
+      
+      <InfiniteDiv view={view} />
 
       </div>
-      <InfiniteDiv view={view} />
 
     </div>
   )
