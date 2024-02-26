@@ -24,14 +24,12 @@ const Next = ({ step,username}: NextDTO) => {
     cookies: token,
     }
 
+  
   const handleMember = async (data: UpdateMemberParams) => {
-    // Handle member data
-    console.log("Saving data:", data);
-
     if(step === 3) { 
       const code = await updateMember(data);
+      
       if(code.status === 200) {
-        console.log(code)
         setTimeout(async () => {
           navigate(`/user/${code.data.username}`)
         }, 1000);  
@@ -46,7 +44,7 @@ const Next = ({ step,username}: NextDTO) => {
     { key: 2, value: profileBackgroundImage },
     { key: 3, value: profileIntroduction },
   ];
-  console.log(checkData(checkDataItem,step))
+
   return (
     <Link to={`/SetProfile/${username}/${step + 1}`}>
       {checkData(checkDataItem,step) ? 

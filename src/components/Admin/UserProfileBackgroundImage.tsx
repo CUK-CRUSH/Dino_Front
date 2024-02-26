@@ -8,10 +8,23 @@ const UserProfileBackground = ({ userBackgroundImage }: UserBackgroundImageDTO) 
   const { profileBackgroundImage } = useSelector(
     (state: RootState) => state.userProfile
   );
+    
+  const { profileBackgroundImage : initialProfileBackgroundImage } = useSelector(
+    (state: RootState) => state.setProfile
+  );
   return (
 
     <div className="">
-      {profileBackgroundImage ? (
+
+      {
+      initialProfileBackgroundImage ? (
+        <Img
+          src={initialProfileBackgroundImage} 
+          alt="Selected"
+          className="h-[250px] w-full object-cover"
+        />) :
+
+      profileBackgroundImage ? (
         <Img
           src={profileBackgroundImage} 
           alt="Selected"

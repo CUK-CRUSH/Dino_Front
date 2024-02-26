@@ -35,7 +35,7 @@ const SearchPlaylistDetail: React.FC = () => {
       setPage((page) => page + 1);
       setCount(playlistData.length);
 
-      if (count < 8) {
+      if (count <= 8) {
         setLast(false);
       } else {
         setLast(true);
@@ -58,7 +58,7 @@ const SearchPlaylistDetail: React.FC = () => {
     <div className="w-full h-full min-h-screen relative flex flex-col bg-white scrollbar-hide overflow-scroll font-PretendardMedium">
       <OptionHeader text="검색" />
 
-      <main className='h-full'>
+      <div className='h-full'>
 
       {query && <QueryText query={query} />}
       <p className='p-4'> 플레이리스트 </p>
@@ -70,7 +70,7 @@ const SearchPlaylistDetail: React.FC = () => {
           <PlayList key={playlist.id} playlist={playlist} fontColor='#000' visible={true} />
       ))}
 
-      </main>
+      </div>
       <InfiniteDiv view={view} />
 
     </div>

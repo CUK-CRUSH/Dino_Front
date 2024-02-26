@@ -1,5 +1,5 @@
 import loadable from "@loadable/component";
-import { Route, Routes } from "react-router-dom";
+import { Route, Routes, Navigate } from 'react-router-dom';
 import Layout from "@components/Layout/layout";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
@@ -17,17 +17,24 @@ const AddMusic = loadable(() => import("@pages/AddMusic/addMusic"));
 const EditMusic = loadable(() => import("@pages/EditMusic/EditMusics"));
 const Redirect = loadable(() => import("@pages/Redirect/Redirect"));
 const Like = loadable(() => import("@pages/Likes/Like"));
-const Search =loadable(() => import("@pages/Search/Search"));
-const SearchPlaylistDetail =loadable(() => import("@pages/Search/SearchPlaylistDetail"));
-const SearchMemberDetail =loadable(() => import("@pages/Search/SearchMemberDetail"));
+const Search = loadable(() => import("@pages/Search/Search"));
+const SearchPlaylistDetail = loadable(() => import("@pages/Search/SearchPlaylistDetail"));
+const SearchMemberDetail = loadable(() => import("@pages/Search/SearchMemberDetail"));
 const Favorites = loadable(() => import("@pages/Favorites/Favorites"));
 
 const Environment = loadable(() => import("@pages/Environment/Environment"));
 const Prepare = loadable(() => import("@utils/Preparation"));
 const NotFound = loadable(() => import("@pages/NotFound/NotFonud"));
-const Unsign  = loadable(() => import("@pages/Unsign/Unsign"));
+const Unsign = loadable(() => import("@pages/Unsign/Unsign"));
 
 function App() {
+  const checkRefreshToken = (): string | null => {
+    // 여기서는 localStorage를 사용하지만, 실제로는 적절한 방법을 사용하여 
+    // 리프레시 토큰을 가져와야 합니다.
+    const refreshToken = localStorage.getItem('refreshToken');
+    return refreshToken;
+  }
+
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
@@ -59,12 +66,9 @@ function App() {
                 path="user/:username/:playlistId/like"
                 element={<Like />}
               />
-              <Route path="/env" element={<Environment />} />
-              <Route path="/env/favorites" element={<Favorites />} />
-              <Route
-                path="/env/unsign"
-                element={<Unsign />}
-              />
+              <Route path="/env" element={checkRefreshToken() ? <Environment /> : <Navigate to="/" replace />} />
+              <Route path="/env/favorites" element={checkRefreshToken() ? <Favorites /> : <Navigate to="/" replace />} />
+              <Route path="/env/unsign" element={checkRefreshToken() ? <Unsign /> : <Navigate to="/" replace />} />
               <Route path="/redirect" element={<Redirect />} />
               <Route path="/search" element={<Search />} />
               <Route path="/search/playlist" element={<SearchPlaylistDetail />} />

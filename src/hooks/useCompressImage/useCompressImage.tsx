@@ -9,9 +9,12 @@ const useCompressedImage = () => {
   const dispatch = useDispatch();
   
 /* eslint-disable react-hooks/exhaustive-deps */
-  const compressedImage = useCallback(async (file: File, type: string, setUpdateMemberData: React.Dispatch<React.SetStateAction<UpdateMemberParams>>) => {
+  const compressedImage = useCallback(async (file: File, type: string | undefined , setUpdateMemberData: React.Dispatch<React.SetStateAction<UpdateMemberParams>>) => {
     const compressedImageResult = await compressImage(file);
-
+    if (!type) {
+      throw new Error("Type must be 'profileImage' or 'profileBackgroundImage'");
+    }
+    
     if (type === 'profileImage') {
       dispatch(setProfileImageLoader(true));
     } else {
