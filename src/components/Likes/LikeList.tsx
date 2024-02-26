@@ -71,41 +71,43 @@ const LikeList = () => {
     if (inView && !isLast) {
       fetchLikeList();
     }
+    /* eslint-disable react-hooks/exhaustive-deps */
   }, [inView]);
 
   const handleBack = useCallback(() => {
     navigate(-1);
   }, [navigate]);
 
-  console.log(page);
   return (
-    <>
-      <div className="h-full w-full scrollbar-hide overflow-scroll flex flex-col bg-white text-black font-medium leading-[18px]">
-        <header className="flex h-[5%] smartPhoneXs:h-[3.5%] smartPhone:h-[3.5%] tabletMini:h-[3%] tablet:h-[3%] items-center justify-between m-3 text-[19px] border-b-[1px] border-[#EFEFEF]">
-          <button
-            type="button"
-            onClick={handleBack}
-            className="text-white self-start mt-2"
-          >
-            <FaAngleLeft size={24} color="black" />
-          </button>
-          <p className="text-center mx-auto">{playlistName}</p>
-        </header>
-        {/* 이만큼 API가져와서 Mapping */}
-        {users.length > 0 ? (
-          users.map((user: any) => (
-            <>
-              <UserProfile key={user.id} user={user} />
-            </>
-          ))
-        ) : (
-          <p>좋아요가 없습니다.</p>
-        )}
-        <div>
-          <InfiniteDiv view={view} />
+    <div className="h-full w-full scrollbar-hide overflow-scroll flex flex-col bg-white text-black font-medium leading-[18px]">
+      <header className="flex h-[5%] smartPhoneXs:h-[3.5%] smartPhone:h-[3.5%] tabletMini:h-[3%] tablet:h-[3%] items-center justify-between m-3 text-[19px] border-b-[1px] border-[#EFEFEF]">
+        <button
+          type="button"
+          onClick={handleBack}
+          className="text-white self-start mt-2"
+        >
+          <FaAngleLeft size={24} color="black" />
+        </button>
+        <p className="text-center mx-auto">{playlistName}</p>
+      </header>
+      {/* 이만큼 API가져와서 Mapping */}
+      {users.length > 0 ? (
+        users.map((user: any) => (
+          <>
+            <UserProfile key={user.id} user={user} />
+          </>
+        ))
+      ) : (
+        <div className="flex flex-grow items-center justify-center">
+          <p className="text-[20px] text-center font-bold">
+            좋아요가 없습니다.
+          </p>
         </div>
+      )}
+      <div>
+        <InfiniteDiv view={view} />
       </div>
-    </>
+    </div>
   );
 };
 

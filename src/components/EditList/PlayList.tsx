@@ -108,13 +108,21 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     setPlaylistId(Number(playlistId));
     setToken(cookies.accessToken);
 
-    fetchPlaylist();
+    const fetchAndSetPlaylist = async () => {
+      await fetchPlaylist();
+      const savedPlaylistName = sessionStorage.getItem("playlistName");
+      if (savedPlaylistName) {
+        setPlaylistName(savedPlaylistName);
+      }
+    };
+
+    fetchAndSetPlaylist();
   }, [playlistId, fetchPlaylist, setPlaylistId, cookies.accessToken, setToken]);
 
   if (hasError) {
     return <NotFound />;
   }
-  console.log(musicList.data?.length);
+
   return (
     <div className="h-full w-full scrollbar-hide overflow-scroll flex flex-col bg-black text-white font-medium leading-[18px]">
       {!isEditing && (

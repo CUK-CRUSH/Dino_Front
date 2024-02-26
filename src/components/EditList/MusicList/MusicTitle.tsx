@@ -10,7 +10,9 @@ export const MusicTitle = ({ isEditing }: MusicTitleProps) => {
 
   const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPlaylistName(e.target.value);
+    sessionStorage.setItem("playlistName", e.target.value);
   };
+  console.log(playlistName);
 
   return (
     <h2 className="mt-8 my-[8px] mx-6 text-[25px] text-shadow-title font-bold leading-5">
