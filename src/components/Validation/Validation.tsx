@@ -37,7 +37,6 @@ const ValidationProps = () => {
 const checkNickname = (nickname: string) => {
   // 숫자영어 _ . 허용
   const nicknameRegex = /^[a-zA-Z0-9._]{3,30}$/;
-  console.log(nickname);
   if (nicknameRegex.test(nickname)) {
     if (!checkBadWord(nickname)) {
       return true;
@@ -60,7 +59,6 @@ const checkNickname = (nickname: string) => {
           e.target.value,
           token
         );
-        console.log(checkNicknameBack);
   
         if (!checkBadWord(e.target.value) && checkNickname(e.target.value) && checkNicknameBack.status === 200) {
           setNicknameValidation(true);
@@ -123,7 +121,6 @@ const checkNickname = (nickname: string) => {
         try {
           if (id !== null) {
             const getUserData = await getMember(id);
-            console.log(getUserData);
   
             if (getUserData.data.username) {
               dispatch(setToast("login"));

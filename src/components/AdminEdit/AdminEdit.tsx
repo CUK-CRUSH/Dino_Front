@@ -49,6 +49,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   // 유효상태
   const [nicknameValidation, setNicknameValidation] = useState<boolean>(true);
 
+  // 이미지 전역관리
   const handleImageUpdates = useHandleImageUpdates();
 
   // 정보불러오기
