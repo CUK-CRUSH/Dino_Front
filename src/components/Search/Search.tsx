@@ -29,15 +29,15 @@ const addSearchTerm = (term: string | undefined) => {
 }
 
 // 로컬 스토리지에서 검색어와 검색 날짜의 목록을 가져오는 함수
-const getSearchTerms = (): { term: string; date: string }[] => {
-  let searchTerms = localStorage.getItem('searchTerms');
+// const getSearchTerms = (): { term: string; date: string }[] => {
+//   let searchTerms = localStorage.getItem('searchTerms');
 
-  if (!searchTerms) {
-    return [];
-  }
+//   if (!searchTerms) {
+//     return [];
+//   }
 
-  return JSON.parse(searchTerms);
-}
+//   return JSON.parse(searchTerms);
+// }
 
   const location = useLocation();
 
