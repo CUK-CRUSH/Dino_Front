@@ -6,7 +6,6 @@ import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "@store/index";
 import "./styles/font.css";
 import { RecoilRoot } from "recoil";
-import { ReactNode } from 'react';
 
 const Home = loadable(() => import("@pages/Home/home"));
 const LogIn = loadable(() => import("@pages/LogIn/login"));
@@ -35,13 +34,6 @@ function App() {
     const refreshToken = localStorage.getItem('refreshToken');
     return refreshToken;
   }
-
-  interface ProtectedRouteProps {
-    path: string;
-    element: ReactNode;
-  }
-
-
 
   return (
     <Provider store={store}>

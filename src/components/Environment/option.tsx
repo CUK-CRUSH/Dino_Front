@@ -129,7 +129,7 @@ const OptionComponents = () => {
     }, delay);
 
     return () => clearTimeout(timeoutId);
-  }, [id]);
+  }, [id,navigate]);
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
@@ -142,12 +142,6 @@ const OptionComponents = () => {
   };
 
   const { profileImage, username, introduction } = useSelector((state: RootState) => state.userProfile);
-
-  useEffect(()=>{
-    if(!localStorage.getItem('refreshToken')){
-      navigate('/');
-    }
-  })
 
   return (
     <div className="h-full min-h-screen w-full scrollbar-hide overflow-scroll flex  flex-col bg-white text-black text-[15px] font-medium leading-[18px]">
