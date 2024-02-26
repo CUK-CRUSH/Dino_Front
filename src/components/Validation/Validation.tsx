@@ -87,8 +87,6 @@ const checkNickname = (nickname: string) => {
     }
   }, 500);
 
-  console.log(cookies);
-
   const [updateMemberData, setUpdateMemberData] = useState<UpdateMemberParams>({
     // 입력없을때 닉네임 통과
     username: '',
@@ -99,7 +97,6 @@ const checkNickname = (nickname: string) => {
   });
   
   const handleMember = async (data: UpdateMemberParams) => {
-    console.log("Saving data:", data);
 
     await new Promise(resolve => setTimeout(resolve, 300));
     const code = await updateMember(data);

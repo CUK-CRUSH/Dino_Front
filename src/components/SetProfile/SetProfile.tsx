@@ -115,7 +115,6 @@ export const SetProfilePage = () => {
         try {
           if (true) {
             const getUserData = await getMemberUsername(username);
-            console.log(getUserData.data)
             if (getUserData.data.backgroundImageUrl !== null || getUserData.data.profileImageUrl !== null || getUserData.data.introduction !== '') {
               navigate(`/user/${getUserData.data.username}`);
             }
