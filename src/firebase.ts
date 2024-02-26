@@ -1,4 +1,4 @@
-import { initializeApp } from "firebase/app";
+gut import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore";
 import { getAnalytics, isSupported } from "firebase/analytics";
