@@ -150,10 +150,8 @@ export const UsePlayListEditor = ({
     dispatch(setIsEditing(false));
     dispatch(resetIsSaved());
     dispatch(updateImage(null));
+    sessionStorage.removeItem("playlistName");
 
-    // if (compressedImage) {
-    //   dispatch(updateImage(compressedImage));
-    // }
     fetchPlaylist();
   };
 
@@ -166,6 +164,8 @@ export const UsePlayListEditor = ({
     dispatch(setIsEditing(false));
     dispatch(resetIsSaved());
     dispatch(clearMusic());
+    setPlaylistName(playlists.playlistName);
+    sessionStorage.removeItem("playlistName");
   };
 
   //플리삭제

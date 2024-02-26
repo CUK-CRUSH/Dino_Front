@@ -1,10 +1,10 @@
 import { axiosInstance } from "@api/axiosInstance";
 
 // 플레이리스트 방명록 조회하기
-export const getVisitor = async (playlistId: number) => {
+export const getVisitor = async (playlistId: number, page: any = "0") => {
   try {
     const response = await axiosInstance.get(
-      `/api/v1/playlist/${playlistId}/guestbook`
+      `/api/v1/playlist/${playlistId}/guestbook?page=${page}`
     );
     if (response) {
       return response.data;

@@ -11,5 +11,3 @@ const InfiniteDiv: React.FC<RefInterface> = ({ view }) => {
     </React.Fragment>
   );
 };
-
-export default InfiniteDiv;

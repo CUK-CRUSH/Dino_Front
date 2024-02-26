@@ -77,12 +77,13 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
 
       // 0.3초 지연
       await new Promise((resolve) => setTimeout(resolve, 300));
-      const playlist = await getSinglePlayList(Number(playlistId));
+      const [playlist, musicAPIData] = await Promise.all([
+        getSinglePlayList(Number(playlistId)),
+        getMusicList(Number(playlistId)),
+      ]);
+
       setPlaylists(playlist.data);
       setPlaylistName(playlist.data.playlistName);
-
-      const musicAPIData = await getMusicList(Number(playlistId));
-
       setMusicList(musicAPIData);
     } catch (error) {
       console.error(error);
@@ -107,7 +108,15 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     setPlaylistId(Number(playlistId));
     setToken(cookies.accessToken);
 
-    fetchPlaylist();
+    const fetchAndSetPlaylist = async () => {
+      await fetchPlaylist();
+      const savedPlaylistName = sessionStorage.getItem("playlistName");
+      if (savedPlaylistName) {
+        setPlaylistName(savedPlaylistName);
+      }
+    };
+
+    fetchAndSetPlaylist();
   }, [playlistId, fetchPlaylist, setPlaylistId, cookies.accessToken, setToken]);
 
   if (hasError) {
@@ -144,15 +153,16 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
 
       <MusicTitle isEditing={isEditing} />
       <div className="flex flex-row">
-        <LikeButton id={playlistId} />
-        <VisitorButton id={playlistId} />
+        <LikeButton id={musicList.data?.length} />
+        <VisitorButton id={musicList.data?.length} />
       </div>
       <MusicDataRow isEditing={isEditing} fetchPlaylist={fetchPlaylist} />
       {isEditing && musicList.data?.length + musicData.musics.length < 9 && (
         <PlusButton playlists={playlists} />
       )}
-      <Recommendation />
-      <Footer bgColor="black" />
+      {musicList.data?.length > 0 && !isEditing && <Recommendation />}
+
+      {!isEditing && <Footer bgColor="black" />}
       {toast === "editPlayList" && (
         <ToastComponent
           background="white"
