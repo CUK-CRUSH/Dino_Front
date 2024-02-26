@@ -1,4 +1,4 @@
-  import {
+import {
   deleteVisitor,
   getVisitor,
   patchVisitor,
@@ -14,10 +14,8 @@ import "@styles/Admin/style.css";
 import useWindowSizeCustom from "@hooks/useCustomMargin/useWindowSizeCustom";
 import { useRecoilState } from "recoil";
 import { visitorUpdateState } from "@atoms/Visit/visitUpdate";
-import useCompareToken from "@hooks/useCompareToken/useCompareToken";
-import { useSelector } from "react-redux";
-import { RootState } from "@store/index";
 import Swal from "sweetalert2";
+import useDecodedJWT from "@hooks/useDecodedJWT";
 
 interface VisitorData {
   id: number;
@@ -48,7 +46,6 @@ const Visitor = ({ onClose }: VisitorDTO) => {
   const [isOpen, setIsOpen] = useState(true);
   const [buttonOpen, setButtonOpen] = useState<{ [key: string]: boolean }>({});
 
-  const memberId = useSelector((state: RootState) => state.memberId);
   // 수정
   const [editMode, setEditMode] = useState<{ [key: string]: boolean }>({});
   const [editContent, setEditContent] = useState<{ [key: string]: string }>({});
@@ -189,7 +186,10 @@ const Visitor = ({ onClose }: VisitorDTO) => {
     /* eslint-disable react-hooks/exhaustive-deps */
   }, []);
 
-  const authority = useCompareToken(memberId);
+  const refreshToken = localStorage.getItem("refreshToken");
+
+  // 토큰 해독
+  const decodedRefeshToken = useDecodedJWT(refreshToken);
 
   return (
     <div
@@ -246,13 +246,14 @@ const Visitor = ({ onClose }: VisitorDTO) => {
                     <div>
                       <div className="flex justify-between items-start">
                         <div className="flex items-center">
-                          <p className="font-bold">{visitor.username}</p>
+                          <p className="font-bold">{visitor.member.username}</p>
                         </div>
                         <button
                           onClick={() => toggleDropdown(visitor.id)}
                           className="relative cursor-pointer"
                         >
-                          {authority && (
+                          {visitor.member.id ===
+                            Number(decodedRefeshToken.sub) && (
                             <img
                               src={SettingButton}
                               alt="edit"
