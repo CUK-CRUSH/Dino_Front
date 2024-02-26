@@ -13,7 +13,7 @@ import { useCallback, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import Swal from "sweetalert2";
 
-const LikeButton = (id: any) => {
+const LikeButton = ({ id }: any) => {
   const swalButton = Swal.mixin({
     customClass: {
       popup: "popup", // 전체
@@ -91,7 +91,7 @@ const LikeButton = (id: any) => {
     return () => clearTimeout(timeoutId);
   }, [fetchPlaylist]);
 
-  return !id && isLoading ? null : (
+  return (
     <div className="bg-black inline-flex px-1  rounded-[30px] ml-4">
       <div className="p-1 rounded-full">
         <img
@@ -101,11 +101,13 @@ const LikeButton = (id: any) => {
           alt="Like button"
         />
       </div>
-      <div onClick={handleNavigate} className="mx-2 mt-2">
-        <span className="text-center font-semibold">
-          {likeCount < 1000 ? likeCount : "999+"}
-        </span>
-      </div>
+      {id === undefined ? null : (
+        <div onClick={handleNavigate} className="mx-2 mt-2">
+          <span className="text-center font-semibold">
+            {likeCount < 1000 ? likeCount : "999+"}
+          </span>
+        </div>
+      )}
     </div>
   );
 };

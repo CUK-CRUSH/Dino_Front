@@ -201,16 +201,16 @@ const Visitor = ({ onClose }: VisitorDTO) => {
       <div
         className={`relative ${
           size ? "w-[390px]" : "w-full"
-        } h-full mt-5 bg-[#F7F8FA]  rounded-t-3xl shadow-lg
+        } h-[100%] mt-5 bg-[#F7F8FA]  rounded-t-3xl shadow-lg
         animate-slide-edit-${isOpen ? "in" : "out"}`}
         onClick={(e) => e.stopPropagation()}
       >
         <header>
-          <p className="text-[20px] font-bold text-black my-5 text-center">
+          <p className="h-[10%] text-[20px] font-bold text-black my-5 text-center">
             방명록
           </p>
         </header>
-        <main>
+        <main className="h-[90%] overflow-y-scroll scrollbar-hide">
           <div className="flex flex-col items-center justify-center h-full">
             {visitorData &&
               visitorData.map((visitor: any) => (
@@ -293,27 +293,28 @@ const Visitor = ({ onClose }: VisitorDTO) => {
                   )}
                 </div>
               ))}
-
-            <form
-              onSubmit={handleSubmit}
-              className="h-full flex items-center justify-center w-full text-black mt-auto"
-            >
-              <input
-                type="text"
-                value={content}
-                onChange={(e) => setContent(e.target.value)}
-                placeholder="방명록을 입력해주세요"
-                className="relative w-11/12 h-10 from-[0deg, #FFFFFF, #FFFFFF]  border-none rounded-[10px] p-2 my-2"
-              />
-              <button
-                className="absolute w-9 h-9 rounded-full right-4 bg-black text-8px "
-                type="submit"
-              >
-                <img className="ml-[6px]" src={SendChat} alt="send" />
-              </button>
-            </form>
           </div>
         </main>
+        <footer className="fixed bottom-1 w-[390px]">
+          <form
+            onSubmit={handleSubmit}
+            className="h-full flex items-center justify-center w-full text-black mt-auto"
+          >
+            <input
+              type="text"
+              value={content}
+              onChange={(e) => setContent(e.target.value)}
+              placeholder="방명록을 입력해주세요"
+              className="relative w-11/12 h-10 from-[0deg, #FFFFFF, #FFFFFF]  border-none rounded-[10px] p-2 my-2"
+            />
+            <button
+              className="absolute w-9 h-9 rounded-full right-4 bg-black text-8px "
+              type="submit"
+            >
+              <img className="ml-[6px]" src={SendChat} alt="send" />
+            </button>
+          </form>
+        </footer>
       </div>
     </div>
   );

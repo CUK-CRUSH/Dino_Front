@@ -5,7 +5,10 @@ import { getVisitor } from "@api/visitor-controller/visitorControl";
 import { useParams } from "react-router";
 import VisitModal from "@pages/Visit/VisitEditModal";
 import { visitorUpdateState } from "@atoms/Visit/visitUpdate";
-import { useRecoilValue } from "recoil";
+import {
+  useRecoilBridgeAcrossReactRoots_UNSTABLE,
+  useRecoilValue,
+} from "recoil";
 
 interface VisitorData {
   id: number;
@@ -14,7 +17,7 @@ interface VisitorData {
   modifiedDate: string;
 }
 
-const VisitorButton = (id: any) => {
+const VisitorButton = ({ id }: any) => {
   const [visitorData, setVisitorData] = useState<VisitorData[]>([]);
   const [isLoading, setIsLoding] = useState<boolean>(true);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -52,7 +55,7 @@ const VisitorButton = (id: any) => {
     /* eslint-disable react-hooks/exhaustive-deps */
   }, [visitorUpdate]);
 
-  return !id && isLoading ? null : (
+  return (
     <div className="bg-black inline-flex px-1  rounded-[30px] mx-4">
       <div className="p-1 rounded-full">
         <img
@@ -62,11 +65,14 @@ const VisitorButton = (id: any) => {
           alt="chat button"
         />
       </div>
-      <div className="mx-2 mt-2">
-        <span className="text-center font-semibold">
-          {visitorData.length < 1000 ? visitorData.length : "999+"}
-        </span>
-      </div>
+      {id === undefined ? null : (
+        <div className="mx-2 mt-2">
+          <span className="text-center font-semibold">
+            {visitorData.length < 1000 ? visitorData.length : "999+"}
+          </span>
+        </div>
+      )}
+
       {isEditModalOpen && <VisitModal onClose={closeEditModal} />}
     </div>
   );
