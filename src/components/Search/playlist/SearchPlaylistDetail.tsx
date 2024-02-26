@@ -5,7 +5,7 @@ import { PlayList } from '@components/Admin/Button/PlayList';
 import { getPlaylistDTO } from 'types/Admin';
 import { useInView } from 'react-intersection-observer';
 import OptionHeader from '@components/Layout/optionHeader';
-import QueryText from './QueryText';
+import QueryText from '../part/QueryText';
 import SkeltonPlaylist from '@components/Admin/SkeltonPlaylist';
 import { useCustomMargin } from '@hooks/useCustomMargin/useCustomMargin';
 import InfiniteDiv from '@components/InfiniteDiv/InfiniteDiv';

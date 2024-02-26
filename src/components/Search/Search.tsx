@@ -5,12 +5,40 @@ import { getSearch } from '@api/search-controller/searchController';
 import { searchResultsDTO } from 'types/Search/Search';
 import SearchMemberList from './member/SearchMemberList';
 import OptionHeader from '@components/Layout/optionHeader';
-import SearchInput from './playlist/SearchInput';
+import SearchInput from './part/SearchInput';
 import hot from "@assets/Search/hot.svg";
-import NothingSearch from './playlist/NothingSearch';
-import QueryText from './playlist/QueryText';
+import NothingSearch from './part/NothingSearch';
+import QueryText from './part/QueryText';
+import SearchRecently from './recently/SearchRecently';
 
 const SearchPage: React.FC = () => {
+// 검색어와 검색 날짜를 로컬 스토리지에 추가하는 함수
+const addSearchTerm = (term: string | undefined) => {
+  let searchTerms = localStorage.getItem('searchTerms');
+  
+  if (!searchTerms) {
+    searchTerms = '[]';
+  }
+
+  const terms = JSON.parse(searchTerms);
+  const date = new Date().toISOString(); // 현재 날짜와 시간을 ISO 형식으로 가져옵니다.
+
+  terms.push({ term, date });
+
+  localStorage.setItem('searchTerms', JSON.stringify(terms));
+}
+
+// 로컬 스토리지에서 검색어와 검색 날짜의 목록을 가져오는 함수
+const getSearchTerms = (): { term: string; date: string }[] => {
+  let searchTerms = localStorage.getItem('searchTerms');
+
+  if (!searchTerms) {
+    return [];
+  }
+
+  return JSON.parse(searchTerms);
+}
+
   const location = useLocation();
 
   // URL 파라미터 읽기
@@ -18,12 +46,17 @@ const SearchPage: React.FC = () => {
   const query = searchParams.get('query');
 
   const [searchResults, setSearchResults] = useState<searchResultsDTO>();
+
+  // 검색창 펼치기
+  const [openSearchRecently,setOpenSearchRecently] = useState<boolean>(false);
   useEffect(() => {
     // API 호출
     const fetchData = async () => {
       try {
         const searchResult = await getSearch(query?.trim());
+        addSearchTerm(query?.trim());
         setSearchResults(searchResult);
+        setOpenSearchRecently(false);
       } catch (error) {
         console.error(error);
       }
@@ -37,7 +70,10 @@ const SearchPage: React.FC = () => {
   return (
     <div className="w-full h-full relative bg-white flex flex-col justify-start scrollbar-hide overflow-scroll font-PretendardMedium">
       <OptionHeader text="검색" />
-      <SearchInput />
+      <SearchInput setOpenSearchRecently={setOpenSearchRecently}/>
+      {openSearchRecently ? 
+      <SearchRecently />
+      :
       <main className='p-4'>
         {query?.trim() && <QueryText query={query} />}
 
@@ -86,6 +122,7 @@ const SearchPage: React.FC = () => {
           : <></>
         }
       </main>
+      }
     </div>
   );
 };

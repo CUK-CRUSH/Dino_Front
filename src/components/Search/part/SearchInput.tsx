@@ -3,7 +3,11 @@ import React, { useState } from 'react';
 import search from '@assets/Search/search.svg';
 import { useNavigate } from 'react-router-dom';
 
-const SearchInput: React.FC = () => {
+interface SearchInputDTO{
+  setOpenSearchRecently : any
+}
+
+const SearchInput: React.FC<SearchInputDTO> = ({ setOpenSearchRecently }) => {
   const navigate = useNavigate();
 
   const [searchQuery, setSearchQuery] = useState('');
@@ -21,7 +25,8 @@ const SearchInput: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit} >
-      <div className="w-full my-4 flex flex-col items-center relative focus:border-slate-300 ">
+      <div className="w-full my-4 flex flex-col items-center relative focus:border-slate-300 "
+            onClick={() => setOpenSearchRecently(true)}>
         <input
           type="text"
           value={searchQuery}

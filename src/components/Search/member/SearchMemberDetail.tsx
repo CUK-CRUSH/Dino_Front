@@ -5,7 +5,7 @@ import { useEffect, useState } from 'react';
 import { getSearchMember } from '@api/search-controller/searchController';
 import { Member } from 'types/Search/Search';
 import OptionHeader from '@components/Layout/optionHeader';
-import QueryText from '../playlist/QueryText';
+import QueryText from '../part/QueryText';
 import InfiniteDiv from '@components/InfiniteDiv/InfiniteDiv';
 
 const SearchMemberDetail: React.FC = () => {

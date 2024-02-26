@@ -28,12 +28,15 @@ const NotFound = loadable(() => import("@pages/NotFound/NotFonud"));
 const Unsign = loadable(() => import("@pages/Unsign/Unsign"));
 
 function App() {
-  const checkRefreshToken = (): string | null => {
+  const checkRefreshToken = (): boolean | undefined => {
     // 여기서는 localStorage를 사용하지만, 실제로는 적절한 방법을 사용하여 
     // 리프레시 토큰을 가져와야 합니다.
     const refreshToken = localStorage.getItem('refreshToken');
-    return refreshToken;
+    if(refreshToken) {return true}
+    else {return false}
   }
+  console.log(checkRefreshToken())
+
 
   return (
     <Provider store={store}>
@@ -66,7 +69,7 @@ function App() {
                 path="user/:username/:playlistId/like"
                 element={<Like />}
               />
-              <Route path="/env" element={checkRefreshToken() ? <Environment /> : <Navigate to="/" replace />} />
+              <Route path="/env" element={checkRefreshToken() ? <Environment /> :<Environment />} />
               <Route path="/env/favorites" element={checkRefreshToken() ? <Favorites /> : <Navigate to="/" replace />} />
               <Route path="/env/unsign" element={checkRefreshToken() ? <Unsign /> : <Navigate to="/" replace />} />
               <Route path="/redirect" element={<Redirect />} />
