@@ -153,6 +153,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         <PlusButton playlists={playlists} />
       )}
       {musicList.data?.length > 0 && <Recommendation />}
+
       <Footer bgColor="black" />
       {toast === "editPlayList" && (
         <ToastComponent

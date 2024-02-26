@@ -5,6 +5,8 @@ import { useNavigate, useParams } from "react-router-dom";
 import Noimage from "@assets/noimage.jpg";
 import { useRecoilValue } from "recoil";
 import { playlistNameState } from "@atoms/Playlist/playlistName";
+import { useInView } from "react-intersection-observer";
+import InfiniteDiv from "@components/InfiniteDiv/InfiniteDiv";
 
 const UserProfile = ({ user }: any) => {
   const navigate = useNavigate();
@@ -41,6 +43,7 @@ const LikeList = () => {
   const { playlistId } = useParams<{ playlistId: string }>();
 
   const [users, setUsers] = useState([]);
+  const [view, inView] = useInView();
 
   const playlistName = useRecoilValue(playlistNameState);
 
@@ -74,12 +77,15 @@ const LikeList = () => {
 
       {/* 이만큼 API가져와서 Mapping */}
       {users.length > 0 ? (
-        users.map((user: any) => <UserProfile key={user.id} user={user} />)
+        users.map((user: any) => (
+          <>
+            <UserProfile key={user.id} user={user} />
+            <InfiniteDiv view={view} />
+          </>
+        ))
       ) : (
         <p>좋아요가 없습니다.</p>
       )}
-
-      {/*  */}
     </div>
   );
 };

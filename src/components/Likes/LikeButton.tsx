@@ -35,7 +35,6 @@ const LikeButton = ({ id }: any) => {
 
   const [likeCount, setLikeCount] = useState<number>(0);
   const [isLike, setIsLike] = useState<boolean>(false);
-  const [isLoading, setIsLoding] = useState<boolean>(true);
 
   const handleLikeToggle = async () => {
     if (!token) {
@@ -84,7 +83,6 @@ const LikeButton = ({ id }: any) => {
   useEffect(() => {
     const delay = 200;
     const timeoutId = setTimeout(() => {
-      setIsLoding(false);
       fetchPlaylist();
     }, delay);
 

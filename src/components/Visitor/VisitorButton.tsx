@@ -5,10 +5,7 @@ import { getVisitor } from "@api/visitor-controller/visitorControl";
 import { useParams } from "react-router";
 import VisitModal from "@pages/Visit/VisitEditModal";
 import { visitorUpdateState } from "@atoms/Visit/visitUpdate";
-import {
-  useRecoilBridgeAcrossReactRoots_UNSTABLE,
-  useRecoilValue,
-} from "recoil";
+import { useRecoilValue } from "recoil";
 
 interface VisitorData {
   id: number;
@@ -19,7 +16,7 @@ interface VisitorData {
 
 const VisitorButton = ({ id }: any) => {
   const [visitorData, setVisitorData] = useState<VisitorData[]>([]);
-  const [isLoading, setIsLoding] = useState<boolean>(true);
+
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
   const visitorUpdate = useRecoilValue(visitorUpdateState);
 
@@ -46,12 +43,7 @@ const VisitorButton = ({ id }: any) => {
   };
 
   useEffect(() => {
-    const delay = 200;
-    const timeoutId = setTimeout(() => {
-      setIsLoding(false);
-    }, delay);
     fetchVisitorData();
-    return () => clearTimeout(timeoutId);
     /* eslint-disable react-hooks/exhaustive-deps */
   }, [visitorUpdate]);
 
