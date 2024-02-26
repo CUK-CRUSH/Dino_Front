@@ -31,7 +31,7 @@ const SearchMemberDetail: React.FC = () => {
       setPage((page) => page + 1);
       setCount(memberData.length);
 
-      if (count < 10) {
+      if (count < 8) {
         setLast(false);
       } else {
         setLast(true);
@@ -55,7 +55,7 @@ const SearchMemberDetail: React.FC = () => {
 
       {query && <QueryText query={query} />}
 
-      <div className='p-4'>
+      <div className='h-full p-4 '>
         <p className='mb-[12px]'> 유저 </p>
 
         <SearchUserList
@@ -63,11 +63,12 @@ const SearchMemberDetail: React.FC = () => {
           username_fontSize='18px'
           introduction_fontSize='15px'
           size='50px'
-          marginY='10px' />
+          marginY='28px' />
           
+        <InfiniteDiv view={view} />
+
       </div>
 
-      <InfiniteDiv view={view} />
 
     </div>
   )

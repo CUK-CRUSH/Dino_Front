@@ -119,6 +119,7 @@ const OptionComponents = () => {
         setUserdata(userDataResult.data);
       } catch (error) {
         console.error("Error fetching user data:", error);
+        navigate('/')
       }
     };
     const delay = 500;
@@ -128,7 +129,7 @@ const OptionComponents = () => {
     }, delay);
 
     return () => clearTimeout(timeoutId);
-  }, [id]);
+  }, [id,navigate]);
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 

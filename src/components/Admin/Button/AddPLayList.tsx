@@ -34,7 +34,7 @@ export const AddPlayList = () => {
   };
 
   return (
-    <div style={{ marginLeft: `${customMargin}px`, marginRight: `${customMargin}px` }} className="inline-block h-[200px] mt-[15px] relative">
+    <div style={{ marginLeft: `${customMargin}px`, marginRight: `${customMargin}px` }} className="inline-block h-[200px] mt-[15px] relative cursor-pointer">
 
       <div onClick={handleClick} style={{ background: '#2E2E2E' }} className="w-[150px] h-[150px] rounded-[13px] font-light text-zinc-300 text-4xl ">
 

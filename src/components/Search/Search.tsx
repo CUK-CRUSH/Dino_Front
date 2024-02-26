@@ -79,7 +79,7 @@ const SearchPage: React.FC = () => {
           />
         }
 
-        {searchResults && searchResults.data.members.length > 10 ?
+        {searchResults && searchResults.data.members.length >= 8 ?
           <Link to={`/search/member?query=${query}`}>
             <div className="flex justify-center">더보기</div>
           </Link>
