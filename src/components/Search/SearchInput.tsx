@@ -21,7 +21,7 @@ const SearchInput: React.FC = () => {
 
   return (
     <form onSubmit={handleSubmit} >
-      <div className="w-full mb-4 flex flex-col items-center relative focus:border-slate-300 ">
+      <div className="w-full my-4 flex flex-col items-center relative focus:border-slate-300 ">
         <input
           type="text"
           value={searchQuery}

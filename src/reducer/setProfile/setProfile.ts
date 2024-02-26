@@ -3,7 +3,7 @@ import { createSlice } from "@reduxjs/toolkit";
 const initialState = {
   profileImage: undefined,
   profileBackgroundImage: undefined,
-  profileIntroduction: undefined,
+  profileIntroduction: '',
 };
 
 const setProfile = createSlice({
