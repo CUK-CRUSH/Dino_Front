@@ -60,7 +60,7 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   const dispatch = useDispatch();
 
   const handleEditClick = () => {
-    if (isEditing && musicData.id < 100000) {
+    if (isEditing && isNaN(Number(musicData.id))) {
       dispatch(updateTitle(musicData.title));
       dispatch(updateArtist(musicData.artist));
       dispatch(updateUrl(musicData.url));
@@ -195,7 +195,7 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
         )}
       </div>
 
-      {isEditing && musicData.id < 100000 && (
+      {isEditing && isNaN(Number(musicData.id)) && (
         <div
           onClick={handleDeleteClick}
           className={`flex ml-2 mx-1 items-center absolute bottom-4 right-2`}
