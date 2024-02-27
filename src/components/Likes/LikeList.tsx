@@ -2,40 +2,11 @@ import { getLikeList } from "@api/playlist-controller/playlistControl";
 import { useCallback, useEffect, useState } from "react";
 import { FaAngleLeft } from "react-icons/fa6";
 import { useNavigate, useParams } from "react-router-dom";
-import Noimage from "@assets/noimage.jpg";
 import { useRecoilValue } from "recoil";
 import { playlistNameState } from "@atoms/Playlist/playlistName";
 import { useInView } from "react-intersection-observer";
 import InfiniteDiv from "@components/InfiniteDiv/InfiniteDiv";
-
-const UserProfile = ({ user }: any) => {
-  const navigate = useNavigate();
-
-  const handleProfileClick = useCallback(() => {
-    navigate(`/user/${user.username}`);
-  }, [navigate, user.username]);
-  return (
-    <main className="flex items-center justify-between p-4">
-      <div className="flex items-center">
-        <img
-          src={user.profileImageUrl ? user.profileImageUrl : Noimage}
-          alt="프로필 이미지"
-          className="w-14 h-14 rounded-full"
-        />
-        <div className="ml-4">
-          <h2 className="text-lg font-bold">{user.username}</h2>
-          <p className="text-sm text-gray-500">{user.introduction}</p>
-        </div>
-      </div>
-      <button
-        onClick={handleProfileClick} /* 프로필 바로가기 기능 구현 */
-        className="px-4 py-2 text-sm bg-black text-white rounded-2xl"
-      >
-        프로필
-      </button>
-    </main>
-  );
-};
+import UserProfile from "./UserProfile";
 
 const LikeList = () => {
   const navigate = useNavigate();
@@ -92,11 +63,7 @@ const LikeList = () => {
       </header>
       {/* 이만큼 API가져와서 Mapping */}
       {users.length > 0 ? (
-        users.map((user: any) => (
-          <>
-            <UserProfile key={user.id} user={user} />
-          </>
-        ))
+        users.map((user: any) => <UserProfile key={user.id} user={user} />)
       ) : (
         <div className="flex flex-grow items-center justify-center">
           <p className="text-[20px] text-center font-bold">
