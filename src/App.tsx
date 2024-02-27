@@ -33,7 +33,7 @@ function App() {
   const [cookies] = useCookies(['accessToken']);
   const checkAccessToken = (): boolean | undefined => {
 
-    if(cookies) { return true }
+    if(cookies.accessToken) { return true }
     else { return false }
   }
 

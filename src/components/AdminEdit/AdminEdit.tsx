@@ -57,16 +57,15 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     const fetchData = async () => {
       try {
         // Call the asynchronous function and await its result
-        const userDataResult = await getMemberMe(cookies.accessToken);
+        const userDataResult = await getMemberMe(token);
         setUserdata(userDataResult.data);
-        console.log(userDataResult)
       } catch (error) {
         console.error("Error fetching user data:", error);
         // Handle errors appropriately
       }
     };
     fetchData();
-  }, [cookies.accessToken]);
+  }, [token]);
 
   const [input, setInput] = useState({
     username: "",

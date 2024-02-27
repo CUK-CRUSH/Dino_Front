@@ -36,24 +36,46 @@ axiosInstance.interceptors.response.use(
 
       const refreshToken = localStorage.getItem("refreshToken");
 
-      return axiosInstance
-        .post("/login/token/reissue", { refreshToken })
-        .then((response) => {
-          Cookies.set("accessToken", response.data.data.access_token, {
-            expires: 1 / 144,
+      if (refreshToken) {
+        return axiosInstance
+          .post("/login/token/reissue", { refreshToken })
+          .then((response) => {
+            Cookies.set("accessToken", response.data.data.access_token, {
+              expires: 1 / 144,
+            });
+            console.log("토큰을 새로 발급 중입니다...");
+            originalRequest.headers.Authorization = `Bearer ${response.data.data.access_token}`;
+
+            return axiosInstance(originalRequest);
+          })
+          .catch((error) => {
+            console.log("리스레시 토큰이 만료되었습니다.");
+
+            window.location.href = "/login";
+
+            return Promise.reject(error);
           });
-          console.log("토큰을 새로 발급 중입니다...");
-          originalRequest.headers.Authorization = `Bearer ${response.data.data.access_token}`;
+      }
+      else {
+        axiosInstance
+          .post("/login/token/reissue", { refreshToken })
+          .then((response) => {
+            Cookies.set("accessToken", response.data.data.access_token, {
+              expires: 1 / 144,
+            });
+            console.log("토큰을 새로 발급 중입니다...");
+            originalRequest.headers.Authorization = `Bearer ${response.data.data.access_token}`;
 
-          return axiosInstance(originalRequest);
-        })
-        .catch((error) => {
-          console.log("리스레시 토큰이 만료되었습니다.");
+            return axiosInstance(originalRequest);
+          })
+          .catch((error) => {
+            console.log("리스레시 토큰이 만료되었습니다.");
 
-          window.location.href = "/login";
+            window.location.href = "/login";
 
-          return Promise.reject(error);
-        });
+            return Promise.reject(error);
+          })
+      }
     } else {
       return Promise.reject(error);
     }
