@@ -195,7 +195,7 @@ const Visitor = ({ onClose }: VisitorDTO) => {
   return (
     <div
       onClick={cancel}
-      className="absolute top-14 left-0 w-full flex items-center justify-center z-50"
+      className="fixed top-14 left-0 w-full h-[calc(100%-56px)] flex items-center justify-center z-50"
     >
       <div className="absolute -inset-14 bg-gray-800 opacity-75 "></div>
 
@@ -203,15 +203,15 @@ const Visitor = ({ onClose }: VisitorDTO) => {
         className={`relative ${
           size ? "w-[390px]" : "w-full"
         } h-full bg-[#F7F8FA] flex flex-col pointer-events-auto  rounded-t-3xl shadow-lg
-        animate-slide-edit-${isOpen ? "in" : "out"}`}
+    animate-slide-edit-${isOpen ? "in" : "out"}`}
         onClick={(e) => e.stopPropagation()}
       >
-        <header className="py-5">
-          <p className="text-[20px] font-bold text-black my-5 text-center">
+        <header className="py-5 h-[60px]">
+          <p className="text-[20px] font-bold text-black my-5 text-center h-full">
             방명록
           </p>
         </header>
-        <main className="lex-grow overflow-y-auto  scrollbar-hide">
+        <main className="overflow-y-scroll h-[calc(100%-120px)] scrollbar-hide">
           <div className="flex flex-col items-center justify-center h-full">
             {visitorData &&
               visitorData.map((visitor: any) => (
@@ -297,7 +297,7 @@ const Visitor = ({ onClose }: VisitorDTO) => {
               ))}
           </div>
         </main>
-        <footer className="absolute bottom-1 h-[60px] w-[390px]">
+        <footer className="w-[390px] h-[60px] mt-auto">
           <form
             onSubmit={handleSubmit}
             className="h-full flex items-center justify-center w-full text-black mt-auto"
