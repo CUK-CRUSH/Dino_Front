@@ -211,7 +211,7 @@ const Visitor = ({ onClose }: VisitorDTO) => {
             방명록
           </p>
         </header>
-        <main className="overflow-y-scroll h-[calc(100%-120px)] scrollbar-hide">
+        <main className="overflow-y-scroll h-[calc(100%-150px)] scrollbar-hide">
           <div className="flex flex-col items-center justify-center h-full">
             {visitorData &&
               visitorData.map((visitor: any) => (
