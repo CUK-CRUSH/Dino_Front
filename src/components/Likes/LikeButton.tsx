@@ -50,6 +50,7 @@ const LikeButton = ({ id }: any) => {
         })
         .then((result) => {
           if (result.dismiss === Swal.DismissReason.cancel) {
+            localStorage.setItem("prevUrl", window.location.href);
             navigate("/login");
           }
         });
