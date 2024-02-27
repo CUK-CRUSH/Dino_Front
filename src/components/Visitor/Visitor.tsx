@@ -253,14 +253,15 @@ const Visitor = ({ onClose }: VisitorDTO) => {
                           onClick={() => toggleDropdown(visitor.id)}
                           className="relative cursor-pointer"
                         >
-                          {visitor.member.id ===
-                            Number(decodedRefeshToken.sub) && (
-                            <img
-                              src={SettingButton}
-                              alt="edit"
-                              className="cursor-pointer"
-                            />
-                          )}
+                          {decodedRefeshToken &&
+                            visitor.member.id ===
+                              Number(decodedRefeshToken.sub) && (
+                              <img
+                                src={SettingButton}
+                                alt="edit"
+                                className="cursor-pointer"
+                              />
+                            )}
 
                           {buttonOpen[visitor.id] && (
                             <ul className="absolute text-12px right-0 top-full mt-2 w-24 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5">
