@@ -47,7 +47,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const setUsernames = useSetRecoilState(userNameState);
   //
 
-  const setPlaylistName = useSetRecoilState(playlistNameState);
+  const [playlistName, setPlaylistName] = useRecoilState(playlistNameState);
   const [musicList, setMusicList] = useRecoilState(musicListState);
 
   const [hasError, setHasError] = useState<boolean>(false);
@@ -160,7 +160,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       {isEditing && musicList.data?.length + musicData.musics.length < 9 && (
         <PlusButton playlists={playlists} />
       )}
-      {musicList.data?.length > 0 && !isEditing && <Recommendation />}
+      {playlistName?.length > 0 && !isEditing && <Recommendation />}
 
       {!isEditing && <Footer bgColor="black" />}
       {toast === "editPlayList" && (

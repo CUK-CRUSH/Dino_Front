@@ -47,7 +47,14 @@ const Redirect = () => {
               navigate("/login/validation");
             } else {
               dispatch(setToast("login"));
-              navigate(`/user/${getUserData.data.username}`);
+
+              const prevUrl = localStorage.getItem("prevUrl");
+              if (prevUrl) {
+                window.location.assign(prevUrl);
+                localStorage.removeItem("prevUrl");
+              } else {
+                navigate(`/user/${getUserData.data.username}`);
+              }
             }
           }
         } catch (error) {
