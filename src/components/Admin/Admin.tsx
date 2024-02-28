@@ -116,8 +116,6 @@ const AdminPage: React.FC = () => {
   // 권한부여
   const authority = useCompareToken(userData && userData?.id);
 
-  // margin Top
-
   const handleShare = () => {
     if (navigator.share) {
       navigator

@@ -38,6 +38,7 @@ const OptionComponents = () => {
   });
 
   const navigate = useNavigate();
+
   const [cookies, , removeCookie] = useCookies(["accessToken"]);
   // 세션 아이디
   const id = sessionStorage.getItem("id");
@@ -130,6 +131,7 @@ const OptionComponents = () => {
     }, delay);
 
     return () => clearTimeout(timeoutId);
+
   }, [id, navigate, cookies.accessToken]);
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
