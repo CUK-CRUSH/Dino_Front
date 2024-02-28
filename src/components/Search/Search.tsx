@@ -40,17 +40,6 @@ const addSearchTerm = (term: string | undefined) => {
   localStorage.setItem('searchTerms', JSON.stringify(terms));
 }
 
-// 로컬 스토리지에서 검색어와 검색 날짜의 목록을 가져오는 함수
-// const getSearchTerms = (): { term: string; date: string }[] => {
-//   let searchTerms = localStorage.getItem('searchTerms');
-
-//   if (!searchTerms) {
-//     return [];
-//   }
-
-//   return JSON.parse(searchTerms);
-// }
-
   const location = useLocation();
 
   // URL 파라미터 읽기
@@ -84,8 +73,8 @@ const addSearchTerm = (term: string | undefined) => {
 
   return (
     <div className="w-full h-full relative bg-white flex flex-col justify-start scrollbar-hide overflow-scroll font-PretendardMedium">
-      <OptionHeader text="검색" />
-      <SearchInput setOpenSearchRecently={setOpenSearchRecently}/>
+      <OptionHeader text="검색" openSearchRecently={openSearchRecently} setOpenSearchRecently={setOpenSearchRecently}/>
+      <SearchInput setOpenSearchRecently={setOpenSearchRecently} />
       {openSearchRecently ? 
       <SearchRecently />
       :
