@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-
-import useWindowSizeCustom from "@hooks/useCustomMargin/useWindowSizeCustom";
 import "../../styles/Admin/style.css";
 import EditButton from "@components/AdminEdit/Button/EditButton";
 import SetUserProfileBackground from "@components/AdminEdit/SetUserProfileBackground";
@@ -33,6 +31,7 @@ import useCompressedImage from "@hooks/useCompressImage/useCompressImage";
 import convertUrlToBlobFile from "@utils/convertFile/convertFile";
 import useHandleUploadImage from "@hooks/useHandleUploadImage/useHandleUploadImage";
 import useCompressHandleImage from "@hooks/useCompressHandleImage/useCompressHandleImage";
+import useResponsiveWidth from "@hooks/useResponsiveWidth/useResponsiveWidth";
 
 interface AdminEditModalProps {
   onClose: () => void; // A function to close the modal
@@ -57,16 +56,15 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     const fetchData = async () => {
       try {
         // Call the asynchronous function and await its result
-        const userDataResult = await getMemberMe(cookies.accessToken);
+        const userDataResult = await getMemberMe(token);
         setUserdata(userDataResult.data);
-        console.log(userDataResult)
       } catch (error) {
         console.error("Error fetching user data:", error);
         // Handle errors appropriately
       }
     };
     fetchData();
-  }, [cookies.accessToken]);
+  }, [token]);
 
   const [input, setInput] = useState({
     username: "",
@@ -217,21 +215,11 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
     onClose(); // Close the modal without saving changes
   };
 
-  const { windowSize } = useWindowSizeCustom();
-  // 사이즈 390 보다 크면 모달창 크기 고정
-  const [size, setSize] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (windowSize.width > 390) {
-      setSize(true);
-    } else {
-      setSize(false);
-    }
-  }, [windowSize.width]);
-
   // 열고닫기
   const [isOpen, setIsOpen] = useState(true);
 
+  // 모달 반응형 크기
+  const modalResponsiveWidth = useResponsiveWidth();
   // 취소
   const cancel = () => {
     
@@ -314,12 +302,10 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
   return (
     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50">
       {/* The following div creates a semi-transparent overlay background */}
-      <div className="absolute inset-0 bg-gray-800 opacity-75 "></div>
+      <div className="absolute inset-0 bg-gray-800 opacity-75 " />
 
       <div
-        className={`relative ${
-          size ? "w-[390px]" : "w-full"
-        } h-full mt-5 bg-white rounded-t-3xl shadow-lg
+        className={`relative ${modalResponsiveWidth} h-full mt-5 bg-white rounded-t-3xl shadow-lg
         animate-slide-edit-${isOpen ? "in" : "out"}`}
       >
         {toast === "duplicate" && (

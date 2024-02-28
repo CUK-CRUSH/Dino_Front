@@ -6,6 +6,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "@store/index";
 import "./styles/font.css";
 import { RecoilRoot } from "recoil";
+import { useCookies } from "react-cookie";
 
 const Home = loadable(() => import("@pages/Home/home"));
 const LogIn = loadable(() => import("@pages/LogIn/login"));
@@ -33,17 +34,14 @@ const Unsign = loadable(() => import("@pages/Unsign/Unsign"));
 const Visitor = loadable(() => import("@pages/Visit/VisitPage"));
 
 function App() {
-  const checkRefreshToken = (): boolean | undefined => {
-    // 여기서는 localStorage를 사용하지만, 실제로는 적절한 방법을 사용하여
-    // 리프레시 토큰을 가져와야 합니다.
-    const refreshToken = localStorage.getItem("refreshToken");
-    if (refreshToken) {
+  const [cookies] = useCookies(["accessToken"]);
+  const checkAccessToken = (): boolean | undefined => {
+    if (cookies.accessToken) {
       return true;
     } else {
       return false;
     }
   };
-  // console.log(checkRefreshToken())
 
   return (
     <Provider store={store}>
@@ -76,22 +74,18 @@ function App() {
                 path="user/:username/:playlistId/like"
                 element={<Like />}
               />
-
               <Route
                 path="user/:username/:playlistId/visitor"
                 element={<Visitor />}
               />
-
               <Route
                 path="/env"
-                element={
-                  checkRefreshToken() ? <Environment /> : <Environment />
-                }
+                element={checkAccessToken() ? <Environment /> : <Environment />}
               />
               <Route
                 path="/env/favorites"
                 element={
-                  checkRefreshToken() ? (
+                  checkAccessToken() ? (
                     <Favorites />
                   ) : (
                     <Navigate to="/" replace />
@@ -101,7 +95,7 @@ function App() {
               <Route
                 path="/env/unsign"
                 element={
-                  checkRefreshToken() ? <Unsign /> : <Navigate to="/" replace />
+                  checkAccessToken() ? <Unsign /> : <Navigate to="/" replace />
                 }
               />
               <Route path="/redirect" element={<Redirect />} />

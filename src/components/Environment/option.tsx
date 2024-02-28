@@ -1,4 +1,4 @@
-import { getMember } from "@api/member-controller/memberController";
+import { getMemberMe } from "@api/member-controller/memberController";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getMemberDTO } from "types/Admin";
@@ -38,7 +38,7 @@ const OptionComponents = () => {
   });
 
   const navigate = useNavigate();
-  const [, , removeCookie] = useCookies();
+  const [cookies, , removeCookie] = useCookies(['accessToken']);
   // 세션 아이디
   const id = sessionStorage.getItem('id');
 
@@ -114,12 +114,11 @@ const OptionComponents = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const userDataResult = await getMember(id);
+        const userDataResult = await getMemberMe(cookies.accessToken);
 
         setUserdata(userDataResult.data);
       } catch (error) {
         console.error("Error fetching user data:", error);
-        navigate('/')
       }
     };
     const delay = 500;
@@ -129,7 +128,7 @@ const OptionComponents = () => {
     }, delay);
 
     return () => clearTimeout(timeoutId);
-  }, [id,navigate]);
+  }, [id,navigate,cookies.accessToken]);
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
