@@ -15,12 +15,12 @@ const SearchRecentlyWord: React.FC = () => {
   const [cookies,,] = useCookies(['accessToken']);
   let token = cookies.accessToken;
   let decodedToken = useDecodedJWT(token);
-  let userId: string | undefined;
+  let userId: string ;
   if (decodedToken) {
-    userId = userId;
+    userId = decodedToken.sub;
   } else {
     // decodedToken이 null이면 적절한 기본값을 설정합니다.
-    userId = '';
+    userId = 'defaultUserId';
   }
 
   const localSearchTerms = localStorage.getItem(`searchTerms_${userId}`);

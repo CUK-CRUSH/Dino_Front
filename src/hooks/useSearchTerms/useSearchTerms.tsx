@@ -31,6 +31,8 @@ const useSearchTerms = (userId?: string) => {
     localStorage.setItem(`searchTerms_${userId}`, JSON.stringify(terms));
     setSearchTerms(terms);
   }
+  
+  /* eslint-disable react-hooks/exhaustive-deps */
 
   // 컴포넌트가 마운트되거나 userId가 변경될 때마다 검색어를 불러옴
   useEffect(() => {
