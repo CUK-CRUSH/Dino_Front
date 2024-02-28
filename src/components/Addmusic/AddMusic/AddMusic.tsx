@@ -133,6 +133,7 @@ const AddMusic: React.FC = () => {
         text: "Url형식이 맞지않아요",
       });
     }
+    /* eslint-disable react-hooks/exhaustive-deps */
   }, [navigate, url, dispatch, artist, title]);
 
   const handleBack = useCallback(() => {
