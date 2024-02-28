@@ -102,6 +102,10 @@ const EditMusic: React.FC = () => {
     fetchAutoComplete("artist", artist);
   }, [title, artist, fetchAutoComplete, dispatch, musicId]);
 
+  useEffect(() => {
+    navigate("/");
+  }, []);
+
   return (
     <div className="scrollbar-hide overflow-scroll relative z-30 h-full w-full flex flex-col bg-black text-white py-10 text-[17px] leading-[18px]">
       <AddBackButton handleBack={handleBack} />
