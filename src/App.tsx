@@ -1,5 +1,5 @@
 import loadable from "@loadable/component";
-import { Route, Routes, Navigate } from 'react-router-dom';
+import { Route, Routes, Navigate } from "react-router-dom";
 import Layout from "@components/Layout/layout";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
@@ -19,23 +19,30 @@ const EditMusic = loadable(() => import("@pages/EditMusic/EditMusics"));
 const Redirect = loadable(() => import("@pages/Redirect/Redirect"));
 const Like = loadable(() => import("@pages/Likes/Like"));
 const Search = loadable(() => import("@pages/Search/Search"));
-const SearchPlaylistDetail = loadable(() => import("@pages/Search/SearchPlaylistDetail"));
-const SearchMemberDetail = loadable(() => import("@pages/Search/SearchMemberDetail"));
+const SearchPlaylistDetail = loadable(
+  () => import("@pages/Search/SearchPlaylistDetail")
+);
+const SearchMemberDetail = loadable(
+  () => import("@pages/Search/SearchMemberDetail")
+);
 const Favorites = loadable(() => import("@pages/Favorites/Favorites"));
 
 const Environment = loadable(() => import("@pages/Environment/Environment"));
 const Prepare = loadable(() => import("@utils/Preparation"));
 const NotFound = loadable(() => import("@pages/NotFound/NotFonud"));
 const Unsign = loadable(() => import("@pages/Unsign/Unsign"));
+const Visitor = loadable(() => import("@pages/Visit/VisitPage"));
 
 function App() {
 
-  const [cookies] = useCookies(['accessToken']);
+  const [cookies] = useCookies(["accessToken"]);
   const checkAccessToken = (): boolean | undefined => {
-
-    if(cookies.accessToken) { return true }
-    else { return false }
-  }
+    if (cookies.accessToken) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   return (
     <Provider store={store}>
@@ -68,12 +75,37 @@ function App() {
                 path="user/:username/:playlistId/like"
                 element={<Like />}
               />
-              <Route path="/env" element={checkAccessToken() ? <Environment /> :<Environment />} />
-              <Route path="/env/favorites" element={checkAccessToken() ? <Favorites /> : <Navigate to="/" replace />} />
-              <Route path="/env/unsign" element={checkAccessToken() ? <Unsign /> : <Navigate to="/" replace />} />
+
+              <Route
+                path="user/:username/:playlistId/visitor"
+                element={<Visitor />}
+              />
+              <Route
+                path="/env"
+                element={checkAccessToken() ? <Environment /> : <Environment />}
+              />
+              <Route
+                path="/env/favorites"
+                element={
+                  checkAccessToken() ? (
+                    <Favorites />
+                  ) : (
+                    <Navigate to="/" replace />
+                  )
+                }
+              />
+              <Route
+                path="/env/unsign"
+                element={
+                  checkAccessToken() ? <Unsign /> : <Navigate to="/" replace />
+                }
+              />
               <Route path="/redirect" element={<Redirect />} />
               <Route path="/search" element={<Search />} />
-              <Route path="/search/playlist" element={<SearchPlaylistDetail />} />
+              <Route
+                path="/search/playlist"
+                element={<SearchPlaylistDetail />}
+              />
               <Route path="/search/member" element={<SearchMemberDetail />} />
 
               <Route path="/unprepared" element={<Prepare />} />

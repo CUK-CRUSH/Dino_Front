@@ -7,7 +7,7 @@ export interface EditPlayListControlsDTO {
 }
 
 export interface MusicContentDTO {
-  id: number;
+  id: string;
   title: string;
   artist: string;
   url: string;
