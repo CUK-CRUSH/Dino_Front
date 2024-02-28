@@ -11,11 +11,12 @@ import { setToast } from "@reducer/Toast/toast";
 import { RootState } from "@store/index";
 import { updateArtist, updateTitle, updateUrl } from "@reducer/musicadd";
 import YouTube from "react-youtube";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { musicListState } from "@atoms/Musics/MusicList";
 import { userNameState } from "@atoms/Playlist/username";
 import { playlistIdState } from "@atoms/Playlist/playlistId";
 import { tokenState } from "@atoms/Playlist/token";
+import { fromButtonState } from "@atoms/Musics/locationState";
 
 export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   musicData,
@@ -55,6 +56,7 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   const usernames = useRecoilValue(userNameState);
   const playlistId = useRecoilValue(playlistIdState);
   const token = useRecoilValue(tokenState);
+  const setFromButtonState = useSetRecoilState(fromButtonState);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -64,6 +66,8 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
       dispatch(updateTitle(musicData.title));
       dispatch(updateArtist(musicData.artist));
       dispatch(updateUrl(musicData.url));
+      setFromButtonState(true);
+
       navigate(`/user/${usernames}/${playlistId}/edit/${musicData.id}`);
     }
   };
