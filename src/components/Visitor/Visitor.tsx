@@ -23,11 +23,8 @@ interface VisitorData {
   content: string;
   modifiedDate: string;
 }
-interface VisitorDTO {
-  onClose: () => void;
-}
 
-const Visitor = ({ onClose }: VisitorDTO) => {
+const Visitor = () => {
   const swalButton = Swal.mixin({
     customClass: {
       popup: "popup", // 전체
@@ -43,7 +40,7 @@ const Visitor = ({ onClose }: VisitorDTO) => {
   const [visitorData, setVisitorData] = useState<VisitorData[]>([]);
   const [content, setContent] = useState<string>("");
   // 열고닫기
-  const [isOpen, setIsOpen] = useState(true);
+
   const [buttonOpen, setButtonOpen] = useState<{ [key: string]: boolean }>({});
 
   // 수정
@@ -73,17 +70,16 @@ const Visitor = ({ onClose }: VisitorDTO) => {
 
   const handleSave = async (id: any) => {
     try {
-      // 수정된 내용으로 PATCH 요청
       await patchVisitor(Number(playlistId), id, editContent[id], token);
 
       // 데이터 새로 가져오기
-      await fetchVisitorData();
 
       // 수정 모드 해제
       setEditMode((prevState) => ({
         ...prevState,
         [id]: false,
       }));
+      setVisitorUpdate((prev) => !prev);
     } catch (error) {
       console.error(error);
     }
@@ -96,7 +92,7 @@ const Visitor = ({ onClose }: VisitorDTO) => {
       await deleteVisitor(Number(playlistId), id, token);
 
       // 데이터 새로 가져오기
-      await fetchVisitorData();
+      setVisitorUpdate((prev) => !prev);
     } catch (error) {
       console.error(error);
     }
@@ -121,18 +117,6 @@ const Visitor = ({ onClose }: VisitorDTO) => {
 
   const [cookies] = useCookies(["accessToken"]);
   const token = cookies.accessToken;
-
-  const close = () => {
-    onClose(); // Close the modal without saving changes
-  };
-
-  const cancel = () => {
-    setIsOpen(!isOpen);
-    // 애니메이션 용 타이머
-    setTimeout(() => {
-      close();
-    }, 900);
-  };
 
   const fetchVisitorData = async () => {
     try {
@@ -167,7 +151,7 @@ const Visitor = ({ onClose }: VisitorDTO) => {
     try {
       await postVisitor(Number(playlistId), content, token);
       setContent("");
-      await fetchVisitorData();
+
       setVisitorUpdate(!visitorUpdate);
     } catch (error) {
       console.error(error);
@@ -185,7 +169,7 @@ const Visitor = ({ onClose }: VisitorDTO) => {
   useEffect(() => {
     fetchVisitorData();
     /* eslint-disable react-hooks/exhaustive-deps */
-  }, []);
+  }, [visitorUpdate]);
 
   const refreshToken = localStorage.getItem("refreshToken");
 
@@ -194,7 +178,7 @@ const Visitor = ({ onClose }: VisitorDTO) => {
 
   return (
     <div
-      onClick={cancel}
+      // onClick={cancel}
       className="fixed top-14 left-0 w-full h-[calc(100%-56px)] flex items-center justify-center z-50"
     >
       <div className="absolute -inset-14 bg-gray-800 opacity-75 "></div>
@@ -202,8 +186,7 @@ const Visitor = ({ onClose }: VisitorDTO) => {
       <div
         className={`relative ${
           size ? "w-[390px]" : "w-full"
-        } h-full bg-[#F7F8FA] flex flex-col pointer-events-auto  rounded-t-3xl shadow-lg
-    animate-slide-edit-${isOpen ? "in" : "out"}`}
+        } h-full bg-[#F7F8FA] flex flex-col pointer-events-auto  rounded-t-3xl shadow-lg`}
         onClick={(e) => e.stopPropagation()}
       >
         <header className="py-5 h-[60px]">
