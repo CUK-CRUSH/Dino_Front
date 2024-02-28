@@ -61,7 +61,16 @@ function App() {
                 path="user/:username/:playlistId"
                 element={<EditPlayList />}
               />
-              <Route path="/login/validation" element={<Validation />} />
+              <Route
+                path="/login/validation"
+                element={
+                  checkAccessToken() ? (
+                    <Validation />
+                  ) : (
+                    <Navigate to="/" replace />
+                  )
+                }
+              />
               <Route
                 path="user/:username/:playlistId/edit"
                 element={<AddMusic />}
@@ -80,7 +89,13 @@ function App() {
               />
               <Route
                 path="/env"
-                element={checkAccessToken() ? <Environment /> : <Environment />}
+                element={
+                  checkAccessToken() ? (
+                    <Environment />
+                  ) : (
+                    <Navigate to="/" replace />
+                  )
+                }
               />
               <Route
                 path="/env/favorites"
