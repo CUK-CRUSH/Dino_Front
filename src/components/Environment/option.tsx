@@ -38,9 +38,10 @@ const OptionComponents = () => {
   });
 
   const navigate = useNavigate();
-  const [cookies, , removeCookie] = useCookies(['accessToken']);
+
+  const [cookies, , removeCookie] = useCookies(["accessToken"]);
   // 세션 아이디
-  const id = sessionStorage.getItem('id');
+  const id = sessionStorage.getItem("id");
 
   // 토스트
   const { toast } = useSelector((state: RootState) => state.toast);
@@ -60,9 +61,9 @@ const OptionComponents = () => {
     }
   };
 
-  const handleUnprepared = useCallback(() => {
-    navigate(`/unprepared`);
-  }, [navigate]);
+  const handleUnprepared = () => {
+    window.open("https://forms.gle/UjDH44tU8AJEAYNL7");
+  };
 
   const handleLogout = useCallback(() => {
     swalButton
@@ -101,8 +102,10 @@ const OptionComponents = () => {
   };
 
   const handleFavorites = () => {
-    navigate('./favorites', { state: { username: username ? username : userData.username } });
-  }
+    navigate("./favorites", {
+      state: { username: username ? username : userData.username },
+    });
+  };
 
   const handleUnsign = useCallback(() => {
     navigate(`./unsign`);
@@ -128,7 +131,8 @@ const OptionComponents = () => {
     }, delay);
 
     return () => clearTimeout(timeoutId);
-  }, [id,navigate,cookies.accessToken]);
+
+  }, [id, navigate, cookies.accessToken]);
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
@@ -140,7 +144,9 @@ const OptionComponents = () => {
     setIsEditModalOpen(false);
   };
 
-  const { profileImage, username, introduction } = useSelector((state: RootState) => state.userProfile);
+  const { profileImage, username, introduction } = useSelector(
+    (state: RootState) => state.userProfile
+  );
 
   return (
     <div className="h-full min-h-screen w-full scrollbar-hide overflow-scroll flex  flex-col bg-white text-black text-[15px] font-medium leading-[18px]">
@@ -171,17 +177,21 @@ const OptionComponents = () => {
                   profileImage
                     ? profileImage
                     : userData.profileImage
-                      ? userData.profileImage
-                      : userData.profileImageUrl
-                        ? userData.profileImageUrl
-                        : NoImage
+                    ? userData.profileImage
+                    : userData.profileImageUrl
+                    ? userData.profileImageUrl
+                    : NoImage
                 }
                 alt="프로필 이미지"
                 className="w-14 h-14 rounded-full"
               />
               <div className="ml-4">
-                <h2 className="text-lg font-bold">{username ? username : userData.username}</h2>
-                <p className="text-sm text-gray-500">{introduction ? introduction : userData.introduction}</p>
+                <h2 className="text-lg font-bold">
+                  {username ? username : userData.username}
+                </h2>
+                <p className="text-sm text-gray-500">
+                  {introduction ? introduction : userData.introduction}
+                </p>
               </div>
             </div>
             <button

@@ -127,7 +127,7 @@ export const MusicDataRow = ({ isEditing, fetchPlaylist }: MusicDataDTO) => {
                 key={Date.now() + index} // 고유한 키를 생성합니다.
                 musicData={{
                   ...musicItem,
-                  id: Date.now() + index, // 고유한 id를 부여합니다.
+                  id: String(Date.now()), // 고유한 id를 부여합니다.
                 }}
                 order={1 + index + musicList?.data?.length}
                 isEditing={isEditing}

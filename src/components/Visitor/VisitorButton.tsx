@@ -2,8 +2,7 @@ import ChatIcon from "@assets/Visitor/Chat.svg";
 import "@styles/EditList/playList.css";
 import { useEffect, useState } from "react";
 import { getVisitor } from "@api/visitor-controller/visitorControl";
-import { useParams } from "react-router";
-import VisitModal from "@pages/Visit/VisitEditModal";
+import { useParams, useNavigate } from "react-router";
 import { visitorUpdateState } from "@atoms/Visit/visitUpdate";
 import { useRecoilValue } from "recoil";
 
@@ -16,27 +15,35 @@ interface VisitorData {
 
 const VisitorButton = ({ id }: any) => {
   const [visitorData, setVisitorData] = useState<VisitorData[]>([]);
+  const navigate = useNavigate();
 
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  const visitorUpdate = useRecoilValue(visitorUpdateState);
-
+  const { username: paramUsername } = useParams<{
+    username: string | undefined;
+  }>();
   const { playlistId: ParamsPlaylistId } = useParams<{ playlistId: string }>();
 
-  const openEditModal = () => {
-    setIsEditModalOpen(true);
+  const handleMoveVisitor = () => {
+    navigate(`/user/${paramUsername}/${ParamsPlaylistId}/visitor`);
   };
 
-  const closeEditModal = async () => {
-    setIsEditModalOpen(false);
-    await fetchVisitorData();
-  };
+  const visitorUpdate = useRecoilValue(visitorUpdateState);
 
   const fetchVisitorData = async () => {
     try {
       // 0.3초 지연
       await new Promise((resolve) => setTimeout(resolve, 300));
-      const visitor = await getVisitor(Number(ParamsPlaylistId));
-      setVisitorData(visitor.data);
+      let page = 0;
+      let totalData: VisitorData[] = [];
+      while (true) {
+        const response = await getVisitor(Number(ParamsPlaylistId), page);
+        if (response.data.length === 0) {
+          // 데이터가 없으면 반복 중지
+          break;
+        }
+        totalData = [...totalData, ...response.data];
+        page++;
+      }
+      setVisitorData(totalData);
     } catch (error) {
       console.error(error);
     }
@@ -51,7 +58,7 @@ const VisitorButton = ({ id }: any) => {
     <div className="bg-black inline-flex px-1  rounded-[30px] mx-4">
       <div className="p-1 rounded-full">
         <img
-          onClick={openEditModal}
+          onClick={handleMoveVisitor}
           className="w-6 h-6"
           src={ChatIcon}
           alt="chat button"
@@ -64,8 +71,6 @@ const VisitorButton = ({ id }: any) => {
           </span>
         </div>
       )}
-
-      {isEditModalOpen && <VisitModal onClose={closeEditModal} />}
     </div>
   );
 };

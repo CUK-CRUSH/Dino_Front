@@ -8,8 +8,11 @@ export const getMusicList = async (playlistId: number, page?: number) => {
       url += `?page=${page}`;
     }
     const response = await axiosInstance.get(url);
-    if (response) { return response.data; }
-    else { return }
+    if (response) {
+      return response.data;
+    } else {
+      return;
+    }
   } catch (error) {
     console.log(error);
     throw error;
@@ -42,8 +45,11 @@ export const postMusicList = async (
       }
     );
 
-    if (response) { return response.data; }
-    else { return }
+    if (response) {
+      return response.data;
+    } else {
+      return;
+    }
   } catch (error) {
     console.log(error);
     throw error;
@@ -70,8 +76,11 @@ export const postMultipleMusicList = async (
       }
     );
 
-    if (response) { return response.data; }
-    else { return }
+    if (response) {
+      return response.data;
+    } else {
+      return;
+    }
   } catch (error) {
     console.log(error);
     throw error;
@@ -79,7 +88,7 @@ export const postMultipleMusicList = async (
 };
 
 // 음악 삭제하기
-export const deleteMusicList = async (musicId: number, cookies?: string) => {
+export const deleteMusicList = async (musicId: string, cookies?: string) => {
   try {
     const response = await axiosInstance.delete(
       `/api/v1/music?musicId=${musicId}`,
@@ -89,8 +98,11 @@ export const deleteMusicList = async (musicId: number, cookies?: string) => {
         },
       }
     );
-    if (response) { return response.data; }
-    else { return }
+    if (response) {
+      return response.data;
+    } else {
+      return;
+    }
   } catch (error) {
     console.log(error);
     throw error;
@@ -99,7 +111,7 @@ export const deleteMusicList = async (musicId: number, cookies?: string) => {
 
 // 음악 변경하기
 export const patchMusicList = async (
-  musicId: number,
+  musicId: string,
   title: string,
   artist: string,
   url: string,
@@ -123,8 +135,11 @@ export const patchMusicList = async (
       }
     );
 
-    if (response) { return response.data; }
-    else { return }
+    if (response) {
+      return response.data;
+    } else {
+      return;
+    }
   } catch (error) {
     console.log(error);
     throw error;

@@ -5,7 +5,7 @@ interface VisitModalProps {
 }
 
 const VisitModal = ({ onClose }: VisitModalProps) => {
-  return <Visitor onClose={onClose} />;
+  return <Visitor />;
 };
 
 export default VisitModal;

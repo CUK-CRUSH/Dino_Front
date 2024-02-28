@@ -239,7 +239,6 @@ export const getLikeList = async (playlistId: number, page: any = "0") => {
 
 // 좋아요한 플레이리스트 조회
 export const getFavoritesPlayList = async (
-  username?: string,
   cookies?: string,
   page: any = "0",
   setIsLoading?: (loading: boolean) => void
@@ -247,7 +246,7 @@ export const getFavoritesPlayList = async (
   try {
     setIsLoading?.(true); // 로딩 시작
     const response = await axiosInstance.get(
-      `/api/v1/member/playlist/like?username=${username}&page=${page}`,
+      `/api/v1/member/playlist/like?page=${page}`,
       {
         headers: {
           Authorization: `Bearer ${cookies}`,

@@ -82,10 +82,11 @@ const EditMusic: React.FC = () => {
     }
 
     try {
-      await patchMusicList(Number(musicId), title, artist, url, token);
+      await patchMusicList(String(musicId), title, artist, url, token);
       dispatch(updateTitle(""));
       dispatch(updateArtist(""));
       dispatch(updateUrl(""));
+
       navigate(-1);
     } catch (error) {
       Swal.fire({
@@ -100,6 +101,10 @@ const EditMusic: React.FC = () => {
     fetchAutoComplete("title", title);
     fetchAutoComplete("artist", artist);
   }, [title, artist, fetchAutoComplete, dispatch, musicId]);
+
+  useEffect(() => {
+    navigate("/");
+  }, [navigate]);
 
   return (
     <div className="scrollbar-hide overflow-scroll relative z-30 h-full w-full flex flex-col bg-black text-white py-10 text-[17px] leading-[18px]">
