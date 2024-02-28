@@ -11,11 +11,11 @@ import { useNavigate, useParams } from "react-router-dom";
 import SendChat from "@assets/Visitor/SendChat.svg";
 import SettingButton from "@assets/Visitor/Setting.svg";
 import "@styles/Admin/style.css";
-import useWindowSizeCustom from "@hooks/useCustomMargin/useWindowSizeCustom";
 import { useRecoilState } from "recoil";
 import { visitorUpdateState } from "@atoms/Visit/visitUpdate";
 import Swal from "sweetalert2";
 import useDecodedJWT from "@hooks/useDecodedJWT";
+import OptionHeader from "@components/Layout/optionHeader";
 
 interface VisitorData {
   id: number;
@@ -109,9 +109,8 @@ const Visitor = () => {
 
   const [visitorUpdate, setVisitorUpdate] = useRecoilState(visitorUpdateState);
   //
-  const { windowSize } = useWindowSizeCustom();
+
   // 사이즈 390 보다 크면 모달창 크기 고정
-  const [size, setSize] = useState<boolean>(false);
 
   const { playlistId } = useParams<{ playlistId: string }>();
 
@@ -159,14 +158,6 @@ const Visitor = () => {
   };
 
   useEffect(() => {
-    if (windowSize.width > 390) {
-      setSize(true);
-    } else {
-      setSize(false);
-    }
-  }, [windowSize.width]);
-
-  useEffect(() => {
     fetchVisitorData();
     /* eslint-disable react-hooks/exhaustive-deps */
   }, [visitorUpdate]);
@@ -177,24 +168,13 @@ const Visitor = () => {
   const decodedRefeshToken = useDecodedJWT(refreshToken);
 
   return (
-    <div
-      // onClick={cancel}
-      className="fixed top-14 left-0 w-full h-[calc(100%-56px)] flex items-center justify-center z-50"
-    >
-      <div className="absolute -inset-14 bg-gray-800 opacity-75 "></div>
-
+    <div className="h-full w-full scrollbar-hide overflow-scroll flex flex-col bg-white text-black font-medium leading-[18px]">
       <div
-        className={`relative ${
-          size ? "w-[390px]" : "w-full"
-        } h-full bg-[#F7F8FA] flex flex-col pointer-events-auto  rounded-t-3xl shadow-lg`}
+        className={`relative h-full bg-[#F7F8FA] flex flex-col`}
         onClick={(e) => e.stopPropagation()}
       >
-        <header className="py-5 h-[60px]">
-          <p className="text-[20px] font-bold text-black my-5 text-center h-full">
-            방명록
-          </p>
-        </header>
-        <main className="overflow-y-scroll h-[calc(100%-150px)] scrollbar-hide">
+        <OptionHeader text="방명록" />
+        <main>
           <div className="flex flex-col items-center justify-center h-full">
             {visitorData &&
               visitorData.map((visitor: any) => (
@@ -280,7 +260,7 @@ const Visitor = () => {
               ))}
           </div>
         </main>
-        <footer className="w-[390px] h-[60px] mt-auto">
+        <footer className="w-full ">
           <form
             onSubmit={handleSubmit}
             className="h-full flex items-center justify-center w-full text-black mt-auto"
