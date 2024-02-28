@@ -82,10 +82,11 @@ const EditMusic: React.FC = () => {
     }
 
     try {
-      await patchMusicList(Number(musicId), title, artist, url, token);
+      await patchMusicList(String(musicId), title, artist, url, token);
       dispatch(updateTitle(""));
       dispatch(updateArtist(""));
       dispatch(updateUrl(""));
+
       navigate(-1);
     } catch (error) {
       Swal.fire({
