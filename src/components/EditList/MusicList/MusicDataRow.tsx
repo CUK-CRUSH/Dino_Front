@@ -72,6 +72,7 @@ export const MusicDataRow = ({ isEditing, fetchPlaylist }: MusicDataDTO) => {
 
     return () => clearTimeout(timeoutId);
   }, [isEditing]);
+
   return (
     <>
       <div className="scrollbar-hide text-[17px] flex justify-center ">

@@ -158,6 +158,7 @@ const Visitor = ({ onClose }: VisitorDTO) => {
         })
         .then((result) => {
           if (result.dismiss === Swal.DismissReason.cancel) {
+            localStorage.setItem("prevUrl", window.location.href);
             navigate("/login");
           }
         });
@@ -194,23 +195,23 @@ const Visitor = ({ onClose }: VisitorDTO) => {
   return (
     <div
       onClick={cancel}
-      className="fixed top-14 left-0 w-full h-full flex items-center justify-center z-50"
+      className="fixed top-14 left-0 w-full h-[calc(100%-56px)] flex items-center justify-center z-50"
     >
       <div className="absolute -inset-14 bg-gray-800 opacity-75 "></div>
 
       <div
         className={`relative ${
           size ? "w-[390px]" : "w-full"
-        } h-[100%] mt-5 bg-[#F7F8FA]  rounded-t-3xl shadow-lg
-        animate-slide-edit-${isOpen ? "in" : "out"}`}
+        } h-full bg-[#F7F8FA] flex flex-col pointer-events-auto  rounded-t-3xl shadow-lg
+    animate-slide-edit-${isOpen ? "in" : "out"}`}
         onClick={(e) => e.stopPropagation()}
       >
-        <header>
-          <p className="h-[10%] text-[20px] font-bold text-black my-5 text-center">
+        <header className="py-5 h-[60px]">
+          <p className="text-[20px] font-bold text-black my-5 text-center h-full">
             방명록
           </p>
         </header>
-        <main className="h-[90%] overflow-y-scroll scrollbar-hide">
+        <main className="overflow-y-scroll h-[calc(100%-150px)] scrollbar-hide">
           <div className="flex flex-col items-center justify-center h-full">
             {visitorData &&
               visitorData.map((visitor: any) => (
@@ -252,14 +253,15 @@ const Visitor = ({ onClose }: VisitorDTO) => {
                           onClick={() => toggleDropdown(visitor.id)}
                           className="relative cursor-pointer"
                         >
-                          {visitor.member.id ===
-                            Number(decodedRefeshToken.sub) && (
-                            <img
-                              src={SettingButton}
-                              alt="edit"
-                              className="cursor-pointer"
-                            />
-                          )}
+                          {decodedRefeshToken &&
+                            visitor.member.id ===
+                              Number(decodedRefeshToken.sub) && (
+                              <img
+                                src={SettingButton}
+                                alt="edit"
+                                className="cursor-pointer"
+                              />
+                            )}
 
                           {buttonOpen[visitor.id] && (
                             <ul className="absolute text-12px right-0 top-full mt-2 w-24 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5">
@@ -295,7 +297,7 @@ const Visitor = ({ onClose }: VisitorDTO) => {
               ))}
           </div>
         </main>
-        <footer className="fixed bottom-1 w-[390px]">
+        <footer className="w-[390px] h-[60px] mt-auto">
           <form
             onSubmit={handleSubmit}
             className="h-full flex items-center justify-center w-full text-black mt-auto"
