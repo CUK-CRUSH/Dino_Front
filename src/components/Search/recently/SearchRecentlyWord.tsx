@@ -15,8 +15,15 @@ const SearchRecentlyWord: React.FC = () => {
   const [cookies,,] = useCookies(['accessToken']);
   let token = cookies.accessToken;
   let decodedToken = useDecodedJWT(token);
+  let userId: string | undefined;
+  if (decodedToken) {
+    userId = userId;
+  } else {
+    // decodedToken이 null이면 적절한 기본값을 설정합니다.
+    userId = '';
+  }
 
-  const localSearchTerms = localStorage.getItem(`searchTerms_${decodedToken.sub}`);
+  const localSearchTerms = localStorage.getItem(`searchTerms_${userId}`);
 
   const navigate = useNavigate();
 
@@ -38,11 +45,11 @@ const SearchRecentlyWord: React.FC = () => {
 
   // 각각 삭제
   function deleteSearchWord(index : number){
-    let search = JSON.parse(localStorage.getItem(`searchTerms_${decodedToken.sub}`) || '[]');
+    let search = JSON.parse(localStorage.getItem(`searchTerms_${userId}`) || '[]');
     if(index < search.length){
       search.splice(index,1)
     }
-    localStorage.setItem(`searchTerms_${decodedToken.sub}`,JSON.stringify(search));
+    localStorage.setItem(`searchTerms_${userId}`,JSON.stringify(search));
     setSearchTerms(search)
   }
 

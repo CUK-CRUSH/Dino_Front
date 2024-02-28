@@ -22,9 +22,15 @@ const SearchPage: React.FC = () => {
   const [cookies,,] = useCookies(['accessToken']);
   let token = cookies.accessToken;
   let decodedToken = useDecodedJWT(token);
-
+  let userId: string | undefined;
+  if (decodedToken) {
+    userId = decodedToken.sub;
+  } else {
+    // decodedToken이 null이면 적절한 기본값을 설정합니다.
+    userId = '';
+  }
   // 검색추가하기
-  const { addSearchTerm } = useSearchTerms(decodedToken.sub);
+  const { addSearchTerm } = useSearchTerms(userId);
   // URL 파라미터 읽기
   const searchParams = new URLSearchParams(location.search);
   const query = searchParams.get('query');
@@ -40,7 +46,7 @@ const SearchPage: React.FC = () => {
     const fetchData = async () => {
       try {
         const searchResult = await getSearch(query?.trim());
-        if(searchResult.status === 200){
+        if(searchResult.status === 200 && userId !== '' ){
           addSearchTerm(query?.trim());
         }
         

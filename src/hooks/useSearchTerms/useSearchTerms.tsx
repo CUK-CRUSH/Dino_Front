@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 
-const useSearchTerms = (userId: string) => {
+const useSearchTerms = (userId?: string) => {
   const [searchTerms, setSearchTerms] = useState<any[]>([]);
 
   // 로컬 스토리지에서 검색어를 불러오는 함수
