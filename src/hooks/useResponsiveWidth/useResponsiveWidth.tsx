@@ -9,7 +9,6 @@ function useCompareToken() {
   const [size, setSize] = useState<string>();
 
   useEffect(() => {
-    console.log(windowSize)
     if (windowSize.width === 390) {
       setSize("w-[390px]")
       return;

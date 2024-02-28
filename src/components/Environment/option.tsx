@@ -128,7 +128,7 @@ const OptionComponents = () => {
     }, delay);
 
     return () => clearTimeout(timeoutId);
-  }, [id,navigate]);
+  }, [id,navigate,cookies.accessToken]);
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
