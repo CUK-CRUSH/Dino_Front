@@ -1,15 +1,21 @@
 import { useNavigate } from "react-router-dom";
 import { FaCirclePlus } from "react-icons/fa6";
 import { useTranslation } from "react-i18next";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { userNameState } from "@atoms/Playlist/username";
+import { fromButtonState } from "@atoms/Musics/locationState";
 
 export const PlusButton: React.FC<{
   playlists: any;
 }> = ({ playlists }) => {
   const navigate = useNavigate();
   const usernames = useRecoilValue(userNameState);
+
+  const setFromButtonState = useSetRecoilState(fromButtonState);
+
   const handleAddMusicClick = () => {
+    setFromButtonState(true);
+
     navigate(`/user/${usernames}/${playlists.id}/edit`);
   };
   const { t } = useTranslation("Edit");

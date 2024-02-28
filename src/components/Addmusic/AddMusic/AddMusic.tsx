@@ -18,6 +18,8 @@ import AddButton from "@components/Addmusic/Button/AddButton";
 import AddBackButton from "@components/Addmusic/Button/AddBackButton";
 import { useTranslation } from "react-i18next";
 import { playAutoComplete } from "@api/AutoComplete/AutocompleteControl";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { fromButtonState } from "@atoms/Musics/locationState";
 
 const AddMusic: React.FC = () => {
   const { t } = useTranslation("AddMusic");
@@ -81,7 +83,9 @@ const AddMusic: React.FC = () => {
     setSearchClick((prevSearchClick) => !prevSearchClick);
   };
 
-  //
+  // url 제한
+  const fromButton = useRecoilValue(fromButtonState);
+  const setFromButtonState = useSetRecoilState(fromButtonState);
 
   const musicData = useSelector((state: RootState) => state.musicAdd);
   const { title, artist, url } = musicData;
@@ -119,6 +123,8 @@ const AddMusic: React.FC = () => {
         dispatch(updateTitle(""));
         dispatch(updateArtist(""));
         dispatch(updateUrl(""));
+        setFromButtonState(false);
+
         navigate(-1);
       }, 100);
     } catch (error) {
@@ -127,13 +133,17 @@ const AddMusic: React.FC = () => {
         text: "Url형식이 맞지않아요",
       });
     }
+    /* eslint-disable react-hooks/exhaustive-deps */
   }, [navigate, url, dispatch, artist, title]);
 
   const handleBack = useCallback(() => {
     dispatch(updateTitle(""));
     dispatch(updateArtist(""));
     dispatch(updateUrl(""));
+    setFromButtonState(false);
+
     navigate(-1);
+    /* eslint-disable react-hooks/exhaustive-deps */
   }, [navigate, dispatch]);
 
   useEffect(() => {
@@ -142,8 +152,10 @@ const AddMusic: React.FC = () => {
   }, [title, artist, fetchAutoComplete, dispatch, musicId]);
 
   useEffect(() => {
-    navigate("/");
-  }, [navigate]);
+    if (!fromButton) {
+      navigate("/");
+    }
+  }, [navigate, fromButton]);
   return (
     <div className="scrollbar-hide overflow-scroll relative z-30 h-full w-full flex flex-col bg-black text-white py-10 text-[17px] leading-[18px]">
       <div className="mt-14 mx-4">
