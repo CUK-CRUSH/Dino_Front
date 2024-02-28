@@ -1,4 +1,6 @@
+import useDecodedJWT from '@hooks/useDecodedJWT';
 import React, { useEffect, useState } from 'react';
+import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 
 interface Data {
@@ -9,13 +11,17 @@ interface Data {
 const SearchRecentlyWord: React.FC = () => {
   const [searchTerms, setSearchTerms] = useState<Data[]>([]);
 
-  const localSearchTerms = localStorage.getItem('searchTerms');
+  // id값
+  const [cookies,,] = useCookies(['accessToken']);
+  let token = cookies.accessToken;
+  let decodedToken = useDecodedJWT(token);
+
+  const localSearchTerms = localStorage.getItem(`searchTerms_${decodedToken.sub}`);
 
   const navigate = useNavigate();
 
   useEffect(() => {
     const storedTerms = localSearchTerms;
-    console.log('a')
     if (storedTerms) {
       setSearchTerms(JSON.parse(storedTerms));
     }
@@ -32,11 +38,11 @@ const SearchRecentlyWord: React.FC = () => {
 
   // 각각 삭제
   function deleteSearchWord(index : number){
-    let search = JSON.parse(localStorage.getItem('searchTerms') || '[]');
+    let search = JSON.parse(localStorage.getItem(`searchTerms_${decodedToken.sub}`) || '[]');
     if(index < search.length){
       search.splice(index,1)
     }
-    localStorage.setItem('searchTerms',JSON.stringify(search));
+    localStorage.setItem(`searchTerms_${decodedToken.sub}`,JSON.stringify(search));
     setSearchTerms(search)
   }
 
