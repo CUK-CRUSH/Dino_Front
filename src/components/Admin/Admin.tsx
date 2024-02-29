@@ -32,12 +32,12 @@ const AdminPage: React.FC = () => {
     profileImageUrl: null,
     username: "",
   });
-  
+
   // skelton margin
   const customPlaylistMargin = useCustomPlaylistMargin();
   // Admin Margin
   const customAdminMargin = useCustomAdminMargin();
-  
+
   // 유저데이터
   const [userData, setUserdata] = useState<getMemberDTO>(getDefaultMember);
 
@@ -45,6 +45,8 @@ const AdminPage: React.FC = () => {
   const [playlistData, setPlaylistdata] = useState<
     getPlaylistDTO[] | undefined
   >();
+  // 플레이리스트 길이
+  const [playlistDataLength, setPlaylistDataLength] = useState<number>(0)
 
   const { username } = useParams<{ username: string | undefined }>();
 
@@ -60,6 +62,7 @@ const AdminPage: React.FC = () => {
 
         setUserdata(userDataResult.data);
         dispatch(setProfileIntroduction(userDataResult.data.introduction));
+
         if (userDataResult.data?.id) {
           localStorage.setItem("userId", userDataResult.data.id.toString());
         }
@@ -105,6 +108,7 @@ const AdminPage: React.FC = () => {
       try {
         const playlistDataResult = await getPlayList(username);
         setPlaylistdata(playlistDataResult.data);
+        setPlaylistDataLength(playlistDataResult.data.length)
       } catch (error) {
         console.error("Error fetching playlist data:", error);
       }
@@ -135,14 +139,12 @@ const AdminPage: React.FC = () => {
   };
 
   return (
-    <div className="relative w-full h-full mx-auto scrollbar-hide overflow-scroll flex flex-col justify-between bg-neutral-900">
+    <div className="h-full scrollbar-hide overflow-scroll relative ">
       <Header id={userData.id} authority={authority} />
 
       <UserProfileBackground
         userBackgroundImage={userData?.backgroundImageUrl}
       />
-      {/* 로그인 여부 */}
-      {/* {!induceLogin ? <InduceButton /> : <></>} */}
 
       {/* 플레이리스트 생성 성공 토스트 */}
 
@@ -166,52 +168,51 @@ const AdminPage: React.FC = () => {
       )}
 
       {/* 검은화면 */}
-      <div className={`w-full`} style={{marginTop: `${customAdminMargin}px` }} >
+      {/*   */}
+      <div className={`w-full min-h-[calc(100%-210px)]  absolute bg-neutral-900 z-10 rounded-tl-[50px] rounded-tr-[50px] `} >
 
         {/* 프로필 이미지 */}
-        <div
-          className={`flex relative items-center flex-col z-10 bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px] `}
-        >
-          <UserProfileImage userProfileImage={userData?.profileImageUrl} />
-          {userData.id && !authority && (
-            <Img
-              onClick={handleShare}
-              src={ShareImg}
-              alt="share"
-              className="w-6 h-6 absolute top-3 right-4 cursor-pointer"
-            />
-          )}
 
-          <UserProfileInfo
-            username={userData?.username}
-            // introText={userData?.introduction}
+        <UserProfileImage userProfileImage={userData?.profileImageUrl} />
+        {userData.id && !authority && (
+          <Img
+            onClick={handleShare}
+            src={ShareImg}
+            alt="share"
+            className="w-6 h-6 absolute top-4 right-5 cursor-pointer"
           />
-        </div>
-        <div className={`bg-neutral-900 min-h-[500px] rounded-tl-[30px] rounded-tr-[30px]`}>
-          
-        {isLoading && <SkeltonPlaylist customMargin={customPlaylistMargin} /> }
-        {/* Admin Margin
-         */}{isLoading && <SkeltonPlaylist customMargin={customPlaylistMargin} /> }
+        )}
+
+        <UserProfileInfo
+          username={userData?.username}
+        // introText={userData?.introduction}
+        />
+
+        {isLoading && <SkeltonPlaylist customMargin={customPlaylistMargin} />}
 
         {playlistData &&
           playlistData.map((playlist: getPlaylistDTO, index: number) => (
             <PlayList key={playlist.id} playlist={playlist} fontColor="#fff" visible={true} />
           ))}
 
-          {!isLoading &&
+       
+        {!isLoading &&
           authority &&
           playlistData?.length !== undefined &&
           playlistData.length < 4 ? (
-            <AddPlayList />
-          ) : (
-            <></>
-          )}
+          <AddPlayList />
+        ) : (
+          <></>
+        )}
 
-        </div>
 
         {/* 여기까지 플레이리스트 */}
+        <div className="absolute -bottom-0 w-full">
+        <Footer  bgColor="neutral-900" />
+        </div>
+
       </div>
-      <Footer bgColor="neutral-900" />
+
     </div>
   );
 };
