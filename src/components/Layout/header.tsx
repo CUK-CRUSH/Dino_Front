@@ -29,9 +29,14 @@ const Header = ({ authority, id }: { authority?: boolean; id?: string }) => {
   };
 
   const handleNavigate = () => {
+    if(localStorage.getItem('homeUrl')){
       navigate(`/user/${localStorage.getItem('homeUrl')}`)
+    }
+    else {
+      navigate('/');
+    }
   }
-  
+
   return (
     <header className="absolute w-full top-0 h-[100px] bg-transparent">
       <div onClick={handleNavigate}>
