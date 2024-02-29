@@ -20,7 +20,6 @@ import ShareImg from "@assets/Share.svg";
 import { Img } from "react-image";
 import SkeltonPlaylist from "./SkeltonPlaylist";
 import { useCustomPlaylistMargin } from "@hooks/useCustomMargin/useCustomPlaylistMargin";
-import { useCustomAdminMargin } from "@hooks/useCustomMargin/useCustomAdminMargin";
 
 const AdminPage: React.FC = () => {
   const getDefaultMember = (): getMemberDTO => ({
@@ -35,8 +34,7 @@ const AdminPage: React.FC = () => {
 
   // skelton margin
   const customPlaylistMargin = useCustomPlaylistMargin();
-  // Admin Margin
-  const customAdminMargin = useCustomAdminMargin();
+
 
   // 유저데이터
   const [userData, setUserdata] = useState<getMemberDTO>(getDefaultMember);
@@ -45,8 +43,6 @@ const AdminPage: React.FC = () => {
   const [playlistData, setPlaylistdata] = useState<
     getPlaylistDTO[] | undefined
   >();
-  // 플레이리스트 길이
-  const [playlistDataLength, setPlaylistDataLength] = useState<number>(0)
 
   const { username } = useParams<{ username: string | undefined }>();
 
@@ -108,7 +104,6 @@ const AdminPage: React.FC = () => {
       try {
         const playlistDataResult = await getPlayList(username);
         setPlaylistdata(playlistDataResult.data);
-        setPlaylistDataLength(playlistDataResult.data.length)
       } catch (error) {
         console.error("Error fetching playlist data:", error);
       }
@@ -195,7 +190,7 @@ const AdminPage: React.FC = () => {
             <PlayList key={playlist.id} playlist={playlist} fontColor="#fff" visible={true} />
           ))}
 
-       
+
         {!isLoading &&
           authority &&
           playlistData?.length !== undefined &&
@@ -208,7 +203,7 @@ const AdminPage: React.FC = () => {
 
         {/* 여기까지 플레이리스트 */}
         <div className="absolute -bottom-0 w-full">
-        <Footer  bgColor="neutral-900" />
+          <Footer bgColor="neutral-900" />
         </div>
 
       </div>
