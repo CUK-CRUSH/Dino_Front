@@ -21,7 +21,6 @@ export const AddPlayList = () => {
   
   const handleAddPlaylist = async (title : null, titleImage: null, token : string) => {
     const post = await postPlayList(title, titleImage, token);
-    console.log(post);
     if (post && post.status === 200) {
       dispatch(setToast("profile"));
       navigate(`${post.data.id}`)

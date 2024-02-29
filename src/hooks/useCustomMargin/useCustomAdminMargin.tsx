@@ -6,11 +6,18 @@ export const useCustomAdminMargin = () => {
   const { windowSize, isMobile } = useWindowSizeCustom();
 
   useEffect(() => {
-    if (!isMobile) {
-      setCustomAdminMargin((390 / 2 - 151) / 2);
-    } 
-    
-  }, [windowSize.width, isMobile]);
+
+    if (windowSize.height < 906) {
+      setCustomAdminMargin(-40);
+      return;
+    }
+
+    else {
+      setCustomAdminMargin(-(-20 + windowSize.height - 850));
+      return;
+    }
+
+  }, [windowSize.height, isMobile]);
 
   return customAdminMargin;
 };

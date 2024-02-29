@@ -20,6 +20,7 @@ import ShareImg from "@assets/Share.svg";
 import { Img } from "react-image";
 import SkeltonPlaylist from "./SkeltonPlaylist";
 import { useCustomPlaylistMargin } from "@hooks/useCustomMargin/useCustomPlaylistMargin";
+import { useCustomAdminMargin } from "@hooks/useCustomMargin/useCustomAdminMargin";
 
 const AdminPage: React.FC = () => {
   const getDefaultMember = (): getMemberDTO => ({
@@ -33,7 +34,9 @@ const AdminPage: React.FC = () => {
   });
   
   // skelton margin
-  const customMargin = useCustomPlaylistMargin();
+  const customPlaylistMargin = useCustomPlaylistMargin();
+  // Admin Margin
+  const customAdminMargin = useCustomAdminMargin();
   
   // 유저데이터
   const [userData, setUserdata] = useState<getMemberDTO>(getDefaultMember);
@@ -163,7 +166,8 @@ const AdminPage: React.FC = () => {
       )}
 
       {/* 검은화면 */}
-      <div className={`w-full -mt-[5vh]`}>
+      <div className={`w-full`} style={{marginTop: `${customAdminMargin}px` }} >
+
         {/* 프로필 이미지 */}
         <div
           className={`flex relative items-center flex-col z-10 bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px] `}
@@ -183,9 +187,11 @@ const AdminPage: React.FC = () => {
             // introText={userData?.introduction}
           />
         </div>
-        <div className={`bg-neutral-900 min-h-[468px] rounded-tl-[30px] rounded-tr-[30px]`}>
+        <div className={`bg-neutral-900 min-h-[500px] rounded-tl-[30px] rounded-tr-[30px]`}>
           
-        {isLoading && <SkeltonPlaylist customMargin={customMargin} /> }
+        {isLoading && <SkeltonPlaylist customMargin={customPlaylistMargin} /> }
+        {/* Admin Margin
+         */}{isLoading && <SkeltonPlaylist customMargin={customPlaylistMargin} /> }
 
         {playlistData &&
           playlistData.map((playlist: getPlaylistDTO, index: number) => (
@@ -200,6 +206,7 @@ const AdminPage: React.FC = () => {
           ) : (
             <></>
           )}
+
         </div>
 
         {/* 여기까지 플레이리스트 */}
