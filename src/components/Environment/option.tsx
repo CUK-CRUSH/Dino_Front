@@ -83,6 +83,7 @@ const OptionComponents = () => {
           try {
             removeCookie("accessToken");
             localStorage.removeItem("refreshToken");
+            localStorage.removeItem("homeUrl");
             navigate("/");
           } catch (error) {
             console.log(error);
@@ -102,9 +103,7 @@ const OptionComponents = () => {
   };
 
   const handleFavorites = () => {
-    navigate("./favorites", {
-      state: { username: username ? username : userData.username },
-    });
+    navigate("./favorites", { });
   };
 
   const handleUnsign = useCallback(() => {
