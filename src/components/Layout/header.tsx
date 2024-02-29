@@ -4,10 +4,12 @@ import AdminEditModal from "@pages/Admin/AdminEditModal";
 import { useState } from "react";
 import logo from "@assets/Header/logo.svg";
 import { Img } from "react-image";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import SearchButton from "@components/Admin/Button/SearchButton";
 
 const Header = ({ authority, id }: { authority?: boolean; id?: string }) => {
+  const navigate = useNavigate();
+
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
 
   const openEditModal = () => {
@@ -26,19 +28,23 @@ const Header = ({ authority, id }: { authority?: boolean; id?: string }) => {
     setOptionsModalOpen(false);
   };
 
+  const handleNavigate = () => {
+      navigate(`/user/${localStorage.getItem('homeUrl')}`)
+  }
+  
   return (
     <header className="absolute w-full top-0 h-[100px] bg-transparent">
-      <Link to="/">
+      <div onClick={handleNavigate}>
         <Img
           src={logo}
           alt="logo"
           className="absolute top-[25px] left-[20px] cursor-pointer"
         />
-      </Link>
+      </div>
       {/* 돋보기 */}
       <SearchButton authority={authority} />
       {/* ... 설정창 */}
-      {id && authority && <OpenOption id={id} />}
+      {id && authority && <OpenOption />}
       {/* ...설정창 펼치기 */}
       {isOptionsModalOpen && (
         <EditProfile

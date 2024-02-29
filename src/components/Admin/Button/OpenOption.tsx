@@ -1,14 +1,11 @@
 import setting from "@assets/Header/setting.svg";
 import { Img } from "react-image";
 import { useNavigate } from "react-router-dom";
-interface OpenOptionProps {
-  id: string;
-}
-const OpenOption: React.FC<OpenOptionProps> = ({ id }) => {
+
+const OpenOption: React.FC = () => {
   const navigate = useNavigate();
   const handleNavigateEnv = () => {
     navigate(`/env`);
-    sessionStorage.setItem('id',id);
   };
 
   return (
