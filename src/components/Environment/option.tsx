@@ -210,7 +210,7 @@ const OptionComponents = () => {
                 alt="링크복사"
                 className="flex items-center justify-center w-[28px] h-[36px] cursor-pointer"
               />
-              <p className="text-center mt-2">내 링크 복사</p>
+              <p className="text-center mt-2">내 링크 공유</p>
             </div>
             <div className="border-[1px] h-[36px] border-solid border-[#C8C8C8]" />
             <div className="flex flex-col items-center">
