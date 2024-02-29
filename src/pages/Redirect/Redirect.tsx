@@ -17,6 +17,7 @@ const fetchData = async (setCookie: any) => {
 
     setCookie("accessToken", accessToken, { path: "/", expires: date }); // Set accessToken in cookies
     localStorage.setItem("refreshToken", refreshToken); // Set refreshToken in local storage
+
     return true; // tokens are successfully set
   }
   return false; // tokens are not set
@@ -41,6 +42,7 @@ const Redirect = () => {
         try {
           if (id !== null) {
             const getUserData = await getMember(id);
+            localStorage.setItem("homeUrl", getUserData.data.username); // Set refreshToken in local storage
 
             if (success && !getUserData.data.username) {
               dispatch(setToast("login"));

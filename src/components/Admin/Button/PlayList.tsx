@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getPlaylistDTO } from "types/Admin";
-import { useCustomMargin } from "@hooks/useCustomMargin/useCustomMargin";
+import { useCustomPlaylistMargin } from "@hooks/useCustomMargin/useCustomPlaylistMargin";
 
 export const PlayList = ({ playlist, fontColor, visible }: { playlist: getPlaylistDTO, fontColor?: string, visible?: boolean }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -17,7 +17,7 @@ export const PlayList = ({ playlist, fontColor, visible }: { playlist: getPlayli
     return () => clearTimeout(timeoutId);
   }, []);
 
-  const customMargin = useCustomMargin();
+  const customMargin = useCustomPlaylistMargin();
 
   const handleOnClick = (username: string | undefined, id: number | undefined) => {
     navigate(`/user/${username}/${id}`);

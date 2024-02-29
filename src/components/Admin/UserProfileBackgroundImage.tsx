@@ -14,32 +14,32 @@ const UserProfileBackground = ({ userBackgroundImage }: UserBackgroundImageDTO) 
   );
   return (
 
-    <div className="">
+    <div className="-mb-[40px]">
 
       {
       initialProfileBackgroundImage ? (
         <Img
           src={initialProfileBackgroundImage} 
           alt="Selected"
-          className="h-[250px] w-full object-cover"
+          className="h-[250px] w-full object-cover "
         />) :
 
       profileBackgroundImage ? (
         <Img
           src={profileBackgroundImage} 
           alt="Selected"
-          className="h-[250px] w-full object-cover"
+          className="h-[250px] w-full object-cover "
         />) : 
         userBackgroundImage ? (
           <Img
             src={userBackgroundImage}
             alt="Selected"
-            className="h-[250px] w-full object-cover"
+            className="h-[250px] w-full object-cover "
           />
         ) : <Img
         src={setDefaultBackgroundImage}
         alt="Selected"
-        className="h-[250px] w-full object-cover"
+        className="h-[250px] w-full object-cover "
       />}
     </div>
   );

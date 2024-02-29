@@ -5,10 +5,10 @@ import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setToast } from "@reducer/Toast/toast";
-import { useCustomMargin } from "@hooks/useCustomMargin/useCustomMargin";
+import { useCustomPlaylistMargin } from "@hooks/useCustomMargin/useCustomPlaylistMargin";
 export const AddPlayList = () => {
 
- const customMargin = useCustomMargin();
+ const customMargin = useCustomPlaylistMargin();
 
   const [cookie] = useCookies();
   let token = cookie.accessToken;
@@ -21,7 +21,6 @@ export const AddPlayList = () => {
   
   const handleAddPlaylist = async (title : null, titleImage: null, token : string) => {
     const post = await postPlayList(title, titleImage, token);
-    console.log(post);
     if (post && post.status === 200) {
       dispatch(setToast("profile"));
       navigate(`${post.data.id}`)
