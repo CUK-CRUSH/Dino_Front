@@ -19,7 +19,7 @@ import { setProfileIntroduction } from "@reducer/Admin/userProfileSlice";
 import ShareImg from "@assets/Share.svg";
 import { Img } from "react-image";
 import SkeltonPlaylist from "./SkeltonPlaylist";
-import { useCustomMargin } from "@hooks/useCustomMargin/useCustomMargin";
+import { useCustomPlaylistMargin } from "@hooks/useCustomMargin/useCustomPlaylistMargin";
 
 const AdminPage: React.FC = () => {
   const getDefaultMember = (): getMemberDTO => ({
@@ -33,7 +33,7 @@ const AdminPage: React.FC = () => {
   });
   
   // skelton margin
-  const customMargin = useCustomMargin();
+  const customMargin = useCustomPlaylistMargin();
   
   // 유저데이터
   const [userData, setUserdata] = useState<getMemberDTO>(getDefaultMember);
@@ -163,7 +163,7 @@ const AdminPage: React.FC = () => {
       )}
 
       {/* 검은화면 */}
-      <div className={`w-full -mt-[40px]`}>
+      <div className={`w-full -mt-[5vh]`}>
         {/* 프로필 이미지 */}
         <div
           className={`flex relative items-center flex-col z-10 bg-neutral-900 rounded-tl-[30px] rounded-tr-[30px] `}
