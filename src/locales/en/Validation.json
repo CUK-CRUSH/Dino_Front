@@ -1,0 +1,9 @@
+{
+  "welcome": "Welcome!",
+  "nickname": "Write your nickname that you want to use",
+  "ristriction": "Nicknames are only allowed in English and numbers of 3 to 30 characters",
+  "nicknamePlaceholder": "Nickname",
+  "next": "Next",
+  "success": "Login Success",
+  "fail": "Nickname is already in use"
+}
