@@ -8,7 +8,6 @@ import { BrowserRouter } from "react-router-dom";
 import "./firebase";
 import "./locales";
 
-
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement
 );

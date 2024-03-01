@@ -153,7 +153,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
 
       <MusicTitle isEditing={isEditing} />
       <div className="flex flex-row">
-        <LikeButton id={musicList.data?.length} />
+        <LikeButton id={musicList.data?.length}  />
         <VisitorButton id={musicList.data?.length} />
       </div>
       <MusicDataRow isEditing={isEditing} fetchPlaylist={fetchPlaylist} />

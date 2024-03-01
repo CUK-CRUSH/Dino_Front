@@ -12,6 +12,8 @@ import {
 import { useCallback, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import Swal from "sweetalert2";
+import { useSelector } from "react-redux";
+import { RootState } from "@store/index";
 
 const LikeButton = ({ id }: any) => {
   const swalButton = Swal.mixin({
@@ -24,6 +26,10 @@ const LikeButton = ({ id }: any) => {
     },
     buttonsStyling: false,
   });
+
+  const isEditing = useSelector(
+    (state: RootState) => state.editPlaylistToggle.isEditing
+  );
 
   const navigate = useNavigate();
   const username = useRecoilValue(userNameState);
@@ -95,7 +101,7 @@ const LikeButton = ({ id }: any) => {
       <div className="p-1 rounded-full">
         <img
           className="w-6 h-6"
-          onClick={handleLikeToggle}
+          onClick={!isEditing ? handleLikeToggle : undefined}
           src={isLike ? AfterLike : BeforeLike}
           alt="Like button"
         />

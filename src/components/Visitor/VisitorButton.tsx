@@ -5,6 +5,8 @@ import { getVisitor } from "@api/visitor-controller/visitorControl";
 import { useParams, useNavigate } from "react-router";
 import { visitorUpdateState } from "@atoms/Visit/visitUpdate";
 import { useRecoilValue } from "recoil";
+import { RootState } from "@store/index";
+import { useSelector } from "react-redux";
 
 interface VisitorData {
   id: number;
@@ -14,6 +16,10 @@ interface VisitorData {
 }
 
 const VisitorButton = ({ id }: any) => {
+  const isEditing = useSelector(
+    (state: RootState) => state.editPlaylistToggle.isEditing
+  );
+
   const [visitorData, setVisitorData] = useState<VisitorData[]>([]);
   const navigate = useNavigate();
 
@@ -58,7 +64,7 @@ const VisitorButton = ({ id }: any) => {
     <div className="bg-black inline-flex px-1  rounded-[30px] mx-4">
       <div className="p-1 rounded-full">
         <img
-          onClick={handleMoveVisitor}
+          onClick={!isEditing ? handleMoveVisitor : undefined}
           className="w-6 h-6"
           src={ChatIcon}
           alt="chat button"
