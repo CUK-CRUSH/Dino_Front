@@ -7,7 +7,7 @@ import { useInView } from 'react-intersection-observer';
 import OptionHeader from '@components/Layout/optionHeader';
 import QueryText from '../part/QueryText';
 import SkeltonPlaylist from '@components/Admin/SkeltonPlaylist';
-import { useCustomMargin } from '@hooks/useCustomMargin/useCustomMargin';
+import { useCustomPlaylistMargin } from '@hooks/useCustomMargin/useCustomPlaylistMargin';
 import InfiniteDiv from '@components/InfiniteDiv/InfiniteDiv';
 
 const SearchPlaylistDetail: React.FC = () => {
@@ -19,7 +19,7 @@ const SearchPlaylistDetail: React.FC = () => {
   const [isLoading, setIsLoding] = useState<boolean>(true);
   
   // skelton margin
-  const customMargin = useCustomMargin();
+  const customMargin = useCustomPlaylistMargin();
   // URL 파라미터 읽기
   const searchParams = new URLSearchParams(location.search);
   const query = searchParams.get('query');

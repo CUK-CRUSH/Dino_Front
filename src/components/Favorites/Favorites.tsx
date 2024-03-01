@@ -3,7 +3,7 @@ import { PlayList } from "@components/Admin/Button/PlayList";
 import SkeltonPlaylist from "@components/Admin/SkeltonPlaylist";
 import InfiniteDiv from "@components/InfiniteDiv/InfiniteDiv";
 import OptionHeader from "@components/Layout/optionHeader";
-import { useCustomMargin } from "@hooks/useCustomMargin/useCustomMargin";
+import { useCustomPlaylistMargin } from "@hooks/useCustomMargin/useCustomPlaylistMargin";
 
 import {  useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
@@ -43,7 +43,7 @@ const FavoritesPage: React.FC = () => {
   };
   
   // skelton margin
-  const customMargin = useCustomMargin();
+  const customMargin = useCustomPlaylistMargin();
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
