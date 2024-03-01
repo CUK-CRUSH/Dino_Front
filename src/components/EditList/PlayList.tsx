@@ -63,7 +63,10 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
 
   const setToken = useSetRecoilState(tokenState);
 
-  const handleUploadImage = (image: string) => setUploadImage(image);
+  const handleUploadImage = (image: string) => {
+    setUploadImage(image);
+    sessionStorage.setItem("uploadImage", image);
+  };
 
   const fetchPlaylist = useCallback(async () => {
     try {
@@ -115,6 +118,10 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         setPlaylistName(savedPlaylistName);
       }
     };
+    const savedImage = sessionStorage.getItem("uploadImage");
+    if (savedImage) {
+      setUploadImage(savedImage);
+    }
 
     fetchAndSetPlaylist();
   }, [playlistId, fetchPlaylist, setPlaylistId, cookies.accessToken, setToken]);
@@ -153,7 +160,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
 
       <MusicTitle isEditing={isEditing} />
       <div className="flex flex-row">
-        <LikeButton id={musicList.data?.length}  />
+        <LikeButton id={musicList.data?.length} />
         <VisitorButton id={musicList.data?.length} />
       </div>
       <MusicDataRow isEditing={isEditing} fetchPlaylist={fetchPlaylist} />
