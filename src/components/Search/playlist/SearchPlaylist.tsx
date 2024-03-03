@@ -18,37 +18,37 @@ const SearchPlaylist: React.FC<SearchPlaylistProps> = ({ searchResults, query })
 
   const navigate = useNavigate();
 
-  const handleNavigate = (username : string, id : string) =>{
+  const handleNavigate = (username: string, id: string) => {
     navigate(`/user/${username}/${id}`);
   }
   return (
     <div className="">
 
-<Swiper
-                modules={[Pagination, Navigation, Mousewheel]}
-                grabCursor={true}
-                slidesPerView={3.5}
-                spaceBetween={10}
-                navigation
-                loop={false}
-                mousewheel
-            >
+      <Swiper
+        modules={[Pagination, Navigation, Mousewheel]}
+        grabCursor={true}
+        slidesPerView={3.5}
+        spaceBetween={10}
+        navigation
+        loop={false}
+        mousewheel
+      >
         {searchResults && searchResults.map((playlist) => (
-                            <SwiperSlide key={playlist.id}>
+          <SwiperSlide key={playlist.id}>
 
-          <div className="flex flex-col justify-center items-center w-[105px] cursor-pointer" key={playlist.id} onClick={() => handleNavigate(playlist.username, playlist.id)}>
-            <img
-              className="cursor-pointer w-[90px] h-[90px] rounded-lg object-cover "
-              src={playlist.thumbnailUrl ? playlist.thumbnailUrl : Noimage} // default.jpg는 기본 이미지 경로입니다.
-              alt="썸네일"
-            />
-            <div className="w-[100px] text-left whitespace-normal break-words">
-              <span>{playlist.playlistName}</span></div>
-          </div>
+            <div className="flex flex-col justify-center items-center w-[105px] cursor-pointer" key={playlist.id} onClick={() => handleNavigate(playlist.username, playlist.id)}>
+              <img
+                className="cursor-pointer w-[90px] h-[90px] rounded-lg object-cover "
+                src={playlist.thumbnailUrl ? playlist.thumbnailUrl : Noimage} // default.jpg는 기본 이미지 경로입니다.
+                alt="썸네일"
+              />
+              <div className="w-[100px] text-left whitespace-normal break-words">
+                <span>{playlist.playlistName}</span></div>
+            </div>
           </SwiperSlide>
         ))}
 
-</Swiper>
+      </Swiper>
     </div>
   );
 };
