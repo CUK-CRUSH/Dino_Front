@@ -6,9 +6,12 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { setToast } from "@reducer/Toast/toast";
 import { useCustomPlaylistMargin } from "@hooks/useCustomMargin/useCustomPlaylistMargin";
+import {useTranslation} from "react-i18next";
+
 export const AddPlayList = () => {
 
  const customMargin = useCustomPlaylistMargin();
+  const { t } = useTranslation("AddPlayList");
 
   const [cookie] = useCookies();
   let token = cookie.accessToken;
@@ -39,8 +42,8 @@ export const AddPlayList = () => {
 
         <img className="mx-auto mt-[0px] w-[33px] h-full" src={plus} alt="Plus Icon" />
 
-        <div className="absolute bottom-[55px] left-0 right-0 text-center text-zinc-300 text-[12px] font-medium font-['Noto Sans']">
-          새로운 플레이리스트
+        <div className="absolute bottom-1 left-0 right-0 text-center text-zinc-300 text-[12px] font-medium font-['Noto Sans']">
+            {t("newplaylist")}
         </div>
       </div>
     </div>

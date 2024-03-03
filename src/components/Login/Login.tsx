@@ -5,10 +5,10 @@ import googlelogo from "@assets/Google logo.png";
 // import facebook from "@assets/facebook-3 logo.png";
 import kakao from "@assets/Kakao.svg";
 import { useCookies } from "react-cookie";
-
+import { useTranslation } from 'react-i18next';
 // 로그인 컴포넌트
 const LoginComponents = () => {
-
+  const { t } = useTranslation("Login");
   const [,,removeCookie] = useCookies();
 
   const handleLogin = (link : string) => {
@@ -71,7 +71,7 @@ const LoginComponents = () => {
               </svg>
               <div className="w-[10px]"></div>
               <div className=" text-white text-[15px] font-medium font-['Noto Sans']">
-                소셜 계정으로 3초만에 빠른 가입
+                {t("social")}
               </div>
             </div>
           </div>
@@ -87,7 +87,7 @@ const LoginComponents = () => {
                 />
                 <div className={"w-[20px]"}></div>
                 <div className="flex flex-col items-center text-[17px] font-semibold font-['Noto Sans']">
-                  카카오로 로그인/회원가입
+                  {t("kakao")}
                 </div>
               </div>
             </div>
@@ -104,7 +104,7 @@ const LoginComponents = () => {
                 />
                 <div className={"w-[20px]"}></div>
                 <div className="flex flex-col items-center text-[17px] font-semibold font-['Noto Sans']">
-                  구글로 로그인/회원가입
+                  {t("google")}
                 </div>
               </div>
             </div>

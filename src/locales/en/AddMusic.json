@@ -1,10 +1,10 @@
 {
-  "musicTitle": "Add Music",
-  "title": "Title",
-  "artist": "Artist",
-  "toggle": "Please add the youtube link as the url",
+  "urlwarning" : "Please enter a valid URL",
+  "urlerror" : "Invalid URL",
   "plus": "Add",
-  "alertTitle": "You cant't use",
-  "alertMessage": "You have to include https://www.youtube.com/ or https://www.youtu.be/",
-  "edit": "edit"
+  "search": "Search music on YouTube",
+  "titlesearch": "Search with title",
+  "artistsearch": "Search with artist",
+  "directinputdesc": "If you want to enter a URL directly, please use the following format:",
+  "directinput": "Direct input"
 }

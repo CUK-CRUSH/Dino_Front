@@ -1,0 +1,9 @@
+{
+  "welcome": "환영합니다!",
+  "nickname": "사용하실 닉네임을 작성해주세요!",
+  "ristriction": "닉네임은 3~30 자의 영문, 숫자만 사용가능합니다.",
+  "nicknamePlaceholder": "닉네임",
+  "next": "계속하기",
+  "success": "로그인 성공",
+  "fail": "이미 존재하는 닉네임입니다"
+}

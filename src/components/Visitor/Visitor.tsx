@@ -208,8 +208,14 @@ const Visitor = () => {
                     </>
                   ) : (
                     <div>
-                      <div className="flex justify-between items-start">
-                        <div className="flex items-center">
+                      <div className="flex justify-between items-start ">
+                        <div className="flex items-center mb-1">
+                          <img
+                            src={visitor.member.profileImageUrl}
+                            className="w-[20px] h-[20px] rounded-full mr-1"
+                            alt="profile"
+                          />
+
                           <p className="font-bold">{visitor.member.username}</p>
                         </div>
                         <button
@@ -247,7 +253,7 @@ const Visitor = () => {
                         </button>
                       </div>
                       <div className="flex items-start">
-                        <div className="w-full font-bold break-words whitespace-normal">
+                        <div className="w-full text-[16px] font-bold break-words whitespace-normal">
                           {visitor.content}
                         </div>
                       </div>
