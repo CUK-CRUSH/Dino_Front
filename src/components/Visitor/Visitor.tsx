@@ -20,6 +20,7 @@ import InfiniteDiv from "@components/InfiniteDiv/InfiniteDiv";
 import { getMemberUsername } from "@api/member-controller/memberController";
 import useCompareToken from "@hooks/useCompareToken/useCompareToken";
 import { FaCirclePlus } from "react-icons/fa6";
+import InfiniteScroll from "react-infinite-scroller";
 
 interface VisitorData {
   id: number;
@@ -223,6 +224,10 @@ const Visitor = () => {
 
   const authority = useCompareToken(userData && userData?.id);
 
+  const loadMore = useCallback(() => {
+    // TODO: Implement loadMore function
+  }, []);
+
   return (
     <div className="h-full w-full scrollbar-hide overflow-scroll flex flex-col bg-white text-black font-medium leading-[18px]">
       <div
@@ -230,108 +235,121 @@ const Visitor = () => {
         onClick={(e) => e.stopPropagation()}
       >
         <OptionHeader text="방명록" />
-        <main>
-          <div className="flex flex-col items-center justify-center h-full">
-            {visitorData &&
-              visitorData.map((visitor: any) => (
-                <div className="flex flex-col bg-[#ffffff] text-black text-[14px] w-11/12 my-2 p-4">
-                  {editMode[visitor.id] ? (
-                    <>
-                      <input
-                        className="font-bold w-full h-10 from-[0deg, #FFFFFF, #FFFFFF]  border-none rounded-[10px] p-2 my-2"
-                        type="text"
-                        value={editContent[visitor.id] || ""}
-                        onChange={(e) =>
-                          handleEditContent(visitor.id, e.target.value)
-                        }
-                      />
-                      <div className="flex flex-row justify-end">
-                        <button
-                          className="p-2 border-[1px] mr-1 rounded-lg"
-                          onClick={() =>
-                            toggleEditMode(visitor.id, visitor.content)
+        <InfiniteScroll
+          className="h-[90%] overflow-y-scroll scrollbar-hide"
+          pageStart={0}
+          loadMore={loadMore}
+        >
+          <main>
+            <div className="flex flex-col items-center justify-center h-full">
+              {visitorData &&
+                visitorData.map((visitor: any) => (
+                  <div className="flex flex-col bg-[#ffffff] text-black text-[14px] w-11/12 my-2 p-4">
+                    {editMode[visitor.id] ? (
+                      <>
+                        <input
+                          className="font-bold w-full h-10 from-[0deg, #FFFFFF, #FFFFFF]  border-none rounded-[10px] p-2 my-2"
+                          type="text"
+                          value={editContent[visitor.id] || ""}
+                          onChange={(e) =>
+                            handleEditContent(visitor.id, e.target.value)
                           }
-                        >
-                          취소
-                        </button>
-                        <button
-                          className="p-2 border-[1px] rounded-lg text-white bg-black"
-                          onClick={() => handleSave(visitor.id)}
-                        >
-                          저장
-                        </button>
-                      </div>
-                    </>
-                  ) : (
-                    <div>
-                      <div className="flex justify-between items-start ">
-                        <div className="flex items-center mb-1">
-                          <img
-                            src={visitor.member.profileImageUrl}
-                            className="w-[20px] h-[20px] rounded-full mr-1"
-                            alt="profile"
-                          />
-
-                          <p className="font-bold">{visitor.member.username}</p>
+                        />
+                        <div className="flex flex-row justify-end">
+                          <button
+                            className="p-2 border-[1px] mr-1 rounded-lg"
+                            onClick={() =>
+                              toggleEditMode(visitor.id, visitor.content)
+                            }
+                          >
+                            취소
+                          </button>
+                          <button
+                            className="p-2 border-[1px] rounded-lg text-white bg-black"
+                            onClick={() => handleSave(visitor.id)}
+                          >
+                            저장
+                          </button>
                         </div>
-                        <button
-                          onClick={() => toggleDropdown(visitor.id)}
-                          className="relative cursor-pointer"
-                        >
-                          {decodedRefeshToken &&
-                            (authority ||
-                              visitor.member.id ===
-                                Number(decodedRefeshToken.sub)) && (
-                              <img
-                                src={SettingButton}
-                                alt="edit"
-                                className="cursor-pointer"
-                              />
+                      </>
+                    ) : (
+                      <div>
+                        <div className="flex justify-between items-start ">
+                          <div className="flex items-center mb-1">
+                            <img
+                              src={visitor.member.profileImageUrl}
+                              className="w-[20px] h-[20px] rounded-full mr-1"
+                              alt="profile"
+                            />
+
+                            <p className="font-bold">
+                              {visitor.member.username}
+                            </p>
+                          </div>
+                          <button
+                            onClick={() => toggleDropdown(visitor.id)}
+                            className="relative cursor-pointer"
+                          >
+                            {decodedRefeshToken &&
+                              (authority ||
+                                visitor.member.id ===
+                                  Number(decodedRefeshToken.sub)) && (
+                                <img
+                                  src={SettingButton}
+                                  alt="edit"
+                                  className="cursor-pointer"
+                                />
+                              )}
+
+                            {buttonOpen[visitor.id] && (
+                              <ul className="absolute text-12px right-0 top-full mt-2 w-24 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5">
+                                <li
+                                  className="cursor-pointer py-1 border-[1px] border-[#F2F2F2] text-[#2E2E2E]"
+                                  onClick={() =>
+                                    toggleEditMode(visitor.id, visitor.content)
+                                  }
+                                >
+                                  수정
+                                </li>
+                                <li
+                                  onClick={() => handleDelete(visitor.id)}
+                                  className="cursor-pointer py-1 border-[1px] border-[#F2F2F2] text-[#2E2E2E]"
+                                >
+                                  삭제
+                                </li>
+                              </ul>
                             )}
-
-                          {buttonOpen[visitor.id] && (
-                            <ul className="absolute text-12px right-0 top-full mt-2 w-24 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5">
-                              <li
-                                className="cursor-pointer py-1 border-[1px] border-[#F2F2F2] text-[#2E2E2E]"
-                                onClick={() =>
-                                  toggleEditMode(visitor.id, visitor.content)
-                                }
-                              >
-                                수정
-                              </li>
-                              <li
-                                onClick={() => handleDelete(visitor.id)}
-                                className="cursor-pointer py-1 border-[1px] border-[#F2F2F2] text-[#2E2E2E]"
-                              >
-                                삭제
-                              </li>
-                            </ul>
-                          )}
-                        </button>
-                      </div>
-                      <div className="flex items-start">
-                        <div className="w-full text-[16px] font-bold break-words whitespace-normal">
-                          {visitor.content}
+                          </button>
                         </div>
+                        <div className="flex items-start">
+                          <div className="w-full text-[16px] font-bold break-words whitespace-normal">
+                            {visitor.content}
+                          </div>
+                        </div>
+                        <p className="text-[10px] text-[#C8C8C8] mr-2">
+                          {visitor.modifiedDate}
+                        </p>
                       </div>
-                      <p className="text-[10px] text-[#C8C8C8] mr-2">
-                        {visitor.modifiedDate}
-                      </p>
-                    </div>
-                  )}
-                </div>
-              ))}
-          </div>
-        </main>
-        {!isLast && (
-          <button onClick={handleLoadMore} className="flex justify-center">
-            <FaCirclePlus size={28} color="" />
-          </button>
-        )}
+                    )}
+                  </div>
+                ))}
+            </div>
+          </main>
+          {!isLast && (
+            <button
+              onClick={handleLoadMore}
+              className="flex justify-center items-center h-10 w-full"
+            >
+              <FaCirclePlus size={28} color="" />
+            </button>
+          )}
+        </InfiniteScroll>
+
         <div>
           <InfiniteDiv view={view} />
         </div>
-        <footer className="w-full ">
+
+        <footer className="w-full h-[5%]">
           <form
             onSubmit={handleSubmit}
             className="h-full flex items-center justify-center w-full text-black mt-auto"
