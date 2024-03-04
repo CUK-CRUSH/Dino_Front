@@ -27,7 +27,7 @@ const Header = ({ authority, id }: { authority?: boolean; id?: string }) => {
   };
 
   return (
-    <header className="absolute w-full top-0 h-[100px] bg-transparent">
+    <header className="absolute w-full top-0 h-[5%] bg-transparent">
       <Link to="/">
         <Img
           src={logo}
