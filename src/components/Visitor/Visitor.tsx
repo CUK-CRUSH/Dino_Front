@@ -6,6 +6,7 @@ import {
 } from "@api/visitor-controller/visitorControl";
 import "@styles/EditList/playList.css";
 import { useEffect, useState } from "react";
+import { getMemberDTO } from "types/Admin";
 import { useCookies } from "react-cookie";
 import { useNavigate, useParams } from "react-router-dom";
 import SendChat from "@assets/Visitor/SendChat.svg";
@@ -18,6 +19,8 @@ import useDecodedJWT from "@hooks/useDecodedJWT";
 import OptionHeader from "@components/Layout/optionHeader";
 import { useInView } from "react-intersection-observer";
 import InfiniteDiv from "@components/InfiniteDiv/InfiniteDiv";
+import { getMemberUsername } from "@api/member-controller/memberController";
+import useCompareToken from "@hooks/useCompareToken/useCompareToken";
 
 interface VisitorData {
   id: number;
@@ -27,6 +30,15 @@ interface VisitorData {
 }
 
 const Visitor = () => {
+  const getDefaultMember = (): getMemberDTO => ({
+    backgroundImageUrl: null,
+    id: undefined,
+    introduction: "",
+    name: undefined,
+    oauth2id: undefined,
+    profileImageUrl: null,
+    username: "",
+  });
   const swalButton = Swal.mixin({
     customClass: {
       popup: "popup", // 전체
@@ -51,6 +63,7 @@ const Visitor = () => {
   const [isLast, setLast] = useState<boolean>(false);
   const [page, setPage] = useState<number>(0);
 
+  const [visitorUpdate, setVisitorUpdate] = useRecoilState(visitorUpdateState);
   // 수정
   const [editMode, setEditMode] = useState<{ [key: string]: boolean }>({});
   const [editContent, setEditContent] = useState<{ [key: string]: string }>({});
@@ -78,16 +91,23 @@ const Visitor = () => {
 
   const handleSave = async (id: any) => {
     try {
-      await patchVisitor(Number(playlistId), id, editContent[id], token);
-
-      // 데이터 새로 가져오기
+      const updatedVisitor = await patchVisitor(
+        Number(playlistId),
+        id,
+        editContent[id],
+        token
+      );
+      setVisitorData((prevData) =>
+        prevData.map((visitor) =>
+          visitor.id === id ? updatedVisitor.data : visitor
+        )
+      );
 
       // 수정 모드 해제
       setEditMode((prevState) => ({
         ...prevState,
         [id]: false,
       }));
-      setVisitorUpdate((prev) => !prev);
     } catch (error) {
       console.error(error);
     }
@@ -99,44 +119,9 @@ const Visitor = () => {
       // 삭제 요청
       await deleteVisitor(Number(playlistId), id, token);
 
-      // 데이터 새로 가져오기
-      setVisitorUpdate((prev) => !prev);
-    } catch (error) {
-      console.error(error);
-    }
-  };
-
-  //
-
-  const toggleDropdown = (id: any) => {
-    setButtonOpen((prevState) => ({
-      ...prevState,
-      [id]: !prevState[id], // 클릭한 visitor의 상태만 변경
-    }));
-  };
-
-  const [visitorUpdate, setVisitorUpdate] = useRecoilState(visitorUpdateState);
-  //
-
-  // 사이즈 390 보다 크면 모달창 크기 고정
-
-  const { playlistId } = useParams<{ playlistId: string }>();
-
-  const [cookies] = useCookies(["accessToken"]);
-  const token = cookies.accessToken;
-
-  const fetchVisitorData = async () => {
-    try {
-      const visitor = await getVisitor(Number(playlistId), page);
-      // setVisitorData(visitor.data);
-      setVisitorData((prevUsers) => [...prevUsers, ...visitor.data]);
-
-      setPage((page) => page + 1);
-      if (visitor.data.length < 15) {
-        setLast(true); // 마지막 페이지의 항목 수를 사용하여 isLast를 설정
-      } else {
-        setLast(false);
-      }
+      setVisitorData((prevData) =>
+        prevData.filter((visitor) => visitor.id !== id)
+      );
     } catch (error) {
       console.error(error);
     }
@@ -164,31 +149,75 @@ const Visitor = () => {
       return;
     }
     try {
-      await postVisitor(Number(playlistId), content, token);
+      const newVisitor = await postVisitor(Number(playlistId), content, token);
       setContent("");
 
-      setVisitorUpdate(!visitorUpdate);
+      setVisitorData((prevData) => [...prevData, newVisitor.data]);
+
+      // setTimeout(() => setVisitorUpdate(false), 1000);
     } catch (error) {
       console.error(error);
     }
   };
 
-  // useEffect(() => {
-  //   fetchVisitorData();
-  //   /* eslint-disable react-hooks/exhaustive-deps */
-  // }, [visitorUpdate]);
+  const toggleDropdown = (id: any) => {
+    setButtonOpen((prevState) => ({
+      ...prevState,
+      [id]: !prevState[id], // 클릭한 visitor의 상태만 변경
+    }));
+  };
+
+  const { playlistId } = useParams<{ playlistId: string }>();
+  const { username } = useParams<{ username: string }>();
+  const [userData, setUserData] = useState<getMemberDTO>(getDefaultMember);
+
+  const [cookies] = useCookies(["accessToken"]);
+  const token = cookies.accessToken;
+
+  const fetchVisitorData = async () => {
+    try {
+      const visitor = await getVisitor(Number(playlistId), page);
+      setVisitorData((prevUsers) => [...prevUsers, ...visitor.data]);
+
+      setPage((page) => page + 1);
+      if (visitor.data.length < 15) {
+        setLast(true);
+      } else {
+        setLast(false);
+      }
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   useEffect(() => {
     if (inView && !isLast) {
       fetchVisitorData();
     }
+
     /* eslint-disable react-hooks/exhaustive-deps */
   }, [inView, visitorUpdate]);
 
+  useEffect(() => {
+    const fetchUserData = async () => {
+      try {
+        const data = await getMemberUsername(username);
+        setUserData(data.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    fetchUserData();
+  }, [username]);
+
   const refreshToken = localStorage.getItem("refreshToken");
+  // console.log(visitorUpdate);
 
   // 토큰 해독
   const decodedRefeshToken = useDecodedJWT(refreshToken);
+
+  const authority = useCompareToken(userData && userData?.id);
 
   return (
     <div className="h-full w-full scrollbar-hide overflow-scroll flex flex-col bg-white text-black font-medium leading-[18px]">
@@ -246,8 +275,9 @@ const Visitor = () => {
                           className="relative cursor-pointer"
                         >
                           {decodedRefeshToken &&
-                            visitor.member.id ===
-                              Number(decodedRefeshToken.sub) && (
+                            (authority ||
+                              visitor.member.id ===
+                                Number(decodedRefeshToken.sub)) && (
                               <img
                                 src={SettingButton}
                                 alt="edit"
