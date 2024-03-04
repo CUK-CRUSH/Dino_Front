@@ -236,7 +236,7 @@ const Visitor = () => {
       >
         <OptionHeader text="방명록" />
         <InfiniteScroll
-          className="h-[90%] overflow-y-scroll scrollbar-hide"
+          className="h-[85%] overflow-y-scroll scrollbar-hide"
           pageStart={0}
           loadMore={loadMore}
         >
@@ -349,7 +349,7 @@ const Visitor = () => {
           <InfiniteDiv view={view} />
         </div>
 
-        <footer className="w-full h-[5%]">
+        <footer className="w-full h-[10%]">
           <form
             onSubmit={handleSubmit}
             className="h-full flex items-center justify-center w-full text-black mt-auto"
