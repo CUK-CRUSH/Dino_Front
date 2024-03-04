@@ -16,6 +16,8 @@ import { visitorUpdateState } from "@atoms/Visit/visitUpdate";
 import Swal from "sweetalert2";
 import useDecodedJWT from "@hooks/useDecodedJWT";
 import OptionHeader from "@components/Layout/optionHeader";
+import { useInView } from "react-intersection-observer";
+import InfiniteDiv from "@components/InfiniteDiv/InfiniteDiv";
 
 interface VisitorData {
   id: number;
@@ -42,6 +44,12 @@ const Visitor = () => {
   // 열고닫기
 
   const [buttonOpen, setButtonOpen] = useState<{ [key: string]: boolean }>({});
+
+  //무한 스크롤
+  const [view, inView] = useInView();
+
+  const [isLast, setLast] = useState<boolean>(false);
+  const [page, setPage] = useState<number>(0);
 
   // 수정
   const [editMode, setEditMode] = useState<{ [key: string]: boolean }>({});
@@ -119,8 +127,16 @@ const Visitor = () => {
 
   const fetchVisitorData = async () => {
     try {
-      const visitor = await getVisitor(Number(playlistId));
-      setVisitorData(visitor.data);
+      const visitor = await getVisitor(Number(playlistId), page);
+      // setVisitorData(visitor.data);
+      setVisitorData((prevUsers) => [...prevUsers, ...visitor.data]);
+
+      setPage((page) => page + 1);
+      if (visitor.data.length < 15) {
+        setLast(true); // 마지막 페이지의 항목 수를 사용하여 isLast를 설정
+      } else {
+        setLast(false);
+      }
     } catch (error) {
       console.error(error);
     }
@@ -157,10 +173,17 @@ const Visitor = () => {
     }
   };
 
+  // useEffect(() => {
+  //   fetchVisitorData();
+  //   /* eslint-disable react-hooks/exhaustive-deps */
+  // }, [visitorUpdate]);
+
   useEffect(() => {
-    fetchVisitorData();
+    if (inView && !isLast) {
+      fetchVisitorData();
+    }
     /* eslint-disable react-hooks/exhaustive-deps */
-  }, [visitorUpdate]);
+  }, [inView, visitorUpdate]);
 
   const refreshToken = localStorage.getItem("refreshToken");
 
@@ -266,6 +289,9 @@ const Visitor = () => {
               ))}
           </div>
         </main>
+        <div>
+          <InfiniteDiv view={view} />
+        </div>
         <footer className="w-full ">
           <form
             onSubmit={handleSubmit}
