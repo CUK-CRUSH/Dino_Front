@@ -4,7 +4,7 @@ import search from '@assets/Search/search.svg';
 import { useNavigate } from 'react-router-dom';
 
 interface SearchInputDTO{
-  setOpenSearchRecently : any
+  setOpenSearchRecently : React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const SearchInput: React.FC<SearchInputDTO> = ({ setOpenSearchRecently }) => {

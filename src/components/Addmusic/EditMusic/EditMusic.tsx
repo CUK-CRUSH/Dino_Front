@@ -16,7 +16,7 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { fromButtonState } from "@atoms/Musics/locationState";
 
 const EditMusic: React.FC = () => {
-  const { t } = useTranslation("AddMusic");
+  const { t } = useTranslation("Edit");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { musicId } = useParams();
@@ -122,7 +122,7 @@ const EditMusic: React.FC = () => {
     <div className="scrollbar-hide overflow-scroll relative z-30 h-full w-full flex flex-col bg-black text-white py-10 text-[17px] leading-[18px]">
       <AddBackButton handleBack={handleBack} />
       <div className="space-y-8 mx-4">
-        <MusicTitle title={"음악 수정하기"} />
+        <MusicTitle title={t("musicedit")} />
         <MusicInput
           type="text"
           label={labels.title}
