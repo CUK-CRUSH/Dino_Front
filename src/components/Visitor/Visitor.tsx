@@ -12,8 +12,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import SendChat from "@assets/Visitor/SendChat.svg";
 import SettingButton from "@assets/Visitor/Setting.svg";
 import "@styles/Admin/style.css";
-import { useRecoilValue } from "recoil";
-import { visitorUpdateState } from "@atoms/Visit/visitUpdate";
 import Swal from "sweetalert2";
 import useDecodedJWT from "@hooks/useDecodedJWT";
 import OptionHeader from "@components/Layout/optionHeader";
@@ -21,6 +19,7 @@ import { useInView } from "react-intersection-observer";
 import InfiniteDiv from "@components/InfiniteDiv/InfiniteDiv";
 import { getMemberUsername } from "@api/member-controller/memberController";
 import useCompareToken from "@hooks/useCompareToken/useCompareToken";
+import { FaCirclePlus } from "react-icons/fa6";
 
 interface VisitorData {
   id: number;
@@ -58,12 +57,10 @@ const Visitor = () => {
   const [buttonOpen, setButtonOpen] = useState<{ [key: string]: boolean }>({});
 
   //무한 스크롤
-  const [view, inView] = useInView();
+  const [view] = useInView();
 
   const [isLast, setLast] = useState<boolean>(false);
   const [page, setPage] = useState<number>(0);
-
-  const visitorUpdate = useRecoilValue(visitorUpdateState);
 
   const { playlistId } = useParams<{ playlistId: string }>();
   const { username } = useParams<{ username: string }>();
@@ -180,12 +177,11 @@ const Visitor = () => {
     }));
   };
 
-  const fetchVisitorData = async () => {
+  const fetchVisitorData = async (pageNum: number) => {
     try {
-      const visitor = await getVisitor(Number(playlistId), page);
+      const visitor = await getVisitor(Number(playlistId), pageNum);
       setVisitorData((prevUsers) => [...prevUsers, ...visitor.data]);
 
-      setPage((page) => page + 1);
       if (visitor.data.length < 15) {
         setLast(true);
       } else {
@@ -197,13 +193,9 @@ const Visitor = () => {
   };
 
   useEffect(() => {
-    if (inView && !isLast) {
-      fetchVisitorData();
-    }
-
+    fetchVisitorData(0);
     /* eslint-disable react-hooks/exhaustive-deps */
-  }, [inView, visitorUpdate]);
-
+  }, []);
   useEffect(() => {
     const fetchUserData = async () => {
       try {
@@ -216,6 +208,12 @@ const Visitor = () => {
 
     fetchUserData();
   }, [username]);
+
+  const handleLoadMore = () => {
+    const newPage = page + 1;
+    setPage(newPage); // 페이지 번호를 증가시키고
+    fetchVisitorData(newPage); // 새 페이지 번호를 fetchVisitorData에 전달합니다.
+  };
 
   const refreshToken = localStorage.getItem("refreshToken");
   // console.log(visitorUpdate);
@@ -325,6 +323,11 @@ const Visitor = () => {
               ))}
           </div>
         </main>
+        {!isLast && (
+          <button onClick={handleLoadMore} className="flex justify-center">
+            <FaCirclePlus size={28} color="" />
+          </button>
+        )}
         <div>
           <InfiniteDiv view={view} />
         </div>
