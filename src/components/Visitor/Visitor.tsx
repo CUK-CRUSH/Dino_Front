@@ -152,9 +152,8 @@ const Visitor = () => {
       const newVisitor = await postVisitor(Number(playlistId), content, token);
       setContent("");
 
-      setVisitorData((prevData) => [...prevData, newVisitor.data]);
-
-      // setTimeout(() => setVisitorUpdate(false), 1000);
+      // setVisitorData((prevData) => [...prevData, newVisitor.data]);
+      setVisitorData((prevData) => [newVisitor.data, ...prevData]);
     } catch (error) {
       console.error(error);
     }
