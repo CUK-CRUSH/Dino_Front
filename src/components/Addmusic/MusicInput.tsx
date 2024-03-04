@@ -87,7 +87,7 @@ export const MusicInput: React.FC<MusicInputDTO> = ({
     } catch (e) {
       console.error(e);
     }
-  }, [onChange, swalButton]);
+  }, [onChange, swalButton, t]);
 
   const handleClear = useCallback(
     (action: () => AnyAction) => {
