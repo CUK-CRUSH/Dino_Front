@@ -20,6 +20,9 @@ import ShareImg from "@assets/Share.svg";
 import { Img } from "react-image";
 import SkeltonPlaylist from "./SkeltonPlaylist";
 import { useCustomPlaylistMargin } from "@hooks/useCustomMargin/useCustomPlaylistMargin";
+import {useTranslation} from "react-i18next";
+
+
 
 const AdminPage: React.FC = () => {
   const getDefaultMember = (): getMemberDTO => ({
@@ -115,6 +118,8 @@ const AdminPage: React.FC = () => {
   // 토스트
   const { toast } = useSelector((state: RootState) => state.toast);
 
+  const {t} = useTranslation("AdminAdmin");
+
   // 권한부여
   const authority = useCompareToken(userData && userData?.id);
 
@@ -146,20 +151,20 @@ const AdminPage: React.FC = () => {
       {toast === "add" && (
         <ToastComponent
           background="white"
-          text="새로운 플레이리스트 생성이 완료되었습니다 !"
+          text={t("newplaylist")}
         />
       )}
 
       {/* 로그인 성공 토스트 */}
 
       {toast === "login" && (
-        <ToastComponent background="white" text="로그인 성공 ! " />
+        <ToastComponent background="white" text={t("login")} />
       )}
 
       {/* 복사 성공 토스트 */}
 
       {toast === "copy" && (
-        <ToastComponent background="white" text="링크가 복사되었습니다." />
+        <ToastComponent background="white" text={t("link")} />
       )}
 
       {/* 검은화면 */}

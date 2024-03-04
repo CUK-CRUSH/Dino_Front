@@ -1,8 +1,10 @@
 {
-  "musicTitle": "음악 추가하기",
-  "title": "제목",
-  "artist": "아티스트",
-  "toggle": "URL에 유튜브 링크를 복사해 추가해주세요",
+  "urlwarning": "알맞은 URL을 입력해주세요.",
+  "urlerror": "URL형식이 맞지 않아요.",
   "plus": "추가하기",
-  "edit": "수정하기"
+  "search": "유튜브에서 음악 검색하기",
+  "titlesearch": "제목으로 검색하기",
+  "artistsearch": "아티스트로 검색하기",
+  "directinputdesc" : "검색을 하지 않고 바로 입력하고 싶다면?",
+  "directinput": "직접 입력하기"
 }

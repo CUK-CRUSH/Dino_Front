@@ -65,6 +65,10 @@ const OptionComponents = () => {
     window.open("https://forms.gle/UjDH44tU8AJEAYNL7");
   };
 
+  const preparedPage = () => {
+    navigate("/unprepared");
+  };
+
   const handleLogout = useCallback(() => {
     swalButton
       .fire({
@@ -103,7 +107,7 @@ const OptionComponents = () => {
   };
 
   const handleFavorites = () => {
-    navigate("./favorites", { });
+    navigate("./favorites", {});
   };
 
   const handleUnsign = useCallback(() => {
@@ -130,7 +134,6 @@ const OptionComponents = () => {
     }, delay);
 
     return () => clearTimeout(timeoutId);
-
   }, [id, navigate, cookies.accessToken]);
 
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
@@ -214,7 +217,7 @@ const OptionComponents = () => {
             <div className="border-[1px] h-[36px] border-solid border-[#C8C8C8]" />
             <div className="flex flex-col items-center">
               <img
-                onClick={handleUnprepared}
+                onClick={preparedPage}
                 src={Credit}
                 alt="결제관리"
                 className="flex items-center justify-center w-[28px] h-[36px] cursor-pointer"
@@ -224,7 +227,7 @@ const OptionComponents = () => {
             <div className="border-[1px] h-[36px] border-solid border-[#C8C8C8]" />
             <div className="flex flex-col items-center">
               <img
-                onClick={handleUnprepared}
+                onClick={preparedPage}
                 src={Theme}
                 alt="테마"
                 className="flex items-center justify-center w-[28px] h-[36px] mt-1 cursor-pointer"

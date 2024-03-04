@@ -1,6 +1,5 @@
 import useDecodedJWT from '@hooks/useDecodedJWT';
 import React, { useEffect, useState } from 'react';
-import { useCookies } from 'react-cookie';
 import { useNavigate } from 'react-router-dom';
 
 interface Data {
@@ -8,12 +7,15 @@ interface Data {
   date: string;
 }
 
-const SearchRecentlyWord: React.FC = () => {
+interface setOpenSearchRecentlyDTO{
+  setOpenSearchRecently : React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+const SearchRecentlyWord: React.FC<setOpenSearchRecentlyDTO> = ({setOpenSearchRecently}) => {
   const [searchTerms, setSearchTerms] = useState<Data[]>([]);
 
   // id값
-  const [cookies,,] = useCookies(['accessToken']);
-  let token = cookies.accessToken;
+  let token = localStorage.getItem('refreshToken');
   let decodedToken = useDecodedJWT(token);
   let userId: string ;
   if (decodedToken) {
@@ -64,11 +66,14 @@ const SearchRecentlyWord: React.FC = () => {
       <p className={`p-4 font-PretendardBold underline underline-offset-4	`}>최근검색어</p>
       {searchTerms.map((item, index) => (
         <div className={`flex justify-between p-2`} key={index}>
-          <div onClick={()=>{searchQuery(item.term)}}>
-            <span className='ml-4'>
-              {item.term} 
-            </span>
-          </div>
+         <div onClick={() => {
+  searchQuery(item.term);
+  setOpenSearchRecently(false);
+}}>
+  <span className='ml-4'>
+    {item.term} 
+  </span>
+</div>
           <div>
             <span className='mr-4'>
               {formatDate(item.date)}
