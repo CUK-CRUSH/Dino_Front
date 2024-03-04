@@ -5,14 +5,14 @@ import {
   postVisitor,
 } from "@api/visitor-controller/visitorControl";
 import "@styles/EditList/playList.css";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { getMemberDTO } from "types/Admin";
 import { useCookies } from "react-cookie";
 import { useNavigate, useParams } from "react-router-dom";
 import SendChat from "@assets/Visitor/SendChat.svg";
 import SettingButton from "@assets/Visitor/Setting.svg";
 import "@styles/Admin/style.css";
-import { useRecoilState } from "recoil";
+import { useRecoilValue } from "recoil";
 import { visitorUpdateState } from "@atoms/Visit/visitUpdate";
 import Swal from "sweetalert2";
 import useDecodedJWT from "@hooks/useDecodedJWT";
@@ -63,7 +63,14 @@ const Visitor = () => {
   const [isLast, setLast] = useState<boolean>(false);
   const [page, setPage] = useState<number>(0);
 
-  const [visitorUpdate, setVisitorUpdate] = useRecoilState(visitorUpdateState);
+  const visitorUpdate = useRecoilValue(visitorUpdateState);
+
+  const { playlistId } = useParams<{ playlistId: string }>();
+  const { username } = useParams<{ username: string }>();
+  const [userData, setUserData] = useState<getMemberDTO>(getDefaultMember);
+
+  const [cookies] = useCookies(["accessToken"]);
+  const token = cookies.accessToken;
   // 수정
   const [editMode, setEditMode] = useState<{ [key: string]: boolean }>({});
   const [editContent, setEditContent] = useState<{ [key: string]: string }>({});
@@ -127,37 +134,44 @@ const Visitor = () => {
     }
   };
 
-  const handleSubmit = async (event: React.FormEvent) => {
-    event.preventDefault();
-    if (!token) {
-      swalButton
-        .fire({
-          title: "로그인 필요한 서비스입니다.",
-          text: "로그인이 하시겠습니까?",
-          showCancelButton: true,
-          confirmButtonColor: "blue",
-          cancelButtonColor: "#d33",
-          confirmButtonText: "취소",
-          cancelButtonText: "로그인",
-        })
-        .then((result) => {
-          if (result.dismiss === Swal.DismissReason.cancel) {
-            localStorage.setItem("prevUrl", window.location.href);
-            navigate("/login");
-          }
-        });
-      return;
-    }
-    try {
-      const newVisitor = await postVisitor(Number(playlistId), content, token);
-      setContent("");
-
-      // setVisitorData((prevData) => [...prevData, newVisitor.data]);
-      setVisitorData((prevData) => [newVisitor.data, ...prevData]);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+  const handleSubmit = useCallback(
+    async (event: React.FormEvent) => {
+      event.preventDefault();
+      if (!token) {
+        swalButton
+          .fire({
+            title: "로그인 필요한 서비스입니다.",
+            text: "로그인이 하시겠습니까?",
+            showCancelButton: true,
+            confirmButtonColor: "blue",
+            cancelButtonColor: "#d33",
+            confirmButtonText: "취소",
+            cancelButtonText: "로그인",
+          })
+          .then((result) => {
+            if (result.dismiss === Swal.DismissReason.cancel) {
+              localStorage.setItem("prevUrl", window.location.href);
+              navigate("/login");
+            }
+          });
+        return;
+      }
+      try {
+        const newVisitor = await postVisitor(
+          Number(playlistId),
+          content,
+          token
+        );
+        setContent("");
+        setVisitorData((prevData) => [newVisitor.data, ...prevData]);
+      } catch (error) {
+        if (error instanceof Error) {
+          swalButton.fire("오류가 발생했습니다.", error.message, "error");
+        }
+      }
+    },
+    [content, playlistId, swalButton, token, navigate]
+  );
 
   const toggleDropdown = (id: any) => {
     setButtonOpen((prevState) => ({
@@ -165,13 +179,6 @@ const Visitor = () => {
       [id]: !prevState[id], // 클릭한 visitor의 상태만 변경
     }));
   };
-
-  const { playlistId } = useParams<{ playlistId: string }>();
-  const { username } = useParams<{ username: string }>();
-  const [userData, setUserData] = useState<getMemberDTO>(getDefaultMember);
-
-  const [cookies] = useCookies(["accessToken"]);
-  const token = cookies.accessToken;
 
   const fetchVisitorData = async () => {
     try {
