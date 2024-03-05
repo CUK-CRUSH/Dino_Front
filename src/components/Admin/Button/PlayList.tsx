@@ -44,8 +44,10 @@ export const PlayList = ({ playlist, fontColor, visible }: { playlist: getPlayli
 
             </div>
           </div>
+         
         </div>
       )}
+      
     </>
   );
 };

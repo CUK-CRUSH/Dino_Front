@@ -76,10 +76,10 @@ const LoginComponents = () => {
             </div>
           </div>
         </div>
-        <div className={"flex flex-row justify-center my-2"}>
-          <button onClick={() => handleLogin('kakao')}>
+        <div className={"flex flex-row justify-center my-2 w-full"}>
+          <button className={`w-buttonWidth `} onClick={() => handleLogin('kakao')}>
             <div className="w-full bg-white">
-            <div style={{background : '#FEE500'}} className="w-[360px] h-[58px] flex flex-row items-center justify-center rounded-[30px] border border-zinc-300">
+            <div style={{background : '#FEE500'}} className="h-[58px] flex flex-row items-center justify-center rounded-[30px] border border-zinc-300">
                 <img
                   src={kakao}
                   alt={kakao}
@@ -93,10 +93,10 @@ const LoginComponents = () => {
             </div>
           </button>
         </div>
-        <div className={"flex flex-row justify-center my-2"}>
-          <button onClick={() => handleLogin('google')}>
+        <div className={"flex flex-row justify-center my-2 w-full"}>
+          <button className={`w-buttonWidth `} onClick={() => handleLogin('google')}>
             <div className="w-full bg-white">
-              <div className="w-[360px] h-[58px] flex flex-row items-center justify-center rounded-[30px] border border-zinc-300">
+              <div className="h-[58px] flex flex-row items-center justify-center rounded-[30px] border border-zinc-300">
                 <img
                   src={googlelogo}
                   alt={googlelogo}

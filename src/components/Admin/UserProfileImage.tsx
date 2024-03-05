@@ -13,7 +13,7 @@ const UserProfileImage = ({ userProfileImage }: UserProfileImageDTO) => {
     (state: RootState) => state.setProfile
   );
     return (
-    <div className="w-[75px] h-[75px] rounded-full overflow-hidden mx-auto -mt-[30px]">
+    <div className="w-[75px] h-[75px] rounded-full overflow-hidden mx-auto -mt-[40px]">
       {initialProfileImage ? (
         <Img src={initialProfileImage} alt="User Profile" className="w-full object-cover" />
       ) : 

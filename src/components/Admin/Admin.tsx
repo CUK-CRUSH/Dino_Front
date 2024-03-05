@@ -42,7 +42,7 @@ const AdminPage: React.FC = () => {
   // 플레이리스트 데이터
   const [playlistData, setPlaylistdata] = useState<
     getPlaylistDTO[] | undefined
-  >();
+  >([]);
 
   const { username } = useParams<{ username: string | undefined }>();
 
@@ -99,6 +99,7 @@ const AdminPage: React.FC = () => {
       }));
     }
   }, [deleteBackgroundImage]);
+
   useEffect(() => {
     const fetchPlaylistData = async () => {
       try {
@@ -134,6 +135,8 @@ const AdminPage: React.FC = () => {
     }
   };
 
+  // const footerHeight = useSizeFooter(playlistData?.length, 80, authority);
+
   return (
     <div className="h-full scrollbar-hide overflow-scroll relative ">
       <Header id={userData.id} authority={authority} />
@@ -162,8 +165,8 @@ const AdminPage: React.FC = () => {
 
       {/* 검은화면 */}
       {/*   */}
-      <div
-        className={`w-full min-h-[calc(100%-210px)]  absolute bg-neutral-900 z-10 rounded-tl-[50px] rounded-tr-[50px] `}
+      <main
+        className={`w-full h-[calc(100%)] absolute flex-grid bg-neutral-900 z-10 rounded-tl-[50px] rounded-tr-[50px] `}
       >
         {/* 프로필 이미지 */}
 
@@ -204,10 +207,10 @@ const AdminPage: React.FC = () => {
         )}
 
         {/* 여기까지 플레이리스트 */}
-        <div className="absolute -bottom-0 w-full">
+        <div className="absolute -bottom-[0px] w-full">
           <Footer bgColor="neutral-900" />
         </div>
-      </div>
+      </main>
     </div>
   );
 };
