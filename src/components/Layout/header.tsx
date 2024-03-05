@@ -38,6 +38,7 @@ const Header = ({ authority, id }: { authority?: boolean; id?: string }) => {
   }
 
   return (
+
     <header className="absolute w-full top-0 h-[100px] bg-transparent">
       <div onClick={handleNavigate}>
         <Img
