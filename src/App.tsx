@@ -6,7 +6,6 @@ import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "@store/index";
 import "./styles/font.css";
 import { RecoilRoot } from "recoil";
-import { useCookies } from "react-cookie";
 
 const Home = loadable(() => import("@pages/Home/home"));
 const LogIn = loadable(() => import("@pages/LogIn/login"));
@@ -35,9 +34,8 @@ const Visitor = loadable(() => import("@pages/Visit/VisitPage"));
 
 function App() {
 
-  const [cookies] = useCookies(["accessToken"]);
-  const checkAccessToken = (): boolean | undefined => {
-    if (cookies.accessToken) {
+  const checkRefreshToken = (): boolean | undefined => {
+    if (localStorage.getItem('refreshToken')) {
       return true;
     } else {
       return false;
@@ -54,8 +52,13 @@ function App() {
               <Route path="/login" element={<LogIn />} />
               <Route
                 path="/SetProfile/:username/:step"
-                element={<SetProfile />}
-              />
+                element={
+                  checkRefreshToken() ? (
+                    <SetProfile />
+                  ) : (
+                    <Navigate to="/" replace />
+                  )
+                }              />
               <Route path="user/:username" element={<Admin />} />
 
               <Route
@@ -65,7 +68,7 @@ function App() {
               <Route
                 path="/login/validation"
                 element={
-                  checkAccessToken() ? (
+                  checkRefreshToken() ? (
                     <Validation />
                   ) : (
                     <Navigate to="/" replace />
@@ -92,7 +95,7 @@ function App() {
               <Route
                 path="/env"
                 element={
-                  checkAccessToken() ? (
+                  checkRefreshToken() ? (
                     <Environment />
                   ) : (
                     <Navigate to="/" replace />
@@ -102,7 +105,7 @@ function App() {
               <Route
                 path="/env/favorites"
                 element={
-                  checkAccessToken() ? (
+                  checkRefreshToken() ? (
                     <Favorites />
                   ) : (
                     <Navigate to="/" replace />
@@ -112,7 +115,7 @@ function App() {
               <Route
                 path="/env/unsign"
                 element={
-                  checkAccessToken() ? <Unsign /> : <Navigate to="/" replace />
+                  checkRefreshToken() ? <Unsign /> : <Navigate to="/" replace />
                 }
               />
               <Route path="/redirect" element={<Redirect />} />
