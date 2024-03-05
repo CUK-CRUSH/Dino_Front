@@ -13,7 +13,6 @@ import InfiniteDiv from '@components/InfiniteDiv/InfiniteDiv';
 const SearchPlaylistDetail: React.FC = () => {
   const location = useLocation();
   const [view, inView] = useInView();
-  const [count, setCount] = useState<number>(0);
   const [isLast, setLast] = useState<boolean>(false);
   const [page, setPage] = useState(0); // 현재 페이지를 저장할 상태
   const [isLoading, setIsLoding] = useState<boolean>(true);
@@ -33,7 +32,6 @@ const SearchPlaylistDetail: React.FC = () => {
       const searchResult = await getSearchPlaylist(query, page,setIsLoding);
       setPlaylistdata([...playlistData, ...searchResult.data]); // 기존 데이터에 새로운 데이터를 추가
       setPage((page) => page + 1);
-      setCount(searchResult.data.length);
 
       if (searchResult.data.length < 8) {
         setLast(true);
