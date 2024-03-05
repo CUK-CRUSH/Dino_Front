@@ -51,7 +51,6 @@ const OptionComponents = () => {
       navigator
         .share({
           title: "MyList",
-          text: "Check out MyList!",
           url: window.location.href.replace("/env", ""),
         })
         .then(() => console.log("Successful share"))
