@@ -44,3 +44,31 @@ export const getSearchMember = async (query: string | null, page: any = '0') => 
     throw error;
   }
 };
+
+//일간 유저 랭킹 조회
+export const getSearchMemberRanking = async () => {
+  try {
+    const response = await axiosInstance.get(
+      `/api/v1/ranking/daily/users`
+    );
+    if (response) { return response.data; }
+    else { return }
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};
+
+//일간 플리 랭킹 조회
+export const getSearchPlaylistRanking = async () => {
+  try {
+    const response = await axiosInstance.get(
+      `/api/v1/ranking/daily/playlists`
+    );
+    if (response) { return response.data; }
+    else { return }
+  } catch (error) {
+    console.log(error);
+    throw error;
+  }
+};

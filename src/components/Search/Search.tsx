@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import SearchPlaylist from './playlist/SearchPlaylist';
-import { getSearch } from '@api/search-controller/searchController';
-import { searchResultsDTO } from 'types/Search/Search';
+import { getSearch, getSearchMemberRanking, getSearchPlaylistRanking } from '@api/search-controller/searchController';
+import { Member, Playlist, searchResultsDTO } from 'types/Search/Search';
 import SearchMemberList from './member/SearchMemberList';
 import OptionHeader from '@components/Layout/optionHeader';
 import SearchInput from './part/SearchInput';
 import hot from "@assets/Search/hot.svg";
-import NothingSearch from './part/NothingSearch';
 import QueryText from './part/QueryText';
 import SearchRecently from './recently/SearchRecently';
 import { useCookies } from 'react-cookie';
@@ -19,7 +18,7 @@ const SearchPage: React.FC = () => {
   const location = useLocation();
 
   // id값
-  const [cookies,,] = useCookies(['accessToken']);
+  const [cookies, ,] = useCookies(['accessToken']);
   let token = cookies.accessToken;
   let decodedToken = useDecodedJWT(token);
   let userId: string | undefined;
@@ -35,10 +34,31 @@ const SearchPage: React.FC = () => {
   const searchParams = new URLSearchParams(location.search);
   const query = searchParams.get('query');
 
+  // 인기 플리 & 유저
+  const [rankingMemberResult, setRankingMemberResults] = useState<Member[]>();
+  const [rankingPlaylistResult, setRankingPlaylistResults] = useState<Playlist[]>();
+
+  // 검색 결과
   const [searchResults, setSearchResults] = useState<searchResultsDTO>();
 
   // 검색창 펼치기
-  const [openSearchRecently,setOpenSearchRecently] = useState<boolean>(false);
+  const [openSearchRecently, setOpenSearchRecently] = useState<boolean>(false);
+
+  useEffect(() => {
+    // API 호출
+    const fetchData = async () => {
+      try {
+        const rankingMemberResult = await getSearchMemberRanking();
+        const rankingPlaylistResult = await getSearchPlaylistRanking();
+        setRankingMemberResults(rankingMemberResult.data);
+        setRankingPlaylistResults(rankingPlaylistResult.data);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+    fetchData();
+
+  }, [])
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
@@ -46,10 +66,10 @@ const SearchPage: React.FC = () => {
     const fetchData = async () => {
       try {
         const searchResult = await getSearch(query?.trim());
-        if(searchResult.status === 200 && userId !== '' ){
+
+        if (searchResult.status === 200 && userId !== '') {
           addSearchTerm(query?.trim());
         }
-        
         setSearchResults(searchResult);
         setOpenSearchRecently(false);
       } catch (error) {
@@ -57,70 +77,88 @@ const SearchPage: React.FC = () => {
       }
     };
     // 띄어쓰기 방지.
-    if(query?.trim()){
+    if (query?.trim()) {
       fetchData();
     }
-    
+
   }, [location.search, query]);
 
   return (
     <div className="w-full h-full relative bg-white flex flex-col justify-start scrollbar-hide overflow-scroll font-PretendardMedium">
-      <OptionHeader text="검색" openSearchRecently={openSearchRecently} setOpenSearchRecently={setOpenSearchRecently}/>
+      <OptionHeader text="검색" openSearchRecently={openSearchRecently} setOpenSearchRecently={setOpenSearchRecently} />
+      
+      {/* 검색창 */}
       <SearchInput setOpenSearchRecently={setOpenSearchRecently} />
-      {openSearchRecently ? 
-      <SearchRecently setOpenSearchRecently={setOpenSearchRecently}/>
-      :
-      <main className='p-4'>
-        {query?.trim() && <QueryText query={query} />}
+      
+      {openSearchRecently ?
+        <SearchRecently setOpenSearchRecently={setOpenSearchRecently} />
+        :
+        <main className='p-4'>
+          {query?.trim() && <QueryText query={query} />}
 
-        {/* 플레이리스트 */}
-        {!query?.trim() ?
-          <span className="flex justify-start "><img src={hot} alt='x' /> &nbsp; 인기 플레이리스트</span>
-          :
-          <div className="flex justify-between font-PretendardSemiBold">
-            <span className="flex justify-start ">플레이리스트</span>
-            {searchResults && searchResults.data.playlists.length > 4 ?
-              <Link to={`/search/playlist?query=${query}`}><span className="flex justify-end">  더보기</span></Link> : <></>
-            }
-          </div>
-        }
+          {/* 플레이리스트 */}
+          {!query?.trim() ?
 
-        {!searchResults?.data.playlists.length ? <NothingSearch text='플레이리스트' /> :
-          <SearchPlaylist
-            searchResults={searchResults?.data.playlists}
-            query={query}
-          />
-        }
+            <span className="flex justify-start "><img src={hot} alt='x' /> &nbsp; 인기 플레이리스트</span>
+            :
+            <div className="flex justify-between font-PretendardSemiBold">
+              <span className="flex justify-start ">플레이리스트</span>
+              {searchResults && searchResults.data.playlists.length > 4 ?
+                <Link to={`/search/playlist?query=${query}`}><span className="flex justify-end">  더보기</span></Link> : <></>
+              }
+            </div>
+          }
 
-        {/* 여백 */}
-        <div className='h-[50px]' />
+          {/* 쿼리가 없으면 인기플레이리스트 렌더링 */}
+          {!query?.trim() ?
+            <SearchPlaylist
+              searchResults={rankingPlaylistResult}
+              query={query}
+            /> :
+            <SearchPlaylist
+              searchResults={searchResults?.data.playlists}
+              query={query}
+            />
+          }
 
-        {/* 유저 */}
-        {!query?.trim() ?
-          <span className="flex justify-start "><img src={hot} alt='x' /> &nbsp; 인기 유저</span>
-          : <p className='font-PretendardSemiBold mb-3'> 유저 </p>
-        }
+          {/* 여백 */}
+          <div className='h-[50px]' />
 
-        {!searchResults?.data.members.length ? <NothingSearch text='유저' /> :
-          <SearchMemberList
-            searchResults={searchResults?.data.members}
-            username_fontSize='18px'
-            introduction_fontSize='15px'
-            size='60px'
-            marginY='10px'
-          />
-        }
+          {/* 유저 */}
+          {!query?.trim() ?
+            <span className="flex justify-start "><img src={hot} alt='x' /> &nbsp; 인기 유저</span>
+            : <p className='font-PretendardSemiBold mb-3'> 유저 </p>
+          }
 
-        {searchResults && searchResults.data.members.length >= 8 ?
-          <Link to={`/search/member?query=${query}`}>
-            <div className="flex justify-center">더보기</div>
-          </Link>
-          : <></>
-        }
-      </main>
+          {!query?.trim() ?
+            <SearchMemberList
+              searchResults={rankingMemberResult}
+              username_fontSize='18px'
+              introduction_fontSize='15px'
+              size='60px'
+              marginY='10px'
+            />
+            :
+            <SearchMemberList
+              searchResults={searchResults?.data.members}
+              username_fontSize='18px'
+              introduction_fontSize='15px'
+              size='60px'
+              marginY='10px'
+            />
+          }
+
+          {searchResults && searchResults.data.members.length >= 8 ?
+            <Link to={`/search/member?query=${query}`}>
+              <div className="flex justify-center">더보기</div>
+            </Link>
+            : <></>
+          }
+        </main>
       }
     </div>
   );
 };
 
 export default SearchPage;
+
