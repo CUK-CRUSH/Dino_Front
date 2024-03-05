@@ -12,7 +12,6 @@ const SearchMemberDetail: React.FC = () => {
   const location = useLocation();
   const [view, inView] = useInView();
 
-  const [count, setCount] = useState<number>(0);
   const [isLast, setLast] = useState<boolean>(false);
   const [page, setPage] = useState(0); // 현재 페이지를 저장할 상태
 
@@ -29,11 +28,10 @@ const SearchMemberDetail: React.FC = () => {
       const searchResult = await getSearchMember(query, page);
       setMemberdata([...memberData, ...searchResult.data]); // 기존 데이터에 새로운 데이터를 추가
       setPage((page) => page + 1);
-      setCount(searchResult.data.length);
-      if (count < 10) {
-        setLast(false);
-      } else {
+      if (searchResult.data.length < 10) {
         setLast(true);
+      } else {
+        setLast(false);
       }
     } catch (error) {
       console.error(error);
