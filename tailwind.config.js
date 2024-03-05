@@ -30,6 +30,9 @@ module.exports = {
         lg: "0 8px 16px var(--tw-shadow-color)",
         title: "0 3px 10px rgba(0, 0, 0, 0.3)",
       },
+      width : {
+        buttonWidth: '92%',
+      }
     },
     screens: {
       sm: { min: "375px", max: "720px" },
@@ -52,9 +55,8 @@ module.exports = {
       PretendardRegular : ["Pretendard Regular"],
       PretendardSemiBold : ["Pretendard SemiBold"],
       PretendardThin : ["Pretendard Thin"]
-
-
-    }
+    },
+    
   },
   variants: {},
   plugins: [

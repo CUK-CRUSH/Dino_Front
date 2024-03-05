@@ -18,7 +18,7 @@ const SetUserProfileNickname = ({ placeholder, maxlength, name, value, onChange,
            placeholder={placeholder}
            maxLength={maxlength}
            onChange={onChange}
-          className=" w-11/12 p-3 pl-4 pr-12 border 1px bg-white rounded-xl border-slate-200	focus:outline-none font-PretendardSemiBold"
+          className=" w-buttonWidth p-3 pl-4 pr-12 border 1px bg-white rounded-xl border-slate-200	focus:outline-none font-PretendardSemiBold"
         />
         <div className="absolute right-10 top-4">
           {nicknameValidation ? (

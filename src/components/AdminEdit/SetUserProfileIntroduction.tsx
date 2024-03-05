@@ -17,7 +17,7 @@ const SetUserProfileIntroduction = ({ placeholder, maxlength, name, value, onCha
            maxLength={maxlength}
            onChange={onChange}
            onKeyDown={handleKeyDown}
-           className=" w-11/12 p-3 pl-4 pr-12 border 1px bg-white rounded-xl border-slate-200	focus:outline-none font-PretendardMedium"
+           className=" w-buttonWidth p-3 pl-4 pr-12 border 1px bg-white rounded-xl border-slate-200	focus:outline-none font-PretendardMedium"
         />
       </div>
     </>
