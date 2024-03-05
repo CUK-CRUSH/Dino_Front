@@ -33,7 +33,7 @@ const SearchPlaylistDetail: React.FC = () => {
       const searchResult = await getSearchPlaylist(query, page,setIsLoding);
       setPlaylistdata([...playlistData, ...searchResult.data]); // 기존 데이터에 새로운 데이터를 추가
       setPage((page) => page + 1);
-      setCount(playlistData.length);
+      setCount(searchResult.data.length);
 
       if (count < 8) {
         setLast(false);
