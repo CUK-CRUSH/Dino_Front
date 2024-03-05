@@ -1,18 +1,23 @@
 import { useNavigate } from "react-router-dom";
 import { FaCirclePlus } from "react-icons/fa6";
-import { useTranslation } from "react-i18next";
-import { useRecoilValue } from "recoil";
+import { useRecoilValue, useSetRecoilState } from "recoil";
 import { userNameState } from "@atoms/Playlist/username";
+import { fromButtonState } from "@atoms/Musics/locationState";
 
 export const PlusButton: React.FC<{
   playlists: any;
 }> = ({ playlists }) => {
   const navigate = useNavigate();
   const usernames = useRecoilValue(userNameState);
+
+  const setFromButtonState = useSetRecoilState(fromButtonState);
+
   const handleAddMusicClick = () => {
+    setFromButtonState(true);
+
     navigate(`/user/${usernames}/${playlists.id}/edit`);
   };
-  const { t } = useTranslation("Edit");
+  
   return (
     <div className="flex justify-center items-center text-black">
       <button
@@ -20,7 +25,7 @@ export const PlusButton: React.FC<{
         onClick={handleAddMusicClick}
       >
         <FaCirclePlus size={32} />
-        <span className="font-extrabold"> {t("plus_music")}</span>
+        <span className="font-extrabold"> 음악 추가하기</span>
       </button>
     </div>
   );

@@ -63,7 +63,10 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
 
   const setToken = useSetRecoilState(tokenState);
 
-  const handleUploadImage = (image: string) => setUploadImage(image);
+  const handleUploadImage = (image: string) => {
+    setUploadImage(image);
+    sessionStorage.setItem("uploadImage", image);
+  };
 
   const fetchPlaylist = useCallback(async () => {
     try {
@@ -115,6 +118,10 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         setPlaylistName(savedPlaylistName);
       }
     };
+    const savedImage = sessionStorage.getItem("uploadImage");
+    if (savedImage) {
+      setUploadImage(savedImage);
+    }
 
     fetchAndSetPlaylist();
   }, [playlistId, fetchPlaylist, setPlaylistId, cookies.accessToken, setToken]);

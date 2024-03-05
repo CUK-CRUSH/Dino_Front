@@ -19,7 +19,7 @@ export const MusicInput: React.FC<MusicInputDTO> = ({
   onSuggestionClick,
   type,
 }) => {
-  const { t } = useTranslation("AddMusic");
+  const { t } = useTranslation('Musicinput');
   const [isSuggestionsVisible, setIsSuggestionsVisible] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
@@ -77,7 +77,7 @@ export const MusicInput: React.FC<MusicInputDTO> = ({
         !text.startsWith("https://youtube.com/")
       ) {
         swalButton.fire({
-          title: "유튜브 URL을 넣어주세요",
+          title: t("unvalid")
         });
         return;
       }
@@ -87,7 +87,7 @@ export const MusicInput: React.FC<MusicInputDTO> = ({
     } catch (e) {
       console.error(e);
     }
-  }, [onChange, swalButton]);
+  }, [onChange, swalButton, t]);
 
   const handleClear = useCallback(
     (action: () => AnyAction) => {

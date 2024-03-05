@@ -56,6 +56,7 @@ const SearchPage: React.FC = () => {
         console.error(error);
       }
     };
+    // 띄어쓰기 방지.
     if(query?.trim()){
       fetchData();
     }
@@ -67,7 +68,7 @@ const SearchPage: React.FC = () => {
       <OptionHeader text="검색" openSearchRecently={openSearchRecently} setOpenSearchRecently={setOpenSearchRecently}/>
       <SearchInput setOpenSearchRecently={setOpenSearchRecently} />
       {openSearchRecently ? 
-      <SearchRecently />
+      <SearchRecently setOpenSearchRecently={setOpenSearchRecently}/>
       :
       <main className='p-4'>
         {query?.trim() && <QueryText query={query} />}

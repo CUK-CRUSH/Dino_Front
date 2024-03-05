@@ -6,15 +6,15 @@ import { useNavigate, useParams } from "react-router-dom";
 import { MusicInput } from "@components/Addmusic/MusicInput";
 import Swal from "sweetalert2";
 import AddBackButton from "@components/Addmusic/Button/AddBackButton";
-import { useTranslation } from "react-i18next";
 import { playAutoComplete } from "@api/AutoComplete/AutocompleteControl";
 import EditButton from "@components/Addmusic/Button/EditButton";
 import { patchMusicList } from "@api/music-controller/musicControl";
 import { useCookies } from "react-cookie";
 import MusicTitle from "../Title/MusicTitle";
+import { useRecoilValue, useSetRecoilState } from "recoil";
+import { fromButtonState } from "@atoms/Musics/locationState";
 
 const EditMusic: React.FC = () => {
-  const { t } = useTranslation("AddMusic");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { musicId } = useParams();
@@ -44,6 +44,10 @@ const EditMusic: React.FC = () => {
     []
   );
 
+  // url 제한
+  const fromButton = useRecoilValue(fromButtonState);
+  const setFromButtonState = useSetRecoilState(fromButtonState);
+
   const musicData = useSelector((state: RootState) => state.musicAdd);
   const { title, artist, url } = musicData;
 
@@ -63,7 +67,10 @@ const EditMusic: React.FC = () => {
     dispatch(updateTitle(""));
     dispatch(updateArtist(""));
     dispatch(updateUrl(""));
+    setFromButtonState(false);
+
     navigate(-1);
+    /* eslint-disable react-hooks/exhaustive-deps */
   }, [navigate, dispatch]);
 
   const handlePatchClick = async () => {
@@ -75,7 +82,7 @@ const EditMusic: React.FC = () => {
       Swal.fire({
         icon: "warning",
         title: `You can't use "${url}"`,
-        text: `${t("urlWarning")}`,
+        text: "적절한 URL을 입력해주세요.",
       });
 
       return;
@@ -86,6 +93,7 @@ const EditMusic: React.FC = () => {
       dispatch(updateTitle(""));
       dispatch(updateArtist(""));
       dispatch(updateUrl(""));
+      setFromButtonState(false);
 
       navigate(-1);
     } catch (error) {
@@ -103,14 +111,16 @@ const EditMusic: React.FC = () => {
   }, [title, artist, fetchAutoComplete, dispatch, musicId]);
 
   useEffect(() => {
-    navigate("/");
-  }, [navigate]);
+    if (!fromButton) {
+      navigate("/");
+    }
+  }, [navigate, fromButton]);
 
   return (
     <div className="scrollbar-hide overflow-scroll relative z-30 h-full w-full flex flex-col bg-black text-white py-10 text-[17px] leading-[18px]">
       <AddBackButton handleBack={handleBack} />
       <div className="space-y-8 mx-4">
-        <MusicTitle title={"음악 수정하기"} />
+        <MusicTitle title="음악수정" />
         <MusicInput
           type="text"
           label={labels.title}
@@ -144,7 +154,7 @@ const EditMusic: React.FC = () => {
           onChange={handleURLChange}
         />
 
-        <EditButton handlePatch={handlePatchClick} plusText={t("edit")} />
+        <EditButton handlePatch={handlePatchClick} plusText="수정" />
       </div>
     </div>
   );

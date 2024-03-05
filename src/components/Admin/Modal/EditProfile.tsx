@@ -1,5 +1,6 @@
 import React, { useEffect } from "react";
 import { EditProfileDTO } from "types/Admin";
+import {useTranslation} from "react-i18next";
 import "../../../styles/Admin/style.css";
 
 export const EditProfile = ({
@@ -7,6 +8,8 @@ export const EditProfile = ({
   closeOptionsModalOpen,
   authority,
 }: EditProfileDTO) => {
+  const {t} = useTranslation("EditProfile");
+
   // 스크롤 방지이벤트
   useEffect(() => {
     document.body.style.cssText = `
@@ -49,7 +52,7 @@ export const EditProfile = ({
                 className="block text-black hover:bg-gray-300 p-2 w-full text-center cursor-pointer"
                 onClick={openEditModal}
               >
-                프로필 편집
+                {t("editprofile")}
                 {/* Edit Profile */}
               </div>
             )}
@@ -59,7 +62,7 @@ export const EditProfile = ({
               className="block text-black hover:bg-gray-300 p-2 w-full text-center"
               onClick={() => handleShare()}
             >
-              링크 공유하기
+              {t("sharelink")}
               {/* Copy Link */}
             </button>
           </div>
