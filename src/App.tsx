@@ -1,11 +1,12 @@
 import loadable from "@loadable/component";
-import { Route, Routes, Navigate } from "react-router-dom";
+import { Route, Routes } from "react-router-dom";
 import Layout from "@components/Layout/layout";
 import { Provider } from "react-redux";
 import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "@store/index";
 import "./styles/font.css";
 import { RecoilRoot } from "recoil";
+import PrivateRoute from '@components/PrivateRouter/PrivateRouter';
 
 const Home = loadable(() => import("@pages/Home/home"));
 const LogIn = loadable(() => import("@pages/LogIn/login"));
@@ -34,14 +35,6 @@ const Visitor = loadable(() => import("@pages/Visit/VisitPage"));
 
 function App() {
 
-  const checkRefreshToken = (): boolean | undefined => {
-    if (localStorage.getItem('refreshToken')) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
@@ -50,29 +43,23 @@ function App() {
             <Routes>
               <Route path="/" element={<Home />} />
               <Route path="/login" element={<LogIn />} />
-              <Route
-                path="/SetProfile/:username/:step"
-                element={
-                  checkRefreshToken() ? (
-                    <SetProfile />
-                  ) : (
-                    <Navigate to="/" replace />
-                  )
-                } />
+
+              {/* 인증을 반드시 해야지만 접속 가능한 페이지 정의 */}
+              <Route element={<PrivateRoute authentication={true} />}>
+                <Route path="/SetProfile/:username/:step" element={<SetProfile />} />
+              </Route>
+
               <Route path="user/:username" element={<Admin />} />
 
               <Route
                 path="user/:username/:playlistId"
                 element={<EditPlayList />}
               />
-              <Route
-                path="/login/validation"
-                element={
+               {/* 인증을 반드시 해야지만 접속 가능한 페이지 정의 */}
+               <Route element={<PrivateRoute authentication={true} />}>
+                <Route path="/login/validation" element={<Validation />} />
+              </Route>
 
-                  <Validation />
-
-                }
-              />
               <Route
                 path="user/:username/:playlistId/edit"
                 element={<AddMusic />}
@@ -90,32 +77,19 @@ function App() {
                 path="user/:username/:playlistId/visitor"
                 element={<Visitor />}
               />
-              <Route
-                path="/env"
-                element={
-                  checkRefreshToken() ? (
-                    <Environment />
-                  ) : (
-                    <Navigate to="/" replace />
-                  )
-                }
-              />
-              <Route
-                path="/env/favorites"
-                element={
-                  checkRefreshToken() ? (
-                    <Favorites />
-                  ) : (
-                    <Navigate to="/" replace />
-                  )
-                }
-              />
-              <Route
-                path="/env/unsign"
-                element={
-                  checkRefreshToken() ? <Unsign /> : <Navigate to="/" replace />
-                }
-              />
+
+              <Route element={<PrivateRoute authentication={true} />}>
+                <Route path="/env" element={<Environment />} />
+              </Route>
+
+              <Route element={<PrivateRoute authentication={true} />}>
+                <Route path="/env/unsign" element={<Unsign />} />
+              </Route>
+
+              <Route element={<PrivateRoute authentication={true} />}>
+                <Route path="/env/favorites" element={<Favorites />} />
+              </Route>
+
               <Route path="/redirect" element={<Redirect />} />
               <Route path="/search" element={<Search />} />
               <Route

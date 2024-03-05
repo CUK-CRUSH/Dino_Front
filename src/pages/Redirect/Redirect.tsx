@@ -55,7 +55,10 @@ const Redirect = () => {
                 window.location.assign(prevUrl);
                 localStorage.removeItem("prevUrl");
               } else {
-                navigate(`/user/${getUserData.data.username}`);
+                setTimeout(() => {
+                  navigate(`/user/${getUserData.data.username}`);
+
+                }, 1000);
               }
             }
           }
