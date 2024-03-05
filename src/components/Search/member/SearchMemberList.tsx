@@ -17,7 +17,7 @@ const SearchMemberList: React.FC<SearchMemberProps> = ({ searchResults,size, mar
       navigate(`/user/${username}`);
     }
   return (
-    <div >
+    <div className="py-4">
 
       {searchResults && searchResults.map((member) => (
         <div className={`flex flex-row cursor-pointer  `} style={{ marginBottom: marginY }}  key={member.id} onClick={() => handleNavigate(member.username)}>

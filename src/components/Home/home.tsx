@@ -34,11 +34,11 @@ const HomeComponent = () => {
           <img className={"m-4"} src={Mylist} alt="Mylist"/>
         </div>
         <div className={"h-[38px]"}></div>
-        <div className={"divdiv flex flex-col items-center justify-center gap-4"}>
+        <div className={"flex flex-col items-center justify-center gap-4"}>
           <img src={mainGraphic} alt="Main Graphic"/>
           <div className={"h-[44px]"}></div>
-            <Link to={"/login"}>
-          <div className="flex flex-row w-[360px] h-[58px] bg-neutral-200 rounded-[30px] justify-center items-center">
+            <Link className={`w-buttonWidth`} to={"/login"}>
+          <div className="flex flex-row  h-[58px] bg-neutral-200 rounded-[30px] justify-center items-center">
               <div className="text-[15px] font-normal font-['Pretendard']"><b>{t("makemylist")}</b></div>
           </div>
             </Link>
