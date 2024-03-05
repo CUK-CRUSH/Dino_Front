@@ -17,7 +17,7 @@ const Footer = ({ bgColor }: FooterProps) => {
       </p>
       <p>
         Email :{" "}
-        <a target="_blank" href="mailto:mylist.company@gmail.com">
+        <a target="_blank" href="mailto:mylist.company@gmail.com" rel="noreferrer">
           mylist.company@gmail.com
         </a>
       </p>
