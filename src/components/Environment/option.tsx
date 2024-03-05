@@ -84,7 +84,7 @@ const OptionComponents = () => {
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           // '로그아웃' 버튼을 눌렀을 때 실행할 코드를 여기에 작성합니다.
           try {
-            removeCookie("accessToken");
+            removeCookie("accessToken", { path: "/" });
             localStorage.removeItem("refreshToken");
             localStorage.removeItem("homeUrl");
             navigate("/");
