@@ -28,6 +28,7 @@ import LikeButton from "@components/Likes/LikeButton";
 import VisitorButton from "@components/Visitor/VisitorButton";
 import { useDispatch } from "react-redux";
 import { setMemberId } from "@reducer/editPlayList/isMemberId";
+import useImageCompress from "@hooks/useImageCompress";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
   const dispatch = useDispatch();
@@ -63,10 +64,42 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
 
   const setToken = useSetRecoilState(tokenState);
 
-  const handleUploadImage = (image: string) => {
-    setUploadImage(image);
-    sessionStorage.setItem("uploadImage", image);
+  // session 꼼수 사용
+  const { compressImage } = useImageCompress();
+  const readImageFile = (file: File) => {
+    return new Promise<string>((resolve, reject) => {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        if (typeof reader.result === "string") {
+          resolve(reader.result);
+        } else {
+          reject("File read error");
+        }
+      };
+      reader.onerror = reject;
+      reader.readAsDataURL(file);
+    });
   };
+
+  const handleUploadImage = async (image: string) => {
+    setUploadImage(image);
+    const response = await fetch(image);
+    const blob = await response.blob();
+    const file = new File([blob], image, { type: "image/png" });
+    const compressedFile = await compressImage(file);
+
+    if (compressedFile) {
+      const result = await readImageFile(compressedFile.compressedFile);
+      sessionStorage.setItem("uploadImage", result);
+
+      const sizeInBytes = result.length * 2; // 각 문자는 대략 2바이트
+      const sizeInKilobytes = sizeInBytes / 1024; // 1KB = 1024바이트
+      console.log(`Estimated size of uploadImage: ${sizeInKilobytes} KB`);
+    } else {
+      console.error("Failed to compress the image.");
+    }
+  };
+  //session 꼼수 사용
 
   const fetchPlaylist = useCallback(async () => {
     try {
