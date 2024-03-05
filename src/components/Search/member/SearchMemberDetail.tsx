@@ -30,10 +30,10 @@ const SearchMemberDetail: React.FC = () => {
       setMemberdata([...memberData, ...searchResult.data]); // 기존 데이터에 새로운 데이터를 추가
       setPage((page) => page + 1);
       setCount(searchResult.data.length);
-      if (count < 10) {
-        setLast(false);
-      } else {
+      if (searchResult.data.length < 10) {
         setLast(true);
+      } else {
+        setLast(false);
       }
     } catch (error) {
       console.error(error);

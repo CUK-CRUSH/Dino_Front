@@ -35,10 +35,10 @@ const SearchPlaylistDetail: React.FC = () => {
       setPage((page) => page + 1);
       setCount(searchResult.data.length);
 
-      if (count < 8) {
-        setLast(false);
-      } else {
+      if (searchResult.data.length < 8) {
         setLast(true);
+      } else {
+        setLast(false);
       }
 
     } catch (error) {
