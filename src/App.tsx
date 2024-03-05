@@ -6,7 +6,6 @@ import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "@store/index";
 import "./styles/font.css";
 import { RecoilRoot } from "recoil";
-import { useCookies } from "react-cookie";
 
 const Home = loadable(() => import("@pages/Home/home"));
 const LogIn = loadable(() => import("@pages/LogIn/login"));
@@ -42,16 +41,6 @@ function App() {
       return false;
     }
   };
-
-  const [cookies] = useCookies(["accessToken"]);
-  const checkAccessToken = (): boolean | undefined => {
-    if (cookies.accessToken) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
 
   return (
     <Provider store={store}>
