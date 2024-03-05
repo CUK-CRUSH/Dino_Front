@@ -19,7 +19,7 @@ export const MusicInput: React.FC<MusicInputDTO> = ({
   onSuggestionClick,
   type,
 }) => {
-  const { t } = useTranslation("MusicInput");
+  const { t } = useTranslation('Musicinput');
   const [isSuggestionsVisible, setIsSuggestionsVisible] = useState(false);
   const wrapperRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
@@ -123,7 +123,7 @@ export const MusicInput: React.FC<MusicInputDTO> = ({
             className="absolute -top-1 left-10 text-[10px] bg-[#2E2E2E] p-1 rounded-lg cursor-help"
             onClick={handleCopyClipBoard}
           >
-            {t("paste")}
+            붙여넣기
           </button>
           <button
             onClick={() => handleClear(() => updateUrl(""))}

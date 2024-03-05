@@ -6,7 +6,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { MusicInput } from "@components/Addmusic/MusicInput";
 import Swal from "sweetalert2";
 import AddBackButton from "@components/Addmusic/Button/AddBackButton";
-import { useTranslation } from "react-i18next";
 import { playAutoComplete } from "@api/AutoComplete/AutocompleteControl";
 import EditButton from "@components/Addmusic/Button/EditButton";
 import { patchMusicList } from "@api/music-controller/musicControl";
@@ -16,7 +15,6 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { fromButtonState } from "@atoms/Musics/locationState";
 
 const EditMusic: React.FC = () => {
-  const { t } = useTranslation("Edit");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { musicId } = useParams();
@@ -84,7 +82,7 @@ const EditMusic: React.FC = () => {
       Swal.fire({
         icon: "warning",
         title: `You can't use "${url}"`,
-        text: `${t("urlWarning")}`,
+        text: "적절한 URL을 입력해주세요.",
       });
 
       return;
@@ -122,7 +120,7 @@ const EditMusic: React.FC = () => {
     <div className="scrollbar-hide overflow-scroll relative z-30 h-full w-full flex flex-col bg-black text-white py-10 text-[17px] leading-[18px]">
       <AddBackButton handleBack={handleBack} />
       <div className="space-y-8 mx-4">
-        <MusicTitle title={t("musicedit")} />
+        <MusicTitle title="음악수정" />
         <MusicInput
           type="text"
           label={labels.title}
@@ -156,7 +154,7 @@ const EditMusic: React.FC = () => {
           onChange={handleURLChange}
         />
 
-        <EditButton handlePatch={handlePatchClick} plusText={t("edit")} />
+        <EditButton handlePatch={handlePatchClick} plusText="수정" />
       </div>
     </div>
   );
