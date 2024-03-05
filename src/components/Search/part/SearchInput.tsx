@@ -32,7 +32,7 @@ const SearchInput: React.FC<SearchInputDTO> = ({ setOpenSearchRecently }) => {
           value={searchQuery}
           onChange={handleChange}
           placeholder="사용자 혹은 플레이리스트를 검색해보세요!"
-          className="w-[360px] h-[50px] bg-[#D9D9D9] bg-opacity-20 rounded-lg pl-5 placeholder:text-sm"
+          className="w-buttonWidth h-[50px] bg-[#D9D9D9] bg-opacity-20 rounded-lg pl-5 placeholder:text-sm"
         />
         <img onClick={handleSubmit} src={search} alt="이미지 설명" className="absolute right-6 top-4 cursor-pointer" />
       </div>

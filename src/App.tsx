@@ -6,6 +6,7 @@ import { PersistGate } from "redux-persist/integration/react";
 import { store, persistor } from "@store/index";
 import "./styles/font.css";
 import { RecoilRoot } from "recoil";
+import { useCookies } from "react-cookie";
 
 const Home = loadable(() => import("@pages/Home/home"));
 const LogIn = loadable(() => import("@pages/LogIn/login"));
@@ -42,6 +43,16 @@ function App() {
     }
   };
 
+  const [cookies] = useCookies(["accessToken"]);
+  const checkAccessToken = (): boolean | undefined => {
+    if (cookies.accessToken) {
+      return true;
+    } else {
+      return false;
+    }
+  };
+
+
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
@@ -58,7 +69,7 @@ function App() {
                   ) : (
                     <Navigate to="/" replace />
                   )
-                }              />
+                } />
               <Route path="user/:username" element={<Admin />} />
 
               <Route
@@ -68,11 +79,9 @@ function App() {
               <Route
                 path="/login/validation"
                 element={
-                  checkRefreshToken() ? (
-                    <Validation />
-                  ) : (
-                    <Navigate to="/" replace />
-                  )
+
+                  <Validation />
+
                 }
               />
               <Route

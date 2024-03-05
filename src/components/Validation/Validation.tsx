@@ -154,12 +154,12 @@ const checkNickname = (nickname: string) => {
           {t("ristriction")}
         </span>
       </div>
-      <div className="w-11/12 mb-4 flex flex-col items-center relative focus:border-slate-300">
+      <div className="w-buttonWidth mb-4 flex flex-col items-center relative focus:border-slate-300">
         <input
           type="text"
           onChange={(e) => onChange(e)}
           placeholder={t("nicknamePlaceholder")}
-          className=" w-11/12 p-2 pr-12 border 1px bg-white rounded-3xl text-center border-slate-200	focus:outline-none "
+          className=" w-buttonWidth p-2 pr-12 border 1px bg-white rounded-3xl text-center border-slate-200	focus:outline-none "
         />
         <div className="absolute right-10 top-3">
           {nicknameValidation ? (
