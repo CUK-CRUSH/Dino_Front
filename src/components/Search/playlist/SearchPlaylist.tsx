@@ -22,7 +22,7 @@ const SearchPlaylist: React.FC<SearchPlaylistProps> = ({ searchResults, query })
     navigate(`/user/${username}/${id}`);
   }
   return (
-    <div className="">
+    <div className="py-4">
 
       <Swiper
         modules={[Pagination, Navigation, Mousewheel]}
