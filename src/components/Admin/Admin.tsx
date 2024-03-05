@@ -20,7 +20,7 @@ import ShareImg from "@assets/Share.svg";
 import { Img } from "react-image";
 import SkeltonPlaylist from "./SkeltonPlaylist";
 import { useCustomPlaylistMargin } from "@hooks/useCustomMargin/useCustomPlaylistMargin";
-import useSizeFooter from "@hooks/useSizeFooter/useSizeFooter";
+// import useSizeFooter from "@hooks/useSizeFooter/useSizeFooter";
 
 const AdminPage: React.FC = () => {
   const getDefaultMember = (): getMemberDTO => ({
@@ -138,8 +138,8 @@ const AdminPage: React.FC = () => {
   };
 
 
-  const footerHeight = useSizeFooter(playlistData?.length, 100, authority);
-  console.log(footerHeight)
+  // const footerHeight = useSizeFooter(playlistData?.length, 80, authority);
+  
   return (
     <div className="h-full scrollbar-hide overflow-scroll relative ">
       <Header id={userData.id} authority={authority} />
@@ -171,7 +171,7 @@ const AdminPage: React.FC = () => {
 
       {/* 검은화면 */}
       {/*   */}
-      <main  className={`w-full h-[calc(100%+${footerHeight.height})] absolute flex-grid bg-neutral-900 z-10 rounded-tl-[50px] rounded-tr-[50px] `}>
+      <main  className={`w-full h-[calc(100%)] absolute flex-grid bg-neutral-900 z-10 rounded-tl-[50px] rounded-tr-[50px] `}>
 
         {/* 프로필 이미지 */}
 
