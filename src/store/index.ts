@@ -1,4 +1,4 @@
-import { configureStore } from "@reduxjs/toolkit";
+import { configureStore, getDefaultMiddleware } from "@reduxjs/toolkit";
 import { persistReducer, persistStore } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import counterReducer from "@reducer/counter";
@@ -16,6 +16,7 @@ import userIdReducer from "@reducer/Admin/userId";
 import labelsReducer from "@reducer/AddMusic/labelSlice";
 import likeReducer from "@reducer/Likes/likeToggle";
 import memberIdReducer from "@reducer/editPlayList/isMemberId";
+import { likeListSlice } from "@reducer/Likes/likeList";
 
 const persistConfig = {
   key: "editMusicsToggle",
@@ -50,6 +51,7 @@ export const store = configureStore({
     labels: labelsReducer,
     likes: likeTogglePersistedReducer,
     memberId: memberIdReducer,
+    likeList: likeListSlice.reducer,
   },
 });
 
