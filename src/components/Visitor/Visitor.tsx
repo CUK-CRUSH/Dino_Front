@@ -303,14 +303,21 @@ const Visitor = () => {
 
                             {buttonOpen[visitor.id] && (
                               <ul className="absolute text-12px right-0 top-full mt-2 w-24 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5">
-                                <li
-                                  className="cursor-pointer py-1 border-[1px] border-[#F2F2F2] text-[#2E2E2E]"
-                                  onClick={() =>
-                                    toggleEditMode(visitor.id, visitor.content)
-                                  }
-                                >
-                                  수정
-                                </li>
+                                {visitor.member.id ===
+                                  Number(decodedRefeshToken.sub) && (
+                                  <li
+                                    className="cursor-pointer py-1 border-[1px] border-[#F2F2F2] text-[#2E2E2E]"
+                                    onClick={() =>
+                                      toggleEditMode(
+                                        visitor.id,
+                                        visitor.content
+                                      )
+                                    }
+                                  >
+                                    수정
+                                  </li>
+                                )}
+
                                 <li
                                   onClick={() => handleDelete(visitor.id)}
                                   className="cursor-pointer py-1 border-[1px] border-[#F2F2F2] text-[#2E2E2E]"
