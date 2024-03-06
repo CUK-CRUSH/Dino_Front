@@ -36,7 +36,6 @@ const VisitorButton = ({ id }: any) => {
 
   const fetchVisitorData = async () => {
     try {
-      // 0.3초 지연
       await new Promise((resolve) => setTimeout(resolve, 300));
       let page = 0;
       let totalData: VisitorData[] = [];
