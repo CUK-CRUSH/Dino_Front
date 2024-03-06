@@ -8,7 +8,7 @@ export const EditPlaylistControls = ({
   onDelete,
 }: EditPlayListControlsDTO) => {
   return (
-    <div className="flex h-[5%] smartPhoneXs:h-[3.5%] smartPhone:h-[3.5%] tabletMini:h-[3%] tablet:h-[3%] items-center justify-between m-3 text-[19px]">
+    <div className="flex min-h-[4%]  items-center justify-between m-3 text-[19px]">
       {isEditing ? (
         <>
           <div>
