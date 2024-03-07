@@ -20,6 +20,7 @@ import { likeListSlice } from "@reducer/Likes/likeList";
 import { playlistDataSlice } from "@reducer/Admin/adminPlaylist";
 import { userDataSlice } from "@reducer/Admin/adminUser";
 import { searchMemberRankingSlice } from "@reducer/Search/getSearchMemberRanking";
+import { searchPlaylistRankingSlice } from "@reducer/Search/getSearchPlaylistRanking";
 
 const persistConfig = {
   key: "editMusicsToggle",
@@ -58,6 +59,7 @@ export const store = configureStore({
     adminPlaylist : playlistDataSlice.reducer,
     adminUser : userDataSlice.reducer,
     searchMemberRanking : searchMemberRankingSlice.reducer,
+    searchPlaylistRanking : searchPlaylistRankingSlice.reducer
   },
 });
 

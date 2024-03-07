@@ -15,6 +15,7 @@ import useDecodedJWT from '@hooks/useDecodedJWT';
 import { AppDispatch, RootState } from '@store/index';
 import {   useDispatch, useSelector } from "react-redux";
 import { fetchSearchMemberRanking } from '@reducer/Search/getSearchMemberRanking';
+import { fetchSearchPlaylistRanking } from '@reducer/Search/getSearchPlaylistRanking';
 
 const SearchPage: React.FC = () => {
 
@@ -53,27 +54,15 @@ const SearchPage: React.FC = () => {
   // 리덕스 상태
   const status = useSelector((state : RootState) => state.searchMemberRanking.status);
   const searchMemberRankingData = useSelector((state : RootState) => state.searchMemberRanking.searchMemberRanking);
+  const searchPlaylistRankingData = useSelector((state : RootState) => state.searchPlaylistRanking.searchPlaylistRanking);
+
 
   useEffect(() => {
     if (status === "idle"){
     dispatch(fetchSearchMemberRanking());
+    dispatch(fetchSearchPlaylistRanking());
   }
   }, []);
-
-  useEffect(() => {
-    // API 호출
-    const fetchData = async () => {
-      try {
-        
-        const rankingPlaylistResult = await getSearchPlaylistRanking();
-        setRankingPlaylistResults(rankingPlaylistResult.data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-    fetchData();
-
-  }, [])
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
@@ -127,7 +116,7 @@ const SearchPage: React.FC = () => {
           {/* 쿼리가 없으면 인기플레이리스트 렌더링 */}
           {!query?.trim() ?
             <SearchPlaylist
-              searchResults={rankingPlaylistResult}
+              searchResults={searchPlaylistRankingData}
               query={query}
             /> :
             <SearchPlaylist
