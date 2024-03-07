@@ -57,7 +57,7 @@ const VisitorButton = ({ id }: any) => {
   useEffect(() => {
     fetchVisitorData();
     /* eslint-disable react-hooks/exhaustive-deps */
-  }, [visitorUpdate]);
+  }, [visitorUpdate, ParamsPlaylistId]);
 
   return (
     <div className="bg-black inline-flex px-1  rounded-[30px] mx-4">
