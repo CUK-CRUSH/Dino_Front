@@ -39,7 +39,7 @@ export const PlayList = ({ playlist, fontColor, visible }: { playlist: getPlayli
             )}
             <div className="w-full min-h-[50px] text-left text-zinc-300 font-medium absolute leading-6 whitespace-normal break-words">
               <span className={`text-[15px] text-[${fontColor}] align-top`}>{playlist.playlistName}</span>
-              <span className={`text-[3px] text-[${fontColor}] align-super ml-1`}>●</span>
+              <span className={`text-[3px] text-[${fontColor}] align-top ml-1`}>●</span>
               <span className={`text-[12px] text-[${fontColor}] align-top`}>  {playlist.numberOfMusics}곡 </span>
 
             </div>

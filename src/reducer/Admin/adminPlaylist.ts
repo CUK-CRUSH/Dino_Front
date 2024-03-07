@@ -5,9 +5,9 @@ import { AppDispatch, RootState } from "@store/index";
 
 
 export const fetchPlaylistData = createAsyncThunk<
-getPlaylistDTO[],
-string | undefined,
-{ dispatch: AppDispatch; state: RootState }
+  getPlaylistDTO[],
+  string | undefined,
+  { dispatch: AppDispatch; state: RootState }
 >(
   'playlistData/fetchPlaylistData',
   async (username, { getState }) => {
@@ -20,21 +20,21 @@ string | undefined,
       return;
     }
     const response = await getPlayList(username);
-  if (!response.data) {
-    throw new Error("API Response is missing data field");
-  }
+    if (!response.data) {
+      throw new Error("API Response is missing data field");
+    }
 
-  return response.data;
-}
+    return response.data;
+  }
 );
 
 
 export const playlistDataSlice = createSlice({
   name: "playlistData",
-  initialState : {
-    playlistData : [] as getPlaylistDTO[],
+  initialState: {
+    playlistData: [] as getPlaylistDTO[],
     lastFetch: null as number | null,  // 새로 추가
-    status : "idle",
+    status: "idle",
     error: null as string | null,
 
   },
@@ -46,9 +46,7 @@ export const playlistDataSlice = createSlice({
       })
       .addCase(fetchPlaylistData.fulfilled, (state, action) => {
         state.status = "idle";
-        if (action.payload) {  // action.payload가 존재하는지 확인
-          state.playlistData = [...state.playlistData, ...action.payload];
-        }
+        state.playlistData = [...state.playlistData, ...action.payload];
         state.lastFetch = Date.now();  // API 호출이 완료된 시간을 기록
       })
       .addCase(fetchPlaylistData.rejected, (state, action) => {
@@ -56,7 +54,7 @@ export const playlistDataSlice = createSlice({
         state.error = action.error?.message || null;
       });
   },
- 
+
 });
 
 export default playlistDataSlice.reducer;
