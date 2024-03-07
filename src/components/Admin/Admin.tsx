@@ -6,21 +6,21 @@ import UserProfileInfo from "./UserProfileInfo";
 import { PlayList } from "@components/Admin/Button/PlayList";
 import { getMemberUsername } from "@api/member-controller/memberController";
 import { getMemberDTO, getPlaylistDTO } from "types/Admin";
-import { getPlayList } from "@api/playlist-controller/playlistControl";
 import { useParams } from "react-router-dom";
 import ToastComponent from "@components/Toast/Toast";
-import { useSelector } from "react-redux";
-import { RootState } from "@store/index";
+import {   useDispatch, useSelector } from "react-redux";
+import { AppDispatch, RootState } from "@store/index";
 import Footer from "@components/Layout/footer";
 import Header from "@components/Layout/header";
 import useCompareToken from "@hooks/useCompareToken/useCompareToken";
-import { useDispatch } from "react-redux";
 import { setProfileIntroduction } from "@reducer/Admin/userProfileSlice";
 import ShareImg from "@assets/Share.svg";
 import { Img } from "react-image";
 import SkeltonPlaylist from "./SkeltonPlaylist";
 import { useCustomPlaylistMargin } from "@hooks/useCustomMargin/useCustomPlaylistMargin";
 import { useTranslation } from "react-i18next";
+import { fetchPlaylistData } from "@reducer/Admin/adminPlaylist";
+
 
 const AdminPage: React.FC = () => {
   const getDefaultMember = (): getMemberDTO => ({
@@ -39,17 +39,11 @@ const AdminPage: React.FC = () => {
   // 유저데이터
   const [userData, setUserdata] = useState<getMemberDTO>(getDefaultMember);
 
-  // 플레이리스트 데이터
-  const [playlistData, setPlaylistdata] = useState<
-    getPlaylistDTO[] | undefined
-  >([]);
-
   const { username } = useParams<{ username: string | undefined }>();
 
   const [isLoading, setIsLoding] = useState<boolean>(true);
 
-  // 쿠키
-  const dispatch = useDispatch();
+  const dispatch = useDispatch<AppDispatch>();
 
   useEffect(() => {
     const fetchData = async () => {
@@ -100,18 +94,15 @@ const AdminPage: React.FC = () => {
     }
   }, [deleteBackgroundImage]);
 
-  useEffect(() => {
-    const fetchPlaylistData = async () => {
-      try {
-        const playlistDataResult = await getPlayList(username);
-        setPlaylistdata(playlistDataResult.data);
-      } catch (error) {
-        console.error("Error fetching playlist data:", error);
-      }
-    };
+  const playlistData = useSelector((state: RootState) => state.adminPlaylist.playlistData);
 
-    fetchPlaylistData();
-  }, [username, userData]);
+  const status = useSelector((state : RootState) => state.adminPlaylist.status);
+  console.log(playlistData)
+  useEffect(() => {
+    if (status === "idle"){
+    dispatch(fetchPlaylistData(username));
+  }
+  }, [username]);
 
   // 토스트
   const { toast } = useSelector((state: RootState) => state.toast);
@@ -200,7 +191,7 @@ const AdminPage: React.FC = () => {
         {!isLoading &&
         authority &&
         playlistData?.length !== undefined &&
-        playlistData.length < 4 ? (
+        playlistData?.length < 4 ? (
           <AddPlayList />
         ) : (
           <></>

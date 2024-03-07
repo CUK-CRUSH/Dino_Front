@@ -17,6 +17,7 @@ import labelsReducer from "@reducer/AddMusic/labelSlice";
 import likeReducer from "@reducer/Likes/likeToggle";
 import memberIdReducer from "@reducer/editPlayList/isMemberId";
 import { likeListSlice } from "@reducer/Likes/likeList";
+import { playlistDataSlice } from "@reducer/Admin/adminPlaylist";
 
 const persistConfig = {
   key: "editMusicsToggle",
@@ -52,6 +53,7 @@ export const store = configureStore({
     likes: likeTogglePersistedReducer,
     memberId: memberIdReducer,
     likeList: likeListSlice.reducer,
+    adminPlaylist : playlistDataSlice.reducer,
   },
 });
 
