@@ -45,8 +45,9 @@ export const playlistDataSlice = createSlice({
       })
       .addCase(fetchPlaylistData.fulfilled, (state, action) => {
         state.status = "idle";
-        state.playlistData = [...state.playlistData, ...action.payload];
-        state.lastFetch = Date.now();  // API 호출이 완료된 시간을 기록
+        if (Array.isArray(action.payload)) { // action.payload가 배열인지 확인
+          state.playlistData = [...state.playlistData, ...action.payload];
+        } state.lastFetch = Date.now();  // API 호출이 완료된 시간을 기록
       })
       .addCase(fetchPlaylistData.rejected, (state, action) => {
         state.status = "failed";
