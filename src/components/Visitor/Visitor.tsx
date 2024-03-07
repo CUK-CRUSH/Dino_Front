@@ -217,7 +217,6 @@ const Visitor = () => {
   };
 
   const refreshToken = localStorage.getItem("refreshToken");
-  // console.log(visitorUpdate);
 
   // 토큰 해독
   const decodedRefeshToken = useDecodedJWT(refreshToken);

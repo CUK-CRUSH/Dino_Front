@@ -140,23 +140,39 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     uploadImage,
   });
 
+  // useEffect(() => {
+  //   setPlaylistId(Number(playlistId));
+  //   setToken(cookies.accessToken);
+
+  //   const fetchAndSetPlaylist = async () => {
+  //     await fetchPlaylist();
+  //     const savedPlaylistName = sessionStorage.getItem("playlistName");
+  //     if (savedPlaylistName) {
+  //       setPlaylistName(savedPlaylistName);
+  //     }
+  //   };
+  //   const savedImage = sessionStorage.getItem("uploadImage");
+  //   if (savedImage) {
+  //     setUploadImage(savedImage);
+  //   }
+
+  //   fetchAndSetPlaylist();
+  // }, [playlistId, fetchPlaylist, setPlaylistId, cookies.accessToken, setToken]);
   useEffect(() => {
+    // 페이지 이동 시 필요한 모든 데이터를 새로 불러옵니다.
     setPlaylistId(Number(playlistId));
     setToken(cookies.accessToken);
+    fetchPlaylist();
 
-    const fetchAndSetPlaylist = async () => {
-      await fetchPlaylist();
-      const savedPlaylistName = sessionStorage.getItem("playlistName");
-      if (savedPlaylistName) {
-        setPlaylistName(savedPlaylistName);
-      }
-    };
+    const savedPlaylistName = sessionStorage.getItem("playlistName");
+    if (savedPlaylistName) {
+      setPlaylistName(savedPlaylistName);
+    }
+
     const savedImage = sessionStorage.getItem("uploadImage");
     if (savedImage) {
       setUploadImage(savedImage);
     }
-
-    fetchAndSetPlaylist();
   }, [playlistId, fetchPlaylist, setPlaylistId, cookies.accessToken, setToken]);
 
   if (hasError) {
