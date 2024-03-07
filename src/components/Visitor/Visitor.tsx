@@ -236,7 +236,7 @@ const Visitor = () => {
       >
         <OptionHeader text="방명록" />
         <InfiniteScroll
-          className="h-[85%] overflow-y-scroll scrollbar-hide"
+          className="h-[85%] smartPhone:h-[70%] overflow-y-scroll scrollbar-hide"
           pageStart={0}
           loadMore={loadMore}
         >
@@ -303,14 +303,21 @@ const Visitor = () => {
 
                             {buttonOpen[visitor.id] && (
                               <ul className="absolute text-12px right-0 top-full mt-2 w-24 rounded-md shadow-lg py-1 bg-white ring-1 ring-black ring-opacity-5">
-                                <li
-                                  className="cursor-pointer py-1 border-[1px] border-[#F2F2F2] text-[#2E2E2E]"
-                                  onClick={() =>
-                                    toggleEditMode(visitor.id, visitor.content)
-                                  }
-                                >
-                                  수정
-                                </li>
+                                {visitor.member.id ===
+                                  Number(decodedRefeshToken.sub) && (
+                                  <li
+                                    className="cursor-pointer py-1 border-[1px] border-[#F2F2F2] text-[#2E2E2E]"
+                                    onClick={() =>
+                                      toggleEditMode(
+                                        visitor.id,
+                                        visitor.content
+                                      )
+                                    }
+                                  >
+                                    수정
+                                  </li>
+                                )}
+
                                 <li
                                   onClick={() => handleDelete(visitor.id)}
                                   className="cursor-pointer py-1 border-[1px] border-[#F2F2F2] text-[#2E2E2E]"
@@ -349,7 +356,7 @@ const Visitor = () => {
           <InfiniteDiv view={view} />
         </div>
 
-        <footer className="w-full h-[10%]">
+        <footer className="w-full h-[10%] smartPhone:h-[15%]">
           <form
             onSubmit={handleSubmit}
             className="h-full flex items-center justify-center w-full text-black mt-auto"
