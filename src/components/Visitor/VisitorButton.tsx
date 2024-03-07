@@ -57,17 +57,15 @@ const VisitorButton = ({ id }: any) => {
   useEffect(() => {
     fetchVisitorData();
     /* eslint-disable react-hooks/exhaustive-deps */
-  }, [visitorUpdate]);
+  }, [visitorUpdate, ParamsPlaylistId]);
 
   return (
-    <div className="bg-black inline-flex px-1  rounded-[30px] mx-4">
+    <div
+      onClick={!isEditing ? handleMoveVisitor : undefined}
+      className="bg-black inline-flex px-1  rounded-[30px] mx-4"
+    >
       <div className="p-1 rounded-full">
-        <img
-          onClick={!isEditing ? handleMoveVisitor : undefined}
-          className="w-6 h-6"
-          src={ChatIcon}
-          alt="chat button"
-        />
+        <img className="w-6 h-6" src={ChatIcon} alt="chat button" />
       </div>
       {id === undefined ? null : (
         <div className="mx-2 mt-2">
