@@ -26,7 +26,7 @@ export const searchMemberRankingSlice = createSlice({
   name: "searchMemberRanking",
   initialState: {
     searchMemberRanking: [] as Member[],
-    lastFetch: null as number | null,  
+    lastFetch: null as number | null,
     status: "idle",
     error: null as string | null,
   },
@@ -38,7 +38,10 @@ export const searchMemberRankingSlice = createSlice({
       })
       .addCase(fetchSearchMemberRanking.fulfilled, (state, action: PayloadAction<Member[]>) => {
         state.status = "idle";
-        state.searchMemberRanking = [...state.searchMemberRanking, ...action.payload];
+        if (Array.isArray(action.payload)) { // action.payload가 배열인지 확인
+
+          state.searchMemberRanking = [...state.searchMemberRanking, ...action.payload];
+        }
         state.lastFetch = Date.now();
       })
       .addCase(fetchSearchMemberRanking.rejected, (state, action) => {
