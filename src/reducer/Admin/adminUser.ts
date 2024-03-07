@@ -1,17 +1,17 @@
 import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
 import { getPlayList } from "@api/playlist-controller/playlistControl";  // API 호출 함수
-import { getPlaylistDTO } from "types/Admin";
+import { getMemberDTO } from "types/Admin";
 import { AppDispatch, RootState } from "@store/index";
 
 
-export const fetchPlaylistData = createAsyncThunk<
-  getPlaylistDTO[],
+export const fetchUserData = createAsyncThunk<
+  getMemberDTO[],
   string | undefined,
   { dispatch: AppDispatch; state: RootState }
 >(
-  'playlistData/fetchPlaylistData',
+  'userData/fetchUserData',
   async (username, { getState }) => {
-    const { lastFetch } = (getState() as RootState).adminPlaylist;
+    const { lastFetch } = (getState() as RootState).adminUser;
     const now = Date.now();
     // 마지막으로 데이터를 가져온 시간이 10분 이내라면 API를 호출하지 않음
 
@@ -28,10 +28,10 @@ export const fetchPlaylistData = createAsyncThunk<
 );
 
 
-export const playlistDataSlice = createSlice({
-  name: "playlistData",
+export const userDataSlice = createSlice({
+  name: "userData",
   initialState: {
-    playlistData: [] as getPlaylistDTO[],
+    userData: [] as getMemberDTO[],
     lastFetch: null as number | null,  // 새로 추가
     status: "idle",
     error: null as string | null,
@@ -40,15 +40,15 @@ export const playlistDataSlice = createSlice({
   reducers: {},
   extraReducers: (builder) => {
     builder
-      .addCase(fetchPlaylistData.pending, (state) => {
+      .addCase(fetchUserData.pending, (state) => {
         state.status = "loading";
       })
-      .addCase(fetchPlaylistData.fulfilled, (state, action) => {
+      .addCase(fetchUserData.fulfilled, (state, action) => {
         state.status = "idle";
-        state.playlistData = [...state.playlistData, ...action.payload];
-        state.lastFetch = Date.now();  // API 호출이 완료된 시간을 기록
+        state.userData = action.payload;
+        state.lastFetch = Date.now();
       })
-      .addCase(fetchPlaylistData.rejected, (state, action) => {
+      .addCase(fetchUserData.rejected, (state, action) => {
         state.status = "failed";
         state.error = action.error?.message || null;
       });
@@ -56,4 +56,4 @@ export const playlistDataSlice = createSlice({
 
 });
 
-export default playlistDataSlice.reducer;
+export default userDataSlice.reducer;
