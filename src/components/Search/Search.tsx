@@ -12,6 +12,9 @@ import SearchRecently from './recently/SearchRecently';
 import { useCookies } from 'react-cookie';
 import useSearchTerms from '@hooks/useSearchTerms/useSearchTerms';
 import useDecodedJWT from '@hooks/useDecodedJWT';
+import { AppDispatch, RootState } from '@store/index';
+import {   useDispatch, useSelector } from "react-redux";
+import { fetchSearchMemberRanking } from '@reducer/Search/getSearchMemberRanking';
 
 const SearchPage: React.FC = () => {
 
@@ -28,6 +31,9 @@ const SearchPage: React.FC = () => {
     // decodedToken이 null이면 적절한 기본값을 설정합니다.
     userId = '';
   }
+
+  const dispatch = useDispatch<AppDispatch>();
+  
   // 검색추가하기
   const { addSearchTerm } = useSearchTerms(userId);
   // URL 파라미터 읽기
@@ -44,13 +50,22 @@ const SearchPage: React.FC = () => {
   // 검색창 펼치기
   const [openSearchRecently, setOpenSearchRecently] = useState<boolean>(false);
 
+  // 리덕스 상태
+  const status = useSelector((state : RootState) => state.searchMemberRanking.status);
+  const searchMemberRankingData = useSelector((state : RootState) => state.searchMemberRanking.searchMemberRanking);
+
+  useEffect(() => {
+    if (status === "idle"){
+    dispatch(fetchSearchMemberRanking());
+  }
+  }, []);
+
   useEffect(() => {
     // API 호출
     const fetchData = async () => {
       try {
-        const rankingMemberResult = await getSearchMemberRanking();
+        
         const rankingPlaylistResult = await getSearchPlaylistRanking();
-        setRankingMemberResults(rankingMemberResult.data);
         setRankingPlaylistResults(rankingPlaylistResult.data);
       } catch (error) {
         console.error(error);
@@ -132,7 +147,7 @@ const SearchPage: React.FC = () => {
 
           {!query?.trim() ?
             <SearchMemberList
-              searchResults={rankingMemberResult}
+              searchResults={searchMemberRankingData}
               username_fontSize='18px'
               introduction_fontSize='15px'
               size='60px'
