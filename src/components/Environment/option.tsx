@@ -15,6 +15,8 @@ import Swal from "sweetalert2";
 import { useCookies } from "react-cookie";
 import OptionHeader from "@components/Layout/optionHeader";
 import ToastComponent from "@components/Toast/Toast";
+import { useRecoilValue } from "recoil";
+import { adminuserNameState } from "@atoms/Admin/adminUsername";
 
 const OptionComponents = () => {
   const swalButton = Swal.mixin({
@@ -39,6 +41,9 @@ const OptionComponents = () => {
 
   const navigate = useNavigate();
 
+  //recoil
+  const AdminUsername = useRecoilValue(adminuserNameState);
+
   const [cookies, , removeCookie] = useCookies(["accessToken"]);
   // 세션 아이디
   const id = sessionStorage.getItem("id");
@@ -51,7 +56,7 @@ const OptionComponents = () => {
       navigator
         .share({
           title: "MyList",
-          url: window.location.href.replace("/env", ""),
+          url: `/user/${AdminUsername}`,
         })
         .then(() => console.log("Successful share"))
         .catch((error) => console.log("Error sharing", error));
