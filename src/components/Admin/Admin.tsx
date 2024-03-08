@@ -8,7 +8,7 @@ import { getMemberUsername } from "@api/member-controller/memberController";
 import { getMemberDTO, getPlaylistDTO } from "types/Admin";
 import { useParams } from "react-router-dom";
 import ToastComponent from "@components/Toast/Toast";
-import {   useDispatch, useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@store/index";
 import Footer from "@components/Layout/footer";
 import Header from "@components/Layout/header";
@@ -20,7 +20,8 @@ import SkeltonPlaylist from "./SkeltonPlaylist";
 import { useCustomPlaylistMargin } from "@hooks/useCustomMargin/useCustomPlaylistMargin";
 import { useTranslation } from "react-i18next";
 import { fetchPlaylistData } from "@reducer/Admin/adminPlaylist";
-
+import { useSetRecoilState } from "recoil";
+import { adminuserNameState } from "@atoms/Admin/adminUsername";
 
 const AdminPage: React.FC = () => {
   const getDefaultMember = (): getMemberDTO => ({
@@ -40,6 +41,7 @@ const AdminPage: React.FC = () => {
   const [userData, setUserdata] = useState<getMemberDTO>(getDefaultMember);
 
   const { username } = useParams<{ username: string | undefined }>();
+  const setAdminUsername = useSetRecoilState(adminuserNameState);
 
   const [isLoading, setIsLoding] = useState<boolean>(true);
 
@@ -94,16 +96,24 @@ const AdminPage: React.FC = () => {
     }
   }, [deleteBackgroundImage]);
 
-  const playlistData = useSelector((state: RootState) => state.adminPlaylist.playlistData);
+  const playlistData = useSelector(
+    (state: RootState) => state.adminPlaylist.playlistData
+  );
 
-  const status = useSelector((state : RootState) => state.adminPlaylist.status);
-  
+  const status = useSelector((state: RootState) => state.adminPlaylist.status);
+
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    if (status === "idle"){
-    dispatch(fetchPlaylistData(username));
-  }
-  }, [username,dispatch]);
+    if (status === "idle") {
+      dispatch(fetchPlaylistData(username));
+    }
+  }, [username, dispatch]);
+
+  useEffect(() => {
+    if (username) {
+      setAdminUsername(username);
+    }
+  }, [username]);
 
   // 토스트
   const { toast } = useSelector((state: RootState) => state.toast);
