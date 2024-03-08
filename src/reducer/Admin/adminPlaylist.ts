@@ -10,14 +10,8 @@ export const fetchPlaylistData = createAsyncThunk<
   { dispatch: AppDispatch; state: RootState }
 >(
   'playlistData/fetchPlaylistData',
-  async (username, { getState }) => {
-    const { lastFetch } = (getState() as RootState).adminPlaylist;
-    const now = Date.now();
-    // 마지막으로 데이터를 가져온 시간이 10분 이내라면 API를 호출하지 않음
-
-    if (lastFetch && now - lastFetch < 600000) {
-      return;
-    }
+  async (username) => {
+   
     const response = await getPlayList(username);
     if (!response.data) {
       throw new Error("API Response is missing data field");
@@ -46,7 +40,7 @@ export const playlistDataSlice = createSlice({
       .addCase(fetchPlaylistData.fulfilled, (state, action) => {
         state.status = "idle";
         if (Array.isArray(action.payload)) { // action.payload가 배열인지 확인
-          state.playlistData = [...state.playlistData, ...action.payload];
+          state.playlistData = action.payload;
         } state.lastFetch = Date.now();  // API 호출이 완료된 시간을 기록
       })
       .addCase(fetchPlaylistData.rejected, (state, action) => {
