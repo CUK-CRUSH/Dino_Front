@@ -25,19 +25,19 @@ export const EditPlaylistControls = ({
         </>
       ) : (
         // 이 부분이 모달입니다 ㅋㅋㅋㅋㅋㅋ
-        <div className="ml-auto text-[18px] space-y-3">
+        <div className="ml-auto font-bold text-[14px] space-y-3">
           <button
             className="w-full border-b-[1px] border-[#D9D9D9]"
             onClick={onEdit}
           >
-            수정하기
+            플레이리스트 수정
           </button>
 
           <button
             className="w-full text-[13px] text-red-600 font-bold"
             onClick={onDelete}
           >
-            제거하기
+            플레이리스트 삭제
           </button>
         </div>
       )}
