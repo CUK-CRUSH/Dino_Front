@@ -1,15 +1,14 @@
 import { fetchSearchPlaylistRanking } from '@reducer/Search/getSearchPlaylistRanking';
-import { AppDispatch, RootState } from '@store/index';
+import { AppDispatch} from '@store/index';
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { useSelector } from 'react-redux';
 
 const RankingPlaylist: React.FC = () => {
-  const searchPlaylistsData = useSelector((state: RootState) => state.search.playlists);
+  // const searchPlaylistsData = useSelector((state: RootState) => state.search.playlists);
   const dispatch = useDispatch<AppDispatch>();
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    if (status === "idle") {
+    if (true) {
       dispatch(fetchSearchPlaylistRanking());
     }
   }, []);
