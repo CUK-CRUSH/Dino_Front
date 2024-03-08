@@ -1,7 +1,6 @@
 import ImageCropper from "@utils/ImageCrop/ImageCropper";
 import { ShowImageDTO } from "types/EditplayList";
 import { AiOutlinePicture } from "react-icons/ai";
-import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { RootState } from "@store/index";
 import "@styles/EditList/playList.css";
@@ -22,8 +21,6 @@ const ShowImage = ({
   isEditing,
   fetchPlaylist,
 }: ShowImageDTO) => {
-  const { t } = useTranslation("Edit");
-
   const isLoading = useSelector(
     (state: RootState) => state.selectedFile.isLoading
   );

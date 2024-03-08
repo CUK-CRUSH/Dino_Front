@@ -35,7 +35,7 @@ const LikeList = () => {
 
   useEffect(() => {
     dispatch(likeListSlice.actions.reset());
-  }, [playlistId]);
+  }, [playlistId, dispatch]);
   return (
     <div className="h-full w-full scrollbar-hide overflow-scroll flex flex-col bg-white text-black font-medium leading-[18px]">
       <OptionHeader text={playlistName} />

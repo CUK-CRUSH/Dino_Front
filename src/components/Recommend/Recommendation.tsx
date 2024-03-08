@@ -27,14 +27,22 @@ const Recommendation = () => {
   const [cookies] = useCookies(["accessToken"]);
   const token = cookies.accessToken;
 
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const res = await getRecommendation(token, Number(playlistId));
+  //     setData(res.data);
+  //   };
+
+  //   fetchData();
+  // }, [token, setData, playlistId]);
   useEffect(() => {
     const fetchData = async () => {
       const res = await getRecommendation(token, Number(playlistId));
-      setData(res.data);
+      return res.data;
     };
 
-    fetchData();
-  }, [token, setData, playlistId]);
+    fetchData().then((data) => setData(data));
+  }, [token, playlistId]);
 
   const handleOnClick = (username: string, id: number) => {
     navigate(`/user/${username}/${id}`);
