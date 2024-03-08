@@ -14,6 +14,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { fetchSearchMemberRanking } from '@reducer/Search/getSearchMemberRanking';
 import { fetchSearchPlaylistRanking } from '@reducer/Search/getSearchPlaylistRanking';
 import { fetchSearch } from '@reducer/Search/getSearch';
+import NothingSearch from './part/NothingSearch';
 
 const SearchPage: React.FC = () => {
   // id값
@@ -54,7 +55,7 @@ const SearchPage: React.FC = () => {
     }
   }, []);
 
-  
+
   useEffect(() => {
     // API 호출
     if (query?.trim() && status === "idle") {
@@ -64,8 +65,7 @@ const SearchPage: React.FC = () => {
 
     }
 
-  }, [location.search,query,dispatch]);
-
+  }, [location.search, query, dispatch]);
   return (
     <div className="w-full h-full relative bg-white flex flex-col justify-start scrollbar-hide overflow-scroll font-PretendardMedium">
       <OptionHeader text="검색" openSearchRecently={openSearchRecently} setOpenSearchRecently={setOpenSearchRecently} />
@@ -86,22 +86,28 @@ const SearchPage: React.FC = () => {
             :
             <div className="flex justify-between font-PretendardSemiBold">
               <span className="flex justify-start ">플레이리스트</span>
-              {searchPlaylistsData && searchPlaylistsData.length > 4 ?
+              {searchPlaylistsData && searchPlaylistsData.length > 5 ?
                 <Link to={`/search/playlist?query=${query}`}><span className="flex justify-end">  더보기</span></Link> : <></>
               }
             </div>
           }
 
           {/* 쿼리가 없으면 인기플레이리스트 렌더링 */}
-          {!query?.trim() ?
+          {!query?.trim() ? (
             <SearchPlaylist
-              searchResults={searchPlaylistRankingData}
-              query={query}
-            /> :
-            <SearchPlaylist
-              searchResults={searchPlaylistsData}
+              searchResults={searchPlaylistRankingData.slice(0, 5)}
               query={query}
             />
+          ) : (
+            searchPlaylistsData && searchPlaylistsData.length > 0 ? (
+              <SearchPlaylist
+                searchResults={searchPlaylistsData.slice(0, 5)}
+                query={query}
+              />
+            ) : (
+              <NothingSearch text={query} type={'플레이리스트'} />
+              )
+            )
           }
 
           {/* 여백 */}
@@ -113,22 +119,27 @@ const SearchPage: React.FC = () => {
             : <p className='font-PretendardSemiBold mb-3'> 유저 </p>
           }
 
-          {!query?.trim() ?
+          {!query?.trim() ? (
             <SearchMemberList
-              searchResults={searchMemberRankingData}
+              searchResults={searchMemberRankingData.slice(0, 5)}
               username_fontSize='18px'
               introduction_fontSize='15px'
               size='60px'
               marginY='10px'
             />
-            :
-            <SearchMemberList
-              searchResults={searchMembersData}
-              username_fontSize='18px'
-              introduction_fontSize='15px'
-              size='60px'
-              marginY='10px'
-            />
+          ) : (
+            searchMembersData && searchMembersData.length > 0 ? (
+              <SearchMemberList
+                searchResults={searchMembersData.slice(0, 5)}
+                username_fontSize='18px'
+                introduction_fontSize='15px'
+                size='60px'
+                marginY='10px'
+              />
+            ) : (
+              <NothingSearch text={query} type={'유저'} />
+              )
+            )
           }
 
           {searchMembersData && searchMembersData.length > 5 ?
