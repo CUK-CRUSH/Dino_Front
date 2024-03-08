@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { Navigation, Mousewheel } from "swiper/modules";
 import { getRecommendation } from "@api/Recommendation/recommendationControl";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
@@ -22,18 +22,19 @@ const Recommendation = () => {
   const [data, setData] = useState<PlayListDTO[]>([]);
 
   const navigate = useNavigate();
+  const { playlistId } = useParams<{ playlistId: string }>();
 
   const [cookies] = useCookies(["accessToken"]);
   const token = cookies.accessToken;
 
   useEffect(() => {
     const fetchData = async () => {
-      const res = await getRecommendation(token);
+      const res = await getRecommendation(token, Number(playlistId));
       setData(res.data);
     };
 
     fetchData();
-  }, [token, setData]);
+  }, [token, setData, playlistId]);
 
   const handleOnClick = (username: string, id: number) => {
     navigate(`/user/${username}/${id}`);
