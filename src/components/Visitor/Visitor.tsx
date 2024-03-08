@@ -231,12 +231,12 @@ const Visitor = () => {
   return (
     <div className="h-screen w-full scrollbar-hide overflow-scroll flex flex-col bg-white text-black font-medium leading-[18px]">
       <div
-        className={`relative h-full bg-[#F7F8FA] flex flex-col`}
+        className={`relative h-screen bg-[#F7F8FA] flex flex-col`}
         onClick={(e) => e.stopPropagation()}
       >
         <OptionHeader text="방명록" />
         <InfiniteScroll
-          className="h-[85vh] smartPhone:h-[70vh] overflow-y-scroll scrollbar-hide"
+          className="h-[75vh] overflow-y-scroll scrollbar-hide"
           pageStart={0}
           loadMore={loadMore}
         >
@@ -376,10 +376,10 @@ const Visitor = () => {
           <InfiniteDiv view={view} />
         </div>
 
-        <footer className="w-full h-[10vh] smartPhone:h-[15vh]">
+        <footer className="w-full h-[10vh]">
           <form
             onSubmit={handleSubmit}
-            className="h-full flex items-center justify-center w-full text-black mt-auto"
+            className="h-full flex items-center justify-center w-full text-black"
           >
             <input
               type="text"

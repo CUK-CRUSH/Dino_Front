@@ -25,6 +25,9 @@ const SearchPlaylistDetail = loadable(
 const SearchMemberDetail = loadable(
   () => import("@pages/Search/SearchMemberDetail")
 );
+const RankingPlaylist = loadable(
+  () => import("@pages/Ranking/RankingPlaylist")
+)
 const Favorites = loadable(() => import("@pages/Favorites/Favorites"));
 
 const Environment = loadable(() => import("@pages/Environment/Environment"));
@@ -95,6 +98,10 @@ function App() {
               <Route
                 path="/search/playlist"
                 element={<SearchPlaylistDetail />}
+              />
+              <Route
+                path="/ranking/playlist"
+                element={<RankingPlaylist />}
               />
               <Route path="/search/member" element={<SearchMemberDetail />} />
 

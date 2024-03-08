@@ -19,6 +19,9 @@ import memberIdReducer from "@reducer/editPlayList/isMemberId";
 import { likeListSlice } from "@reducer/Likes/likeList";
 import { playlistDataSlice } from "@reducer/Admin/adminPlaylist";
 import { userDataSlice } from "@reducer/Admin/adminUser";
+import { searchSlice } from "@reducer/Search/getSearch";
+import { searchMemberRankingSlice } from "@reducer/Search/getSearchMemberRanking";
+import { searchPlaylistRankingSlice } from "@reducer/Search/getSearchPlaylistRanking";
 
 const persistConfig = {
   key: "editMusicsToggle",
@@ -56,6 +59,9 @@ export const store = configureStore({
     likeList: likeListSlice.reducer,
     adminPlaylist : playlistDataSlice.reducer,
     adminUser : userDataSlice.reducer,
+    search : searchSlice.reducer,
+    searchMemberRanking : searchMemberRankingSlice.reducer,
+    searchPlaylistRanking : searchPlaylistRankingSlice.reducer
   },
 });
 
