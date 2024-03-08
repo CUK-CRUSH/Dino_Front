@@ -8,8 +8,9 @@ import UserProfile from "./UserProfile";
 import OptionHeader from "@components/Layout/optionHeader";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@store/index";
-import { fetchLikeList } from "@reducer/Likes/likeList";
+
 import SkeletonLikes from "./Skeleton/LikeSkeleton";
+import { fetchLikeList, likeListSlice } from "@reducer/Likes/likeList";
 
 const LikeList = () => {
   const dispatch = useDispatch<AppDispatch>();
@@ -41,6 +42,9 @@ const LikeList = () => {
     return () => clearTimeout(timeoutId);
   }, [status, dispatch, playlistId, currentPage, inView, isLast]);
 
+  useEffect(() => {
+    dispatch(likeListSlice.actions.reset());
+  }, [playlistId, dispatch]);
   return (
     <div className="h-full w-full scrollbar-hide overflow-scroll flex flex-col bg-white text-black font-medium leading-[18px]">
       <OptionHeader text={playlistName} />

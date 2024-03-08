@@ -37,7 +37,15 @@ export const likeListSlice = createSlice({
     status: "idle",
     error: null as string | null,
   },
-  reducers: {},
+  reducers: {
+    reset: (state) => {
+      state.likeList = [];
+      state.currentPage = 0;
+      state.isLast = false;
+      state.status = "idle";
+      state.error = null;
+    },
+  },
   extraReducers: (builder) => {
     builder
       .addCase(fetchLikeList.pending, (state) => {

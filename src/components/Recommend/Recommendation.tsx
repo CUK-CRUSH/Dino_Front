@@ -27,18 +27,25 @@ const Recommendation = () => {
   const [cookies] = useCookies(["accessToken"]);
   const token = cookies.accessToken;
 
+  // useEffect(() => {
+  //   const fetchData = async () => {
+  //     const res = await getRecommendation(token, Number(playlistId));
+  //     setData(res.data);
+  //   };
+
+  //   fetchData();
+  // }, [token, setData, playlistId]);
   useEffect(() => {
     const fetchData = async () => {
       const res = await getRecommendation(token, Number(playlistId));
-      setData(res.data);
+      return res.data;
     };
 
-    fetchData();
-  }, [token, setData, playlistId]);
+    fetchData().then((data) => setData(data));
+  }, [token, playlistId]);
 
   const handleOnClick = (username: string, id: number) => {
     navigate(`/user/${username}/${id}`);
-    // window.location.reload();
   };
 
   return (
@@ -70,7 +77,7 @@ const Recommendation = () => {
                     <div
                       style={{ wordWrap: "break-word", wordBreak: "break-all" }}
                     >
-                      <h3 className="text-center mt-2 overflow-hidden text-overflow-ellipsis">
+                      <h3 className="text-start mt-2 overflow-hidden text-overflow-ellipsis">
                         {item.playlistName}
                       </h3>
                     </div>

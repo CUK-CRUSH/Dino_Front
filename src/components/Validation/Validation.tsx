@@ -104,6 +104,7 @@ const checkNickname = (nickname: string) => {
     if (code.status === 200) {
       dispatch(setToast('login'));
 
+      localStorage.setItem("homeUrl", code.data.username); // Set refreshToken in local storage
       navigate(`/SetProfile/${code.data.username}/1`);
     }
   };
