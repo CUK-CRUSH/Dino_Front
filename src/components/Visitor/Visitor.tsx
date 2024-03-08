@@ -26,6 +26,7 @@ interface VisitorData {
   id: number;
   username: string;
   content: string;
+  createdDate: string;
   modifiedDate: string;
 }
 
@@ -241,7 +242,7 @@ const Visitor = () => {
         >
           <main>
             <div className="flex flex-col items-center justify-center h-full">
-              {visitorData &&
+              {visitorData && visitorData.length > 0 ? (
                 visitorData.map((visitor: any) => (
                   <div className="flex flex-col bg-[#ffffff] text-black text-[14px] w-11/12 my-2 p-4">
                     {editMode[visitor.id] ? (
@@ -333,14 +334,34 @@ const Visitor = () => {
                           </div>
                         </div>
                         <p className="text-[10px] text-[#C8C8C8] mr-2">
-                          {visitor.modifiedDate}
+                          {visitor && visitor.createdDate
+                            ? visitor.createdDate.slice(0, 11) +
+                              (
+                                (parseInt(visitor.createdDate.slice(11, 13)) +
+                                  9) %
+                                24
+                              )
+                                .toString()
+                                .padStart(2, "0") +
+                              visitor.createdDate.slice(13, 16) +
+                              " " +
+                              (visitor.createdDate === visitor.modifiedDate
+                                ? ""
+                                : "· 수정됨")
+                            : "날짜정보 없음"}
                         </p>
                       </div>
                     )}
                   </div>
-                ))}
+                ))
+              ) : (
+                <div className="flex w-full h-screen justify-center items-center">
+                  방명록이 없습니다.
+                </div>
+              )}
             </div>
           </main>
+
           {!isLast && (
             <button
               onClick={handleLoadMore}
