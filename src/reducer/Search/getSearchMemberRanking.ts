@@ -1,5 +1,5 @@
 import { createSlice, createAsyncThunk, PayloadAction } from "@reduxjs/toolkit";
-import { AppDispatch, RootState } from "@store/index";
+import {  RootState } from "@store/index";
 import { Member } from "types/Search/Search";
 import { getSearchMemberRanking } from "@api/search-controller/searchController";
 
