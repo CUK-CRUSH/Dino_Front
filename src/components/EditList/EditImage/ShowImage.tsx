@@ -1,7 +1,6 @@
 import ImageCropper from "@utils/ImageCrop/ImageCropper";
 import { ShowImageDTO } from "types/EditplayList";
 import { AiOutlinePicture } from "react-icons/ai";
-import { useTranslation } from "react-i18next";
 import { useSelector } from "react-redux";
 import { RootState } from "@store/index";
 import "@styles/EditList/playList.css";
@@ -22,8 +21,6 @@ const ShowImage = ({
   isEditing,
   fetchPlaylist,
 }: ShowImageDTO) => {
-  const { t } = useTranslation("Edit");
-
   const isLoading = useSelector(
     (state: RootState) => state.selectedFile.isLoading
   );
@@ -106,7 +103,8 @@ const ShowImage = ({
       <div className="flex flex-col justify-center items-center h-full ">
         <AiOutlinePicture size={29} className="text-[#8E8E8E]" />
         <span className="text-center text-[#8E8E8E] text-[17px] pt-[6px]">
-          {t("representive_image")}
+          {/* {t("representive_image")} */}
+          대표 이미지 설정하기
         </span>{" "}
         {isEditing && (
           <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>

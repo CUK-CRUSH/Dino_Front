@@ -26,6 +26,7 @@ interface VisitorData {
   id: number;
   username: string;
   content: string;
+  createdDate: string;
   modifiedDate: string;
 }
 
@@ -228,14 +229,14 @@ const Visitor = () => {
   }, []);
 
   return (
-    <div className="h-full w-full scrollbar-hide overflow-scroll flex flex-col bg-white text-black font-medium leading-[18px]">
+    <div className="h-screen w-full scrollbar-hide overflow-scroll flex flex-col bg-white text-black font-medium leading-[18px]">
       <div
         className={`relative h-full bg-[#F7F8FA] flex flex-col`}
         onClick={(e) => e.stopPropagation()}
       >
         <OptionHeader text="방명록" />
         <InfiniteScroll
-          className="h-[85%] smartPhone:h-[70%] overflow-y-scroll scrollbar-hide"
+          className="h-[85vh] smartPhone:h-[70vh] overflow-y-scroll scrollbar-hide"
           pageStart={0}
           loadMore={loadMore}
         >
@@ -333,7 +334,18 @@ const Visitor = () => {
                           </div>
                         </div>
                         <p className="text-[10px] text-[#C8C8C8] mr-2">
-                          {visitor.modifiedDate}
+                          {visitor.createdDate.slice(0, 11) +
+                            (
+                              (parseInt(visitor.createdDate.slice(11, 13)) +
+                                9) %
+                              24
+                            )
+                              .toString()
+                              .padStart(2, "0") +
+                            visitor.createdDate.slice(13, 16)}{" "}
+                          {visitor.createdDate === visitor.modifiedDate
+                            ? ""
+                            : "· 수정됨"}
                         </p>
                       </div>
                     )}
@@ -355,7 +367,7 @@ const Visitor = () => {
           <InfiniteDiv view={view} />
         </div>
 
-        <footer className="w-full h-[10%] smartPhone:h-[15%]">
+        <footer className="w-full h-[10vh] smartPhone:h-[15vh]">
           <form
             onSubmit={handleSubmit}
             className="h-full flex items-center justify-center w-full text-black mt-auto"
