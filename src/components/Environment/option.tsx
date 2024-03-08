@@ -20,8 +20,8 @@ const OptionComponents = () => {
   const swalButton = Swal.mixin({
     customClass: {
       popup: "popup", // 전체
-      confirmButton: "confirmButton", // 취소
-      cancelButton: "cancelButton", // 삭제
+      confirmButton: "logoutConfirmButton", // 취소
+      cancelButton: "logoutCancelButton", // 삭제
       title: "title", // 타이틀
       htmlContainer: "htmlContainer", // 내용
     },

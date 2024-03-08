@@ -2,8 +2,6 @@ import { useNavigate, useParams } from "react-router-dom";
 import { FaAngleLeft } from "react-icons/fa6";
 import { RootState } from "@store/index";
 import { useSelector } from "react-redux";
-import { useRecoilValue } from "recoil";
-import { playlistIdState } from "@atoms/Playlist/playlistId";
 
 interface OptionHeaderProps {
   text?: string;

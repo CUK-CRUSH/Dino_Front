@@ -106,7 +106,8 @@ const ShowImage = ({
       <div className="flex flex-col justify-center items-center h-full ">
         <AiOutlinePicture size={29} className="text-[#8E8E8E]" />
         <span className="text-center text-[#8E8E8E] text-[17px] pt-[6px]">
-          {t("representive_image")}
+          {/* {t("representive_image")} */}
+          대표 이미지 설정하기
         </span>{" "}
         {isEditing && (
           <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
