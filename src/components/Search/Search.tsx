@@ -81,8 +81,10 @@ const SearchPage: React.FC = () => {
 
           {/* 플레이리스트 */}
           {!query?.trim() ?
-
-            <span className="flex justify-start "><img src={hot} alt='x' /> &nbsp; 인기 플레이리스트</span>
+            <div className="flex justify-between font-PretendardSemiBold">
+              <span className="flex justify-start "><img src={hot} alt='x' /> &nbsp; 인기 플레이리스트</span>
+              {/* <Link to={`/ranking/playlist`}><span className="flex justify-end"> 더보기</span></Link> */}
+            </div>
             :
             <div className="flex justify-between font-PretendardSemiBold">
               <span className="flex justify-start ">플레이리스트</span>
@@ -106,8 +108,8 @@ const SearchPage: React.FC = () => {
               />
             ) : (
               <NothingSearch text={query} type={'플레이리스트'} />
-              )
             )
+          )
           }
 
           {/* 여백 */}
@@ -138,8 +140,8 @@ const SearchPage: React.FC = () => {
               />
             ) : (
               <NothingSearch text={query} type={'유저'} />
-              )
             )
+          )
           }
 
           {searchMembersData && searchMembersData.length > 5 ?
