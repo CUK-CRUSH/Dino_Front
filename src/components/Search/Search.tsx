@@ -122,7 +122,7 @@ const SearchPage: React.FC = () => {
           }
 
           {/* 여백 */}
-          <div className='h-[50px]' />
+          <div className='h-[20px]' />
 
           {/* 유저 */}
           {!query?.trim() ?
