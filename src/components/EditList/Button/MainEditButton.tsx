@@ -3,7 +3,7 @@ import useCompareToken from "@hooks/useCompareToken/useCompareToken";
 import CustomModal from "@utils/Modal/Modal";
 import { useCallback, useState } from "react";
 import { FaAngleLeft, FaEllipsisVertical } from "react-icons/fa6";
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import Home from "@assets/Home.svg";
 
@@ -29,17 +29,13 @@ export const MainEditButton = ({
   const { username: paramUsername } = useParams<{
     username: string | undefined;
   }>();
+  const { pathname } = useLocation();
 
   const handleBack = () => {
-    const path = window.location.pathname;
-    navigate(-1);
-
-    // 경로가 /user/{username}/{playlistId} 형태인지 확인
-    const isPlaylistPath = /\/user\/[^/]+\/\d+/.test(path);
-
-    if (isPlaylistPath) {
-      // 경로가 /user/{username}/{playlistId} 형태이면 페이지를 리로드
-      setTimeout(() => window.location.reload(), 100);
+    if (pathname.endsWith("visitor")) {
+      navigate(`/user/${paramUsername}`);
+    } else {
+      navigate(-1);
     }
   };
 

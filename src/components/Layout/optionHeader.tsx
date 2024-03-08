@@ -1,7 +1,9 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import { FaAngleLeft } from "react-icons/fa6";
 import { RootState } from "@store/index";
 import { useSelector } from "react-redux";
+import { useRecoilValue } from "recoil";
+import { playlistIdState } from "@atoms/Playlist/playlistId";
 
 interface OptionHeaderProps {
   text?: string;
@@ -17,6 +19,10 @@ const OptionHeader: React.FC<OptionHeaderProps> = ({
 }) => {
   const navigate = useNavigate();
   const { username } = useSelector((state: RootState) => state.userProfile);
+  const { username: paramUsername } = useParams<{
+    username: string | undefined;
+  }>();
+  const { playlistId } = useParams<{ playlistId: string }>();
 
   const handleBack = () => {
     if (openSearchRecently) {
@@ -26,6 +32,8 @@ const OptionHeader: React.FC<OptionHeaderProps> = ({
 
     if (username) {
       navigate(`/user/${username}`);
+    } else if (paramUsername) {
+      navigate(`/user/${paramUsername}/${playlistId}`);
     } else {
       navigate(-1);
     }

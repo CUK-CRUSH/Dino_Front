@@ -26,6 +26,7 @@ interface VisitorData {
   id: number;
   username: string;
   content: string;
+  createdDate: string;
   modifiedDate: string;
 }
 
@@ -333,7 +334,18 @@ const Visitor = () => {
                           </div>
                         </div>
                         <p className="text-[10px] text-[#C8C8C8] mr-2">
-                          {visitor.modifiedDate}
+                          {visitor.createdDate.slice(0, 11) +
+                            (
+                              (parseInt(visitor.createdDate.slice(11, 13)) +
+                                9) %
+                              24
+                            )
+                              .toString()
+                              .padStart(2, "0") +
+                            visitor.createdDate.slice(13, 16)}{" "}
+                          {visitor.createdDate === visitor.modifiedDate
+                            ? ""
+                            : "· 수정됨"}
                         </p>
                       </div>
                     )}

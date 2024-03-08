@@ -38,7 +38,6 @@ const Recommendation = () => {
 
   const handleOnClick = (username: string, id: number) => {
     navigate(`/user/${username}/${id}`);
-    // window.location.reload();
   };
 
   return (
@@ -70,7 +69,7 @@ const Recommendation = () => {
                     <div
                       style={{ wordWrap: "break-word", wordBreak: "break-all" }}
                     >
-                      <h3 className="text-center mt-2 overflow-hidden text-overflow-ellipsis">
+                      <h3 className="text-start mt-2 overflow-hidden text-overflow-ellipsis">
                         {item.playlistName}
                       </h3>
                     </div>
