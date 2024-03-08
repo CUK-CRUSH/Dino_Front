@@ -9,10 +9,13 @@ function useCompareToken(id: string | null | undefined) {
 
   // 토큰 해독
   const decodedRefeshToken = useDecodedJWT(refreshToken);
+  console.log("decodedRefeshToken : ", decodedRefeshToken.sub);
 
   useEffect(() => {
-    if (id && decodedRefeshToken && `${id}` === (decodedRefeshToken.sub)) {
+    if (id && decodedRefeshToken && `${id}` === decodedRefeshToken.sub) {
       setAuthority(true);
+    } else {
+      setAuthority(false);
     }
   }, [id, decodedRefeshToken]);
 
