@@ -21,7 +21,6 @@ export const PlayList = ({ playlist, fontColor, visible }: { playlist: getPlayli
 
   const handleOnClick = (username: string | undefined, id: number | undefined) => {
     navigate(`/user/${username}/${id}`);
-    window.location.reload();
   };
 
   return (
