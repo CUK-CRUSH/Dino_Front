@@ -10,7 +10,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 
 const RankingPlaylist: React.FC = () => {
-  const [isLoading, setIsLoding] = useState<boolean>(false);
+  const [isLoading] = useState<boolean>(false);
 
   const dispatch = useDispatch<AppDispatch>();
   const searchPlaylistRankingData = useSelector((state: RootState) => state.searchPlaylistRanking.searchPlaylistRanking);

@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getPlaylistDTO } from "types/Admin";
 import { useCustomPlaylistMargin } from "@hooks/useCustomMargin/useCustomPlaylistMargin";
@@ -13,7 +12,6 @@ import eight from "@assets/Ranking/8.svg";
 
 
 export const RankingPlaylistComponents = ({ playlist, fontColor,rank }: { playlist: getPlaylistDTO, fontColor?: string, rank : number }) => {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
   
   const navigate = useNavigate();
 
