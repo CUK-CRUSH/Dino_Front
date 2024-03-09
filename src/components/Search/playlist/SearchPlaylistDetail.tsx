@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { getSearchPlaylist } from '@api/search-controller/searchController';
-import { PlayList } from '@components/Admin/Button/PlayList';
+import { PlayList } from '@components/Admin/playlist/PlayList';
 import { getPlaylistDTO } from 'types/Admin';
 import { useInView } from 'react-intersection-observer';
 import OptionHeader from '@components/Layout/optionHeader';

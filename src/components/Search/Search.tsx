@@ -50,8 +50,12 @@ const SearchPage: React.FC = () => {
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (status === "idle") {
-      dispatch(fetchSearchMemberRanking());
-      dispatch(fetchSearchPlaylistRanking());
+      if(!searchPlaylistRankingData.length){
+        dispatch(fetchSearchMemberRanking());
+      }
+      if(!searchMemberRankingData.length){
+        dispatch(fetchSearchPlaylistRanking());
+      }
     }
   }, []);
 
@@ -66,6 +70,7 @@ const SearchPage: React.FC = () => {
     }
 
   }, [location.search, query, dispatch]);
+  
   return (
     <div className="w-full h-full relative bg-white flex flex-col justify-start scrollbar-hide overflow-scroll font-PretendardMedium">
       <OptionHeader text="검색" openSearchRecently={openSearchRecently} setOpenSearchRecently={setOpenSearchRecently} />
@@ -83,7 +88,7 @@ const SearchPage: React.FC = () => {
           {!query?.trim() ?
             <div className="flex justify-between font-PretendardSemiBold">
               <span className="flex justify-start "><img src={hot} alt='x' /> &nbsp; 인기 플레이리스트</span>
-              {/* <Link to={`/ranking/playlist`}><span className="flex justify-end"> 더보기</span></Link> */}
+              <Link to={`/ranking/playlist`}><span className="flex justify-end"> 더보기</span></Link>
             </div>
             :
             <div className="flex justify-between font-PretendardSemiBold">
