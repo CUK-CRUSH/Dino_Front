@@ -6,11 +6,10 @@ import OptionHeader from '@components/Layout/optionHeader';
 import { useCustomPlaylistMargin } from '@hooks/useCustomMargin/useCustomPlaylistMargin';
 import { fetchSearchPlaylistRanking } from '@reducer/Search/getSearchPlaylistRanking';
 import { AppDispatch, RootState } from '@store/index';
-import React, { useState, useEffect } from 'react';
+import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from "react-redux";
 
 const RankingPlaylist: React.FC = () => {
-  const [isLoading] = useState<boolean>(false);
 
   const dispatch = useDispatch<AppDispatch>();
   const searchPlaylistRankingData = useSelector((state: RootState) => state.searchPlaylistRanking.searchPlaylistRanking);
