@@ -9,13 +9,15 @@ import five from "@assets/Ranking/5.svg";
 import six from "@assets/Ranking/6.svg";
 import seven from "@assets/Ranking/7.svg";
 import eight from "@assets/Ranking/8.svg";
+import nine from "@assets/Ranking/9.svg";
+import ten from "@assets/Ranking/10.svg";
 
 
 export const RankingPlaylistComponents = ({ playlist, fontColor,rank }: { playlist: getPlaylistDTO, fontColor?: string, rank : number }) => {
   
   const navigate = useNavigate();
 
-  const rankedImage = [first,second,third,four,five,six,seven,eight];
+  const rankedImage = [first,second,third,four,five,six,seven,eight,nine,ten];
   
   const customMargin = useCustomPlaylistMargin();
 
