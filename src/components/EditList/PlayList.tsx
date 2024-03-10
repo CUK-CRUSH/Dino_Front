@@ -41,6 +41,11 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const memberId = useSelector((state: RootState) => state.memberId);
   const [playlists, setPlaylists] = useState<any[]>([]);
 
+  const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
+  const [selectedVideoIndex, setSelectedVideoIndex] = useState<number | null>(
+    null
+  );
+
   // 유저이름
   const { username: paramUsername } = useParams<{
     username: string | undefined;
@@ -121,6 +126,8 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       setPlaylists(playlist.data);
       setPlaylistName(playlist.data.playlistName);
       setMusicList(musicAPIData);
+      setSelectedVideoId(null);
+      setSelectedVideoIndex(null);
     } catch (error) {
       console.error(error);
       setHasError(true);
@@ -140,26 +147,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     uploadImage,
   });
 
-  // useEffect(() => {
-  //   setPlaylistId(Number(playlistId));
-  //   setToken(cookies.accessToken);
-
-  //   const fetchAndSetPlaylist = async () => {
-  //     await fetchPlaylist();
-  //     const savedPlaylistName = sessionStorage.getItem("playlistName");
-  //     if (savedPlaylistName) {
-  //       setPlaylistName(savedPlaylistName);
-  //     }
-  //   };
-  //   const savedImage = sessionStorage.getItem("uploadImage");
-  //   if (savedImage) {
-  //     setUploadImage(savedImage);
-  //   }
-
-  //   fetchAndSetPlaylist();
-  // }, [playlistId, fetchPlaylist, setPlaylistId, cookies.accessToken, setToken]);
   useEffect(() => {
-    // 페이지 이동 시 필요한 모든 데이터를 새로 불러옵니다.
     setPlaylistId(Number(playlistId));
     setToken(cookies.accessToken);
     fetchPlaylist();
@@ -212,7 +200,15 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         <LikeButton id={musicList.data?.length} />
         <VisitorButton id={musicList.data?.length} />
       </div>
-      <MusicDataRow isEditing={isEditing} fetchPlaylist={fetchPlaylist} />
+
+      <MusicDataRow
+        isEditing={isEditing}
+        fetchPlaylist={fetchPlaylist}
+        selectedVideoId={selectedVideoId}
+        setSelectedVideoId={setSelectedVideoId}
+        selectedVideoIndex={selectedVideoIndex}
+        setSelectedVideoIndex={setSelectedVideoIndex}
+      />
       {isEditing && musicList.data?.length + musicData.musics.length < 9 && (
         <PlusButton playlists={playlists} />
       )}
