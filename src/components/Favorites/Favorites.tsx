@@ -1,5 +1,5 @@
 import { getFavoritesPlayList } from "@api/playlist-controller/playlistControl";
-import { PlayList } from "@components/Admin/Button/PlayList";
+import { PlayList } from "@components/Admin/playlist/PlayList";
 import SkeltonPlaylist from "@components/Admin/SkeltonPlaylist";
 import InfiniteDiv from "@components/InfiniteDiv/InfiniteDiv";
 import OptionHeader from "@components/Layout/optionHeader";

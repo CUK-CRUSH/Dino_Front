@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { AddPlayList } from "@components/Admin/Button/AddPLayList";
+import { AddPlayList } from "@components/Admin/playlist/AddPLayList";
 import UserProfileBackground from "./UserProfileBackgroundImage";
 import UserProfileImage from "./UserProfileImage";
 import UserProfileInfo from "./UserProfileInfo";
-import { PlayList } from "@components/Admin/Button/PlayList";
+import { PlayList } from "@components/Admin/playlist/PlayList";
 import { getMemberUsername } from "@api/member-controller/memberController";
 import { getMemberDTO, getPlaylistDTO } from "types/Admin";
 import { useParams } from "react-router-dom";
