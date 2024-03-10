@@ -99,12 +99,11 @@ const AdminPage: React.FC = () => {
   const playlistData = useSelector(
     (state: RootState) => state.adminPlaylist.playlistData
   );
-
   const status = useSelector((state: RootState) => state.adminPlaylist.status);
-
+    console.log(playlistData)
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    if (status === "idle") {
+    if (status === "idle" &&(!playlistData || (playlistData.length > 0 && (playlistData[0].username !== username)) || playlistData.length === 0) ) {
       dispatch(fetchPlaylistData(username));
     }
   }, [username, dispatch]);
