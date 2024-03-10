@@ -64,7 +64,7 @@ export const MusicDataRow = ({
       setSelectedVideoId(videoId);
       setSelectedVideoIndex(index);
     },
-    [selectedVideoIndex]
+    [selectedVideoIndex, setSelectedVideoId, setSelectedVideoIndex]
   );
 
   useEffect(() => {
@@ -78,6 +78,7 @@ export const MusicDataRow = ({
     }, delay);
 
     return () => clearTimeout(timeoutId);
+    /* eslint-disable react-hooks/exhaustive-deps */
   }, [isEditing]);
 
   return (
