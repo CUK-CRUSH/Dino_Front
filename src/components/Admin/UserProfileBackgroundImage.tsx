@@ -14,7 +14,7 @@ const UserProfileBackground = ({ userBackgroundImage }: UserBackgroundImageDTO) 
     (state: RootState) => state.setProfile
   );
 
-  const src = initialProfileBackgroundImage || profileBackgroundImage || userBackgroundImage || setDefaultBackgroundImage;
+  const src = userBackgroundImage || profileBackgroundImage || initialProfileBackgroundImage || setDefaultBackgroundImage;
 
   return (
     <div className="-mb-[40px] h-[250px] w-full">
