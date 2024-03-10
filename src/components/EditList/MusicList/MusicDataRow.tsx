@@ -11,13 +11,20 @@ import SkeltonMusics from "@components/EditList/Skeleton/MusicSkeleton";
 export interface MusicDataDTO {
   isEditing: boolean;
   fetchPlaylist: () => void;
+  selectedVideoId: string | null;
+  selectedVideoIndex: number | null;
+  setSelectedVideoId: (id: string | null) => void;
+  setSelectedVideoIndex: (index: number | null) => void;
 }
 
-export const MusicDataRow = ({ isEditing, fetchPlaylist }: MusicDataDTO) => {
-  const [selectedVideoId, setSelectedVideoId] = useState<string | null>(null);
-  const [selectedVideoIndex, setSelectedVideoIndex] = useState<number | null>(
-    null
-  );
+export const MusicDataRow = ({
+  isEditing,
+  fetchPlaylist,
+  selectedVideoId,
+  selectedVideoIndex,
+  setSelectedVideoId,
+  setSelectedVideoIndex,
+}: MusicDataDTO) => {
   const musicList = useRecoilValue(musicListState);
   const [width, setWidth] = useState(0);
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -57,7 +64,7 @@ export const MusicDataRow = ({ isEditing, fetchPlaylist }: MusicDataDTO) => {
       setSelectedVideoId(videoId);
       setSelectedVideoIndex(index);
     },
-    [selectedVideoIndex]
+    [selectedVideoIndex, setSelectedVideoId, setSelectedVideoIndex]
   );
 
   useEffect(() => {
@@ -71,6 +78,7 @@ export const MusicDataRow = ({ isEditing, fetchPlaylist }: MusicDataDTO) => {
     }, delay);
 
     return () => clearTimeout(timeoutId);
+    /* eslint-disable react-hooks/exhaustive-deps */
   }, [isEditing]);
 
   return (
@@ -124,10 +132,10 @@ export const MusicDataRow = ({ isEditing, fetchPlaylist }: MusicDataDTO) => {
             musicData.musics &&
             musicData.musics.map((musicItem, index) => (
               <MusicDataRowContent
-                key={Date.now() + index} // 고유한 키를 생성합니다.
+                key={Date.now() + index}
                 musicData={{
                   ...musicItem,
-                  id: String(Date.now()), // 고유한 id를 부여합니다.
+                  id: String(Date.now()),
                 }}
                 order={1 + index + musicList?.data?.length}
                 isEditing={isEditing}
