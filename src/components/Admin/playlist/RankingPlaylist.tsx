@@ -1,16 +1,16 @@
 import { useNavigate } from "react-router-dom";
 import { getPlaylistDTO } from "types/Admin";
 import { useCustomPlaylistMargin } from "@hooks/useCustomMargin/useCustomPlaylistMargin";
-import first from "@assets/Ranking/1.svg";
-import second from "@assets/Ranking/2.svg";
-import third from "@assets/Ranking/3.svg";
-import four from "@assets/Ranking/4.svg";
-import five from "@assets/Ranking/5.svg";
-import six from "@assets/Ranking/6.svg";
-import seven from "@assets/Ranking/7.svg";
-import eight from "@assets/Ranking/8.svg";
-import nine from "@assets/Ranking/9.svg";
-import ten from "@assets/Ranking/10.svg";
+import first from "@assets/Ranking/playlist/1.svg";
+import second from "@assets/Ranking/playlist/2.svg";
+import third from "@assets/Ranking/playlist/3.svg";
+import four from "@assets/Ranking/playlist/4.svg";
+import five from "@assets/Ranking/playlist/5.svg";
+import six from "@assets/Ranking/playlist/6.svg";
+import seven from "@assets/Ranking/playlist/7.svg";
+import eight from "@assets/Ranking/playlist/8.svg";
+import nine from "@assets/Ranking/playlist/9.svg";
+import ten from "@assets/Ranking/playlist/10.svg";
 
 
 export const RankingPlaylistComponents = ({ playlist, fontColor,rank }: { playlist: getPlaylistDTO, fontColor?: string, rank : number }) => {
