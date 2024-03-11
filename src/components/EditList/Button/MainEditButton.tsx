@@ -24,15 +24,16 @@ export const MainEditButton = ({
 }: MainEditButtonProps) => {
   const playlistName = useRecoilValue(playlistNameState);
 
+  const location = useLocation();
   const navigate = useNavigate();
   const [modalOpen, setModalOpen] = useState(false);
   const { username: paramUsername } = useParams<{
     username: string | undefined;
   }>();
-  const { pathname } = useLocation();
+  const cameFromVisitor = location.state?.fromVisitor;
 
   const handleBack = () => {
-    if (pathname.endsWith("visitor")) {
+    if (cameFromVisitor) {
       navigate(`/user/${paramUsername}`);
     } else {
       navigate(-1);
