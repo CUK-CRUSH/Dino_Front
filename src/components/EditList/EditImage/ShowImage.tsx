@@ -1,7 +1,7 @@
 import ImageCropper from "@utils/ImageCrop/ImageCropper";
 import { ShowImageDTO } from "types/EditplayList";
 import { AiOutlinePicture } from "react-icons/ai";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { RootState } from "@store/index";
 import "@styles/EditList/playList.css";
 import { deletePlayListImage } from "@api/playlist-controller/playlistControl";
@@ -13,6 +13,7 @@ import { Img } from "react-image";
 import Spinner from "@assets/Spinner/Spinner.svg";
 import { useRecoilValue } from "recoil";
 import { tokenState } from "@atoms/Playlist/token";
+import { updateImage } from "@reducer/musicadd";
 
 const ShowImage = ({
   aspectRatio,
@@ -20,7 +21,9 @@ const ShowImage = ({
   playlists,
   isEditing,
   fetchPlaylist,
+  setUploadImage,
 }: ShowImageDTO) => {
+  const dispatch = useDispatch();
   const isLoading = useSelector(
     (state: RootState) => state.selectedFile.isLoading
   );
@@ -50,11 +53,15 @@ const ShowImage = ({
       confirmButtonText: "취소",
       cancelButtonText: "삭제",
     });
+    sessionStorage.removeItem("uploadImage");
+    setUploadImage(null);
 
     if (result.dismiss === Swal.DismissReason.cancel) {
       try {
         await deletePlayListImage(playlists.id, token);
         fetchPlaylist();
+
+        dispatch(updateImage(null));
       } catch (error) {
         console.log(error);
         swalButton.fire({
@@ -63,7 +70,6 @@ const ShowImage = ({
       }
     }
   }, [playlists, token, swalButton, fetchPlaylist]);
-  // console.log(reduxImage);
 
   const renderImage = (imageSrc: string) => (
     <Img

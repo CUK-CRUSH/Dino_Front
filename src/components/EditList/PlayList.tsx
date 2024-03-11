@@ -190,6 +190,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       <ShowImage
         aspectRatio={1}
         onCrop={handleUploadImage}
+        setUploadImage={setUploadImage}
         playlists={playlists}
         isEditing={isEditing}
         fetchPlaylist={fetchPlaylist}
