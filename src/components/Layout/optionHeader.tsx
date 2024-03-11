@@ -1,7 +1,8 @@
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { FaAngleLeft } from "react-icons/fa6";
 import { RootState } from "@store/index";
-import { useSelector } from "react-redux";
+import { useSelector, useDispatch } from "react-redux";
+import { setToast } from "@reducer/Toast/toast";
 
 interface OptionHeaderProps {
   text?: string;
@@ -18,6 +19,9 @@ const OptionHeader: React.FC<OptionHeaderProps> = ({
   const navigate = useNavigate();
   const location = useLocation();
 
+  const dispatch = useDispatch();
+  // 토스트
+  const { toast } = useSelector((state: RootState) => state.toast);
   const { username } = useSelector((state: RootState) => state.userProfile);
   const { username: paramUsername } = useParams<{
     username: string | undefined;
@@ -26,6 +30,9 @@ const OptionHeader: React.FC<OptionHeaderProps> = ({
   const { playlistId } = useParams<{ playlistId: string }>();
 
   const handleBack = () => {
+    if(toast){
+      dispatch(setToast(''));
+    }
     // 검색창에섳 최근검색어 열고닫기
     if (openSearchRecently) {
       setOpenSearchRecently(false);
@@ -36,6 +43,7 @@ const OptionHeader: React.FC<OptionHeaderProps> = ({
     if(location.pathname !== '/env'){
       navigate(-1);
     }
+
 
     if (username) {
       navigate(`/user/${username}`);

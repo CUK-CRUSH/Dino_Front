@@ -29,6 +29,7 @@ import VisitorButton from "@components/Visitor/VisitorButton";
 import { useDispatch } from "react-redux";
 import { setMemberId } from "@reducer/editPlayList/isMemberId";
 import useImageCompress from "@hooks/useImageCompress";
+import { useTranslation } from "react-i18next";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
   const dispatch = useDispatch();
@@ -68,6 +69,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const [cookies] = useCookies(["accessToken"]);
 
   const setToken = useSetRecoilState(tokenState);
+  const { t } = useTranslation("AddPlayList");
 
   // session 꼼수 사용
   const { compressImage } = useImageCompress();
@@ -169,6 +171,11 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
 
   return (
     <div className="h-full w-full scrollbar-hide overflow-scroll flex flex-col bg-black text-white font-medium leading-[18px]">
+      {/* 플리 추가 토스트 */}
+      {toast === "add" && (
+        <ToastComponent background="white" text={t("newplaylist")} />
+      )}
+
       {!isEditing && (
         <MainEditButton
           memberId={memberId}

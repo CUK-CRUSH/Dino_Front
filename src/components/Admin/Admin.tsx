@@ -147,12 +147,6 @@ const AdminPage: React.FC = () => {
         userBackgroundImage={userData?.backgroundImageUrl}
       />
 
-      {/* 플레이리스트 생성 성공 토스트 */}
-
-      {toast === "add" && (
-        <ToastComponent background="white" text={t("newplaylist")} />
-      )}
-
       {/* 로그인 성공 토스트 */}
 
       {toast === "login" && (
@@ -166,7 +160,6 @@ const AdminPage: React.FC = () => {
       )}
 
       {/* 검은화면 */}
-      {/*   */}
       <main
         className={`w-full h-[calc(100%)] absolute flex-grid bg-neutral-900 z-10 rounded-tl-[50px] rounded-tr-[50px] `}
       >
