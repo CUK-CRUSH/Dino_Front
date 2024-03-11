@@ -3,7 +3,7 @@ import { useNavigate, useParams } from "react-router-dom";
 import { Navigation, Mousewheel } from "swiper/modules";
 import { getRecommendation } from "@api/Recommendation/recommendationControl";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import Noimage from "@assets/noimage.jpg";
+import defaultImage from "@assets/PlayListImage/default.svg";
 import { useCookies } from "react-cookie";
 import { Swiper, SwiperSlide } from "swiper/react";
 import "swiper/css";
@@ -71,7 +71,7 @@ const Recommendation = () => {
                   <div>
                     <img
                       className="w-[5.5rem] h-[5.5rem] cursor-pointer rounded-lg object-cover"
-                      src={item.thumbnailUrl ? item.thumbnailUrl : Noimage}
+                      src={item.thumbnailUrl ? item.thumbnailUrl : defaultImage}
                       alt={item.playlistName}
                     />
                     <div
