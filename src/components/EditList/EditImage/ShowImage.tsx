@@ -69,6 +69,7 @@ const ShowImage = ({
         });
       }
     }
+    /* eslint-disable react-hooks/exhaustive-deps */
   }, [playlists, token, swalButton, fetchPlaylist]);
 
   const renderImage = (imageSrc: string) => (
