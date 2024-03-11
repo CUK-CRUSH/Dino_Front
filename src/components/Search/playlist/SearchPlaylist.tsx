@@ -1,6 +1,6 @@
 import React from "react";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
-import Noimage from "@assets/noimage.jpg";
+import defaultImage from "@assets/PlayListImage/default.svg";
 import { Swiper, SwiperSlide } from 'swiper/react';
 import 'swiper/css';
 import 'swiper/css/pagination';
@@ -39,7 +39,7 @@ const SearchPlaylist: React.FC<SearchPlaylistProps> = ({ searchResults, query })
             <div className="flex flex-col justify-center items-center w-[105px] cursor-pointer" key={playlist.id} onClick={() => handleNavigate(playlist.username, playlist.id)}>
               <img
                 className="cursor-pointer w-[90px] h-[90px] rounded-lg object-cover "
-                src={playlist.thumbnailUrl ? playlist.thumbnailUrl : Noimage} // default.jpg는 기본 이미지 경로입니다.
+                src={playlist.thumbnailUrl ? playlist.thumbnailUrl : defaultImage} // default.jpg는 기본 이미지 경로입니다.
                 alt="썸네일"
               />
               <div className="w-[100px] text-left whitespace-normal break-words">

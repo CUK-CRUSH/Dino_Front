@@ -11,6 +11,7 @@ import seven from "@assets/Ranking/playlist/7.svg";
 import eight from "@assets/Ranking/playlist/8.svg";
 import nine from "@assets/Ranking/playlist/9.svg";
 import ten from "@assets/Ranking/playlist/10.svg";
+import defaultImage from "@assets/PlayListImage/default.svg";
 
 
 export const RankingPlaylistComponents = ({ playlist, fontColor,rank }: { playlist: getPlaylistDTO, fontColor?: string, rank : number }) => {
@@ -41,7 +42,7 @@ export const RankingPlaylistComponents = ({ playlist, fontColor,rank }: { playli
               <img className="mx-auto w-[150px] h-full rounded-[13px]" src={playlist.thumbnailUrl} alt='x' />
               
             ) : (
-              <div className="mx-auto w-[150px] h-full rounded-[13px] bg-[#2e2e2e]" />
+              <img className="mx-auto w-[150px] h-full rounded-[13px]" src={defaultImage} alt='x' />
             )}
             <div className="w-full min-h-[50px] text-left text-zinc-300 font-medium absolute leading-6 whitespace-normal break-words">
               <span className={`text-[15px] text-[${fontColor}] align-top`}>{playlist.playlistName}</span>

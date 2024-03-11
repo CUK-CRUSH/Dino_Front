@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getPlaylistDTO } from "types/Admin";
 import { useCustomPlaylistMargin } from "@hooks/useCustomMargin/useCustomPlaylistMargin";
-
+import defaultImage from "@assets/PlayListImage/default.svg";
 
 export const PlayList = ({ playlist, fontColor, visible }: { playlist: getPlaylistDTO, fontColor?: string, visible?: boolean }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
@@ -35,7 +35,7 @@ export const PlayList = ({ playlist, fontColor, visible }: { playlist: getPlayli
             {playlist.thumbnailUrl ? (
               <img className="mx-auto w-[150px] h-full rounded-[13px]" src={playlist.thumbnailUrl} alt='x' />
             ) : (
-              <div className="mx-auto w-[150px] h-full rounded-[13px] bg-[#2e2e2e]" />
+              <img className="mx-auto w-[150px] h-full rounded-[13px]" src={defaultImage} alt='x' />
             )}
             <div className="w-full min-h-[50px] text-left text-zinc-300 font-medium absolute leading-6 whitespace-normal break-words">
               <span className={`text-[15px] text-[${fontColor}] align-top`}>{playlist.playlistName}</span>
