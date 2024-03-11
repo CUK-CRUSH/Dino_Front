@@ -173,7 +173,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     <div className="h-full w-full scrollbar-hide overflow-scroll flex flex-col bg-black text-white font-medium leading-[18px]">
       {/* 플리 추가 토스트 */}
       {toast === "add" && (
-        <ToastComponent background="white" text={t("newplaylist")} />
+        <ToastComponent background="white" text={t("addplaylist")} />
       )}
 
       {!isEditing && (
