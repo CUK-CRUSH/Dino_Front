@@ -2,10 +2,14 @@ import { playlistNameState } from "@atoms/Playlist/playlistName";
 import useCompareToken from "@hooks/useCompareToken/useCompareToken";
 import CustomModal from "@utils/Modal/Modal";
 import { useCallback, useState } from "react";
-import { FaAngleLeft, FaEllipsisVertical } from "react-icons/fa6";
+import { FaAngleLeft } from "react-icons/fa6";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
+import EditMusicIcon from "@assets/Header/EditMusic.svg";
 import Home from "@assets/Home.svg";
+import { RootState } from "@store/index";
+import { useSelector, useDispatch } from "react-redux";
+import { setToast } from "@reducer/Toast/toast";
 
 type MainEditButtonProps = {
   playlists: any[];
@@ -26,6 +30,10 @@ export const MainEditButton = ({
 
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  // 토스트
+  const { toast } = useSelector((state: RootState) => state.toast);
+
   const [modalOpen, setModalOpen] = useState(false);
   const { username: paramUsername } = useParams<{
     username: string | undefined;
@@ -33,6 +41,10 @@ export const MainEditButton = ({
   const cameFromVisitor = location.state?.fromVisitor;
 
   const handleBack = () => {
+    if(toast){
+      dispatch(setToast(''));
+    }
+    
     if (cameFromVisitor) {
       navigate(`/user/${paramUsername}`);
     } else {
@@ -67,7 +79,10 @@ export const MainEditButton = ({
         <FaAngleLeft size={24} />
       </button>
       <div className="flex justify-center w-full mr-3">
-        <div onClick={handleUserHome} className="flex flex-row cursor-pointer">
+        <div
+          onClick={handleUserHome}
+          className="flex flex-row cursor-pointer ml-3"
+        >
           <img className="mr-1" src={Home} alt="home" />
           <p className="text-center">{paramUsername}</p>
         </div>
@@ -78,7 +93,7 @@ export const MainEditButton = ({
           onClick={handleModalToggle}
           className="text-white"
         >
-          <FaEllipsisVertical size={24} />
+          <img src={EditMusicIcon} alt="edit" />
         </button>
       )}
 

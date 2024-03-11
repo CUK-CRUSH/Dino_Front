@@ -3,7 +3,6 @@
 import { setToast } from "@reducer/Toast/toast";
 import React, { useEffect } from "react";
 import { useDispatch } from "react-redux";
-// import "react-toastify/dist/ReactToastify.css";
 
 interface ToastComponentDTO {
   background: string;
@@ -25,7 +24,7 @@ const ToastComponent: React.FC<ToastComponentDTO> = ({ background, text }) => {
     <>
       {background === "white" && (
         <div
-          className={`z-10 fixed left-1/2 transform -translate-x-1/2 bottom-10 p-4 text-[#000] bg-[#fff] rounded-2xl h-[40px] flex items-center`}
+          className={` z-10 fixed left-1/2 transform -translate-x-1/2 bottom-10 p-4 text-[#000] bg-[#fff] rounded-2xl h-[40px] flex items-center`}
         >
           <div className="text-center text-xs">{text}</div>
         </div>
