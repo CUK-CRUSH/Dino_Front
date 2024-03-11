@@ -6,6 +6,9 @@ import { FaAngleLeft, FaEllipsisVertical } from "react-icons/fa6";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import Home from "@assets/Home.svg";
+import { RootState } from "@store/index";
+import { useSelector, useDispatch } from "react-redux";
+import { setToast } from "@reducer/Toast/toast";
 
 type MainEditButtonProps = {
   playlists: any[];
@@ -26,6 +29,10 @@ export const MainEditButton = ({
 
   const location = useLocation();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
+  // 토스트
+  const { toast } = useSelector((state: RootState) => state.toast);
+
   const [modalOpen, setModalOpen] = useState(false);
   const { username: paramUsername } = useParams<{
     username: string | undefined;
@@ -33,6 +40,10 @@ export const MainEditButton = ({
   const cameFromVisitor = location.state?.fromVisitor;
 
   const handleBack = () => {
+    if(toast){
+      dispatch(setToast(''));
+    }
+    
     if (cameFromVisitor) {
       navigate(`/user/${paramUsername}`);
     } else {

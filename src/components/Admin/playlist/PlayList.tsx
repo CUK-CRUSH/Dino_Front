@@ -3,11 +3,12 @@ import { useNavigate } from "react-router-dom";
 import { getPlaylistDTO } from "types/Admin";
 import { useCustomPlaylistMargin } from "@hooks/useCustomMargin/useCustomPlaylistMargin";
 
+
 export const PlayList = ({ playlist, fontColor, visible }: { playlist: getPlaylistDTO, fontColor?: string, visible?: boolean }) => {
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   const navigate = useNavigate();
-
+  
   useEffect(() => {
     const delay = 500;
     const timeoutId = setTimeout(() => {
@@ -40,13 +41,10 @@ export const PlayList = ({ playlist, fontColor, visible }: { playlist: getPlayli
               <span className={`text-[15px] text-[${fontColor}] align-top`}>{playlist.playlistName}</span>
               <span className={`text-[3px] text-[${fontColor}] align-top ml-1`}>●</span>
               <span className={`text-[12px] text-[${fontColor}] align-top`}>  {playlist.numberOfMusics}곡 </span>
-
             </div>
           </div>
-         
         </div>
       )}
-      
     </>
   );
 };
