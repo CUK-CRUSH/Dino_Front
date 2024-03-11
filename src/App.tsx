@@ -7,6 +7,7 @@ import { store, persistor } from "@store/index";
 import "./styles/font.css";
 import { RecoilRoot } from "recoil";
 import PrivateRoute from '@components/PrivateRouter/PrivateRouter';
+import RankingMember from "@pages/Ranking/RankingMember";
 
 const Home = loadable(() => import("@pages/Home/home"));
 const LogIn = loadable(() => import("@pages/LogIn/login"));
@@ -102,6 +103,10 @@ function App() {
               <Route
                 path="/ranking/playlist"
                 element={<RankingPlaylist />}
+              />
+              <Route
+                path="/ranking/member"
+                element={<RankingMember /> }
               />
               <Route path="/search/member" element={<SearchMemberDetail />} />
 
