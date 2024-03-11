@@ -15,8 +15,8 @@ const UserProfileImage = ({ userProfileImage }: UserProfileImageDTO) => {
   );
     return (
     <div className="w-[75px] h-[75px] rounded-full overflow-hidden mx-auto -mt-[40px]">
-      {initialProfileImage ? (
-        <Img src={initialProfileImage} alt="User Profile" className="w-full object-cover" loader={<Loader />} />
+      {userProfileImage ? (
+        <Img src={userProfileImage} alt="User Profile" className="w-full object-cover" loader={<Loader />} />
       ) : 
       profileImage ? (
         <Img src={profileImage} alt="User Profile" className="w-full object-cover" loader={<Loader />}/>
@@ -27,9 +27,9 @@ const UserProfileImage = ({ userProfileImage }: UserProfileImageDTO) => {
           className="w-full object-cover"
           loader={<Loader />}
         />
-      ) : userProfileImage ? (
+      ) : initialProfileImage ? (
         <Img
-          src={userProfileImage}
+          src={initialProfileImage}
           alt="Default User Profile"
           className="w-full object-cover"
           loader={<Loader />}
