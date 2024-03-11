@@ -42,8 +42,8 @@ const OptionHeader: React.FC<OptionHeaderProps> = ({
     // env/~ 에서 뒤로가기
     if(location.pathname !== '/env'){
       navigate(-1);
+      return;
     }
-
 
     if (username) {
       navigate(`/user/${username}`);
