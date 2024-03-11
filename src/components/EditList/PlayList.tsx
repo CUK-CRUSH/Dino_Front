@@ -133,7 +133,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       setHasError(true);
     }
     /* eslint-disable react-hooks/exhaustive-deps */
-  }, [setMusicList, paramUsername, dispatch]);
+  }, [setMusicList, paramUsername, dispatch, playlistId]);
 
   const {
     handleEditClick,
