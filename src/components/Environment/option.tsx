@@ -176,37 +176,47 @@ const OptionComponents = () => {
 
       {!isLoading && (
         <div className="flex-crow h-full">
-          <main className="flex items-center justify-between p-4">
-            <div className="flex items-center">
+          <main className="relative flex py-4">
+            <div className="w-[15%] ml-[3%] flex justify-center items-center">
               <img
                 src={
                   profileImage
                     ? profileImage
                     : userData.profileImage
-                    ? userData.profileImage
-                    : userData.profileImageUrl
-                    ? userData.profileImageUrl
-                    : NoImage
+                      ? userData.profileImage
+                      : userData.profileImageUrl
+                        ? userData.profileImageUrl
+                        : NoImage
                 }
                 alt="프로필 이미지"
-                className="w-14 h-14 rounded-full"
+                className="w-full h-auto rounded-full"
               />
-              <div className="ml-4">
+            </div>
+
+            <div className="w-[55%] ml-[2%]">
+              <div className={` whitespace-normal break-words`}>
                 <h2 className="text-lg font-bold">
                   {username ? username : userData.username}
                 </h2>
+              </div>
+              <div className={` whitespace-normal break-words`}>
                 <p className="text-sm text-gray-500">
                   {introduction ? introduction : userData.introduction}
                 </p>
               </div>
+
             </div>
-            <button
-              onClick={openEditModal} /* 프로필 바로가기 기능 구현 */
-              className="px-4 py-2 text-sm bg-black text-white rounded-2xl"
-            >
-              프로필 수정
-            </button>
+
+            <div className="w-[20%] ml-[2%] mr-[3%] my-auto">
+              <button
+                onClick={openEditModal} /* 프로필 바로가기 기능 구현 */
+                className="w-[100%] h-[24px] text-sm bg-black text-white rounded-2xl"
+              >
+                <span className="text-xs">프로필 수정</span>
+              </button>
+            </div>
           </main>
+
           <div className="h-[14px] bg-[#F8F8F8]" />
           <main className="flex items-center justify-center text-[16px] font-bold flex-row gap-x-9 my-6">
             <div className="flex flex-col items-center">

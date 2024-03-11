@@ -35,6 +35,7 @@ export interface ShowImageDTO {
   playlists: any;
   isEditing: boolean;
   fetchPlaylist: () => void;
+  setUploadImage: (image: string | null) => void;
 }
 
 export interface EditModalDTO {

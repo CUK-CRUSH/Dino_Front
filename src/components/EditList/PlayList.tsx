@@ -133,7 +133,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       setHasError(true);
     }
     /* eslint-disable react-hooks/exhaustive-deps */
-  }, [setMusicList, paramUsername, dispatch]);
+  }, [setMusicList, paramUsername, dispatch, playlistId]);
 
   const {
     handleEditClick,
@@ -190,6 +190,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       <ShowImage
         aspectRatio={1}
         onCrop={handleUploadImage}
+        setUploadImage={setUploadImage}
         playlists={playlists}
         isEditing={isEditing}
         fetchPlaylist={fetchPlaylist}

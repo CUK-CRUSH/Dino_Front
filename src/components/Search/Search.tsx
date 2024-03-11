@@ -49,11 +49,11 @@ const SearchPage: React.FC = () => {
 
   /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
-    if (status === "idle") {
-      if(!searchPlaylistRankingData.length){
+    if (status === "idle" ) {
+      if (!searchPlaylistRankingData.length) {
         dispatch(fetchSearchMemberRanking());
       }
-      if(!searchMemberRankingData.length){
+      if (!searchMemberRankingData.length) {
         dispatch(fetchSearchPlaylistRanking());
       }
     }
@@ -70,7 +70,7 @@ const SearchPage: React.FC = () => {
     }
 
   }, [location.search, query, dispatch]);
-  
+
   return (
     <div className="w-full h-full relative bg-white flex flex-col justify-start scrollbar-hide overflow-scroll font-PretendardMedium">
       <OptionHeader text="검색" openSearchRecently={openSearchRecently} setOpenSearchRecently={setOpenSearchRecently} />
@@ -149,11 +149,18 @@ const SearchPage: React.FC = () => {
           )
           }
 
-          {searchMembersData && searchMembersData.length > 5 ?
-            <Link to={`/search/member?query=${query}`}>
-              <div className="flex justify-center">더보기</div>
-            </Link>
-            : <></>
+          {
+            !query?.trim() ? (
+              <Link to={`/ranking/member`}>
+                  <div className="flex justify-center">더보기</div>
+              </Link>
+            ) : (
+              searchMembersData && searchMembersData.length > 5 ? (
+                <Link to={`/search/member?query=${query}`}>
+                  <div className="flex justify-center">더보기</div>
+                </Link>
+              ) : null
+            )
           }
         </main>
       }

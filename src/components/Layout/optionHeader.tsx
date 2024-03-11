@@ -1,4 +1,4 @@
-import { useNavigate, useParams } from "react-router-dom";
+import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { FaAngleLeft } from "react-icons/fa6";
 import { RootState } from "@store/index";
 import { useSelector } from "react-redux";
@@ -16,22 +16,33 @@ const OptionHeader: React.FC<OptionHeaderProps> = ({
   setOpenSearchRecently,
 }) => {
   const navigate = useNavigate();
+  const location = useLocation();
+
   const { username } = useSelector((state: RootState) => state.userProfile);
   const { username: paramUsername } = useParams<{
     username: string | undefined;
   }>();
+
   const { playlistId } = useParams<{ playlistId: string }>();
 
   const handleBack = () => {
+    // 검색창에섳 최근검색어 열고닫기
     if (openSearchRecently) {
       setOpenSearchRecently(false);
       return;
     }
 
+    // env/~ 에서 뒤로가기
+    if(location.pathname !== '/env'){
+      navigate(-1);
+    }
+
     if (username) {
       navigate(`/user/${username}`);
     } else if (paramUsername) {
-      navigate(`/user/${paramUsername}/${playlistId}`);
+      navigate(`/user/${paramUsername}/${playlistId}`, {
+        state: { fromVisitor: true },
+      });
     } else {
       navigate(-1);
     }
