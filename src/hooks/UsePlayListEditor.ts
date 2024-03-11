@@ -24,7 +24,6 @@ import {
 import Swal from "sweetalert2";
 import "@styles/EditList/playList.css";
 import { useRecoilValue } from "recoil";
-import { playlistNameState } from "@atoms/Playlist/playlistName";
 import { userNameState } from "@atoms/Playlist/username";
 import { playlistIdState } from "@atoms/Playlist/playlistId";
 import { tokenState } from "@atoms/Playlist/token";
@@ -54,7 +53,6 @@ export const UsePlayListEditor = ({
   const isLoading = useSelector(
     (state: RootState) => state.selectedFile.isLoading
   );
-  const playlistName = useRecoilValue(playlistNameState);
 
   const swalButton = Swal.mixin({
     customClass: {
@@ -111,6 +109,7 @@ export const UsePlayListEditor = ({
       }
 
       // 비동기 함수들이 완료될 때까지 기다립니다.
+      const playlistName = sessionStorage.getItem("playlistName");
       if (playlistName) {
         await putPlayList(id, playlistName, null, token);
       }

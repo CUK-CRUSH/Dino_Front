@@ -48,7 +48,9 @@ const OptionHeader: React.FC<OptionHeaderProps> = ({
     if (username) {
       navigate(`/user/${username}`);
     } else if (paramUsername) {
-      navigate(`/user/${paramUsername}/${playlistId}`);
+      navigate(`/user/${paramUsername}/${playlistId}`, {
+        state: { fromVisitor: true },
+      });
     } else {
       navigate(-1);
     }
