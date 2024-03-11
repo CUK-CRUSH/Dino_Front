@@ -273,7 +273,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
     if (nicknameValidation) {
       const code = await updateMember(data);
-
+      console.log(code)
       if (code && code.status === 200) {
         handleImageUpdates({
           uploadUserProfileImage: uploadUserProfileImage,
@@ -282,6 +282,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
           deleteBackgroundImage: deleteBackgroundImage,
         });
         dispatch(setToast("profile"));
+        localStorage.setItem("homeUrl", code.data.username); // Set refreshToken in local storage
 
       }
 
