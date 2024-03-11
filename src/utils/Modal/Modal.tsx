@@ -26,7 +26,7 @@ const customModalStyles: ReactModal.Styles = {
     alignItems: "center",
     left: "58%",
     borderRadius: "10px",
-    backgroundColor: "rgba(255, 255, 255, 0.5)",
+    backgroundColor: "rgba(255, 255, 255)",
     overflow: "hidden",
   },
 };
