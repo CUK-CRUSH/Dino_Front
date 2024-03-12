@@ -173,7 +173,7 @@ const AdminPage: React.FC = () => {
             onClick={handleShare}
             src={ShareImg}
             alt="share"
-            className="w-6 h-6 absolute top-4 right-5 cursor-pointer"
+            className="w-6 h-6 absolute top-6 right-9 cursor-pointer"
           />
         )}
 
