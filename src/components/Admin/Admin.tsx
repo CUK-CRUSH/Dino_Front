@@ -142,7 +142,7 @@ const AdminPage: React.FC = () => {
 
   return (
     <div className="h-full scrollbar-hide overflow-scroll relative ">
-      {/* <Tutorial username={userData?.username} /> */}
+      <Tutorial username={userData?.username} />
       <Header id={userData.id} authority={authority} />
 
       <UserProfileBackground
