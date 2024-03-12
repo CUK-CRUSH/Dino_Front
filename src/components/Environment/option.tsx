@@ -2,7 +2,6 @@ import { getMemberMe } from "@api/member-controller/memberController";
 import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { getMemberDTO } from "types/Admin";
-import NoImage from "@assets/noimage.jpg";
 import AdminEditModal from "@pages/Admin/AdminEditModal";
 import "@styles/EditList/playList.css";
 import { RootState } from "@store/index";
