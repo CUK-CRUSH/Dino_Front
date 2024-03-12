@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { FaChevronRight } from "react-icons/fa";
 import TutorialCharacter from "@assets/Tutorial/Character.svg";
-import One from "@assets/Tutorial/1.png";
-import Two from "@assets/Tutorial/2.png";
-import Three from "@assets/Tutorial/3.png";
-import Four from "@assets/Tutorial/4.png";
-import Five from "@assets/Tutorial/5.png";
-import Six from "@assets/Tutorial/6.png";
+import One from "@assets/Tutorial/1.svg";
+import Two from "@assets/Tutorial/2.svg";
+import Three from "@assets/Tutorial/3.svg";
+import Four from "@assets/Tutorial/4.svg";
+import Five from "@assets/Tutorial/5.svg";
+import Six from "@assets/Tutorial/6.svg";
 import { useCookies } from "react-cookie";
 
 interface TutorialProps {
@@ -80,7 +80,7 @@ const Tutorial: React.FC<TutorialProps> = ({ username }) => {
             <img
               src={images[imageIndex - 1]}
               alt={`Step ${imageIndex}`}
-              className="h-screen object-cover"
+              className="h-full object-cover"
             />
             {/* 건너뛰기 버튼 */}
             <div className="absolute bottom-2 left-4 smartPhone12:bottom-8 smartPhoneXs:bottom-4 smartPhone:bottom-32">
