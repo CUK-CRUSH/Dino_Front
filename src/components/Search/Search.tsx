@@ -128,7 +128,7 @@ const SearchPage: React.FC = () => {
 
           {!query?.trim() ? (
             <SearchMemberList
-              searchResults={searchMemberRankingData.slice(0, 10)}
+              searchResults={searchMemberRankingData.slice(0,10)}
               username_fontSize='18px'
               introduction_fontSize='15px'
               size='60px'
