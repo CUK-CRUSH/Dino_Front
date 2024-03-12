@@ -22,6 +22,7 @@ import { useTranslation } from "react-i18next";
 import { fetchPlaylistData } from "@reducer/Admin/adminPlaylist";
 import { useSetRecoilState } from "recoil";
 import { adminuserNameState } from "@atoms/Admin/adminUsername";
+import Tutorial from "@components/Tutorial/Tutorial";
 
 const AdminPage: React.FC = () => {
   const getDefaultMember = (): getMemberDTO => ({
@@ -141,6 +142,7 @@ const AdminPage: React.FC = () => {
 
   return (
     <div className="h-full scrollbar-hide overflow-scroll relative ">
+      <Tutorial username={userData?.username} />
       <Header id={userData.id} authority={authority} />
 
       <UserProfileBackground
