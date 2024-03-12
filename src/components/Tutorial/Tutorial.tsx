@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { FaChevronRight } from "react-icons/fa";
 import TutorialCharacter from "@assets/Tutorial/Character.svg";
-import One from "@assets/Tutorial/1.png";
-import Two from "@assets/Tutorial/2.png";
-import Three from "@assets/Tutorial/3.png";
-import Four from "@assets/Tutorial/4.png";
-import Five from "@assets/Tutorial/5.png";
-import Six from "@assets/Tutorial/6.png";
+import One from "@assets/Tutorial/1.svg";
+import Two from "@assets/Tutorial/2.svg";
+import Three from "@assets/Tutorial/3.svg";
+import Four from "@assets/Tutorial/4.svg";
+import Five from "@assets/Tutorial/5.svg";
+import Six from "@assets/Tutorial/6.svg";
 import { useCookies } from "react-cookie";
+import useWindowSizeCustom from "@hooks/useCustomMargin/useWindowSizeCustom";
 
 interface TutorialProps {
   username: string;
@@ -32,6 +33,8 @@ const Tutorial: React.FC<TutorialProps> = ({ username }) => {
     setCookie("tutorial", "true", { path: "/" });
     setIsVisible(false);
   };
+
+  const { windowSize } = useWindowSizeCustom();
 
   useEffect(() => {
     if (cookies.tutorial === true || !accessToken) {
@@ -76,29 +79,33 @@ const Tutorial: React.FC<TutorialProps> = ({ username }) => {
         </div>
       ) : imageIndex <= images.length ? (
         <div className="w-full h-screen flex justify-center items-center">
-          <div className="relative max-w-[390px] h-screen">
+          <div className="relative h-screen">
             <img
               src={images[imageIndex - 1]}
               alt={`Step ${imageIndex}`}
-              className="w-full h-screen object-cover"
+              className={`w-screen h-[${windowSize.height}] object-cover`}
             />
             {/* 건너뛰기 버튼 */}
-            <div className="absolute bottom-2 left-4 smartPhoneXs:bottom-1 smartPhoneXs:left-2 smartPhone12:bottom-2 smartPhone12:left-3 smartPhone:bottom-3 smartPhone:left-4">
+            <div className="absolute bottom-2 left-4 smartPhone12:bottom-8 smartPhoneXs:bottom-4 smartPhone:bottom-32">
               <button
                 onClick={handleClose}
-                className="flex items-center justify-center flex-row w-[120px] h-[40px] bg-black text-white border-2 border-white font-bold text-[14px] rounded-full px-4 smartPhoneXs:w-[110px] smartPhone12:w-[115px] smartPhone:w-[120px]"
+                className="flex items-center justify-center flex-row  w-[120px] h-[40px] bg-black text-white border-2 border-white font-bold text-[14px] rounded-full px-4 smartPhoneXs:w-[100px] smartPhone12:w-[115px] smartPhone:w-[120px]"
               >
-                <span className="mr-2">건너뛰기</span>
+                <span className="mr-2  smartPhone:text-[12px] smartPhone12:text-[13px] smartPhoneXs:text-[8px]">
+                  건너뛰기
+                </span>
                 <FaChevronRight color="white" size={26} />
               </button>
             </div>
             {/* 다음으로 넘기기 버튼 */}
-            <div className="absolute bottom-2 right-4 smartPhoneXs:bottom-1 smartPhoneXs:right-2 smartPhone12:bottom-2 smartPhone12:right-3 smartPhone:bottom-3 smartPhone:right-4">
+            <div className="absolute bottom-2 right-4 smartPhone12:bottom-8 smartPhoneXs:bottom-4 smartPhone:bottom-32">
               <button
                 onClick={handleNext}
-                className="flex items-center justify-center flex-row w-[200px] h-[40px] bg-white font-bold text-[14px] text-black rounded-full px-4 smartPhoneXs:w-[180px] smartPhone12:w-[190px] smartPhone:w-[200px]"
+                className="flex items-center justify-center flex-row  w-[200px] h-[40px] bg-white font-bold text-[14px] text-black rounded-full px-4 smartPhoneXs:w-[150px] smartPhone12:w-[190px] smartPhone:w-[200px]"
               >
-                <span className="mr-2">탭해서 다음으로 넘기기</span>
+                <span className="mr-2  smartPhone:text-[12px] smartPhone12:text-[13px] smartPhoneXs:text-[8px]">
+                  탭해서 다음으로 넘기기
+                </span>
                 <FaChevronRight color="black" size={26} />
               </button>
             </div>
