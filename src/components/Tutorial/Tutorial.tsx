@@ -34,10 +34,12 @@ const Tutorial: React.FC<TutorialProps> = ({ username }) => {
   };
 
   useEffect(() => {
-    if (!accessToken || cookies.tutorial === "true") {
+    if (cookies.tutorial === true || !accessToken) {
       setIsVisible(false);
+    } else {
+      setIsVisible(true);
     }
-  }, [cookies, accessToken]);
+  }, [cookies, accessToken]); // Dependencies array ensures effect runs when either value changes.
 
   if (!isVisible) return null;
 
