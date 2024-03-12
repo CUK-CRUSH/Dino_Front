@@ -12,7 +12,7 @@ export const getPlayList = async (username: string | undefined) => {
       return;
     }
   } catch (error) {
-    console.log(error);
+    window.location.replace('/404')
     throw error;
   }
 };
