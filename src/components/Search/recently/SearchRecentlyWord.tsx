@@ -26,7 +26,7 @@ const SearchRecentlyWord: React.FC<setOpenSearchRecentlyDTO> = ({ setOpenSearchR
   }
 
   const localSearchTerms = localStorage.getItem(`searchTerms_${userId}`);
-
+  
   const navigate = useNavigate();
 
   useEffect(() => {
