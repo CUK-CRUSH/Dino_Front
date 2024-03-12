@@ -8,6 +8,7 @@ import Four from "@assets/Tutorial/4.svg";
 import Five from "@assets/Tutorial/5.svg";
 import Six from "@assets/Tutorial/6.svg";
 import { useCookies } from "react-cookie";
+import useWindowSizeCustom from "@hooks/useCustomMargin/useWindowSizeCustom";
 
 interface TutorialProps {
   username: string;
@@ -32,6 +33,8 @@ const Tutorial: React.FC<TutorialProps> = ({ username }) => {
     setCookie("tutorial", "true", { path: "/" });
     setIsVisible(false);
   };
+
+  const { windowSize } = useWindowSizeCustom();
 
   useEffect(() => {
     if (cookies.tutorial === true || !accessToken) {
@@ -80,7 +83,7 @@ const Tutorial: React.FC<TutorialProps> = ({ username }) => {
             <img
               src={images[imageIndex - 1]}
               alt={`Step ${imageIndex}`}
-              className="h-full object-cover"
+              className={`w-screen h-[${windowSize.height}] object-cover`}
             />
             {/* 건너뛰기 버튼 */}
             <div className="absolute bottom-2 left-4 smartPhone12:bottom-8 smartPhoneXs:bottom-4 smartPhone:bottom-32">
