@@ -104,12 +104,18 @@ const OptionComponents = () => {
       });
   }, [navigate, removeCookie, swalButton]);
 
-  const handleNotion = () => {
+  const handleNotice = () => {
     window.open(
       "https://myist-info.notion.site/My-List-a0198135fd564a7bb73de538f92e8153"
     );
   };
 
+  const handleHowToUse = () => {
+    window.open(
+      "https://myist-info.notion.site/MyList-c0677d15f0ef4e979c47acca15258391?pvs=4"
+    );
+  };
+  
   const handleFavorites = () => {
     navigate("./favorites", {});
   };
@@ -264,12 +270,16 @@ const OptionComponents = () => {
           <div className="h-[14px] bg-[#F8F8F8]" />
           <main className="ml-3 text-[17px] font-semibold space-y-5 my-5">
             <div>
-              <button onClick={handleNotion}>공지사항</button>
+              <button onClick={handleNotice}>공지사항</button>
+            </div>
+            <div>
+              <button onClick={handleHowToUse}>사용방법</button>
             </div>
             <div>
               <button onClick={handleUnprepared}>신고</button>
             </div>
           </main>
+          
         </div>
       )}
       {!isLoading && <Footer bgColor="white" />}
