@@ -17,6 +17,8 @@ const Tutorial: React.FC<TutorialProps> = ({ username }) => {
   const [isVisible, setIsVisible] = useState(true);
 
   const [cookies, setCookie] = useCookies(["tutorial"]);
+  const [token] = useCookies(["accessToken"]);
+  const accessToken = token.accessToken;
   const [imageIndex, setImageIndex] = useState(0);
   const images = [One, Two, Three, Four, Five, Six];
 
@@ -32,10 +34,10 @@ const Tutorial: React.FC<TutorialProps> = ({ username }) => {
   };
 
   useEffect(() => {
-    if (cookies.tutorial) {
+    if (!accessToken || cookies.tutorial === "true") {
       setIsVisible(false);
     }
-  }, [cookies]);
+  }, [cookies, accessToken]);
 
   if (!isVisible) return null;
 
@@ -71,29 +73,28 @@ const Tutorial: React.FC<TutorialProps> = ({ username }) => {
           </div>
         </div>
       ) : imageIndex <= images.length ? (
-        // 이미지가 있는 각 화면에 대한 JSX 부분
-        <div className="w-full h-full flex justify-center items-center">
-          <div className="relative max-w-[390px] h-full">
+        <div className="w-full h-screen flex justify-center items-center">
+          <div className="relative max-w-[390px] h-screen">
             <img
               src={images[imageIndex - 1]}
               alt={`Step ${imageIndex}`}
-              className="w-full h-full object-cover"
+              className="w-full h-screen object-cover"
             />
             {/* 건너뛰기 버튼 */}
-            <div className="absolute bottom-2 left-4 ">
+            <div className="absolute bottom-2 left-4 smartPhoneXs:bottom-1 smartPhoneXs:left-2 smartPhone12:bottom-2 smartPhone12:left-3 smartPhone:bottom-3 smartPhone:left-4">
               <button
                 onClick={handleClose}
-                className="flex items-center justify-center flex-row w-[120px] h-[40px] bg-black text-white border-2 border-white font-bold text-[14px]  rounded-full px-4"
+                className="flex items-center justify-center flex-row w-[120px] h-[40px] bg-black text-white border-2 border-white font-bold text-[14px] rounded-full px-4 smartPhoneXs:w-[110px] smartPhone12:w-[115px] smartPhone:w-[120px]"
               >
                 <span className="mr-2">건너뛰기</span>
                 <FaChevronRight color="white" size={26} />
               </button>
             </div>
             {/* 다음으로 넘기기 버튼 */}
-            <div className="absolute bottom-2 right-4">
+            <div className="absolute bottom-2 right-4 smartPhoneXs:bottom-1 smartPhoneXs:right-2 smartPhone12:bottom-2 smartPhone12:right-3 smartPhone:bottom-3 smartPhone:right-4">
               <button
                 onClick={handleNext}
-                className="flex items-center justify-center flex-row w-[200px] h-[40px] bg-white font-bold text-[14px] text-black rounded-full px-4"
+                className="flex items-center justify-center flex-row w-[200px] h-[40px] bg-white font-bold text-[14px] text-black rounded-full px-4 smartPhoneXs:w-[180px] smartPhone12:w-[190px] smartPhone:w-[200px]"
               >
                 <span className="mr-2">탭해서 다음으로 넘기기</span>
                 <FaChevronRight color="black" size={26} />
