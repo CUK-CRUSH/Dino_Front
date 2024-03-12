@@ -33,7 +33,7 @@ const RankingMemberComponents: React.FC<SearchMemberProps> = ({ rank, member, si
     <div className="">
 
       {member &&
-        <div className={`flex flex-row cursor-pointer relative`} style={{ marginBottom: marginY , left : customMargin}} key={member.id} onClick={() => handleNavigate(member.username)}>
+        <div className={`flex flex-row cursor-pointer relative mb-[80px]`} style={{ left : customMargin}} key={member.id} onClick={() => handleNavigate(member.username)}>
           <img src={rankedImage[rank]} alt='x' className="absolute top-[15px] " />
 
           <img
