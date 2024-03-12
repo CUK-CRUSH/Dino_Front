@@ -4,16 +4,25 @@ import { useCookies } from "react-cookie";
 import { deleteAccount } from "@api/member-controller/memberController";
 import Swal from "sweetalert2";
 import "@styles/EditList/playList.css";
-import { useNavigate } from "react-router-dom";
 import emailjs from "emailjs-com";
 import OptionHeader from "@components/Layout/optionHeader";
+import useDecodedJWT from "@hooks/useDecodedJWT";
 
 const Unsign = () => {
-  const [cookies] = useCookies();
+  const [cookies, , removeCookie] = useCookies(["accessToken"]);
   const [input, setInput] = useState("");
   const [buttonColor, setButtonColor] = useState("#D9D9D9");
-  const navigate = useNavigate();
 
+  // id값
+  let token = localStorage.getItem('refreshToken');
+  let decodedToken = useDecodedJWT(token);
+  let userId: string;
+  if (decodedToken) {
+    userId = decodedToken.sub;
+  } else {
+    // decodedToken이 null이면 적절한 기본값을 설정합니다.
+    userId = 'defaultUserId';
+  }
 
 
   const handleInputChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -32,7 +41,7 @@ const Unsign = () => {
     buttonsStyling: false,
   });
 
-  const handleSubmit = async (event: React.FormEvent) => {
+  const handleSubmit = async (event: React.FormEvent,tokenId : string) => {
     event.preventDefault();
 
     const serviceId = process.env.REACT_APP_EMAILJS_SERVICE_ID;
@@ -70,7 +79,11 @@ const Unsign = () => {
             },
             userId
           );
-          navigate("/login");
+          localStorage.removeItem(`searchTerms_${tokenId}`)
+          localStorage.removeItem("homeUrl");
+          removeCookie("accessToken", { path: "/" });
+          localStorage.removeItem('refreshToken');
+          window.location.replace(`/login`)
         }
       });
   };
@@ -78,8 +91,8 @@ const Unsign = () => {
   return (
     <div className="h-full min-h-screen w-full scrollbar-hide overflow-scroll flex  flex-col bg-white text-black text-[15px] font-medium leading-[18px]">
       <OptionHeader />
-      <main className="h-full mt-2">
-        <form onSubmit={handleSubmit} className=" p-4">
+      <main className="h-full mt-2 p-4">
+      <form onSubmit={(e) => handleSubmit(e, userId)}>
           <h2 className="text-2xl font-bold mb-4">계정 삭제</h2>
           <p className="mb-2">계정이 삭제될 경우</p>
           <p className="mb-2">기존 계정 정보는 즉시 삭제되어</p>
