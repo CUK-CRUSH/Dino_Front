@@ -52,7 +52,7 @@ const AdminPage: React.FC = () => {
     const fetchData = async () => {
       try {
         const userDataResult = await getMemberUsername(username);
-
+        
         setUserdata(userDataResult.data);
         dispatch(setProfileIntroduction(userDataResult.data.introduction));
 
