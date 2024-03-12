@@ -17,6 +17,8 @@ const Tutorial: React.FC<TutorialProps> = ({ username }) => {
   const [isVisible, setIsVisible] = useState(true);
 
   const [cookies, setCookie] = useCookies(["tutorial"]);
+  const [token] = useCookies(["accessToken"]);
+  const accessToken = token.accessToken;
   const [imageIndex, setImageIndex] = useState(0);
   const images = [One, Two, Three, Four, Five, Six];
 
@@ -32,10 +34,10 @@ const Tutorial: React.FC<TutorialProps> = ({ username }) => {
   };
 
   useEffect(() => {
-    if (cookies.tutorial) {
+    if (!accessToken || cookies.tutorial === "true") {
       setIsVisible(false);
     }
-  }, [cookies]);
+  }, [cookies, accessToken]);
 
   if (!isVisible) return null;
 
