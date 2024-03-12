@@ -78,7 +78,7 @@ const Tutorial: React.FC<TutorialProps> = ({ username }) => {
           </div>
         </div>
       ) : imageIndex <= images.length ? (
-        <div className="w-full h-screen flex justify-center items-center">
+        <div className="w-full h-[calc(100vh - 240px)] flex justify-center items-center">
           <div className="relative h-screen">
             <img
               src={images[imageIndex - 1]}
