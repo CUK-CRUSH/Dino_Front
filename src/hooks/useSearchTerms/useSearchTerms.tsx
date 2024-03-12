@@ -3,20 +3,17 @@ import { useState, useEffect } from "react";
 const useSearchTerms = (userId?: string) => {
   const [searchTerms, setSearchTerms] = useState<any[]>([]);
 
-  // 로컬 스토리지에서 검색어를 불러오는 함수
-  const loadSearchTerms = () => {
+  // 검색어를 로컬 스토리지에 저장하고 상태를 업데이트하는 함수
+  const addSearchTerm = (term: string | undefined) => {
+    // 로컬 스토리지에서 검색어 목록을 불러옴
     let storedTerms = localStorage.getItem(`searchTerms_${userId}`);
     if (!storedTerms) {
       storedTerms = '[]';
     }
-    setSearchTerms(JSON.parse(storedTerms));
-  }
+    let terms = JSON.parse(storedTerms);
 
-  // 검색어를 로컬 스토리지에 저장하는 함수
-  const addSearchTerm = (term: string | undefined) => {
+    // 새로운 검색어를 목록에 추가하는 로직
     const date = new Date().toISOString();
-    const terms = [...searchTerms];
-
     const existingIndex = terms.findIndex((item: any) => item.term === term);
     if (existingIndex > -1) {
       terms.splice(existingIndex, 1);
@@ -28,17 +25,12 @@ const useSearchTerms = (userId?: string) => {
       terms.pop();
     }
 
+    // 변경된 검색어 목록을 로컬 스토리지와 상태에 반영
     localStorage.setItem(`searchTerms_${userId}`, JSON.stringify(terms));
     setSearchTerms(terms);
   }
   
-  /* eslint-disable react-hooks/exhaustive-deps */
-
-  // 컴포넌트가 마운트되거나 userId가 변경될 때마다 검색어를 불러옴
-  useEffect(() => {
-    loadSearchTerms();
-  }, [userId]);
-
+ 
   return { searchTerms, addSearchTerm };
 }
 
