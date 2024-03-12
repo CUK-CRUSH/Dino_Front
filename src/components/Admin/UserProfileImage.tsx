@@ -1,44 +1,20 @@
-import { RootState } from "@store/index";
-import { useSelector } from "react-redux";
 import { UserProfileImageDTO } from "types/Admin";
 import defaultImage from "@assets/Admin/defaultImage.svg";
 import { Img } from "react-image";
 import { Loader } from "@components/Loader/Loader";
 
 const UserProfileImage = ({ userProfileImage }: UserProfileImageDTO) => {
-  const { profileImage, deleteProfileImage } = useSelector(
-    (state: RootState) => state.userProfile
-  );
+
+  const src = userProfileImage || defaultImage;
   
-  const { profileImage : initialProfileImage } = useSelector(
-    (state: RootState) => state.setProfile
-  );
-    return (
+  return (
     <div className="w-[75px] h-[75px] rounded-full overflow-hidden mx-auto -mt-[40px]">
-      {userProfileImage ? (
-        <Img src={userProfileImage} alt="User Profile" className="w-full object-cover" loader={<Loader />} />
-      ) : 
-      profileImage ? (
-        <Img src={profileImage} alt="User Profile" className="w-full object-cover" loader={<Loader />}/>
-      ) : deleteProfileImage ? (
-        <Img
-          src={defaultImage}
-          alt="Default User Profile"
-          className="w-full object-cover"
-          loader={<Loader />}
-        />
-      ) : initialProfileImage ? (
-        <Img
-          src={initialProfileImage}
-          alt="Default User Profile"
-          className="w-full object-cover"
-          loader={<Loader />}
-        />
-      ) : <Img
-        src={defaultImage}
+      <Img
+        src={src}
         alt="Default User Profile"
         className="w-full object-cover"
-      />}
+        loader={<Loader />}
+      />
     </div>
   );
 };
