@@ -33,16 +33,16 @@ const RankingMemberComponents: React.FC<SearchMemberProps> = ({ rank, member, si
     <div className="">
 
       {member &&
-        <div className={`flex flex-row cursor-pointer relative mb-[80px]`} style={{ left : customMargin}} key={member.id} onClick={() => handleNavigate(member.username)}>
-          <img src={rankedImage[rank]} alt='x' className="absolute top-[15px] " />
+        <div className={`flex flex-row cursor-pointer relative `} style={{ left : customMargin , marginBottom: marginY }} key={member.id} onClick={() => handleNavigate(member.username)}>
+          <img src={rankedImage[rank]} alt='x' className="mr-[7%] " />
 
           <img
-            className={`rounded-full object-cover absolute left-[15%]`}
+            className={`rounded-full object-cover`}
             style={{ width: size, height: size }}
             src={member.profileImageUrl ? member.profileImageUrl : defaultImage} // default.jpg는 기본 이미지 경로입니다.
             alt="썸네일"
           />
-          <div className="flex flex-col justify-start ml-6 absolute left-[28%] ">
+          <div className="flex flex-col justify-start ml-6 ">
             <p className={`text-[${username_fontSize}]`}>{member.username}</p>
             <p className={`text-[${introduction_fontSize}] `}>{member.introduction}</p>
           </div>

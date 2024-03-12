@@ -5,7 +5,6 @@ import { useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import hot from "@assets/Search/hot.svg";
 import { useCustomPlaylistMargin } from "@hooks/useCustomMargin/useCustomPlaylistMargin";
-import SkeltonPlaylist from "@components/Admin/SkeltonPlaylist";
 import RankingMemberComponents from "../member/RankingMemberComponents";
 import { Member } from "types/Search/Search";
 
@@ -29,7 +28,6 @@ const RankingMember: React.FC = () => {
         <p className="flex justify-center "><img src={hot} alt='x' /> &nbsp; 인기 유저</p>
         <p style={{ marginLeft: customMargin }} className={`py-4 font-PretendardBold underline underline-offset-4	`}>랭킹</p>
 
-        {status === 'loading' && <SkeltonPlaylist customMargin={customMargin} />}
 
         {searchMemberrankingData &&
           searchMemberrankingData.map((member: Member, index: number) => (
@@ -41,7 +39,7 @@ const RankingMember: React.FC = () => {
               introduction_fontSize='15px'
               size='60px'
               customMargin={customMargin}
-              marginY='80px' />
+              marginY='10px' />
           ))}
 
       </div>
