@@ -12,6 +12,8 @@ export const getMember = async (id: string | null) => {
     if (response) { return response.data; }
     else { return }
   } catch (error) {
+    window.location.replace('/404')
+
     console.log(error);
     throw error;
   }
@@ -32,6 +34,8 @@ export const getMemberUsername = async (username: string | undefined) => {
     else { return }
   } catch (error) {
     console.log(error);
+    window.location.replace('/404')
+
     throw error;
   }
 };
