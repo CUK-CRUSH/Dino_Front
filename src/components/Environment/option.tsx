@@ -17,6 +17,7 @@ import OptionHeader from "@components/Layout/optionHeader";
 import ToastComponent from "@components/Toast/Toast";
 import { useRecoilValue } from "recoil";
 import { adminuserNameState } from "@atoms/Admin/adminUsername";
+import defaultImage from "@assets/Admin/defaultImage.svg";
 
 const OptionComponents = () => {
   const swalButton = Swal.mixin({
@@ -186,7 +187,7 @@ const OptionComponents = () => {
                       ? userData.profileImage
                       : userData.profileImageUrl
                         ? userData.profileImageUrl
-                        : NoImage
+                        : defaultImage
                 }
                 alt="프로필 이미지"
                 className="w-full h-auto rounded-full"

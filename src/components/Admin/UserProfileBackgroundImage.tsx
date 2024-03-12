@@ -1,20 +1,11 @@
-import { RootState } from "@store/index";
-import { useSelector } from "react-redux";
 import { UserBackgroundImageDTO } from "types/Admin"
 import { Img } from "react-image";
 import setDefaultBackgroundImage from "@assets/Admin/setDefaultBackgroundImage.svg";
 import { Loader } from "@components/Loader/Loader";
 
 const UserProfileBackground = ({ userBackgroundImage }: UserBackgroundImageDTO) => {
-  const { profileBackgroundImage } = useSelector(
-    (state: RootState) => state.userProfile
-  );
-    
-  const { profileBackgroundImage : initialProfileBackgroundImage } = useSelector(
-    (state: RootState) => state.setProfile
-  );
-
-  const src = userBackgroundImage || profileBackgroundImage || initialProfileBackgroundImage || setDefaultBackgroundImage;
+  
+  const src = userBackgroundImage || setDefaultBackgroundImage;
 
   return (
     <div className="-mb-[40px] h-[250px] w-full">
