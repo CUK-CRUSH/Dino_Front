@@ -83,7 +83,7 @@ const Tutorial: React.FC<TutorialProps> = ({ username }) => {
             <img
               src={images[imageIndex - 1]}
               alt={`Step ${imageIndex}`}
-              className={`w-screen h-[${windowSize.height}] object-cover`}
+              className={`w-full smartPhoneXs:w-screen smartPhone12:w-screen smartPhone:w-screen h-[${windowSize.height}] object-cover`}
             />
             {/* 건너뛰기 버튼 */}
             <div className="absolute bottom-2 left-4 smartPhone12:bottom-8 smartPhoneXs:bottom-4 smartPhone:bottom-32">
