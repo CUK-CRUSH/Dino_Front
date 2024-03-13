@@ -56,8 +56,8 @@ const RankingMemberComponents: React.FC<SearchMemberProps> = ({ rank, member, si
             style={{ marginLeft: customMargin }}
           >
 
-            <p className={`text-[${username_fontSize}] font-PretendardBold`}>{truncateText(member.username, windowSize.width, 18)}</p>
-            <p className={`text-[${introduction_fontSize}] font-PretendardMedium`}>{truncateText(member.introduction, windowSize.width, 15)}</p>
+            <p className={`text-[${username_fontSize}] font-PretendardBold`}>{truncateText(member.username, windowSize.width, 18,true)}</p>
+            <p className={`text-[${introduction_fontSize}] font-PretendardMedium`}>{truncateText(member.introduction, windowSize.width, 15,true)}</p>
           </div>
 
         </div>

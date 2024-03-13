@@ -26,7 +26,7 @@ const RankingMember: React.FC = () => {
       <div className='h-full'>
 
         <p className="flex justify-center "><img src={hot} alt='x' /> &nbsp; 인기 유저</p>
-        <p style={{ marginLeft: customMargin }} className={`py-4 font-PretendardBold underline underline-offset-4	`}>랭킹</p>
+        <p style={{ marginLeft: customMargin }} className={`py-[4%] font-PretendardBold underline underline-offset-4	`}>랭킹</p>
 
 
         {searchMemberrankingData &&
