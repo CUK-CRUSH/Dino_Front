@@ -39,8 +39,8 @@ const Layout: React.FC<LayoutDTO> = ({ children }) => {
 
   return (
     <div className="overflow-hidden  scrollbar-hide bg-[#111111]">
-      <div className="h-screen w-full max-h-full flex justify-center">
-        <main className="max-w-[390px] smartPhone:max-w-[431px] w-full h-screen overflow-y-auto overflow-x-hidden relative font-PretendardRegular">
+      <div className="min-h-screen h-auto w-full max-h-full flex justify-center">
+        <main className="max-w-[390px] smartPhone:max-w-[431px] w-full min-h-screen h-auto overflow-y-auto overflow-x-hidden relative font-PretendardRegular">
           {children}
         </main>
       </div>
