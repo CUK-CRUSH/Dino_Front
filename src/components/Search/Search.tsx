@@ -128,7 +128,7 @@ const SearchPage: React.FC = () => {
 
           {!query?.trim() ? (
             <SearchMemberList
-              searchResults={searchMemberRankingData.slice(0, 10)}
+              searchResults={searchMemberRankingData.slice(0,5)}
               username_fontSize='18px'
               introduction_fontSize='15px'
               size='60px'
@@ -152,7 +152,7 @@ const SearchPage: React.FC = () => {
           {
             !query?.trim() ? (
               <Link to={`/ranking/member`}>
-                  {/* <div className="flex justify-center">더보기</div> */}
+                  <div className="flex justify-center">더보기</div>
               </Link>
             ) : (
               searchMembersData && searchMembersData.length > 5 ? (
