@@ -8,32 +8,37 @@ interface TutorialProps {
 
 const Tutorial: React.FC<TutorialProps> = ({ username }) => {
   const [isVisible, setIsVisible] = useState(true);
-
-  const [cookies, setCookie] = useCookies(["tutorial"]);
   const [token] = useCookies(["accessToken"]);
   const accessToken = token.accessToken;
 
+  // 튜토리얼 닫기 함수
   const handleClose = () => {
-    setCookie("tutorial", "true", { path: "/", maxAge: 315576000 });
+    // localStorage에 튜토리얼을 본 것으로 표시
+    localStorage.setItem("tutorial", "true");
     setIsVisible(false);
 
+    // 지정된 URL로 이동
     window.open(
       "https://myist-info.notion.site/MyList-c0677d15f0ef4e979c47acca15258391?pvs=4"
     );
   };
-  const handleSkip = () => {
-    setCookie("tutorial", "true", { path: "/" });
-    setIsVisible(false);
 
+  // 건너뛰기 함수
+  const handleSkip = () => {
+    // localStorage에 튜토리얼을 본 것으로 표시
+    localStorage.setItem("tutorial", "true");
+    setIsVisible(false);
   };
 
   useEffect(() => {
-    if (cookies.tutorial === true || !accessToken) {
+    // 컴포넌트 마운트 시 localStorage에서 튜토리얼 표시 여부 확인
+    const tutorialSeen = localStorage.getItem("tutorial");
+    if (tutorialSeen === "true" || !accessToken) {
       setIsVisible(false);
     } else {
       setIsVisible(true);
     }
-  }, [cookies, accessToken]);
+  }, [accessToken]);
 
   if (!isVisible) return null;
 
@@ -57,7 +62,7 @@ const Tutorial: React.FC<TutorialProps> = ({ username }) => {
           빠르게 살펴볼까요?
         </p>
         <div className="flex justify-between mx-5 mt-8">
-        <button
+          <button
             onClick={handleClose}
             className="w-[100px] h-[50px] text-[19px] text-center bg-white font-bold text-black rounded-full"
           >
