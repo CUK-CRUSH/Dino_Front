@@ -23,7 +23,7 @@ import { fetchPlaylistData } from "@reducer/Admin/adminPlaylist";
 import { useSetRecoilState } from "recoil";
 import { adminuserNameState } from "@atoms/Admin/adminUsername";
 import Tutorial from "@components/Tutorial/Tutorial";
-
+type TutorialStep = "header" | "playlist" | null;
 const AdminPage: React.FC = () => {
   const getDefaultMember = (): getMemberDTO => ({
     backgroundImageUrl: null,
@@ -138,16 +138,41 @@ const AdminPage: React.FC = () => {
     }
   };
 
-  const [isTutorialMode, setIsTutorialMode] = useState(true);
+  const [tutorialStep, setTutorialStep] = useState<TutorialStep>(null);
 
-  const toggleTutorialMode = () => setIsTutorialMode(!isTutorialMode);
+  const toggleTutorialMode = () => {
+    switch (tutorialStep) {
+      case null:
+        setTutorialStep("header"); // 처음 튜토리얼을 시작할 때
+        break;
+      case "header":
+        setTutorialStep("playlist"); // 헤더 튜토리얼 후 플레이리스트 튜토리얼로
+        break;
+      case "playlist":
+        setTutorialStep(null); // 플레이리스트 튜토리얼 후 튜토리얼 종료
+        break;
+      default:
+        setTutorialStep(null); // 그 외의 경우는 튜토리얼 종료
+    }
+  };
 
+  // 튜토리얼 모드를 표시하는 조건부 렌더링
+  const isTutorialMode = tutorialStep !== null;
+  const handleClick = async () => {
+    // AddPlayList 컴포넌트의 로직에 맞게 정의합니다.
+    // 예시 로직:
+    // const post = await postPlayList(title, titleImage, token);
+    // if (post && post.status === 200) {
+    //   dispatch(setToast("add"));
+    //   navigate(`${post.data.id}`);
+    // }
+  };
   return (
     <div
       className={`h-full scrollbar-hide overflow-scroll relative ${
         isTutorialMode ? "bg-black bg-opacity-50" : ""
       }`}
-      onClick={toggleTutorialMode}
+      onClick={tutorialStep === "playlist" ? handleClick : toggleTutorialMode}
     >
       {isTutorialMode && (
         <div className="fixed inset-0 bg-black bg-opacity-70 z-10"></div>
@@ -157,7 +182,7 @@ const AdminPage: React.FC = () => {
       <Header
         id={userData.id}
         authority={authority}
-        isTutorialMode={isTutorialMode}
+        isTutorialMode={tutorialStep === "header"}
       />
 
       <UserProfileBackground
@@ -216,7 +241,7 @@ const AdminPage: React.FC = () => {
         authority &&
         playlistData?.length !== undefined &&
         playlistData?.length < 4 ? (
-          <AddPlayList />
+          <AddPlayList isTutorialMode={tutorialStep === "playlist"} />
         ) : (
           <></>
         )}
