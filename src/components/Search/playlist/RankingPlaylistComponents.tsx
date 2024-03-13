@@ -26,7 +26,6 @@ export const RankingPlaylistComponents = ({ playlist, fontColor,rank }: { playli
     navigate(`/user/${username}/${id}`);
   };
 
-
   return (
     <>
       
@@ -38,9 +37,7 @@ export const RankingPlaylistComponents = ({ playlist, fontColor,rank }: { playli
           <img src={rankedImage[rank] } alt='x' className="absolute right-0" />
             
             {playlist.thumbnailUrl ? (
-              
               <img className="mx-auto w-[150px] h-full rounded-[13px]" src={playlist.thumbnailUrl} alt='x' />
-              
             ) : (
               <img className="mx-auto w-[150px] h-full rounded-[13px]" src={defaultImage} alt='x' />
             )}
