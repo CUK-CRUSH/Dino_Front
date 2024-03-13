@@ -14,7 +14,7 @@ const Tutorial: React.FC<TutorialProps> = ({ username }) => {
   const accessToken = token.accessToken;
 
   const handleClose = () => {
-    setCookie("tutorial", "true", { path: "/" });
+    setCookie("tutorial", "true", { path: "/", maxAge: 315576000 });
     setIsVisible(false);
 
     window.open(
