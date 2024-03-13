@@ -81,7 +81,7 @@ const SearchPage: React.FC = () => {
       {openSearchRecently ?
         <SearchRecently setOpenSearchRecently={setOpenSearchRecently} />
         :
-        <main className='p-4'>
+        <main className='p-[4%]'>
           {query?.trim() && <QueryText query={query} />}
 
           {/* 플레이리스트 */}

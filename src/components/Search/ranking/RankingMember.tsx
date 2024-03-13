@@ -21,12 +21,12 @@ const RankingMember: React.FC = () => {
   const customMargin = useCustomPlaylistMargin();
 
   return (
-    <div className="w-full h-full relative bg-white scrollbar-hide overflow-scroll font-PretendardMedium ">
+    <div className="w-full h-full min-h-screen  relative bg-white flex flex-col scrollbar-hide overflow-scroll font-PretendardMedium ">
       <OptionHeader />
       <div className='h-full'>
 
         <p className="flex justify-center "><img src={hot} alt='x' /> &nbsp; 인기 유저</p>
-        <p style={{ marginLeft: customMargin }} className={`py-4 font-PretendardBold underline underline-offset-4	`}>랭킹</p>
+        <p style={{ marginLeft: customMargin }} className={`py-[4%] font-PretendardBold underline underline-offset-4	`}>랭킹</p>
 
 
         {searchMemberrankingData &&
