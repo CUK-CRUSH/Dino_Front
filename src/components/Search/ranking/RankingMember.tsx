@@ -21,7 +21,7 @@ const RankingMember: React.FC = () => {
   const customMargin = useCustomPlaylistMargin();
 
   return (
-    <div className="w-full h-full relative bg-white scrollbar-hide overflow-scroll font-PretendardMedium ">
+    <div className="w-full h-full min-h-screen  relative bg-white flex flex-col scrollbar-hide overflow-scroll font-PretendardMedium ">
       <OptionHeader />
       <div className='h-full'>
 

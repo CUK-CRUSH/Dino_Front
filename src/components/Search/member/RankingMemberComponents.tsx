@@ -11,17 +11,19 @@ import seven from "@assets/Ranking/member/7.svg";
 import eight from "@assets/Ranking/member/8.svg";
 import nine from "@assets/Ranking/member/9.svg";
 import ten from "@assets/Ranking/member/10.svg";
+import useWindowSizeCustom from "@hooks/useCustomMargin/useWindowSizeCustom";
+import truncateText from "@utils/truncateText/truncateText";
 
 interface SearchMemberProps {
   rank: number;
   member: Member | undefined;
   username_fontSize: string;
   introduction_fontSize: string;
-  customMargin : number;
+  customMargin: number;
   size: string;
   marginY: string;
 }
-const RankingMemberComponents: React.FC<SearchMemberProps> = ({ rank, member, size, marginY, username_fontSize, introduction_fontSize,customMargin }) => {
+const RankingMemberComponents: React.FC<SearchMemberProps> = ({ rank, member, size, marginY, username_fontSize, introduction_fontSize, customMargin }) => {
 
   const navigate = useNavigate();
   const rankedImage = [first, second, third, four, five, six, seven, eight, nine, ten];
@@ -29,26 +31,38 @@ const RankingMemberComponents: React.FC<SearchMemberProps> = ({ rank, member, si
   const handleNavigate = (username: string,) => {
     navigate(`/user/${username}`);
   }
+
+  const { windowSize } = useWindowSizeCustom();
   return (
     <div className="">
 
       {member &&
-        <div className={`flex flex-row cursor-pointer relative `} style={{ left : customMargin , marginBottom: marginY }} key={member.id} onClick={() => handleNavigate(member.username)}>
-          <img src={rankedImage[rank]} alt='x' className="mr-[7%] " />
+        <div
+          className={`flex flex-row cursor-pointer relative `}
+          style={{ width: `calc(100% - ${customMargin}px)`, marginLeft: `${customMargin}px`, marginBottom: `${marginY}` }}
+          key={member.id}
+          onClick={() => handleNavigate(member.username)}>
+
+          <img src={rankedImage[rank]} alt='x' />
 
           <img
             className={`rounded-full object-cover`}
-            style={{ width: size, height: size }}
+            style={{ width: size, height: size, marginLeft: customMargin }}
             src={member.profileImageUrl ? member.profileImageUrl : defaultImage} // default.jpg는 기본 이미지 경로입니다.
             alt="썸네일"
           />
-          <div className="flex flex-col justify-start ml-6 ">
-            <p className={`text-[${username_fontSize}]`}>{member.username}</p>
-            <p className={`text-[${introduction_fontSize}] `}>{member.introduction}</p>
+          <div
+            className="flex flex-col justify-start "
+            style={{ marginLeft: customMargin }}
+          >
+
+            <p className={`text-[${username_fontSize}] font-PretendardBold`}>{truncateText(member.username, windowSize.width, 18)}</p>
+            <p className={`text-[${introduction_fontSize}] font-PretendardMedium`}>{truncateText(member.introduction, windowSize.width, 15)}</p>
           </div>
 
         </div>
       }
+      <div className="bg-transparents h-[20px]" />
     </div>
   )
 }
