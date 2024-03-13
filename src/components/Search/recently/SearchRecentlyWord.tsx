@@ -1,4 +1,6 @@
+import useWindowSizeCustom from '@hooks/useCustomMargin/useWindowSizeCustom';
 import useDecodedJWT from '@hooks/useDecodedJWT';
+import truncateText from '@utils/truncateText/truncateText';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
@@ -59,26 +61,26 @@ const SearchRecentlyWord: React.FC<setOpenSearchRecentlyDTO> = ({ setOpenSearchR
   const searchQuery = (query: string) => {
     navigate(`?query=${query}`);
   }
-
+  const {windowSize} = useWindowSizeCustom();
   return (
     <div className="w-full h-full relative flex flex-col justify-start scrollbar-hide overflow-scroll font-PretendardMedium">
 
-      <p className={`p-4 font-PretendardBold underline underline-offset-4	`}>최근검색어</p>
+      <p className={`p-[4%] font-PretendardBold underline underline-offset-2	`}>최근검색어</p>
       {searchTerms.map((item, index) => (
-        <div className={`flex justify-between p-2`} key={index}>
+        <div className={`flex justify-between px-[4%] mb-4 cursor-pointer`} key={index}>
           <div onClick={() => {
             searchQuery(item.term);
             setOpenSearchRecently(false);
           }}>
-            <span className='ml-4'>
-              {item.term}
+            <span className=''>
+              {truncateText(item.term,windowSize.width,18)}
             </span>
           </div>
-          <div>
-            <span className='mr-4'>
+          <div className='w-[20%]'>
+            <span className=''>
               {formatDate(item.date)}
             </span>
-            <span className='mr-4' onClick={() => { deleteSearchWord(index) }}>
+            <span className='ml-[10%]' onClick={() => { deleteSearchWord(index) }}>
               x
             </span>
           </div>
