@@ -163,7 +163,7 @@ const AdminPage: React.FC = () => {
 
       {/* 검은화면 */}
       <main
-        className={`w-full h-[calc(100%)] absolute flex-grid bg-neutral-900 z-10 rounded-tl-[50px] rounded-tr-[50px] `}
+        className={`w-full h-[calc(100vh)] absolute flex-grid bg-neutral-900 z-10 rounded-tl-[50px] rounded-tr-[50px] `}
       >
         {/* 프로필 이미지 */}
 
