@@ -52,7 +52,7 @@ const AdminPage: React.FC = () => {
     const fetchData = async () => {
       try {
         const userDataResult = await getMemberUsername(username);
-        
+
         setUserdata(userDataResult.data);
         dispatch(setProfileIntroduction(userDataResult.data.introduction));
 
@@ -138,12 +138,27 @@ const AdminPage: React.FC = () => {
     }
   };
 
-  // const footerHeight = useSizeFooter(playlistData?.length, 80, authority);
+  const [isTutorialMode, setIsTutorialMode] = useState(true);
+
+  const toggleTutorialMode = () => setIsTutorialMode(!isTutorialMode);
 
   return (
-    <div className="h-full scrollbar-hide overflow-scroll relative ">
+    <div
+      className={`h-full scrollbar-hide overflow-scroll relative ${
+        isTutorialMode ? "bg-black bg-opacity-50" : ""
+      }`}
+      onClick={toggleTutorialMode}
+    >
+      {isTutorialMode && (
+        <div className="fixed inset-0 bg-black bg-opacity-70 z-10"></div>
+      )}
       <Tutorial username={userData?.username} />
-      <Header id={userData.id} authority={authority} />
+
+      <Header
+        id={userData.id}
+        authority={authority}
+        isTutorialMode={isTutorialMode}
+      />
 
       <UserProfileBackground
         userBackgroundImage={userData?.backgroundImageUrl}
@@ -163,8 +178,11 @@ const AdminPage: React.FC = () => {
 
       {/* 검은화면 */}
       <main
-        className={`w-full h-[calc(100%)] absolute flex-grid bg-neutral-900 z-10 rounded-tl-[50px] rounded-tr-[50px] `}
+        className={`w-full h-[calc(100%)] absolute flex-grid bg-neutral-900 rounded-tl-[50px] rounded-tr-[50px] `}
       >
+        {/* ${
+        isTutorialMode ? "z-50 " : ""
+      } */}
         {/* 프로필 이미지 */}
 
         <UserProfileImage userProfileImage={userData?.profileImageUrl} />

@@ -9,7 +9,7 @@ const OpenOption: React.FC = () => {
   };
 
   return (
-    <div className={"w-[22px] h-[40px] right-[20px] top-[20px] absolute"}>
+    <div className={"z-30  w-[22px] h-[40px] right-[20px] top-[20px] absolute"}>
       <button
         className=" text-white text-3xl font-bold tracking-wider "
         onClick={handleNavigateEnv}

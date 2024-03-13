@@ -12,18 +12,19 @@ const SearchButton: React.FC<MyComponentProps> = ({ authority }) => {
     navigate(`/search`);
   };
 
-  useEffect(()=>{
-
-  },[])
+  useEffect(() => {}, []);
 
   return (
-    <div className={`w-[22px] h-[40px] ${authority ? 'right-[50px]' : 'right-[20px]'} top-[20px] absolute`}>
+    <div
+      className={`z-30  w-[22px] h-[40px] ${
+        authority ? "right-[50px]" : "right-[20px]"
+      } top-[20px] absolute `}
+    >
       <button
         className=" text-white text-3xl font-bold tracking-wider "
         onClick={handleNavigateSearch}
       >
-        <img src={search} alt='' />
-
+        <img src={search} alt="" />
       </button>
     </div>
   );
