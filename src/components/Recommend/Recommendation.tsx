@@ -18,7 +18,7 @@ interface PlayListDTO {
   username: string;
 }
 
-const Recommendation = () => {
+const Recommendation = ({ tutorialStep }: { tutorialStep: string | null }) => {
   const [data, setData] = useState<PlayListDTO[]>([]);
 
   const navigate = useNavigate();
@@ -53,39 +53,56 @@ const Recommendation = () => {
       <p className="mb-2">✨랜덤 플레이리스트</p>
       <div style={{ width: "100%" }} className={"px-2.5"}>
         {data.length > 0 ? (
-          <Swiper
-            modules={[Pagination, Navigation, Mousewheel]}
-            grabCursor={true}
-            slidesPerView={3.5}
-            spaceBetween={10}
-            navigation
-            loop={false}
-            mousewheel
-          >
-            {data.map((item) => (
-              <SwiperSlide key={item.id}>
-                <div
-                  className="mr-3 cursor-pointer w-[5.5rem] h-[10rem] flex flex-col items-center"
-                  onClick={() => handleOnClick(item.username, item.id)}
-                >
-                  <div>
-                    <img
-                      className="w-[5.5rem] h-[5.5rem] cursor-pointer rounded-lg object-cover"
-                      src={item.thumbnailUrl ? item.thumbnailUrl : defaultImage}
-                      alt={item.playlistName}
-                    />
-                    <div
-                      style={{ wordWrap: "break-word", wordBreak: "break-all" }}
-                    >
-                      <h3 className="text-start mt-2 overflow-hidden text-overflow-ellipsis">
-                        {item.playlistName}
-                      </h3>
+          <>
+            <Swiper
+              modules={[Pagination, Navigation, Mousewheel]}
+              grabCursor={true}
+              slidesPerView={3.5}
+              spaceBetween={10}
+              navigation
+              loop={false}
+              mousewheel
+            >
+              {data.map((item) => (
+                <SwiperSlide key={item.id}>
+                  <div
+                    className="mr-3 cursor-pointer w-[5.5rem] h-[10rem] flex flex-col items-center"
+                    onClick={() => handleOnClick(item.username, item.id)}
+                  >
+                    <div>
+                      <img
+                        className="w-[5.5rem] h-[5.5rem] cursor-pointer rounded-lg object-cover"
+                        src={
+                          item.thumbnailUrl ? item.thumbnailUrl : defaultImage
+                        }
+                        alt={item.playlistName}
+                      />
+                      <div
+                        style={{
+                          wordWrap: "break-word",
+                          wordBreak: "break-all",
+                        }}
+                      >
+                        <h3 className="text-start mt-2 overflow-hidden text-overflow-ellipsis">
+                          {item.playlistName}
+                        </h3>
+                      </div>
                     </div>
                   </div>
+                </SwiperSlide>
+              ))}
+            </Swiper>
+            {tutorialStep === "env" && (
+              <>
+                <div className="absolute text-[14px] w-[300px] h-[60px] bottom-48 right-3 mt-1 z-20 bg-white text-black p-2 rounded-md font-bold flex items-center justify-center">
+                  <div className="text-start">
+                    <p>랜덤으로 추천되는 플레이리스트를 확인해보세요!</p>
+                  </div>
                 </div>
-              </SwiperSlide>
-            ))}
-          </Swiper>
+                <div className="w-6 h-6 bg-white absolute bottom-[180px] right-14 z-[19] transform rotate-45"></div>
+              </>
+            )}
+          </>
         ) : (
           <div>랜덤 플레이리스트가 없습니다.</div>
         )}

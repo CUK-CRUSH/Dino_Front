@@ -1,12 +1,15 @@
 import React, { useEffect, useState } from "react";
 import TutorialCharacter from "@assets/Tutorial/Character.svg";
 import { useCookies } from "react-cookie";
+import { TutorialStep } from "@atoms/Tutorial/TutorialStep";
 
 interface TutorialProps {
   username: string;
 }
-
-const Tutorial: React.FC<TutorialProps> = ({ username }) => {
+const Tutorial: React.FC<
+  TutorialProps & { setTutorialMode: (step: TutorialStep) => void }
+> = ({ username, setTutorialMode }) => {
+  // 컴포넌트 내용...
   const [isVisible, setIsVisible] = useState(true);
   const [token] = useCookies(["accessToken"]);
   const accessToken = token.accessToken;
@@ -16,11 +19,12 @@ const Tutorial: React.FC<TutorialProps> = ({ username }) => {
     // localStorage에 튜토리얼을 본 것으로 표시
     localStorage.setItem("tutorial", "true");
     setIsVisible(false);
+    setTutorialMode("header");
 
     // 지정된 URL로 이동
-    window.open(
-      "https://myist-info.notion.site/MyList-c0677d15f0ef4e979c47acca15258391?pvs=4"
-    );
+    // window.open(
+    //   "https://myist-info.notion.site/MyList-c0677d15f0ef4e979c47acca15258391?pvs=4"
+    // );
   };
 
   // 건너뛰기 함수

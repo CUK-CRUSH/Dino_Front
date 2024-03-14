@@ -7,6 +7,7 @@ import { useDispatch } from "react-redux";
 import { setToast } from "@reducer/Toast/toast";
 import { useCustomPlaylistMargin } from "@hooks/useCustomMargin/useCustomPlaylistMargin";
 import { useTranslation } from "react-i18next";
+import { useTutorial } from "@hooks/useTutorial/useTutorial";
 
 export const AddPlayList = ({
   isTutorialMode,
@@ -39,7 +40,18 @@ export const AddPlayList = ({
 
   const handleClick = (e: React.MouseEvent) => {
     e.stopPropagation();
+
     handleAddPlaylist(title, titleImage, token);
+  };
+  const { tutorialStep, setTutorialStep } = useTutorial();
+  const handleAddPlaylistClick = async (e: React.MouseEvent) => {
+    e.stopPropagation();
+
+    if (tutorialStep === "playlist") {
+      handleAddPlaylist(title, titleImage, token); // 실제 추가 로직 실행
+      // 다음 튜토리얼 단계로 넘어가기
+      // 예시: setTutorialStep('nextStep');
+    }
   };
   const optionsBgClass = isTutorialMode
     ? "opacity-100 bg-[#2E2E2E] absolute w-[150px] right-1 top-2 h-[150px] rounded-xl z-20 flex items-center"
@@ -52,7 +64,7 @@ export const AddPlayList = ({
         marginRight: `${customMargin}px`,
       }}
       className="inline-block h-[200px] mt-[15px] relative cursor-pointer"
-      onClick={isTutorialMode ? handleClick : undefined}
+      onClick={isTutorialMode ? handleAddPlaylistClick : undefined}
     >
       <div
         onClick={handleClick}

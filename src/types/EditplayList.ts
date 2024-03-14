@@ -4,6 +4,7 @@ export interface EditPlayListControlsDTO {
   onCancel: () => void;
   onEdit: () => void;
   onDelete: () => void;
+  tutorialStep?: string | null;
 }
 
 export interface MusicContentDTO {
@@ -36,6 +37,7 @@ export interface ShowImageDTO {
   isEditing: boolean;
   fetchPlaylist: () => void;
   setUploadImage: (image: string | null) => void;
+  tutorialStep: string | null;
 }
 
 export interface EditModalDTO {

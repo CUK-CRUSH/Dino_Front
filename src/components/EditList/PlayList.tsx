@@ -30,6 +30,8 @@ import { useDispatch } from "react-redux";
 import { setMemberId } from "@reducer/editPlayList/isMemberId";
 import useImageCompress from "@hooks/useImageCompress";
 import { useTranslation } from "react-i18next";
+import { useTutorial } from "@hooks/useTutorial/useTutorial";
+import { setIsEditing } from "@reducer/editPlayList/isEdit";
 
 const PlayList: React.FC<EditPlsyListDTO> = () => {
   const dispatch = useDispatch();
@@ -70,6 +72,9 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
 
   const setToken = useSetRecoilState(tokenState);
   const { t } = useTranslation("AddPlayList");
+
+  const { tutorialStep, toggleTutorialMode, setTutorialStep } = useTutorial();
+  const isTutorialMode = tutorialStep !== null;
 
   // session 꼼수 사용
   const { compressImage } = useImageCompress();
@@ -165,15 +170,45 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     }
   }, [playlistId, fetchPlaylist, setPlaylistId, cookies.accessToken, setToken]);
 
+  useEffect(() => {
+    // playlist.tsx 컴포넌트가 마운트될 때 튜토리얼 스텝을 'env'로 설정
+    if (isTutorialMode) {
+      setTutorialStep("env");
+    }
+  }, [setTutorialStep, isTutorialMode]);
+
+  useEffect(() => {
+    if (tutorialStep === "list1") {
+      dispatch(setIsEditing(true));
+    }
+  }, [tutorialStep, dispatch]);
+
   if (hasError) {
     return <NotFound />;
   }
 
+  const handlePageClick = () => {
+    if (!isTutorialMode) {
+      return;
+    }
+    toggleTutorialMode();
+  };
+  console.log(tutorialStep);
+  console.log(isEditing);
+
   return (
-    <div className="h-full w-full scrollbar-hide overflow-scroll flex flex-col bg-black text-white font-medium leading-[18px]">
+    <div
+      className={`h-full w-full scrollbar-hide overflow-scroll flex flex-col bg-black text-white font-medium leading-[18px] ${
+        isTutorialMode ? "bg-black bg-opacity-50" : ""
+      }`}
+      onClick={handlePageClick}
+    >
       {/* 플리 추가 토스트 */}
       {toast === "add" && (
         <ToastComponent background="white" text={t("addplaylist")} />
+      )}
+      {isTutorialMode && (
+        <div className="fixed inset-0 bg-black bg-opacity-70 z-10"></div>
       )}
 
       {!isEditing && (
@@ -183,16 +218,20 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
           uploadImage={uploadImage}
           fetchPlaylist={fetchPlaylist}
           setPlaylistName={setPlaylistName}
+          tutorialStep={tutorialStep}
         />
       )}
       {isEditing && (
-        <EditPlaylistControls
-          isEditing={isEditing}
-          onSave={() => handleSaveClick(uploadImage)}
-          onCancel={handleCancelClick}
-          onEdit={handleEditClick}
-          onDelete={handleDeleteClick}
-        />
+        <div className={`${tutorialStep === "list1" ? "z-20" : ""}`}>
+          <EditPlaylistControls
+            isEditing={isEditing}
+            onSave={() => handleSaveClick(uploadImage)}
+            onCancel={handleCancelClick}
+            onEdit={handleEditClick}
+            onDelete={handleDeleteClick}
+            tutorialStep={tutorialStep}
+          />
+        </div>
       )}
       <ShowImage
         aspectRatio={1}
@@ -201,9 +240,15 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         playlists={playlists}
         isEditing={isEditing}
         fetchPlaylist={fetchPlaylist}
+        tutorialStep={tutorialStep}
       />
-
-      <MusicTitle isEditing={isEditing} />
+      <div
+        className={`relative ${
+          tutorialStep === "list2" ? "z-20 pointer-events-none" : ""
+        }`}
+      >
+        <MusicTitle isEditing={isEditing} tutorialStep={tutorialStep} />
+      </div>
       <div className="flex flex-row">
         <LikeButton id={musicList.data?.length} />
         <VisitorButton id={musicList.data?.length} />
@@ -218,9 +263,23 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         setSelectedVideoIndex={setSelectedVideoIndex}
       />
       {isEditing && musicList.data?.length + musicData.musics.length < 9 && (
-        <PlusButton playlists={playlists} />
+        <div
+          className={`relative ${
+            tutorialStep === "list2" ? "z-20 pointer-events-none" : ""
+          }`}
+        >
+          <PlusButton playlists={playlists} tutorialStep={tutorialStep} />
+        </div>
       )}
-      {playlistName?.length > 0 && !isEditing && <Recommendation />}
+      {playlistName?.length > 0 && !isEditing && (
+        <div
+          className={`relative ${
+            tutorialStep === "env" ? "z-20 pointer-events-none" : ""
+          }`}
+        >
+          <Recommendation tutorialStep={tutorialStep} />
+        </div>
+      )}
 
       {!isEditing && <Footer bgColor="black" />}
       {toast === "editPlayList" && (

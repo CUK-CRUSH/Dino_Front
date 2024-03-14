@@ -23,7 +23,8 @@ import { fetchPlaylistData } from "@reducer/Admin/adminPlaylist";
 import { useSetRecoilState } from "recoil";
 import { adminuserNameState } from "@atoms/Admin/adminUsername";
 import Tutorial from "@components/Tutorial/Tutorial";
-type TutorialStep = "header" | "playlist" | null;
+import { useTutorial } from "@hooks/useTutorial/useTutorial";
+
 const AdminPage: React.FC = () => {
   const getDefaultMember = (): getMemberDTO => ({
     backgroundImageUrl: null,
@@ -138,46 +139,38 @@ const AdminPage: React.FC = () => {
     }
   };
 
-  const [tutorialStep, setTutorialStep] = useState<TutorialStep>(null);
-
-  const toggleTutorialMode = () => {
-    switch (tutorialStep) {
-      case null:
-        setTutorialStep("header"); // 처음 튜토리얼을 시작할 때
-        break;
-      case "header":
-        setTutorialStep("playlist"); // 헤더 튜토리얼 후 플레이리스트 튜토리얼로
-        break;
-      case "playlist":
-        setTutorialStep(null); // 플레이리스트 튜토리얼 후 튜토리얼 종료
-        break;
-      default:
-        setTutorialStep(null); // 그 외의 경우는 튜토리얼 종료
-    }
-  };
+  const { tutorialStep, toggleTutorialMode, setTutorialStep } = useTutorial();
 
   // 튜토리얼 모드를 표시하는 조건부 렌더링
   const isTutorialMode = tutorialStep !== null;
-  const handleClick = async () => {
-    // AddPlayList 컴포넌트의 로직에 맞게 정의합니다.
-    // 예시 로직:
-    // const post = await postPlayList(title, titleImage, token);
-    // if (post && post.status === 200) {
-    //   dispatch(setToast("add"));
-    //   navigate(`${post.data.id}`);
-    // }
+  const handlePageClick = (e: React.MouseEvent) => {
+    // 튜토리얼 모드가 활성화되어 있을 때만 동작
+    if (isTutorialMode) {
+      // 튜토리얼 모드가 'playlist'일 때는 클릭 이벤트 전파를 중단
+      if (tutorialStep === "playlist") {
+        e.stopPropagation(); // 이벤트 전파 중단
+        // 여기서는 추가적인 동작을 수행하지 않음
+        return;
+      }
+      // 튜토리얼 모드가 'playlist'가 아닐 때는 튜토리얼 모드 전환
+      toggleTutorialMode();
+    }
   };
+
   return (
     <div
       className={`h-full scrollbar-hide overflow-scroll relative ${
         isTutorialMode ? "bg-black bg-opacity-50" : ""
       }`}
-      onClick={tutorialStep === "playlist" ? handleClick : toggleTutorialMode}
+      onClick={handlePageClick}
     >
       {isTutorialMode && (
         <div className="fixed inset-0 bg-black bg-opacity-70 z-10"></div>
       )}
-      <Tutorial username={userData?.username} />
+      <Tutorial
+        username={userData?.username}
+        setTutorialMode={setTutorialStep}
+      />
 
       <Header
         id={userData.id}
