@@ -64,9 +64,9 @@ const Galaxy = () => {
     // 이는 메모리 누수를 방지하는 데 도움이 됩니다.
     return () => clearTimeout(timer);
   }, []); // 빈 배열을 의존성 배열로 전달하여 컴포넌트가 마운트될 때 한 번만 실행되도록 합니다.
+  const [isInstalled, setIsInstalled] = useState<string | undefined>(cookies.installation);
 
   // 오늘하루 보지 않기 기능
-  const [isInstalled, setIsInstalled] = useState(sessionStorage.getItem('installation'));
   const handleClose = () => {
     setCookie('installation', 'true', { path: '/', maxAge: 86400 }); // maxAge는 초 단위입니다 하루.
     setIsInstalled('true'); // 세션 스토리지 변경 후, isInstalled 상태를 업데이트하여 컴포넌트를 재렌더링합니다.
