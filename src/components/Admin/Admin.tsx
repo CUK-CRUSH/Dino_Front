@@ -138,8 +138,6 @@ const AdminPage: React.FC = () => {
     }
   };
 
-  // const footerHeight = useSizeFooter(playlistData?.length, 80, authority);
-
   return (
     <div className="h-full scrollbar-hide overflow-scroll relative ">
       <Tutorial username={userData?.username} />
