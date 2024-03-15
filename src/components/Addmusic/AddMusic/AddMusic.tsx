@@ -20,15 +20,17 @@ import { useTranslation } from "react-i18next";
 import { playAutoComplete } from "@api/AutoComplete/AutocompleteControl";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { fromButtonState } from "@atoms/Musics/locationState";
-
+import { useTutorial } from "@hooks/useTutorial/useTutorial";
 
 const AddMusic: React.FC = () => {
   const { t } = useTranslation("AddMusic");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { musicId } = useParams();
+  const { username } = useParams<{ username: string | undefined }>();
   const labels = useSelector((state: RootState) => state.labels);
-
+  const { tutorialStep, toggleTutorialMode } = useTutorial();
+  const isTutorialMode = tutorialStep !== null;
   // 자동완성
 
   const [suggestions, setSuggestions] = useState<{ [key: string]: string[] }>(
@@ -156,19 +158,50 @@ const AddMusic: React.FC = () => {
     if (!fromButton) {
       navigate("/");
     }
-  }, [navigate, fromButton]);
+    if (tutorialStep === "add2") {
+      handleDefaultInput();
+    }
+    if (tutorialStep === "end") {
+      navigate(`/user/${username}`);
+    }
+  }, [navigate, fromButton, tutorialStep]);
+
+  const handlePageClick = (e: any) => {
+    // 튜토리얼 모드가 아니거나, 현재 튜토리얼 단계가 list2일 때는 함수 실행을 중지
+    if (!isTutorialMode) {
+      e.stopPropagation(); // 이벤트 전파를 막음
+      return;
+    }
+
+    // list2가 아닐 때만 튜토리얼 모드를 전환
+    toggleTutorialMode();
+  };
+  console.log(tutorialStep);
   return (
-    <div className="scrollbar-hide overflow-scroll relative z-30 h-full w-full flex flex-col bg-black text-white py-10 text-[17px] leading-[18px]">
-      <div className="mt-14 mx-4">
-        <div className="flex flex-row mb-5 text-[18px]">
+    <div
+      className={`scrollbar-hide overflow-scroll relative  h-full w-full flex flex-col bg-black text-white py-10 text-[17px] leading-[18px] ${
+        isTutorialMode ? "bg-black bg-opacity-50" : ""
+      }`}
+      onClick={handlePageClick}
+    >
+      {isTutorialMode && (
+        <div className="fixed inset-0 bg-black bg-opacity-70 z-10"></div>
+      )}
+      <div className={`mt-14 mx-4  ${tutorialStep === "add1" ? "z-20" : ""}`}>
+        <div className="flex flex-row mb-5 text-[18px] ">
           <button className="mr-2">
             <img src={YoutubeIcon} alt="Youtube" />
           </button>
 
           <p className="mt-[2px]">{t("search")}</p>
         </div>
+
         {/* 검색 타입 토글 버튼 */}
-        <div className="flex w-[177px] h-[50px] items-center bg-[#2E2E2E] p-2 rounded-2xl ">
+        <div
+          className={`flex w-[177px] h-[50px] items-center bg-[#2E2E2E] p-2 rounded-2xl ${
+            tutorialStep === "add1" ? "pointer-events-none" : ""
+          }`}
+        >
           <button
             onClick={toggleSearchType}
             className="flex w-[160px] items-center justify-between"
@@ -179,11 +212,27 @@ const AddMusic: React.FC = () => {
 
             <img src={Switch} alt="Switch" />
           </button>
+          {tutorialStep === "add1" && (
+            <>
+              <div className="absolute text-[16px] w-[150px] h-[80px] top-28 right-3 mt-1 z-20 bg-white text-black p-2 rounded-md font-bold flex items-center justify-center">
+                <div className="text-start">
+                  <p className="mb-1">검색기준을</p>
+                  <p className="mb-1">전환할 수 있어요</p>
+                  <p>(제목 / 아티스트)</p>
+                </div>
+              </div>
+            </>
+          )}
         </div>
 
         {/* 검색 폼 */}
 
-        <form onSubmit={handleSearch} className="relative my-4 ">
+        <form
+          onSubmit={handleSearch}
+          className={`relative my-4 ${
+            tutorialStep === "add1" ? "pointer-events-none" : ""
+          }`}
+        >
           <MusicInput
             type="text"
             label=""
@@ -209,6 +258,7 @@ const AddMusic: React.FC = () => {
             <img src={Search} alt="Search" />
           </button>
         </form>
+
         <div className="mb-10">
           <p className="text-[12px] ml-1">
             {t("directinputdesc")}{" "}
@@ -221,10 +271,58 @@ const AddMusic: React.FC = () => {
           </p>
         </div>
       </div>
+      {tutorialStep === "add1" && (
+        <>
+          <div className="absolute text-[14px] w-[90%] h-[130px] top-[36%] mt-1 z-20 bg-white text-black p-2 rounded-md font-bold flex items-center justify-center">
+            <div className="text-start">
+              <p className="mb-1">
+                음악의 제목 혹은 아티스트의 이름을 검색하면
+              </p>
+              <p className="mb-1">유튜브 검색결과 창으로 이동해요</p>
+              <br />
+              <p className="mb-1">유튜브 검색결과 중,</p>
+              <p>원하는 영상의 링크를 복사해주세요!</p>
+            </div>
+          </div>
+        </>
+      )}
+      {tutorialStep === "add1" && (
+        <>
+          <div className="absolute text-[14px] w-[90%] h-[80px] top-[52%] mt-1 z-20 bg-white text-black p-2 rounded-md font-bold flex items-center justify-center">
+            <div className="text-start">
+              <p className="mb-1">유튜브 링크를 이미 가지고 있다면,</p>
+
+              <p>"직접 입력하기"로도 음악을 등록할 수 있어요</p>
+            </div>
+          </div>
+        </>
+      )}
       <AddBackButton handleBack={handleBack} />
 
+      {tutorialStep === "add2" && (
+        <>
+          <div className="absolute text-[14px] w-[90%] h-[150px] top-[33%] mt-1 z-30 bg-white text-black p-2 rounded-md font-bold flex items-center justify-center">
+            <div className="text-start">
+              <p className="mb-1">
+                나머지 음악 정보(제목/아티스트)를 입력하고,
+              </p>
+              <p className="mb-1">복사해온 유튜브 링크를 붙여넣어 주세요.</p>
+              <p className="mb-1">밑의 추가하기 버튼을 누르면 끝!</p>
+              <br />
+              <p className="mb-1 text-[12px] font-semibold">
+                더 편리하게 음악을 추가할 수 있도록,
+              </p>
+              <p className="text-[12px] font-semibold">
+                기능이 곧 업데이트 될 예정이에요!
+              </p>
+            </div>
+          </div>
+        </>
+      )}
       {searchClick && (
-        <div className="space-y-8 mx-4">
+        <div
+          className={`space-y-8 mx-4 ${tutorialStep === "add2" ? "z-20" : ""}`}
+        >
           <MusicInput
             type="text"
             label={labels.title}
@@ -257,8 +355,13 @@ const AddMusic: React.FC = () => {
             required={true}
             onChange={handleURLChange}
           />
-
-          <AddButton handleSave={handleSave} plusText={t("plus")} />
+          <div
+            className={`${
+              tutorialStep === "add2" ? "pointer-events-none" : ""
+            }`}
+          >
+            <AddButton handleSave={handleSave} plusText={t("plus")} />
+          </div>
         </div>
       )}
     </div>
