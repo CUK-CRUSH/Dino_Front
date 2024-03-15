@@ -34,7 +34,7 @@ export const RankingPlaylistComponents = ({ playlist, fontColor,rank }: { playli
           onClick={() => handleOnClick(playlist.username, playlist.id)}
         >
           <div className="w-[150px] h-[150px] rounded-[13px] font-light text-zinc-300 text-4xl cursor-pointer">
-          <img src={rankedImage[rank] } alt='x' className="absolute right-0" />
+          <img src={rankedImage[rank] } alt='x' className="absolute right-0 rounded-tr-[13px]	" />
             
             {playlist.thumbnailUrl ? (
               <img className="mx-auto w-[150px] h-full rounded-[13px]" src={playlist.thumbnailUrl} alt='x' />
