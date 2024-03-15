@@ -87,7 +87,7 @@ const Tutorial: React.FC<
           </div>
         </div>
       ) : (
-        <div className="w-[331px] h-[500px] bg-[#2E2E2E] rounded-[32px] shadow-md flex flex-col  text-white p-4 relative">
+        <div className="w-[331px] h-[350px] bg-[#2E2E2E] rounded-[32px] shadow-md flex flex-col  text-white p-4 relative">
           <h2 className="text-2xl font-bold  mx-5 ">
             이제, <br />
             MyList를

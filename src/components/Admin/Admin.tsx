@@ -41,6 +41,7 @@ const AdminPage: React.FC = () => {
 
   // 유저데이터
   const [userData, setUserdata] = useState<getMemberDTO>(getDefaultMember);
+  const [showTutorial, setShowTutorial] = useState(false);
 
   const { username } = useParams<{ username: string | undefined }>();
   const setAdminUsername = useSetRecoilState(adminuserNameState);
@@ -116,6 +117,13 @@ const AdminPage: React.FC = () => {
       setAdminUsername(username);
     }
   }, [username]);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowTutorial(true);
+    }, 300); // 0.3초 지연
+
+    return () => clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 정리
+  }, []); // 의존성 배열이 비어 있으므로 컴포넌트가 마운트될 때 한 번만 실행
 
   // 토스트
   const { toast } = useSelector((state: RootState) => state.toast);
@@ -144,19 +152,17 @@ const AdminPage: React.FC = () => {
   // 튜토리얼 모드를 표시하는 조건부 렌더링
   const isTutorialMode = tutorialStep !== null;
   const handlePageClick = (e: React.MouseEvent) => {
-    // 튜토리얼 모드가 활성화되어 있을 때만 동작
     if (isTutorialMode) {
-      // 튜토리얼 모드가 'playlist'일 때는 클릭 이벤트 전파를 중단
       if (tutorialStep === "playlist") {
         e.stopPropagation(); // 이벤트 전파 중단
-        // 여기서는 추가적인 동작을 수행하지 않음
+
         return;
       }
-      // 튜토리얼 모드가 'playlist'가 아닐 때는 튜토리얼 모드 전환
+
       toggleTutorialMode();
     }
   };
-  console.log(tutorialStep);
+
   return (
     <div
       className={`h-full scrollbar-hide overflow-scroll relative ${
@@ -167,11 +173,13 @@ const AdminPage: React.FC = () => {
       {isTutorialMode && (
         <div className="fixed inset-0 bg-black bg-opacity-70 z-10"></div>
       )}
-      <Tutorial
-        username={userData?.username}
-        setTutorialMode={setTutorialStep}
-        length={playlistData?.length}
-      />
+      {showTutorial && (
+        <Tutorial
+          username={userData?.username}
+          setTutorialMode={setTutorialStep}
+          length={playlistData?.length}
+        />
+      )}
       <div
         className={`relative ${
           tutorialStep === "playlist" ? "z-20 pointer-events-none" : ""
