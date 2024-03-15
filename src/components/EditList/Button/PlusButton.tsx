@@ -3,11 +3,13 @@ import { FaCirclePlus } from "react-icons/fa6";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { userNameState } from "@atoms/Playlist/username";
 import { fromButtonState } from "@atoms/Musics/locationState";
+import { TutorialStep } from "@atoms/Tutorial/TutorialStep";
 
 export const PlusButton: React.FC<{
   playlists: any;
   tutorialStep?: string | null;
-}> = ({ playlists, tutorialStep }) => {
+  setTutorialStep: (step: TutorialStep) => void;
+}> = ({ playlists, tutorialStep, setTutorialStep }) => {
   const navigate = useNavigate();
   const usernames = useRecoilValue(userNameState);
 
@@ -15,7 +17,7 @@ export const PlusButton: React.FC<{
 
   const handleAddMusicClick = () => {
     setFromButtonState(true);
-
+    if (tutorialStep === "list2") setTutorialStep("add1");
     navigate(`/user/${usernames}/${playlists.id}/edit`);
   };
 

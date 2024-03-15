@@ -14,8 +14,9 @@ export function useTutorial() {
       "list2",
       "add1",
       "add2",
+      "end",
       null,
-    ]; // null을 포함하여 순환 가능하도록 함
+    ];
     const currentStepIndex = stepOrder.indexOf(tutorialStep);
     const nextStep = stepOrder[(currentStepIndex + 1) % stepOrder.length];
     setTutorialStep(nextStep);

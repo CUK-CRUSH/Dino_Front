@@ -156,7 +156,7 @@ const AdminPage: React.FC = () => {
       toggleTutorialMode();
     }
   };
-
+  console.log(tutorialStep);
   return (
     <div
       className={`h-full scrollbar-hide overflow-scroll relative ${
@@ -170,14 +170,19 @@ const AdminPage: React.FC = () => {
       <Tutorial
         username={userData?.username}
         setTutorialMode={setTutorialStep}
+        length={playlistData?.length}
       />
-
-      <Header
-        id={userData.id}
-        authority={authority}
-        isTutorialMode={tutorialStep === "header"}
-      />
-
+      <div
+        className={`relative ${
+          tutorialStep === "playlist" ? "z-20 pointer-events-none" : ""
+        }`}
+      >
+        <Header
+          id={userData.id}
+          authority={authority}
+          isTutorialMode={tutorialStep === "header"}
+        />
+      </div>
       <UserProfileBackground
         userBackgroundImage={userData?.backgroundImageUrl}
       />

@@ -8,6 +8,7 @@ export type TutorialStep =
   | "list2"
   | "add1"
   | "add2"
+  | "end"
   | null;
 
 export const tutorialStepState = atom<TutorialStep>({

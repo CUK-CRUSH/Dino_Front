@@ -187,10 +187,14 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     return <NotFound />;
   }
 
-  const handlePageClick = () => {
-    if (!isTutorialMode) {
+  const handlePageClick = (e: any) => {
+    // 튜토리얼 모드가 아니거나, 현재 튜토리얼 단계가 list2일 때는 함수 실행을 중지
+    if (!isTutorialMode || tutorialStep === "list2") {
+      e.stopPropagation(); // 이벤트 전파를 막음
       return;
     }
+
+    // list2가 아닐 때만 튜토리얼 모드를 전환
     toggleTutorialMode();
   };
   console.log(tutorialStep);
@@ -263,12 +267,12 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
         setSelectedVideoIndex={setSelectedVideoIndex}
       />
       {isEditing && musicList.data?.length + musicData.musics.length < 9 && (
-        <div
-          className={`relative ${
-            tutorialStep === "list2" ? "z-20 pointer-events-none" : ""
-          }`}
-        >
-          <PlusButton playlists={playlists} tutorialStep={tutorialStep} />
+        <div className={`relative ${tutorialStep === "list2" ? "z-20" : ""}`}>
+          <PlusButton
+            playlists={playlists}
+            tutorialStep={tutorialStep}
+            setTutorialStep={setTutorialStep}
+          />
         </div>
       )}
       {playlistName?.length > 0 && !isEditing && (
