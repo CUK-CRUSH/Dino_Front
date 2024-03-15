@@ -6,14 +6,14 @@ import { useCookies } from "react-cookie";
 
 const Android = () => {
 
-  const [cookies,setCookie] = useCookies(['installation']);
+  const [cookies,setCookie] = useCookies(['androidInstallation']);
   // pwa 설치
   // BeforeInstallPromptEvent 타입 정의 (이 타입은 MDN 문서 또는 해당 API의 타입스크립트 정의에서 찾을 수 있습니다.)
   interface BeforeInstallPromptEvent extends Event {
     prompt: () => Promise<void>;
     userChoice: Promise<{ outcome: 'accepted' | 'dismissed', platform: string }>;
   }
-
+  
   const [installPrompt, setInstallPrompt] = useState<BeforeInstallPromptEvent | null>(null);
 
   useEffect(() => {
@@ -32,7 +32,6 @@ const Android = () => {
 
   const handleInstallClick = () => {
     if (!installPrompt) {
-      console.log('이미 다운로드')
       return;
     }
 
@@ -64,11 +63,11 @@ const Android = () => {
     // 이는 메모리 누수를 방지하는 데 도움이 됩니다.
     return () => clearTimeout(timer);
   }, []); // 빈 배열을 의존성 배열로 전달하여 컴포넌트가 마운트될 때 한 번만 실행되도록 합니다.
-  const [isInstalled, setIsInstalled] = useState<string | undefined>(cookies.installation);
+  const [isInstalled, setIsInstalled] = useState<string | undefined>(cookies.androidInstallation);
 
   // 오늘하루 보지 않기 기능
   const handleClose = () => {
-    setCookie('installation', 'true', { path: '/', maxAge: 86400 }); // maxAge는 초 단위입니다 하루.
+    setCookie('androidInstallation', 'true', { path: '/', maxAge: 86400 }); // maxAge는 초 단위입니다 하루.
     setIsInstalled('true'); // 세션 스토리지 변경 후, isInstalled 상태를 업데이트하여 컴포넌트를 재렌더링합니다.
   }
 
