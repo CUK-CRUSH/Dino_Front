@@ -1,7 +1,7 @@
 import { playlistNameState } from "@atoms/Playlist/playlistName";
 import useCompareToken from "@hooks/useCompareToken/useCompareToken";
 import CustomModal from "@utils/Modal/Modal";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { FaAngleLeft } from "react-icons/fa6";
 import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
@@ -17,6 +17,7 @@ type MainEditButtonProps = {
   fetchPlaylist: () => void;
   setPlaylistName: (name: string) => void;
   memberId: string | null | undefined;
+  tutorialStep: string | null;
 };
 
 export const MainEditButton = ({
@@ -25,7 +26,10 @@ export const MainEditButton = ({
   fetchPlaylist,
   setPlaylistName,
   memberId,
+  tutorialStep,
 }: MainEditButtonProps) => {
+  const editIconRef = useRef<HTMLImageElement>(null);
+
   const playlistName = useRecoilValue(playlistNameState);
 
   const location = useLocation();
@@ -41,10 +45,10 @@ export const MainEditButton = ({
   const cameFromVisitor = location.state?.fromVisitor;
 
   const handleBack = () => {
-    if(toast){
-      dispatch(setToast(''));
+    if (toast) {
+      dispatch(setToast(""));
     }
-    
+
     if (cameFromVisitor) {
       navigate(`/user/${paramUsername}`);
     } else {
@@ -73,6 +77,12 @@ export const MainEditButton = ({
   // 권한부여
   const authority = useCompareToken(memberId);
 
+  useEffect(() => {
+    if (tutorialStep === "env") {
+      setModalOpen(true);
+    }
+  }, [tutorialStep, setModalOpen]);
+
   return (
     <div className="flex min-h-[4%] items-center justify-between m-3 text-[19px]">
       <button type="button" onClick={handleBack} className="text-white">
@@ -93,8 +103,19 @@ export const MainEditButton = ({
           onClick={handleModalToggle}
           className="text-white"
         >
-          <img src={EditMusicIcon} alt="edit" />
+          <img ref={editIconRef} src={EditMusicIcon} alt="edit" />
         </button>
+      )}
+      {tutorialStep === "env" && (
+        <>
+          <div className="absolute w-[300px] h-[80px] top-40 right-3 mt-1 z-20 bg-white text-black p-2 rounded-md font-bold flex items-center justify-center">
+            <div className="text-start">
+              <p className="mb-1">나의 플레이리스트에 곡을 추가하고,</p>
+              <p>수정하거나 삭제할 수 있어요</p>
+            </div>
+          </div>
+          <div className="w-6 h-6 bg-white absolute top-[155px] right-7 z-[19] transform rotate-45"></div>
+        </>
       )}
 
       <CustomModal {...modalProps} />
