@@ -4,51 +4,51 @@ import { useCookies } from "react-cookie";
 import { TutorialStep } from "@atoms/Tutorial/TutorialStep";
 import { useTutorial } from "@hooks/useTutorial/useTutorial";
 
-  interface TutorialProps {
-    username?: string;
-    length?: number;
-  }
-  const Tutorial: React.FC<
-    TutorialProps & { setTutorialMode: (step: TutorialStep) => void }
-  > = ({ username, setTutorialMode, length }) => {
-    // 컴포넌트 내용...
-    const [isVisible, setIsVisible] = useState(true);
-    const [token] = useCookies(["accessToken"]);
-    const accessToken = token.accessToken;
-    const { tutorialStep } = useTutorial();
+interface TutorialProps {
+  username?: string;
+  length?: number;
+}
+const Tutorial: React.FC<
+  TutorialProps & { setTutorialMode: (step: TutorialStep) => void }
+> = ({ username, setTutorialMode, length }) => {
+  // 컴포넌트 내용...
+  const [isVisible, setIsVisible] = useState(true);
+  const [token] = useCookies(["accessToken"]);
+  const accessToken = token.accessToken;
+  const { tutorialStep } = useTutorial();
 
-    // 튜토리얼 닫기 함수
-    const handleClose = (e: React.MouseEvent) => {
-      // localStorage에 튜토리얼을 본 것으로 표시
-      e.stopPropagation();
-      localStorage.setItem("tutorial", "true");
+  // 튜토리얼 닫기 함수
+  const handleNext = (e: React.MouseEvent) => {
+    // localStorage에 튜토리얼을 본 것으로 표시
+    e.stopPropagation();
+    // localStorage.setItem("tutorial", "true");
+    setIsVisible(false);
+    setTutorialMode("header");
+  };
+
+  // 건너뛰기 함수
+  const handleSkip = (e: React.MouseEvent) => {
+    // localStorage에 튜토리얼을 본 것으로 표시
+    e.stopPropagation();
+    localStorage.setItem("tutorial", "true");
+    setIsVisible(false);
+    setTutorialMode(null);
+  };
+
+  useEffect(() => {
+    // 컴포넌트 마운트 시 localStorage에서 튜토리얼 표시 여부 확인
+    const tutorialSeen = localStorage.getItem("tutorial");
+    if (tutorialSeen === "true" || !accessToken || length !== 0) {
       setIsVisible(false);
-      setTutorialMode("header");
-    };
+    } else {
+      setIsVisible(true);
+    }
+    if (tutorialStep === "end") {
+      setIsVisible(true);
+    }
+  }, [accessToken, length, tutorialStep]);
 
-    // 건너뛰기 함수
-    const handleSkip = (e: React.MouseEvent) => {
-      // localStorage에 튜토리얼을 본 것으로 표시
-      e.stopPropagation();
-      localStorage.setItem("tutorial", "true");
-      setIsVisible(false);
-      setTutorialMode(null);
-    };
-
-    useEffect(() => {
-      // 컴포넌트 마운트 시 localStorage에서 튜토리얼 표시 여부 확인
-      const tutorialSeen = localStorage.getItem("tutorial");
-      if (tutorialSeen === "true" || !accessToken || length !== 0) {
-        setIsVisible(false);
-      } else {
-        setIsVisible(true);
-      }
-      if (tutorialStep === "end") {
-        setIsVisible(true);
-      }
-    }, [accessToken, length, tutorialStep]);
-
-    if (!isVisible) return null;
+  if (!isVisible) return null;
 
   return (
     <div
@@ -73,7 +73,7 @@ import { useTutorial } from "@hooks/useTutorial/useTutorial";
           </p>
           <div className="flex justify-between mx-5 mt-8">
             <button
-              onClick={handleClose}
+              onClick={handleNext}
               className="w-[100px] h-[50px] text-[19px] text-center bg-white font-bold text-black rounded-full"
             >
               보러가기
