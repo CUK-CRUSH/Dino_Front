@@ -23,6 +23,7 @@ import { fetchPlaylistData } from "@reducer/Admin/adminPlaylist";
 import { useSetRecoilState } from "recoil";
 import { adminuserNameState } from "@atoms/Admin/adminUsername";
 import Tutorial from "@components/Tutorial/Tutorial";
+import { useTutorial } from "@hooks/useTutorial/useTutorial";
 
 const AdminPage: React.FC = () => {
   const getDefaultMember = (): getMemberDTO => ({
@@ -40,6 +41,7 @@ const AdminPage: React.FC = () => {
 
   // 유저데이터
   const [userData, setUserdata] = useState<getMemberDTO>(getDefaultMember);
+  const [showTutorial, setShowTutorial] = useState(false);
 
   const { username } = useParams<{ username: string | undefined }>();
   const setAdminUsername = useSetRecoilState(adminuserNameState);
@@ -52,7 +54,7 @@ const AdminPage: React.FC = () => {
     const fetchData = async () => {
       try {
         const userDataResult = await getMemberUsername(username);
-        
+
         setUserdata(userDataResult.data);
         dispatch(setProfileIntroduction(userDataResult.data.introduction));
 
@@ -115,6 +117,13 @@ const AdminPage: React.FC = () => {
       setAdminUsername(username);
     }
   }, [username]);
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setShowTutorial(true);
+    }, 300); // 0.3초 지연
+
+    return () => clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 정리
+  }, []); // 의존성 배열이 비어 있으므로 컴포넌트가 마운트될 때 한 번만 실행
 
   // 토스트
   const { toast } = useSelector((state: RootState) => state.toast);
@@ -138,11 +147,50 @@ const AdminPage: React.FC = () => {
     }
   };
 
-  return (
-    <div className="h-full scrollbar-hide overflow-scroll relative ">
-      <Tutorial username={userData?.username} />
-      <Header id={userData.id} authority={authority} />
+  const { tutorialStep, toggleTutorialMode, setTutorialStep } = useTutorial();
 
+  // 튜토리얼 모드를 표시하는 조건부 렌더링
+  const isTutorialMode = tutorialStep !== null;
+  const handlePageClick = (e: React.MouseEvent) => {
+    if (isTutorialMode) {
+      if (tutorialStep === "playlist") {
+        e.stopPropagation(); // 이벤트 전파 중단
+
+        return;
+      }
+
+      toggleTutorialMode();
+    }
+  };
+
+  return (
+    <div
+      className={`h-full scrollbar-hide overflow-scroll relative ${
+        isTutorialMode ? "bg-black bg-opacity-50" : ""
+      }`}
+      onClick={handlePageClick}
+    >
+      {isTutorialMode && (
+        <div className="fixed inset-0 bg-black bg-opacity-70 z-10"></div>
+      )}
+      {showTutorial && authority && (
+        <Tutorial
+          username={userData?.username}
+          setTutorialMode={setTutorialStep}
+          length={playlistData?.length}
+        />
+      )}
+      <div
+        className={`relative ${
+          tutorialStep === "playlist" ? "z-20 pointer-events-none" : ""
+        }`}
+      >
+        <Header
+          id={userData.id}
+          authority={authority}
+          isTutorialMode={tutorialStep === "header"}
+        />
+      </div>
       <UserProfileBackground
         userBackgroundImage={userData?.backgroundImageUrl}
       />
@@ -161,8 +209,11 @@ const AdminPage: React.FC = () => {
 
       {/* 검은화면 */}
       <main
-        className={`w-full h-[calc(100vh)] absolute flex-grid bg-neutral-900 z-10 rounded-tl-[50px] rounded-tr-[50px] `}
+        className={`w-full h-[calc(100%)] absolute flex-grid bg-neutral-900 rounded-tl-[50px] rounded-tr-[50px] `}
       >
+        {/* ${
+        isTutorialMode ? "z-50 " : ""
+      } */}
         {/* 프로필 이미지 */}
 
         <UserProfileImage userProfileImage={userData?.profileImageUrl} />
@@ -196,7 +247,7 @@ const AdminPage: React.FC = () => {
         authority &&
         playlistData?.length !== undefined &&
         playlistData?.length < 4 ? (
-          <AddPlayList />
+          <AddPlayList isTutorialMode={tutorialStep === "playlist"} />
         ) : (
           <></>
         )}

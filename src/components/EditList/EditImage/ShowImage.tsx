@@ -22,6 +22,7 @@ const ShowImage = ({
   isEditing,
   fetchPlaylist,
   setUploadImage,
+  tutorialStep,
 }: ShowImageDTO) => {
   const dispatch = useDispatch();
   const isLoading = useSelector(
@@ -114,11 +115,30 @@ const ShowImage = ({
           대표 이미지 설정하기
         </span>{" "}
         {isEditing && (
-          <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
-            <button className="absolute bottom-2 right-3">
-              <img src={Camera} alt="Camera" width={32} height={32} />
-            </button>
-          </ImageCropper>
+          <>
+            <ImageCropper aspectRatio={aspectRatio} onCrop={onCrop}>
+              <button
+                className={`absolute bottom-2 ${
+                  tutorialStep === "list1"
+                    ? "z-20 -bottom-0 -right-0 flex items-end justify-end bg-white w-[100px] h-[100px] rounded-tl-full overflow-hidden pointer-events-none"
+                    : ""
+                } right-3`}
+              >
+                <img src={Camera} alt="Camera" width={32} height={32} />
+              </button>
+            </ImageCropper>
+            {tutorialStep === "list1" && (
+              <>
+                <div className="absolute text-[16px] w-[250px] h-[80px] bottom-1 left-3 mt-1 z-20 bg-white text-black p-2 rounded-md font-bold flex items-center justify-center">
+                  <div className="text-start">
+                    <p className="mb-1">플레이리스트의 대표이미지를</p>
+                    <p>등록/수정할 수 있어요</p>
+                  </div>
+                </div>
+                {/* <div className="w-6 h-6 bg-white absolute bottom-10 right-[30%] z-[19] transform translate-y-[50%] rotate-45"></div> */}
+              </>
+            )}
+          </>
         )}
       </div>
     </div>
