@@ -1,4 +1,5 @@
 import Android from "@components/Pwa/Android";
+import Ios from "@components/Pwa/Ios";
 import { setIsEditing } from "@reducer/editPlayList/isEdit";
 import {
   updateArtist,
@@ -39,6 +40,9 @@ const Layout: React.FC<LayoutDTO> = ({ children }) => {
     }
   }, [location.pathname, prevLocation.pathname, resetEditingState]);
 
+  // ios 확인
+  const isDeviceIOS = /iPad|iPhone|iPod/.test(window.navigator.userAgent);
+
   return (
     <div className="overflow-hidden  scrollbar-hide bg-[#111111]">
       <div className="min-h-screen h-auto w-full max-h-full flex justify-center">
@@ -46,8 +50,10 @@ const Layout: React.FC<LayoutDTO> = ({ children }) => {
           {children}
 
           {/* 설치유도 팝업 */}
+          {isDeviceIOS ? 
+          <Ios /> : <Android />
+        }
           
-          <Android />
           {/*  */}
           
         </main>

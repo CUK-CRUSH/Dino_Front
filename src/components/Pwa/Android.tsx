@@ -89,12 +89,12 @@ const Android = () => {
       {installPrompt && (!isInstalled && !isAndroidSessionInstallation) && myVar && isMobile && (
         <div className="fixed top-0 right-0 bottom-0 left-0 bg-black bg-opacity-60 z-40">
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            <div className="w-[331px] h-[330px] bg-[#2E2E2E] rounded-[32px] shadow-md flex flex-col justify-start text-white px-[10%]">
+            <div className="w-[350px] h-[330px] bg-[#2E2E2E] rounded-[32px] shadow-md flex flex-col justify-start text-white px-[5%]">
               <div 
                 className="flex justify-end mt-[15px] text-[#fff] pointer-cursor"
                 onClick={close}
                 >
-                 <p>❌</p>
+                 <img src={closeButton} alt='x' />
               </div>
               <div className="flex justify-center my-[15px] text-[19px] font-PretendardSemiBold">
                 <p>MyList를 앱으로 만나보세요! <br /> <span>아래버튼을 누르면 다운됩니다.</span></p>
