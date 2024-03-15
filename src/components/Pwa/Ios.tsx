@@ -81,6 +81,7 @@ const Ios = () => {
                 />
               </div>
               <div className="flex justify-between">
+
                 <button
                   onClick={closeEternal}
                   className="w-[100px] h-[40px] text-[16px] text-center bg-white font-PretendardSemiBold text-black rounded-full px-4"
