@@ -6,7 +6,7 @@ import closeButton from "@assets/Etc/close.svg";
 
 const Android = () => {
 
-  const [cookies,setCookie] = useCookies(['androidInstallation','isAndroidSessionInstallation']);
+  const [cookies,setCookie] = useCookies(['androidInstallation','isAndroidSessionInstallation','accessToken']);
   
   // pwa 설치
   // BeforeInstallPromptEvent 타입 정의 (이 타입은 MDN 문서 또는 해당 API의 타입스크립트 정의에서 찾을 수 있습니다.)
@@ -86,7 +86,7 @@ const Android = () => {
     <>
     {/* 설치가 안되있고 오늘하루보지않기 안 누른사람 접속한지 3초가 된사람 핸드폰일때*/}
 
-      {installPrompt && (!isInstalled && !isAndroidSessionInstallation) && myVar && isMobile && (
+      {(!cookies.accessToken || (cookies.accessToken && localStorage.getItem('tutorial'))) && installPrompt && (!isInstalled && !isAndroidSessionInstallation) && myVar && isMobile && (
         <div className="fixed top-0 right-0 bottom-0 left-0 bg-black bg-opacity-60 z-40">
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
             <div className="w-[350px] h-[330px] bg-[#2E2E2E] rounded-[32px] shadow-md flex flex-col justify-start text-white px-[5%]">
