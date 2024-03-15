@@ -1,4 +1,4 @@
-import Galaxy from "@components/Pwa/Galaxy";
+import Android from "@components/Pwa/Android";
 import { setIsEditing } from "@reducer/editPlayList/isEdit";
 import {
   updateArtist,
@@ -40,7 +40,8 @@ const Layout: React.FC<LayoutDTO> = ({ children }) => {
   }, [location.pathname, prevLocation.pathname, resetEditingState]);
 
 
-
+  const isDeviceIOS = /iPad|iPhone|iPod/.test(window.navigator.userAgent);
+  console.log(isDeviceIOS);
 
   return (
     <div className="overflow-hidden  scrollbar-hide bg-[#111111]">
@@ -49,7 +50,8 @@ const Layout: React.FC<LayoutDTO> = ({ children }) => {
           {children}
 
           {/* 설치유도 팝업 */}
-          <Galaxy />
+          
+          <Android />
           {/*  */}
           
         </main>

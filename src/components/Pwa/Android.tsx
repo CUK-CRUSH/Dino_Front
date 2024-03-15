@@ -4,7 +4,7 @@ import TutorialCharacter from "@assets/Install/TutorialCharacter.svg";
 import { useCookies } from "react-cookie";
 
 
-const Galaxy = () => {
+const Android = () => {
 
   const [cookies,setCookie] = useCookies(['installation']);
   // pwa 설치
@@ -116,4 +116,4 @@ const Galaxy = () => {
   );
 };
 
-export default Galaxy;
+export default Android;
