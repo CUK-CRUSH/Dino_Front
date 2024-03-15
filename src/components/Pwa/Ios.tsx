@@ -6,7 +6,7 @@ import iosDownload2 from "@assets/Pwa/iosDownload2.svg";
 
 const Ios = () => {
 
-  const [cookies,setCookie] = useCookies(['isIosSessionInstallation','iosOneDayInstallation','isIosEternalInstallation']);
+  const [cookies,setCookie] = useCookies(['isIosSessionInstallation','iosOneDayInstallation','isIosEternalInstallation','accessToken']);
 
   // myVar 상태와 이 상태를 설정할 수 있는 함수 setMyVar를 선언합니다.
   // 초기값은 false로 설정합니다.
@@ -53,12 +53,12 @@ const Ios = () => {
     <>
       {/* 설치가 안되있고 오늘하루보지않기 안 누른사람 접속한지 3초가 된사람 핸드폰일때*/}
 
-      { myVar &&   (!isIosOneDayInstallation && !isIosSessionInstallation && !isIosEternalInstallation) && (
+      {(!cookies.accessToken || (cookies.accessToken && localStorage.getItem('tutorial'))) && myVar &&   (!isIosOneDayInstallation && !isIosSessionInstallation && !isIosEternalInstallation) && (
         <div className="fixed top-0 right-0 bottom-0 left-0 bg-black bg-opacity-60 z-40">
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
-            <div className="w-[350px] h-[630px] bg-[#2E2E2E] rounded-[32px] shadow-md flex flex-col justify-start text-white px-[8%]">
+            <div className="w-[350px] h-[610px] bg-[#2E2E2E] rounded-[32px] shadow-md flex flex-col justify-start text-white px-[8%]">
             <div 
-                className="flex justify-end mt-[25px]  text-[#fff] pointer-cursor"
+                className="flex justify-end mt-[15px]  text-[#fff] pointer-cursor"
                 onClick={close}
                 >
                  <img src={closeButton} alt='x' />
@@ -80,7 +80,8 @@ const Ios = () => {
                   className="flex justify-center"
                 />
               </div>
-              <div className="flex justify-between my-[15px]">
+              <div className="flex justify-between">
+
                 <button
                   onClick={closeEternal}
                   className="w-[100px] h-[40px] text-[16px] text-center bg-white font-PretendardSemiBold text-black rounded-full px-4"
