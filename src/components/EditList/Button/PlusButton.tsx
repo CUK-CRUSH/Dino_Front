@@ -25,13 +25,13 @@ export const PlusButton: React.FC<{
     <div className="flex justify-center items-center text-black">
       {tutorialStep === "list2" && (
         <>
-          <div className="absolute text-[16px] w-[160px] h-[80px] -bottom-32 right-[50%] mt-1 z-20 bg-white text-black p-2 rounded-md font-bold flex items-center justify-center">
+          <div className="absolute text-[16px] w-[160px] h-[80px] -bottom-24 right-[50%] mt-1 z-20 bg-white text-black p-2 rounded-md font-bold flex items-center justify-center">
             <div className="text-start">
               <p className="mb-1">현재 플레이리스트에</p>
               <p>새로운 곡을 추가해요</p>
             </div>
           </div>
-          <div className="w-6 h-6 bg-white absolute -bottom-[50px] left-[40%] z-[19] transform translate-y-[50%] rotate-45"></div>
+          <div className="w-6 h-6 bg-white absolute -bottom-[24px] left-[40%] z-[19] transform translate-y-[50%] rotate-45"></div>
         </>
       )}
       <button
