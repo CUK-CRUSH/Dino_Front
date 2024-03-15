@@ -43,7 +43,7 @@ export const AddPlayList = ({
 
     handleAddPlaylist(title, titleImage, token);
   };
-  const { tutorialStep, setTutorialStep } = useTutorial();
+  const { tutorialStep } = useTutorial();
   const handleAddPlaylistClick = async (e: React.MouseEvent) => {
     e.stopPropagation();
 
