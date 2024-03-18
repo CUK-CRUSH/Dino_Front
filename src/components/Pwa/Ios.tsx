@@ -53,7 +53,7 @@ const Ios = () => {
     <>
       {/* 설치가 안되있고 오늘하루보지않기 안 누른사람 접속한지 3초가 된사람 핸드폰일때*/}
 
-      {(!cookies.accessToken || (cookies.accessToken && localStorage.getItem('tutorial'))) && myVar &&   (!isIosOneDayInstallation && !isIosSessionInstallation && !isIosEternalInstallation) && (
+      {Number(sessionStorage.getItem('navigationCount')) > 10 &&  myVar && (!isIosOneDayInstallation && !isIosSessionInstallation && !isIosEternalInstallation) && (
         <div className="fixed top-0 right-0 bottom-0 left-0 bg-black bg-opacity-60 z-40">
           <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2">
             <div className="w-[350px] h-[610px] bg-[#2E2E2E] rounded-[32px] shadow-md flex flex-col justify-start text-white px-[8%]">
