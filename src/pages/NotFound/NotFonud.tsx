@@ -1,6 +1,5 @@
 import {useNavigate} from 'react-router';
 import four from '@assets/Forbidden/404.svg';
-import Character from "@assets/Forbidden/Character.svg";
 import Footer from '@components/Layout/footer';
 
 const NotFound = () => {
@@ -8,10 +7,6 @@ const NotFound = () => {
   const handleClick = () => {
     navigate('/');
   }
-
-  const style = {
-    backgroundImage: `url(${Character})`,
-  };
 
   return (
     <div className="flex flex-col h-screen bg-no-repeat bg-right-bottom bg-[#171717] bg-charactor" >
