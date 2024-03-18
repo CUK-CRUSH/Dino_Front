@@ -1,6 +1,6 @@
 import hot from "@assets/Search/hot.svg";
 
-import { RankingPlaylistComponents } from '@components/Search/playlist/RankingPlaylist';
+import { RankingPlaylistComponents } from '@components/Search/playlist/RankingPlaylistComponents';
 import SkeltonPlaylist from '@components/Admin/SkeltonPlaylist';
 import OptionHeader from '@components/Layout/optionHeader';
 import { useCustomPlaylistMargin } from '@hooks/useCustomMargin/useCustomPlaylistMargin';

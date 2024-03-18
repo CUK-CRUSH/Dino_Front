@@ -1,3 +1,5 @@
+import Android from "@components/Pwa/Android";
+import Ios from "@components/Pwa/Ios";
 import { setIsEditing } from "@reducer/editPlayList/isEdit";
 import {
   updateArtist,
@@ -6,7 +8,8 @@ import {
   updateUrl,
 } from "@reducer/musicadd";
 import { usePreviousLocation } from "@utils/RouteRedux/isRouting";
-import React, { useEffect, useCallback } from "react";
+import React, { useEffect, useCallback} from "react";
+
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
 import { LayoutDTO } from "types/layout";
@@ -37,11 +40,22 @@ const Layout: React.FC<LayoutDTO> = ({ children }) => {
     }
   }, [location.pathname, prevLocation.pathname, resetEditingState]);
 
+  // ios 확인
+  const isDeviceIOS = /iPad|iPhone|iPod/.test(window.navigator.userAgent);
+
   return (
     <div className="overflow-hidden  scrollbar-hide bg-[#111111]">
-      <div className="h-screen w-full max-h-full flex justify-center">
-        <main className="max-w-[390px] smartPhone:max-w-[431px] w-full h-screen overflow-y-auto overflow-x-hidden relative font-PretendardRegular">
+      <div className="min-h-screen h-auto w-full max-h-full flex justify-center">
+        <main className="max-w-[390px] smartPhone:max-w-[431px] w-full min-h-screen h-auto overflow-y-auto overflow-x-hidden relative font-PretendardRegular">
           {children}
+
+          {/* 설치유도 팝업 */}
+          {isDeviceIOS ? 
+          <Ios /> : <Android />
+        }
+          
+          {/*  */}
+          
         </main>
       </div>
     </div>
