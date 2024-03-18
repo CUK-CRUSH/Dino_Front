@@ -1,0 +1,51 @@
+.tutorial-popup {
+  width: 331px;
+  height: 350px;
+  background-color: #2e2e2e;
+  border-radius: 32px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Left align content */
+  justify-content: center;
+}
+
+.tutorial-confirm-button {
+  background-color: white;
+  color: black;
+  border: 2.5px solid black;
+  border-radius: 100px;
+  font-weight: bold;
+  font-size: 19px;
+  width: 50px;
+  height: 50px;
+  align-self: center; /* 버튼을 중앙에 위치 */
+}
+
+.tutorial-title {
+  color: white;
+  font-weight: bold;
+  text-align: left; /* 텍스트 왼쪽 정렬 */
+  font-size: 20px;
+  width: 100%; /* 타이틀 너비를 100%로 설정 */
+}
+
+.tutorial-content {
+  color: white;
+  font-size: 15px;
+  text-align: left; /* 텍스트 왼쪽 정렬 */
+  width: 100%; /* 내용 너비를 100%로 설정 */
+  margin-top: 16px; /* 위 여백 추가 */
+  display: flex; /* Flex container로 설정 */
+  flex-direction: row;
+  justify-content: space-between; /* 내용과 버튼 사이 간격 설정 */
+  align-items: center; /* 세로축 중앙 정렬 */
+}
+
+.tutorial-content .swal-text {
+  font-size: 15px;
+  color: white;
+  flex-grow: 1; /* 내용이 버튼보다 더 많은 공간을 차지하도록 설정 */
+  text-align: start; /* 텍스트를 왼쪽 정렬합니다 */
+  margin-right: 20px; /* 텍스트와 버튼 사이의 간격을 추가합니다 */
+}
