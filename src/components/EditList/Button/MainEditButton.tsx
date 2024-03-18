@@ -84,7 +84,7 @@ export const MainEditButton = ({
   }, [tutorialStep, setModalOpen]);
 
   return (
-    <div className="flex min-h-[4%] items-center justify-between m-3 text-[19px]">
+    <div className="flex h-[4%] items-center justify-between m-3 text-[19px]">
       <button type="button" onClick={handleBack} className="text-white">
         <FaAngleLeft size={24} />
       </button>

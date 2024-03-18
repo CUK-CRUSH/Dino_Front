@@ -19,9 +19,7 @@ const Tutorial: React.FC<
 
   // 튜토리얼 닫기 함수
   const handleNext = (e: React.MouseEvent) => {
-    // localStorage에 튜토리얼을 본 것으로 표시
     e.stopPropagation();
-    // localStorage.setItem("tutorial", "true");
     setIsVisible(false);
     setTutorialMode("header");
   };
@@ -36,15 +34,12 @@ const Tutorial: React.FC<
   };
 
   useEffect(() => {
-    // 컴포넌트 마운트 시 localStorage에서 튜토리얼 표시 여부 확인
     const tutorialSeen = localStorage.getItem("tutorial");
-    if (tutorialSeen === "true" || !accessToken || length !== 0) {
-      setIsVisible(false);
+    // accessToken이 존재하고, 튜토리얼을 본 적이 없으며, 리스트 길이가 0인 경우에만 모달을 초기에 표시합니다.
+    if (!tutorialSeen && accessToken && length === 0 && tutorialStep === null) {
+      setIsVisible(true);
     } else {
-      setIsVisible(true);
-    }
-    if (tutorialStep === "end") {
-      setIsVisible(true);
+      setIsVisible(false);
     }
   }, [accessToken, length, tutorialStep]);
 
