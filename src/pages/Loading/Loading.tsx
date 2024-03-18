@@ -33,7 +33,7 @@ const Loading = () => {
           setIsLoading(false); // 데이터를 가져온 후 또는 오류 발생 시 로딩 상태를 false로 설정
         }
       } else {
-        // navigate('/welcome')
+        navigate('/welcome')
         console.error("Decoded token is not present");
       }
     }; 
