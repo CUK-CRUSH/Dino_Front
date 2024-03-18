@@ -2,9 +2,14 @@ import { Link } from "react-router-dom";
 import mainGraphic from "@assets/main_graphic.svg";
 import Mylist from "@assets/Mylist 1.svg";
 import { useTranslation } from "react-i18next";
-const HomeComponent = () => {
+import { useEffect } from "react";
+const WelcomeComponent = () => {
   const { t } = useTranslation("Home");
 
+  useEffect(()=>{
+
+  });
+  
   return (
     <div className="h-screen scrollbar-hide overflow-y-auto">
       <header className="flex mt-5 h-[calc(8vh - 54px)] flex-row-reverse justify-between items-center">
@@ -31,4 +36,4 @@ const HomeComponent = () => {
   );
 };
 
-export default HomeComponent;
+export default WelcomeComponent;
