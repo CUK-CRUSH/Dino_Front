@@ -14,6 +14,9 @@ module.exports = {
   mode: "jit",
   theme: {
     extend: {
+      backgroundImage: theme => ({
+        'charactor': "url('/src/assets/Forbidden/Character.svg')", // 'custom-name'은 원하는 이름으로 설정 가능
+      }),
       animation: {
         rotate: "rotate 60s linear infinite",
         flowing: "flowing 20s linear infinite",
