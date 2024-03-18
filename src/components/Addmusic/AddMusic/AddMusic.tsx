@@ -21,15 +21,27 @@ import { playAutoComplete } from "@api/AutoComplete/AutocompleteControl";
 import { useRecoilValue, useSetRecoilState } from "recoil";
 import { fromButtonState } from "@atoms/Musics/locationState";
 import { useTutorial } from "@hooks/useTutorial/useTutorial";
+import "@styles/Tutorial/tutorial.css";
 
 const AddMusic: React.FC = () => {
+  const swalButton = Swal.mixin({
+    customClass: {
+      popup: "tutorial-popup", // 모달 전체 배경
+
+      confirmButton: "tutorial-confirm-button", // 확인 버튼
+      title: "tutorial-title", // 타이틀
+      htmlContainer: "tutorial-content", // HTML 내용 컨테이너
+    },
+    buttonsStyling: false,
+  });
+
   const { t } = useTranslation("AddMusic");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { musicId } = useParams();
   const { username } = useParams<{ username: string | undefined }>();
   const labels = useSelector((state: RootState) => state.labels);
-  const { tutorialStep, toggleTutorialMode } = useTutorial();
+  const { tutorialStep, toggleTutorialMode, setTutorialStep } = useTutorial();
   const isTutorialMode = tutorialStep !== null;
   // 자동완성
 
@@ -161,10 +173,34 @@ const AddMusic: React.FC = () => {
     if (tutorialStep === "add2") {
       handleDefaultInput();
     }
+    // if (tutorialStep === "end") {
+    //   navigate(`/user/${username}`);
+    // }
+
     if (tutorialStep === "end") {
-      navigate(`/user/${username}`);
+      swalButton
+        .fire({
+          title: `<span class="tutorial-title">이제,<br/>MyList를<br/>제대로 만나볼까요?</span>`,
+          html: `<span class="tutorial-content">튜토리얼은 끝!<br/> 지금부터는<br/> 내 취향이 잔뜩 담긴<br/> 플레이리스트를 만들러가요!</span>`,
+          confirmButtonText: "▶️",
+          customClass: {
+            popup: "tutorial-popup",
+            confirmButton: "tutorial-confirm-button",
+            title: "tutorial-title",
+            htmlContainer: "tutorial-content",
+          },
+          buttonsStyling: false,
+          allowOutsideClick: false,
+        })
+        .then((result) => {
+          if (result.isConfirmed) {
+            localStorage.setItem("tutorial", "true");
+            setTutorialStep(null);
+            navigate(`/user/${username}`);
+          }
+        });
     }
-  }, [navigate, fromButton, tutorialStep]);
+  }, [navigate, fromButton, tutorialStep, username]);
 
   const handlePageClick = (e: any) => {
     // 튜토리얼 모드가 아니거나, 현재 튜토리얼 단계가 list2일 때는 함수 실행을 중지

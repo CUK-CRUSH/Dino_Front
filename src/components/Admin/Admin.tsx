@@ -162,7 +162,7 @@ const AdminPage: React.FC = () => {
       toggleTutorialMode();
     }
   };
-
+  console.log(tutorialStep);
   return (
     <div
       className={`h-full scrollbar-hide overflow-scroll relative ${
