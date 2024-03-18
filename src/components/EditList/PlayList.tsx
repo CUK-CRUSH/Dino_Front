@@ -202,7 +202,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
 
   return (
     <div
-      className={`h-full w-full scrollbar-hide overflow-scroll flex flex-col bg-black text-white font-medium leading-[18px] ${
+      className={`h-screen w-full scrollbar-hide overflow-scroll flex flex-col bg-black text-white font-medium leading-[18px] ${
         isTutorialMode ? "bg-black bg-opacity-50" : ""
       }`}
       onClick={handlePageClick}
