@@ -8,7 +8,7 @@ import {
   updateUrl,
 } from "@reducer/musicadd";
 import { usePreviousLocation } from "@utils/RouteRedux/isRouting";
-import React, { useEffect, useCallback} from "react";
+import React, { useEffect, useCallback } from "react";
 
 import { useDispatch } from "react-redux";
 import { useLocation } from "react-router-dom";
@@ -43,6 +43,12 @@ const Layout: React.FC<LayoutDTO> = ({ children }) => {
   // ios 확인
   const isDeviceIOS = /iPad|iPhone|iPod/.test(window.navigator.userAgent);
 
+    // Admin 컴포넌트 내부
+    useEffect(() => {
+      // Admin 페이지에 처음 들어왔을 때 navigationCount를 0으로 설정
+      sessionStorage.setItem('navigationCount', '0');
+  
+    }, []);
   return (
     <div className="overflow-hidden  scrollbar-hide bg-[#111111]">
       <div className="min-h-screen h-auto w-full max-h-full flex justify-center">
@@ -50,12 +56,12 @@ const Layout: React.FC<LayoutDTO> = ({ children }) => {
           {children}
 
           {/* 설치유도 팝업 */}
-          {isDeviceIOS ? 
-          <Ios /> : <Android />
-        }
-          
+          {isDeviceIOS ?
+            <Ios /> : <Android />
+          }
+
           {/*  */}
-          
+
         </main>
       </div>
     </div>

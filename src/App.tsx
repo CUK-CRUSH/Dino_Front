@@ -8,6 +8,7 @@ import "./styles/font.css";
 import { RecoilRoot } from "recoil";
 import PrivateRoute from '@components/PrivateRouter/PrivateRouter';
 import RankingMember from "@pages/Ranking/RankingMember";
+import usePageNavigationTracker from "@hooks/usePageNavigationTracker/usePageNavigationTracker.tsx/usePageNavigationTracker";
 
 const Loading = loadable(() => import("@pages/Loading/Loading"));
 const Welcome = loadable(() => import("@pages/Welcome/Welcome"));
@@ -39,7 +40,7 @@ const Unsign = loadable(() => import("@pages/Unsign/Unsign"));
 const Visitor = loadable(() => import("@pages/Visit/VisitPage"));
 
 function App() {
-
+  usePageNavigationTracker();
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>

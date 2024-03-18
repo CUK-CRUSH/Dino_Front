@@ -17,6 +17,7 @@ import { fetchSearch } from '@reducer/Search/getSearch';
 import NothingSearch from './part/NothingSearch';
 
 const SearchPage: React.FC = () => {
+
   // id값
   let token = localStorage.getItem('refreshToken');
   let decodedToken = useDecodedJWT(token);
