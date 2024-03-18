@@ -107,7 +107,10 @@ const LikeButton = ({ id }: any) => {
         />
       </div>
       {id === undefined ? null : (
-        <div onClick={handleNavigate} className="mx-2 mt-2">
+        <div
+          className="mx-2 mt-2"
+          onClick={!isEditing ? handleNavigate : undefined}
+        >
           <span className="text-center font-semibold">
             {likeCount < 1000 ? likeCount : "999+"}
           </span>
