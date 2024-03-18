@@ -9,7 +9,8 @@ import { RecoilRoot } from "recoil";
 import PrivateRoute from '@components/PrivateRouter/PrivateRouter';
 import RankingMember from "@pages/Ranking/RankingMember";
 
-const Home = loadable(() => import("@pages/Home/home"));
+const Loading = loadable(() => import("@pages/Loading/Loading"));
+const Welcome = loadable(() => import("@pages/Welcome/Welcome"));
 const LogIn = loadable(() => import("@pages/LogIn/login"));
 const SetProfile = loadable(() => import("@pages/SetProfile/SetProfile"));
 const Admin = loadable(() => import("@pages/Admin/Admin"));
@@ -45,7 +46,9 @@ function App() {
         <RecoilRoot>
           <Layout>
             <Routes>
-              <Route path="/" element={<Home />} />
+            <Route path="/" element={<Loading />} />
+
+              <Route path="/welcome" element={<Welcome />} />
               <Route path="/login" element={<LogIn />} />
 
               {/* 인증을 반드시 해야지만 접속 가능한 페이지 정의 */}
