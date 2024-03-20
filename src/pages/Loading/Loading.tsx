@@ -13,7 +13,6 @@ const Loading = () => {
   const dispatch = useDispatch();
   
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 관리를 위한 상태 변수
-  console.log(localStorage.getItem("refreshToken"));
   const refreshToken = getItemWithExpiry("refreshToken");
   const decodedToken = useDecodedJWT(refreshToken);
   const id = decodedToken?.sub;

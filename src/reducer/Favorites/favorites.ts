@@ -61,10 +61,15 @@ export const favoriteListSlice = createSlice({
       })
       .addCase(fetchFavoriteList.fulfilled, (state, action) => {
         state.status = "idle";
-        // Add any fetched posts to the array
-        state.favoriteList = state.favoriteList.concat(action.payload);
+        if (Array.isArray(action.payload)) { 
+          state.favoriteList = [...state.favoriteList, ...action.payload];
+        }
         state.currentPage += 1;
-        state.isLast = action.payload.length < 8;
+        
+        if(action.payload.length < 8) {
+          state.isLast = true;  
+        }
+        
       })
       .addCase(fetchFavoriteList.rejected, (state, action) => {
         state.status = "failed";

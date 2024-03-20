@@ -28,7 +28,7 @@ const FavoritesPage: React.FC = () => {
 
   useEffect(() => {
     if (status === "idle" && inView && !isLast) {
-      dispatch(fetchFavoriteList({ token: token, page:0 }));
+      dispatch(fetchFavoriteList({ token: token, page:currentPage }));
 
     }
     const delay = 200;
