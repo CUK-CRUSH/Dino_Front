@@ -15,7 +15,7 @@ import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@store/index";
 import { useDispatch } from "react-redux";
-import { favoriteListSlice, fetchFavoriteList } from "@reducer/Favorites/favorites";
+import { favoriteListSlice } from "@reducer/Favorites/favorites";
 
 const LikeButton = ({ id }: any) => {
   const swalButton = Swal.mixin({
