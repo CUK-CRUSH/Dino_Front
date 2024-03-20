@@ -2,7 +2,6 @@ import { useNavigate } from 'react-router';
 import logo from "@assets/Loading/Logo.svg";
 import title from "@assets/Loading/Title.svg";
 import { useEffect, useState } from 'react';
-import { useCookies } from 'react-cookie';
 import useDecodedJWT from '@hooks/useDecodedJWT';
 import { useDispatch } from 'react-redux';
 import { getMember } from '@api/member-controller/memberController';
@@ -11,10 +10,10 @@ import Spinner from '@assets/Spinner/Spinner.svg';
 const Loading = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
-  const [cookies, setCookie] = useCookies(["accessToken"]);
+  
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 관리를 위한 상태 변수
-
-  const decodedToken = useDecodedJWT(cookies.accessToken);
+  const refreshToken = localStorage.getItem('refreshToken');
+  const decodedToken = useDecodedJWT(refreshToken);
   const id = decodedToken?.sub;
 
   useEffect(() => {
@@ -38,7 +37,7 @@ const Loading = () => {
       }
     }; 
     redirectAfterFetch();
-  }, [navigate, setCookie, decodedToken, dispatch, id]);
+  }, [navigate, decodedToken, dispatch, id]);
 
   return (
     <div className="flex flex-col h-screen  bg-no-repeat bg-right-bottom bg-[#fff] bg-charactor">
