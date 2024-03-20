@@ -7,6 +7,7 @@ import "@styles/EditList/playList.css";
 import emailjs from "emailjs-com";
 import OptionHeader from "@components/Layout/optionHeader";
 import useDecodedJWT from "@hooks/useDecodedJWT";
+import getItemWithExpiry from "@utils/getItemWithExpiry/getItemWithExpiry";
 
 const Unsign = () => {
   const [cookies, , removeCookie] = useCookies(["accessToken"]);
@@ -14,7 +15,7 @@ const Unsign = () => {
   const [buttonColor, setButtonColor] = useState("#D9D9D9");
 
   // id값
-  let token = localStorage.getItem('refreshToken');
+  let token = getItemWithExpiry("refreshToken");
   let decodedToken = useDecodedJWT(token);
   let userId: string;
   if (decodedToken) {

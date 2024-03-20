@@ -1,3 +1,4 @@
+import getItemWithExpiry from "@utils/getItemWithExpiry/getItemWithExpiry";
 import axios from "axios";
 import Cookies from "js-cookie";
 
@@ -34,7 +35,7 @@ axiosInstance.interceptors.response.use(
     if (error.response.status === 401 && !originalRequest._retry) {
       originalRequest._retry = true;
 
-      const refreshToken = localStorage.getItem("refreshToken");
+      const refreshToken = getItemWithExpiry("refreshToken");
 
       if (refreshToken) {
         return axiosInstance
