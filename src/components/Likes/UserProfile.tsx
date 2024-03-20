@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 import defaultImage from "@assets/Admin/defaultImage.svg";
 import truncateText from "@utils/truncateText/truncateText";
 import useWindowSizeCustom from "@hooks/useCustomMargin/useWindowSizeCustom";
+import { useCustomPlaylistMargin } from "@hooks/useCustomMargin/useCustomPlaylistMargin";
 
 const UserProfile = ({ user }: any) => {
   const navigate = useNavigate();
@@ -12,6 +13,8 @@ const UserProfile = ({ user }: any) => {
   }, [navigate, user.username]);
   const { windowSize } = useWindowSizeCustom();
 
+  const customMargin = useCustomPlaylistMargin();
+
   return (
     <main className="flex items-center justify-between p-[4%]">
       <div className="flex items-center">
@@ -20,7 +23,7 @@ const UserProfile = ({ user }: any) => {
           alt="프로필 이미지"
           className="w-14 h-14 rounded-full"
         />
-        <div className="ml-[4%]">
+        <div style={{ marginLeft: customMargin }}>
           <h2 className="text-lg font-bold">{truncateText(user.username, windowSize.width, 22)}</h2>
           <p className="text-sm text-gray-500">{truncateText(user.introduction, windowSize.width, 18)}</p>
         </div>
