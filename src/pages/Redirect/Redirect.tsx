@@ -18,7 +18,6 @@ const fetchData = async (setCookie: any) => {
 
     setCookie("accessToken", accessToken, { path: "/", expires: date }); // Set accessToken in cookies
     setItemWithExpiry("refreshToken", refreshToken, 24 * 60 * 60 * 1000);
-
     return true; // tokens are successfully set
   }
   return false; // tokens are not set

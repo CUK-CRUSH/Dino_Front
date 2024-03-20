@@ -6,13 +6,15 @@ import useDecodedJWT from '@hooks/useDecodedJWT';
 import { useDispatch } from 'react-redux';
 import { getMember } from '@api/member-controller/memberController';
 import Spinner from '@assets/Spinner/Spinner.svg';
+import getItemWithExpiry from '@utils/getItemWithExpiry/getItemWithExpiry';
 
 const Loading = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   
   const [isLoading, setIsLoading] = useState(false); // 로딩 상태 관리를 위한 상태 변수
-  const refreshToken = localStorage.getItem('refreshToken');
+  console.log(localStorage.getItem("refreshToken"));
+  const refreshToken = getItemWithExpiry("refreshToken");
   const decodedToken = useDecodedJWT(refreshToken);
   const id = decodedToken?.sub;
 

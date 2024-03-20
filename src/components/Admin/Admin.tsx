@@ -162,10 +162,7 @@ const AdminPage: React.FC = () => {
       toggleTutorialMode();
     }
   };
-  const timestamp = 1710911191435;
-  const date = new Date(timestamp);
-  
-  console.log(date.toLocaleString("ko-KR", { timeZone: "Asia/Seoul" }));
+
   return (
     <div
       className={`h-full scrollbar-hide overflow-scroll relative ${
