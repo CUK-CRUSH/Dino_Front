@@ -22,6 +22,7 @@ import useCompareToken from "@hooks/useCompareToken/useCompareToken";
 import { FaCirclePlus } from "react-icons/fa6";
 import InfiniteScroll from "react-infinite-scroller";
 import getItemWithExpiry from "@utils/getItemWithExpiry/getItemWithExpiry";
+import defaultImage from "@assets/Admin/defaultImage.svg";
 
 interface VisitorData {
   id: number;
@@ -278,7 +279,7 @@ const Visitor = () => {
                         <div className="flex justify-between items-start ">
                           <div className="flex items-center mb-1">
                             <img
-                              src={visitor.member.profileImageUrl}
+                              src={visitor.member.profileImageUrl || defaultImage}
                               className="w-[20px] h-[20px] rounded-full mr-1"
                               alt="profile"
                             />
