@@ -21,6 +21,7 @@ import { getMemberUsername } from "@api/member-controller/memberController";
 import useCompareToken from "@hooks/useCompareToken/useCompareToken";
 import { FaCirclePlus } from "react-icons/fa6";
 import InfiniteScroll from "react-infinite-scroller";
+import getItemWithExpiry from "@utils/getItemWithExpiry/getItemWithExpiry";
 
 interface VisitorData {
   id: number;
@@ -217,7 +218,7 @@ const Visitor = () => {
     fetchVisitorData(newPage); // 새 페이지 번호를 fetchVisitorData에 전달합니다.
   };
 
-  const refreshToken = localStorage.getItem("refreshToken");
+  const refreshToken = getItemWithExpiry("refreshToken");
 
   // 토큰 해독
   const decodedRefeshToken = useDecodedJWT(refreshToken);

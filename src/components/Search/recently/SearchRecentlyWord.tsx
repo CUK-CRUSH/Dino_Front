@@ -1,5 +1,6 @@
 import useWindowSizeCustom from '@hooks/useCustomMargin/useWindowSizeCustom';
 import useDecodedJWT from '@hooks/useDecodedJWT';
+import getItemWithExpiry from '@utils/getItemWithExpiry/getItemWithExpiry';
 import truncateText from '@utils/truncateText/truncateText';
 import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -17,7 +18,7 @@ const SearchRecentlyWord: React.FC<setOpenSearchRecentlyDTO> = ({ setOpenSearchR
   const [searchTerms, setSearchTerms] = useState<Data[]>([]);
 
   // id값
-  let token = localStorage.getItem('refreshToken');
+  let token = getItemWithExpiry("refreshToken");
   let decodedToken = useDecodedJWT(token);
   let userId: string;
   if (decodedToken) {
