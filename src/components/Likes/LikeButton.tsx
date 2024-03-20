@@ -13,7 +13,9 @@ import { useCallback, useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import Swal from "sweetalert2";
 import { useSelector } from "react-redux";
-import { RootState } from "@store/index";
+import { AppDispatch, RootState } from "@store/index";
+import { useDispatch } from "react-redux";
+import { favoriteListSlice } from "@reducer/Favorites/favorites";
 
 const LikeButton = ({ id }: any) => {
   const swalButton = Swal.mixin({
@@ -41,6 +43,10 @@ const LikeButton = ({ id }: any) => {
 
   const [likeCount, setLikeCount] = useState<number>(0);
   const [isLike, setIsLike] = useState<boolean>(false);
+  
+  // 좋아요 갱신
+  const dispatch = useDispatch<AppDispatch>();
+
 
   const handleLikeToggle = async () => {
     if (!token) {
@@ -65,8 +71,11 @@ const LikeButton = ({ id }: any) => {
     try {
       if (isLike) {
         await deleteLike(Number(playlistId), token);
+        dispatch(favoriteListSlice.actions.reset());
+
       } else {
         await postLike(Number(playlistId), token);
+        dispatch(favoriteListSlice.actions.reset());
       }
       fetchPlaylist();
     } catch (error) {
