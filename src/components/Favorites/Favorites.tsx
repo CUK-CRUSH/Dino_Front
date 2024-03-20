@@ -1,13 +1,10 @@
-import { getFavoritesPlayList } from "@api/playlist-controller/playlistControl";
 import { PlayList } from "@components/Admin/playlist/PlayList";
-import SkeltonPlaylist from "@components/Admin/SkeltonPlaylist";
 import InfiniteDiv from "@components/InfiniteDiv/InfiniteDiv";
 import OptionHeader from "@components/Layout/optionHeader";
-import { useCustomPlaylistMargin } from "@hooks/useCustomMargin/useCustomPlaylistMargin";
-import { fetchFavoriteList, favoriteListSlice } from "@reducer/Favorites/favorites";
+import { fetchFavoriteList } from "@reducer/Favorites/favorites";
 import { AppDispatch, RootState } from "@store/index";
 
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import { useCookies } from "react-cookie";
 import { useInView } from "react-intersection-observer";
 import { useDispatch } from "react-redux";
@@ -38,10 +35,8 @@ const FavoritesPage: React.FC = () => {
     const timeoutId = setTimeout(() => {
     }, delay);
     return () => clearTimeout(timeoutId);
-  }, [status, dispatch,  currentPage, inView, isLast]);
+  }, [status, dispatch,  currentPage, inView, isLast, token]);
 
-  // skelton margin
-  const customMargin = useCustomPlaylistMargin();
 
   return (
     <div className="h-full min-h-screen w-full scrollbar-hide overflow-scroll flex  flex-col bg-white text-black text-[15px] font-medium leading-[18px]">
