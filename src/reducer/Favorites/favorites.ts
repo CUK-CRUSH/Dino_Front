@@ -28,7 +28,6 @@ export const fetchFavoriteList = createAsyncThunk<
   { dispatch: AppDispatch; state: RootState }
 >("favoriteList/fetchFavoriteList", async ({ token, page }) => {
   const response = await getFavoritesPlayList(token, page);
-  console.log(response)
   if (!response.data) {
     throw new Error("API Response is missing data field");
   }

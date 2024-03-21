@@ -26,17 +26,12 @@ const FavoritesPage: React.FC = () => {
   const isLast = useSelector((state: RootState) => state.favorite.isLast);
   const status = useSelector((state: RootState) => state.favorite.status);
 
+  /* eslint-disable react-hooks/exhaustive-deps */
   useEffect(() => {
     if (status === "idle" && inView && !isLast) {
       dispatch(fetchFavoriteList({ token: token, page:currentPage }));
-
     }
-    const delay = 200;
-    const timeoutId = setTimeout(() => {
-    }, delay);
-    return () => clearTimeout(timeoutId);
-  }, [status, dispatch,  currentPage, inView, isLast, token]);
-
+  }, [inView,isLast]);
 
   return (
     <div className="h-full min-h-screen w-full scrollbar-hide overflow-scroll flex  flex-col bg-white text-black text-[15px] font-medium leading-[18px]">
@@ -48,6 +43,7 @@ const FavoritesPage: React.FC = () => {
             <PlayList key={playlist.id} playlist={playlist} fontColor='#000' visible={true} />
           ))}
       </div>
+      
       <InfiniteDiv view={view} />
 
     </div>
