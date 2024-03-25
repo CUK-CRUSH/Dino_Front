@@ -66,9 +66,13 @@ const AddMusic: React.FC = () => {
   const navigate = useNavigate();
   const { musicId } = useParams();
   const { username } = useParams<{ username: string | undefined }>();
-  const labels = useSelector((state: RootState) => state.labels);
+
   const { tutorialStep, toggleTutorialMode, setTutorialStep } = useTutorial();
   const isTutorialMode = tutorialStep !== null;
+
+  const [localTitle, setLocalTitle] = useState("");
+  const [localArtist, setLocalArtist] = useState("");
+  const [localUrl, setLocalUrl] = useState("");
 
   // 자동완성
 
@@ -110,17 +114,6 @@ const AddMusic: React.FC = () => {
     setSearchClick(false);
   };
 
-  const handleSearch = (e: React.FormEvent) => {
-    e.preventDefault();
-    window.open(
-      `https://www.youtube.com/results?search_query=${
-        searchType === "title" ? title : artist
-      }`,
-      "_blank"
-    );
-    setSearchClick(true);
-  };
-
   const handleDefaultInput = () => {
     setSearchClick((prevSearchClick) => !prevSearchClick);
   };
@@ -132,16 +125,22 @@ const AddMusic: React.FC = () => {
   const musicData = useSelector((state: RootState) => state.musicAdd);
   const { title, artist, url } = musicData;
 
-  const handleTitleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(updateTitle(e.target.value));
+  const handleTitleChange = (e: any) => {
+    const newTitle = e.target.value;
+    setLocalTitle(newTitle);
+    dispatch(updateTitle(newTitle)); // Assuming you have such an action
   };
 
-  const handleArtistChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(updateArtist(e.target.value));
+  const handleArtistChange = (e: any) => {
+    const newArtist = e.target.value;
+    setLocalArtist(newArtist);
+    dispatch(updateArtist(newArtist)); // Assuming you have such an action
   };
 
-  const handleURLChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    dispatch(updateUrl(e.target.value));
+  const handleUrlChange = (e: any) => {
+    const newUrl = e.target.value;
+    setLocalUrl(newUrl);
+    dispatch(updateUrl(newUrl)); // Assuming you have such an action
   };
 
   const handleSave = useCallback(async () => {
@@ -263,7 +262,16 @@ const AddMusic: React.FC = () => {
     setVideos([]); // 검색 결과 초기화
     setSearchClick(true);
   };
-  console.log(searchTerm);
+
+  useEffect(() => {
+    if (selectedVideo) {
+      setLocalTitle(selectedVideo.snippet.title);
+      setLocalArtist(selectedVideo.snippet.channelTitle);
+      setLocalUrl(
+        `https://www.youtube.com/watch?v=${selectedVideo.id.videoId}`
+      );
+    }
+  }, [selectedVideo]);
   return (
     <div
       className={`scrollbar-hide overflow-scroll relative  h-full w-full flex flex-col bg-black text-white py-10 text-[17px] leading-[18px] ${
@@ -423,29 +431,25 @@ const AddMusic: React.FC = () => {
             type="text"
             label="Title"
             placeholder="Title"
-            value={selectedVideo ? selectedVideo.snippet.title : ""}
+            value={localTitle}
             required={true}
-            onChange={(e) => dispatch(updateTitle(e.target.value))}
+            onChange={handleTitleChange}
           />
           <MusicInput
             type="text"
             label="Artist"
             placeholder="Artist"
-            value={selectedVideo ? selectedVideo.snippet.channelTitle : ""}
+            value={localArtist}
             required={true}
-            onChange={(e) => dispatch(updateArtist(e.target.value))}
+            onChange={handleArtistChange}
           />
           <MusicInput
             type="url"
             label="URL"
             placeholder="https://youtu.be"
-            value={
-              selectedVideo
-                ? `https://www.youtube.com/watch?v=${selectedVideo.id.videoId}`
-                : ""
-            }
+            value={localUrl}
             required={true}
-            onChange={(e) => dispatch(updateUrl(e.target.value))}
+            onChange={handleUrlChange}
           />
           <div
             className={`${

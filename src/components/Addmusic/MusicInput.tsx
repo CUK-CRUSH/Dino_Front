@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateArtist, updateTitle, updateUrl } from "@reducer/musicadd";
 import { AnyAction } from "@reduxjs/toolkit";
 import { RootState } from "@store/index";
-import Swal from "sweetalert2";
+
 import Cancel from "@assets/AddMusic/DeleteMusic.svg";
 import "@styles/EditList/playList.css";
 
@@ -24,16 +24,6 @@ export const MusicInput: React.FC<MusicInputDTO> = ({
   const wrapperRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
   const labels = useSelector((state: RootState) => state.labels);
-  const swalButton = Swal.mixin({
-    customClass: {
-      popup: "popup", // 전체
-      confirmButton: "confirmButton", // 취소
-      cancelButton: "cancelButton", // 삭제
-      title: "title", // 타이틀
-      htmlContainer: "htmlContainer", // 내용
-    },
-    buttonsStyling: false,
-  });
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
