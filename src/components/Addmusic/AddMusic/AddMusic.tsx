@@ -352,14 +352,20 @@ const AddMusic: React.FC = () => {
           </button>
         </form>
         {videos.map((video, index) => (
-          <div key={index} style={{ marginBottom: "20px" }}>
+          <div
+            key={index}
+            className="flex items-center space-x-4 rounded-lg shadow-lg p-4"
+          >
             <img
               src={video.snippet.thumbnails.high.url}
               alt={video.snippet.title}
-              style={{ cursor: "pointer" }}
+              className="w-[150px] h-auto flex-none rounded-lg"
               onClick={() => handleImageClick(video)}
             />
-            <p>{video.snippet.title}</p>
+            <div className="flex-grow">
+              <p className="text-lg font-semibold">{video.snippet.title}</p>
+              <p className="text-sm">{video.snippet.channelTitle}</p>
+            </div>
           </div>
         ))}
 
