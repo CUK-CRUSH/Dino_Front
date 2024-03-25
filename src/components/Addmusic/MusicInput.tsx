@@ -68,27 +68,6 @@ export const MusicInput: React.FC<MusicInputDTO> = ({
     [onSuggestionClick]
   );
 
-  const handleCopyClipBoard = useCallback(async () => {
-    try {
-      const text = await navigator.clipboard.readText();
-      if (
-        !text.startsWith("https://www.youtube.com/") &&
-        !text.startsWith("https://youtu.be/") &&
-        !text.startsWith("https://youtube.com/")
-      ) {
-        swalButton.fire({
-          title: t("unvalid"),
-        });
-        return;
-      }
-      onChange({
-        target: { value: text },
-      } as React.ChangeEvent<HTMLInputElement>);
-    } catch (e) {
-      console.error(e);
-    }
-  }, [onChange, swalButton, t]);
-
   const handleClear = useCallback(
     (action: () => AnyAction) => {
       dispatch(action());
@@ -119,12 +98,6 @@ export const MusicInput: React.FC<MusicInputDTO> = ({
       )}
       {label === labels.URL && (
         <>
-          <button
-            className="absolute -top-1 left-10 text-[10px] bg-[#2E2E2E] p-1 rounded-lg cursor-help"
-            onClick={handleCopyClipBoard}
-          >
-            붙여넣기
-          </button>
           <button
             onClick={() => handleClear(() => updateUrl(""))}
             className="absolute top-[42px] right-3 text-[10px] bg-[#2E2E2E] p-1 rounded-2xl"

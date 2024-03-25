@@ -22,6 +22,32 @@ import { useRecoilValue, useSetRecoilState } from "recoil";
 import { fromButtonState } from "@atoms/Musics/locationState";
 import { useTutorial } from "@hooks/useTutorial/useTutorial";
 import "@styles/Tutorial/tutorial.css";
+import { youtubeAPIData } from "@api/youtube";
+
+interface VideoSnippet {
+  publishedAt: string;
+  channelId: string;
+  title: string;
+  description: string;
+  thumbnails: {
+    default: { url: string; width: number; height: number };
+    medium: { url: string; width: number; height: number };
+    high: { url: string; width: number; height: number };
+  };
+  channelTitle: string;
+  liveBroadcastContent: string;
+  publishTime: string;
+}
+
+interface Video {
+  kind: string;
+  etag: string;
+  id: {
+    kind: string;
+    videoId: string;
+  };
+  snippet: VideoSnippet;
+}
 
 const AddMusic: React.FC = () => {
   const swalButton = Swal.mixin({
@@ -43,6 +69,7 @@ const AddMusic: React.FC = () => {
   const labels = useSelector((state: RootState) => state.labels);
   const { tutorialStep, toggleTutorialMode, setTutorialStep } = useTutorial();
   const isTutorialMode = tutorialStep !== null;
+
   // 자동완성
 
   const [suggestions, setSuggestions] = useState<{ [key: string]: string[] }>(
@@ -173,9 +200,6 @@ const AddMusic: React.FC = () => {
     if (tutorialStep === "add2") {
       handleDefaultInput();
     }
-    // if (tutorialStep === "end") {
-    //   navigate(`/user/${username}`);
-    // }
 
     if (tutorialStep === "end") {
       swalButton
@@ -212,7 +236,34 @@ const AddMusic: React.FC = () => {
     // list2가 아닐 때만 튜토리얼 모드를 전환
     toggleTutorialMode();
   };
-  console.log(tutorialStep);
+  const [searchTerm, setSearchTerm] = useState<string>("");
+  const [videos, setVideos] = useState<Video[]>([]); // Use the Video interface here
+  const [selectedVideo, setSelectedVideo] = useState<Video | null>(null);
+
+  const handleYotubeSearch = async (e: React.FormEvent) => {
+    e.preventDefault(); // Prevent form submission from reloading the page
+    try {
+      const data = await youtubeAPIData(5, searchTerm);
+      if (data && data.items) {
+        setVideos(data.items);
+        setSelectedVideo(null);
+      } else {
+        console.log("No data returned from the API");
+      }
+    } catch (error) {
+      console.error("Failed to fetch YouTube data", error);
+    }
+  };
+
+  const handleImageClick = (video: Video) => {
+    setSelectedVideo(video); // Optional: store the selected video for other uses
+    dispatch(updateTitle(video.snippet.title));
+    dispatch(updateArtist(video.snippet.channelTitle));
+    dispatch(updateUrl(`https://www.youtube.com/watch?v=${video.id.videoId}`));
+    setVideos([]); // 검색 결과 초기화
+    setSearchClick(true);
+  };
+  console.log(searchTerm);
   return (
     <div
       className={`scrollbar-hide overflow-scroll relative  h-full w-full flex flex-col bg-black text-white py-10 text-[17px] leading-[18px] ${
@@ -264,7 +315,7 @@ const AddMusic: React.FC = () => {
         {/* 검색 폼 */}
 
         <form
-          onSubmit={handleSearch}
+          onSubmit={handleYotubeSearch}
           className={`relative my-4 ${
             tutorialStep === "add1" ? "pointer-events-none" : ""
           }`}
@@ -275,11 +326,9 @@ const AddMusic: React.FC = () => {
             placeholder={
               searchType === "title" ? t("titlesearch") : t("artistsearch")
             }
-            value={searchType === "title" ? title : artist}
+            value={searchTerm}
             required={true}
-            onChange={
-              searchType === "title" ? handleTitleChange : handleArtistChange
-            }
+            onChange={(e) => setSearchTerm(e.target.value)}
             suggestions={suggestions[searchType]}
             onSuggestionClick={(suggestion: string) => {
               dispatch(
@@ -294,6 +343,17 @@ const AddMusic: React.FC = () => {
             <img src={Search} alt="Search" />
           </button>
         </form>
+        {videos.map((video, index) => (
+          <div key={index} style={{ marginBottom: "20px" }}>
+            <img
+              src={video.snippet.thumbnails.high.url}
+              alt={video.snippet.title}
+              style={{ cursor: "pointer" }}
+              onClick={() => handleImageClick(video)}
+            />
+            <p>{video.snippet.title}</p>
+          </div>
+        ))}
 
         <div className="mb-10">
           <p className="text-[12px] ml-1">
@@ -361,35 +421,31 @@ const AddMusic: React.FC = () => {
         >
           <MusicInput
             type="text"
-            label={labels.title}
-            placeholder={labels.title}
-            value={title}
+            label="Title"
+            placeholder="Title"
+            value={selectedVideo ? selectedVideo.snippet.title : ""}
             required={true}
-            onChange={handleTitleChange}
-            suggestions={suggestions["title"]}
-            onSuggestionClick={(suggestion) => {
-              dispatch(updateTitle(suggestion));
-            }}
+            onChange={(e) => dispatch(updateTitle(e.target.value))}
           />
           <MusicInput
             type="text"
-            label={labels.artist}
-            placeholder={labels.artist}
-            value={artist}
+            label="Artist"
+            placeholder="Artist"
+            value={selectedVideo ? selectedVideo.snippet.channelTitle : ""}
             required={true}
-            onChange={handleArtistChange}
-            suggestions={suggestions["artist"]}
-            onSuggestionClick={(suggestion) => {
-              dispatch(updateArtist(suggestion));
-            }}
+            onChange={(e) => dispatch(updateArtist(e.target.value))}
           />
           <MusicInput
             type="url"
-            label={labels.URL}
+            label="URL"
             placeholder="https://youtu.be"
-            value={url}
+            value={
+              selectedVideo
+                ? `https://www.youtube.com/watch?v=${selectedVideo.id.videoId}`
+                : ""
+            }
             required={true}
-            onChange={handleURLChange}
+            onChange={(e) => dispatch(updateUrl(e.target.value))}
           />
           <div
             className={`${
