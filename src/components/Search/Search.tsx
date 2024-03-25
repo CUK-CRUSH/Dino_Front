@@ -15,10 +15,12 @@ import { fetchSearchMemberRanking } from '@reducer/Search/getSearchMemberRanking
 import { fetchSearchPlaylistRanking } from '@reducer/Search/getSearchPlaylistRanking';
 import { fetchSearch } from '@reducer/Search/getSearch';
 import NothingSearch from './part/NothingSearch';
+import getItemWithExpiry from '@utils/getItemWithExpiry/getItemWithExpiry';
 
 const SearchPage: React.FC = () => {
+
   // id값
-  let token = localStorage.getItem('refreshToken');
+  let token = getItemWithExpiry('refreshToken');
   let decodedToken = useDecodedJWT(token);
   let userId: string | undefined;
   if (decodedToken) {

@@ -5,6 +5,7 @@ import useDecodedJWT from "@hooks/useDecodedJWT";
 import { getMember } from "@api/member-controller/memberController";
 import { useDispatch } from "react-redux";
 import { setToast } from "@reducer/Toast/toast";
+import setItemWithExpiry from "@utils/setItemWithExpiry/setItemWithExpiry";
 
 const fetchData = async (setCookie: any) => {
   const params = new URLSearchParams(window.location.search);
@@ -16,8 +17,8 @@ const fetchData = async (setCookie: any) => {
     date.setMinutes(date.getMinutes() + 30); // Set the date 10 minutes from now
 
     setCookie("accessToken", accessToken, { path: "/", expires: date }); // Set accessToken in cookies
-    localStorage.setItem("refreshToken", refreshToken); // Set refreshToken in local storage
-
+    setItemWithExpiry("refreshToken", refreshToken, 24 * 60 * 60 * 1000);
+    // localStorage.setItem('refreshToken',refreshToken)
     return true; // tokens are successfully set
   }
   return false; // tokens are not set
