@@ -197,8 +197,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
     // list2가 아닐 때만 튜토리얼 모드를 전환
     toggleTutorialMode();
   };
-  console.log(tutorialStep);
-  console.log(isEditing);
 
   return (
     <div
