@@ -272,6 +272,7 @@ const AddMusic: React.FC = () => {
       );
     }
   }, [selectedVideo]);
+  console.log(`${process.env.REACT_APP_YOUTUBE_API_KEY_}`);
   return (
     <div
       className={`scrollbar-hide overflow-scroll relative  h-full w-full flex flex-col bg-black text-white py-10 text-[17px] leading-[18px] ${
