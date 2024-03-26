@@ -5,7 +5,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { updateArtist, updateTitle, updateUrl } from "@reducer/musicadd";
 import { AnyAction } from "@reduxjs/toolkit";
 import { RootState } from "@store/index";
-import Swal from "sweetalert2";
+
 import Cancel from "@assets/AddMusic/DeleteMusic.svg";
 import "@styles/EditList/playList.css";
 
@@ -24,16 +24,6 @@ export const MusicInput: React.FC<MusicInputDTO> = ({
   const wrapperRef = useRef<HTMLDivElement>(null);
   const dispatch = useDispatch();
   const labels = useSelector((state: RootState) => state.labels);
-  const swalButton = Swal.mixin({
-    customClass: {
-      popup: "popup", // 전체
-      confirmButton: "confirmButton", // 취소
-      cancelButton: "cancelButton", // 삭제
-      title: "title", // 타이틀
-      htmlContainer: "htmlContainer", // 내용
-    },
-    buttonsStyling: false,
-  });
 
   useEffect(() => {
     function handleClickOutside(event: MouseEvent) {
@@ -68,27 +58,6 @@ export const MusicInput: React.FC<MusicInputDTO> = ({
     [onSuggestionClick]
   );
 
-  const handleCopyClipBoard = useCallback(async () => {
-    try {
-      const text = await navigator.clipboard.readText();
-      if (
-        !text.startsWith("https://www.youtube.com/") &&
-        !text.startsWith("https://youtu.be/") &&
-        !text.startsWith("https://youtube.com/")
-      ) {
-        swalButton.fire({
-          title: t("unvalid"),
-        });
-        return;
-      }
-      onChange({
-        target: { value: text },
-      } as React.ChangeEvent<HTMLInputElement>);
-    } catch (e) {
-      console.error(e);
-    }
-  }, [onChange, swalButton, t]);
-
   const handleClear = useCallback(
     (action: () => AnyAction) => {
       dispatch(action());
@@ -119,12 +88,6 @@ export const MusicInput: React.FC<MusicInputDTO> = ({
       )}
       {label === labels.URL && (
         <>
-          <button
-            className="absolute -top-1 left-10 text-[10px] bg-[#2E2E2E] p-1 rounded-lg cursor-help"
-            onClick={handleCopyClipBoard}
-          >
-            붙여넣기
-          </button>
           <button
             onClick={() => handleClear(() => updateUrl(""))}
             className="absolute top-[42px] right-3 text-[10px] bg-[#2E2E2E] p-1 rounded-2xl"

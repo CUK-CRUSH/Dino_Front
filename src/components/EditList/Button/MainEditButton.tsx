@@ -28,26 +28,22 @@ export const MainEditButton = ({
   memberId,
   tutorialStep,
 }: MainEditButtonProps) => {
-  const editIconRef = useRef<HTMLImageElement>(null);
-
-  const playlistName = useRecoilValue(playlistNameState);
-
-  const location = useLocation();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-  // 토스트
-  const { toast } = useSelector((state: RootState) => state.toast);
-
-  const [modalOpen, setModalOpen] = useState(false);
+  const navigate = useNavigate();
   const { username: paramUsername } = useParams<{
     username: string | undefined;
   }>();
-  const cameFromVisitor = location.state?.fromVisitor;
+  const { toast } = useSelector((state: RootState) => state.toast);
+  const playlistName = useRecoilValue(playlistNameState);
+  const editIconRef = useRef<HTMLImageElement>(null);
+  const authority = useCompareToken(memberId);
+  const [modalOpen, setModalOpen] = useState(false);
+  const cameFromVisitor = useLocation().state?.fromVisitor;
+
+  // 토스트
 
   const handleBack = () => {
-    if (toast) {
-      dispatch(setToast(""));
-    }
+    toast && dispatch(setToast(""));
 
     if (cameFromVisitor) {
       navigate(`/user/${paramUsername}`);
@@ -56,9 +52,9 @@ export const MainEditButton = ({
     }
   };
 
-  const handleUserHome = () => {
+  const handleUserHome = useCallback(() => {
     navigate(`/user/${paramUsername}`);
-  };
+  }, [navigate, paramUsername]);
 
   const handleModalToggle = useCallback(() => {
     setModalOpen((prev) => !prev);
@@ -75,13 +71,10 @@ export const MainEditButton = ({
   };
 
   // 권한부여
-  const authority = useCompareToken(memberId);
 
   useEffect(() => {
-    if (tutorialStep === "env") {
-      setModalOpen(true);
-    }
-  }, [tutorialStep, setModalOpen]);
+    tutorialStep === "env" && setModalOpen(true);
+  }, [tutorialStep]);
 
   return (
     <div className="flex h-[4%] items-center justify-between m-3 text-[19px]">
