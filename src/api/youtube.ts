@@ -18,7 +18,7 @@ export const youtubeAPIData = async (
     const response = await axios.get(
       `https://www.googleapis.com/youtube/v3/search?part=snippet&maxResults=${max}&q=${search}&type=video&key=${apiKey}`
     );
-    console.log(apiKey);
+    // console.log(apiKey);
     localStorage.setItem(cacheKey, JSON.stringify(response.data)); // 새로운 데이터 캐싱
     return response.data;
   } catch (error) {
