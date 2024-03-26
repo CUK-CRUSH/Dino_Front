@@ -20,6 +20,9 @@ jobs:
           echo "REACT_APP_EMAILJS_SERVICE_ID=${{ secrets.REACT_APP_EMAILJS_SERVICE_ID }}" >> .env
           echo "REACT_APP_EMAILJS_TEMPLATE_ID=${{ secrets.REACT_APP_EMAILJS_TEMPLATE_ID }}" >> .env
           echo "REACT_APP_EMAILJS_USER_ID=${{ secrets.REACT_APP_EMAILJS_USER_ID }}" >> .env
+          echo "REACT_APP_YOUTUBE_API_KEY_0=${{ secrets.REACT_APP_YOUTUBE_API_KEY_0 }}" >> .env
+          echo "REACT_APP_YOUTUBE_API_KEY_1=${{ secrets.REACT_APP_YOUTUBE_API_KEY_1 }}" >> .env
+          echo "REACT_APP_YOUTUBE_API_KEY_2=${{ secrets.REACT_APP_YOUTUBE_API_KEY_2 }}" >> .env
 
       - name: Build
         run: npm ci && npm run build
