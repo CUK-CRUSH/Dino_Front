@@ -10,7 +10,7 @@ export interface MusicInputDTO {
 }
 
 export interface AddButtonDTO {
-  handleSave: () => void;
+  handleSave: (e: React.MouseEvent<HTMLButtonElement>) => void;
   plusText: string;
 }
 export interface EditButtonDTO {
