@@ -143,22 +143,24 @@ const AddMusic: React.FC = () => {
     dispatch(updateUrl(newUrl)); // Assuming you have such an action
   };
 
-  const handleSave = useCallback(async () => {
-    if (
-      !url.startsWith("https://www.youtube.com/") &&
-      !url.startsWith("https://youtu.be/") &&
-      !url.startsWith("https://youtube.com/")
-    ) {
-      Swal.fire({
-        icon: "warning",
-        title: t("urlerror"),
-      });
+  const handleSave = useCallback(
+    async (e: React.MouseEvent<HTMLButtonElement>) => {
+      e.preventDefault(); // 폼 제출 또는 버튼 기본 동작 방지
 
-      return;
-    }
+      if (
+        !url.startsWith("https://www.youtube.com/") &&
+        !url.startsWith("https://youtu.be/") &&
+        !url.startsWith("https://youtube.com/")
+      ) {
+        Swal.fire({
+          icon: "warning",
+          title: t("urlerror"),
+        });
 
-    try {
-      setTimeout(() => {
+        return;
+      }
+
+      try {
         dispatch(updateMusic({ title, artist, url }));
         dispatch(saveMusic());
         dispatch(updateTitle(""));
@@ -167,15 +169,16 @@ const AddMusic: React.FC = () => {
         setFromButtonState(false);
 
         navigate(-1);
-      }, 100);
-    } catch (error) {
-      Swal.fire({
-        icon: "error",
-        text: t("urlerror"),
-      });
-    }
-    /* eslint-disable react-hooks/exhaustive-deps */
-  }, [navigate, url, dispatch, artist, title]);
+      } catch (error) {
+        Swal.fire({
+          icon: "error",
+          text: t("urlerror"),
+        });
+      }
+      // 의존성 배열에 e를 포함시킬 필요는 없습니다.
+    },
+    [navigate, url, dispatch, artist, title, setFromButtonState, t]
+  );
 
   const handleBack = useCallback(() => {
     dispatch(updateTitle(""));
