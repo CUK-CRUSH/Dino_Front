@@ -31,6 +31,10 @@ jobs:
           echo "REACT_APP_YOUTUBE_API_KEY_6=${{ secrets.REACT_APP_YOUTUBE_API_KEY_8 }}" >> .env
           echo "REACT_APP_YOUTUBE_API_KEY_6=${{ secrets.REACT_APP_YOUTUBE_API_KEY_9 }}" >> .env
           echo "REACT_APP_YOUTUBE_API_KEY_6=${{ secrets.REACT_APP_YOUTUBE_API_KEY_10 }}" >> .env
+          echo "REACT_APP_YOUTUBE_API_KEY_6=${{ secrets.REACT_APP_YOUTUBE_API_KEY_11 }}" >> .env
+          echo "REACT_APP_YOUTUBE_API_KEY_6=${{ secrets.REACT_APP_YOUTUBE_API_KEY_12 }}" >> .env
+          echo "REACT_APP_YOUTUBE_API_KEY_6=${{ secrets.REACT_APP_YOUTUBE_API_KEY_13 }}" >> .env
+
 
       - name: Build
         run: npm ci && npm run build
