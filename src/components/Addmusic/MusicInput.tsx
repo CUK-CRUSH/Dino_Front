@@ -49,7 +49,8 @@ export const MusicInput: React.FC<MusicInputDTO> = ({
   );
 
   const handleSuggestionClick = useCallback(
-    (suggestion: string) => {
+    (suggestion: string, event: React.MouseEvent<HTMLDivElement>) => {
+      event.stopPropagation(); // 이벤트 전파를 막음
       if (onSuggestionClick) {
         onSuggestionClick(suggestion);
       }
@@ -115,7 +116,7 @@ export const MusicInput: React.FC<MusicInputDTO> = ({
           {suggestions.map((suggestion, index) => (
             <div
               key={index}
-              onClick={() => handleSuggestionClick(suggestion)}
+              onClick={(event) => handleSuggestionClick(suggestion, event)}
               className="cursor-pointer mx-2 py-[1px] rounded-[15px] hover:bg-[#545454] transition-colors duration-200"
             >
               <p className="m-1">{suggestion}</p>
