@@ -8,7 +8,6 @@ import {
 } from "@reducer/musicadd";
 import YoutubeIcon from "@assets/AddMusic/Youtube.svg";
 import Search from "@assets/AddMusic/Search.svg";
-import Switch from "@assets/AddMusic/Switch.svg";
 import { RootState } from "@store/index";
 import { useSelector, useDispatch } from "react-redux";
 import { useNavigate, useParams } from "react-router-dom";
@@ -83,6 +82,7 @@ const AddMusic: React.FC = () => {
     async (field: string, value: string) => {
       if (value.length > 1) {
         const fetchedSuggestions = await playAutoComplete("ko", value);
+
         setSuggestions((prev) => ({
           ...prev,
           [field]: fetchedSuggestions.data,
@@ -93,26 +93,10 @@ const AddMusic: React.FC = () => {
     },
     []
   );
+  console.log(suggestions);
   // 검색 토글에 따른 데이터
 
-  const [searchType, setSearchType] = useState<string>("title"); // title이냐 artist냐 와따리가따리 토글
   const [searchClick, setSearchClick] = useState<boolean>(false); // 검색 버튼을 누름에 따라 나오는 데이터들
-
-  const toggleSearchType = () => {
-    setSearchType((prevType) => {
-      if (prevType === "title") {
-        dispatch(updateTitle("")); // artist 상태 초기화
-
-        return "artist";
-      } else {
-        dispatch(updateArtist("")); // title 상태 초기화
-
-        return "title";
-      }
-    });
-
-    setSearchClick(false);
-  };
 
   const handleDefaultInput = () => {
     setSearchClick((prevSearchClick) => !prevSearchClick);
@@ -295,34 +279,17 @@ const AddMusic: React.FC = () => {
           <p className="mt-[2px]">{t("search")}</p>
         </div>
 
-        {/* 검색 타입 토글 버튼 */}
-        <div
-          className={`flex w-[177px] h-[50px] items-center bg-[#2E2E2E] p-2 rounded-2xl ${
-            tutorialStep === "add1" ? "pointer-events-none" : ""
-          }`}
-        >
-          <button
-            onClick={toggleSearchType}
-            className="flex w-[160px] items-center justify-between"
-          >
-            <p className=" text-[12px] ">
-              {searchType === "title" ? t("titlesearch") : t("artistsearch")}
-            </p>
-
-            <img src={Switch} alt="Switch" />
-          </button>
-          {tutorialStep === "add1" && (
-            <>
-              <div className="absolute text-[16px] w-[150px] h-[80px] top-28 right-3 mt-1 z-20 bg-white text-black p-2 rounded-md font-bold flex items-center justify-center">
-                <div className="text-start">
-                  <p className="mb-1">검색기준을</p>
-                  <p className="mb-1">전환할 수 있어요</p>
-                  <p>(제목 / 아티스트)</p>
-                </div>
+        {tutorialStep === "add1" && (
+          <>
+            <div className="absolute text-[16px] w-[150px] h-[80px] top-28 right-3 mt-1 z-20 bg-white text-black p-2 rounded-md font-bold flex items-center justify-center">
+              <div className="text-start">
+                <p className="mb-1">검색기준을</p>
+                <p className="mb-1">전환할 수 있어요</p>
+                <p>(제목 / 아티스트)</p>
               </div>
-            </>
-          )}
-        </div>
+            </div>
+          </>
+        )}
 
         {/* 검색 폼 */}
 
@@ -335,19 +302,17 @@ const AddMusic: React.FC = () => {
           <MusicInput
             type="text"
             label=""
-            placeholder={
-              searchType === "title" ? t("titlesearch") : t("artistsearch")
-            }
+            placeholder={"검색어 입력"}
             value={searchTerm}
             required={true}
-            onChange={(e) => setSearchTerm(e.target.value)}
-            suggestions={suggestions[searchType]}
-            onSuggestionClick={(suggestion: string) => {
-              dispatch(
-                searchType === "title"
-                  ? updateTitle(suggestion)
-                  : updateArtist(suggestion)
-              );
+            onChange={(e) => {
+              setSearchTerm(e.target.value);
+              fetchAutoComplete("youtube", e.target.value); // 예: "youtube" 필드에 대한 자동완성
+            }}
+            suggestions={suggestions["youtube"] || []} // "youtube" 키에 대한 자동완성 제안 사용
+            onSuggestionClick={(suggestion) => {
+              setSearchTerm(suggestion);
+              // 필요한 경우 추가 동작, 예: 자동완성 제안으로 검색 실행
             }}
           />
 
@@ -355,35 +320,36 @@ const AddMusic: React.FC = () => {
             <img src={Search} alt="Search" />
           </button>
         </form>
-        {videos.map((video, index) => (
-          <div
-            key={index}
-            className="flex items-center space-x-4 rounded-lg shadow-lg p-4"
-          >
-            <img
-              src={video.snippet.thumbnails.high.url}
-              alt={video.snippet.title}
-              className="w-[150px] h-auto flex-none rounded-lg"
+        <>
+          {videos.map((video) => (
+            <div
               onClick={() => handleImageClick(video)}
-            />
-            <div className="flex-grow">
-              <p className="text-lg font-semibold">{video.snippet.title}</p>
-              <p className="text-sm">{video.snippet.channelTitle}</p>
-            </div>
-          </div>
-        ))}
-
-        <div className="mb-10">
-          <p className="text-[12px] ml-1">
-            {t("directinputdesc")}{" "}
-            <button
-              className="border-b-[1px] border-white"
-              onClick={handleDefaultInput}
+              key={video.id.videoId}
+              className="flex items-center space-x-4 rounded-lg shadow-lg p-4"
             >
-              {t("directinput")}
-            </button>
-          </p>
-        </div>
+              <img
+                src={video.snippet.thumbnails.high.url}
+                alt={video.snippet.title}
+                className="w-[150px] h-auto flex-none rounded-lg"
+              />
+              <div className="flex-grow">
+                <p className="text-lg font-semibold">
+                  {video.snippet.title.length > 30
+                    ? video.snippet.title.substring(0, 30) + "..."
+                    : video.snippet.title}
+                </p>
+                <p className="text-sm text-[#6C6C6C]">
+                  {video.snippet.channelTitle}
+                </p>
+              </div>
+            </div>
+          ))}
+          {videos.length > 0 && (
+            <p className="text-[#6C6C6C] text-[12px] text-center">
+              유튜브 검색결과 기준, 상단 5개까지 표시됩니다.
+            </p>
+          )}
+        </>
       </div>
       {tutorialStep === "add1" && (
         <>

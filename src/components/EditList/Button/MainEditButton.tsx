@@ -7,6 +7,9 @@ import { useLocation, useNavigate, useParams } from "react-router-dom";
 import { useRecoilValue } from "recoil";
 import EditMusicIcon from "@assets/Header/EditMusic.svg";
 import Home from "@assets/Home.svg";
+import { RootState } from "@store/index";
+import { useSelector, useDispatch } from "react-redux";
+import { setToast } from "@reducer/Toast/toast";
 
 type MainEditButtonProps = {
   playlists: any[];
@@ -25,10 +28,12 @@ export const MainEditButton = ({
   memberId,
   tutorialStep,
 }: MainEditButtonProps) => {
+  const dispatch = useDispatch();
   const navigate = useNavigate();
   const { username: paramUsername } = useParams<{
     username: string | undefined;
   }>();
+  const { toast } = useSelector((state: RootState) => state.toast);
   const playlistName = useRecoilValue(playlistNameState);
   const editIconRef = useRef<HTMLImageElement>(null);
   const authority = useCompareToken(memberId);
@@ -38,6 +43,7 @@ export const MainEditButton = ({
   // 토스트
 
   const handleBack = () => {
+    toast && dispatch(setToast(""));
 
     if (cameFromVisitor) {
       navigate(`/user/${paramUsername}`);
