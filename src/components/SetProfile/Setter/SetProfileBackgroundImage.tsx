@@ -16,7 +16,7 @@ const SetProfileBackgroundImage = ({ aspectRatio, onCrop }: SetProfileImageDTO) 
 
       <div
         style={{ background: '#EDEDED' }}
-        className="overflow-hidden w-[500px] h-[170px]  relative top-72 flex items-center justify-center"
+        className="overflow-hidden w-[500px] h-[170px] relative top-72 flex items-center justify-center"
       >
 
         {profileBackgroundImage ? 

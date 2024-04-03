@@ -3,11 +3,10 @@ import plus from "../../../assets/Admin/plus.svg";
 import { postPlayList } from "@api/playlist-controller/playlistControl";
 import { useCookies } from "react-cookie";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { setToast } from "@reducer/Toast/toast";
 import { useCustomPlaylistMargin } from "@hooks/useCustomMargin/useCustomPlaylistMargin";
 import { useTranslation } from "react-i18next";
 import { useTutorial } from "@hooks/useTutorial/useTutorial";
+import { notify } from "@utils/toast/toast";
 
 export const AddPlayList = ({
   isTutorialMode,
@@ -24,7 +23,6 @@ export const AddPlayList = ({
   const [titleImage] = useState(null);
 
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const handleAddPlaylist = async (
     title: null,
@@ -33,7 +31,7 @@ export const AddPlayList = ({
   ) => {
     const post = await postPlayList(title, titleImage, token);
     if (post && post.status === 200) {
-      dispatch(setToast("add"));
+      notify('플레이리스트 생성이 완료되었습니다 ! ',"white")
       navigate(`${post.data.id}`);
     }
   };

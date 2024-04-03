@@ -22,7 +22,6 @@ import {
 import { RootState } from "@store/index";
 import { setToast } from "@reducer/Toast/toast";
 import { checkBadWord } from "@utils/checkBadWord/checkBadWord";
-import ToastComponent from "@components/Toast/Toast";
 import { useMemberDataUpdate } from "@hooks/useMemberDataUpdate";
 import { useHandleImageUpdates } from "@hooks/useHandleImageUpdates/useHandleImageUpdates";
 import SetUserProfileNickname from "@components/AdminEdit/SetUserProfileNickname";
@@ -32,8 +31,7 @@ import convertUrlToBlobFile from "@utils/convertFile/convertFile";
 import useHandleUploadImage from "@hooks/useHandleUploadImage/useHandleUploadImage";
 import useCompressHandleImage from "@hooks/useCompressHandleImage/useCompressHandleImage";
 import useResponsiveWidth from "@hooks/useResponsiveWidth/useResponsiveWidth";
-import { toast , ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { notify } from "@utils/toast/toast";
 
 interface AdminEditModalProps {
   onClose: () => void; // A function to close the modal
@@ -245,7 +243,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
   useEffect(() => {
     if (!nicknameValidation) {
-      dispatch(setToast("nicknameValidation"));
+      notify('닉네임을 확인해주세요 !',"black")
       return;
     }
   }, [nicknameValidation, dispatch]);
@@ -282,9 +280,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
           uploadUserProfileBackgroundImage: uploadUserProfileBackgroundImage,
           deleteBackgroundImage: deleteBackgroundImage,
         });
-        dispatch(setToast("profile"));
         localStorage.setItem("homeUrl", code.data.username); // Set refreshToken in local storage
-
       }
 
       setIsOpen(!isOpen);
@@ -294,29 +290,10 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
       }, 900);
     }
   };
-  // 토스트
-  // const { toast } = useSelector((state: RootState) => state.toast);
 
   const handleNotMember = () => {
     dispatch(setToast("nicknameValidation"));
   };
-
-  const notify = () => toast('프로필 수정이 완료되었습니다.', {
-    position: "bottom-center",
-    autoClose: 3000,
-    hideProgressBar: true,
-    closeOnClick: true,
-    pauseOnHover: true,
-    draggable: true,
-    style: {
-      backgroundColor: "rgba(0, 0, 0, 0.7)", // 배경색
-      width : "100%",
-      color: "white", // 글자색
-      textAlign: "center", // 텍스트 가운데 정렬
-      borderRadius : "8px",
-      padding : "0px"
-    }
-  });
 
   return (
     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center z-50">
@@ -327,19 +304,6 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
         className={`relative ${modalResponsiveWidth} h-full mt-5 bg-white rounded-t-3xl shadow-lg
         animate-slide-edit-${isOpen ? "in" : "out"}`}
       >
-              <button onClick={notify}>토스트 보여주기</button>
-
-        <ToastContainer />
-
-        {/* {toast === "duplicate" && (
-          <ToastComponent
-            background="black"
-            text="닉네임이 중복되었습니다 ! "
-          />
-        )}
-        {toast === "nicknameValidation" && (
-          <ToastComponent background="black" text="닉네임을 수정해주세요 ! " />
-        )} */}
 
         {/* 상단 취소/저장 버튼 */}
         <div className="flex justify-between h-[50px]">
