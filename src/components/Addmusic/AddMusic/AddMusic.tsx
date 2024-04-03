@@ -22,6 +22,7 @@ import { fromButtonState } from "@atoms/Musics/locationState";
 import { useTutorial } from "@hooks/useTutorial/useTutorial";
 import "@styles/Tutorial/tutorial.css";
 import { youtubeAPIData } from "@api/youtube";
+import decodeHTML from "@hooks/useEncodeHTML/useEncodeHTML";
 
 interface VideoSnippet {
   publishedAt: string;
@@ -93,7 +94,7 @@ const AddMusic: React.FC = () => {
     },
     []
   );
-  console.log(suggestions);
+
   // 검색 토글에 따른 데이터
 
   const [searchClick, setSearchClick] = useState<boolean>(false); // 검색 버튼을 누름에 따라 나오는 데이터들
@@ -242,9 +243,15 @@ const AddMusic: React.FC = () => {
   };
 
   const handleImageClick = (video: Video) => {
-    setSelectedVideo(video); // Optional: store the selected video for other uses
-    dispatch(updateTitle(video.snippet.title));
-    dispatch(updateArtist(video.snippet.channelTitle));
+    setSelectedVideo(video);
+    const decodedTitle = decodeHTML(video.snippet.title);
+    const decodedArtist = decodeHTML(video.snippet.channelTitle);
+
+    setLocalTitle(decodedTitle);
+    setLocalArtist(decodedArtist);
+
+    dispatch(updateTitle(decodedTitle));
+    dispatch(updateArtist(decodedArtist));
     dispatch(updateUrl(`https://www.youtube.com/watch?v=${video.id.videoId}`));
     setVideos([]); // 검색 결과 초기화
     setSearchClick(true);
@@ -333,14 +340,25 @@ const AddMusic: React.FC = () => {
                 className="w-[150px] h-auto flex-none rounded-lg"
               />
               <div className="flex-grow">
-                <p className="text-lg font-semibold">
-                  {video.snippet.title.length > 30
-                    ? video.snippet.title.substring(0, 30) + "..."
-                    : video.snippet.title}
-                </p>
-                <p className="text-sm text-[#6C6C6C]">
-                  {video.snippet.channelTitle}
-                </p>
+                <p
+                  className="text-lg font-semibold"
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      video.snippet.title.length > 30
+                        ? video.snippet.title.substring(0, 30) + "..."
+                        : video.snippet.title,
+                  }}
+                />
+
+                <p
+                  className="text-sm text-[#6C6C6C]"
+                  dangerouslySetInnerHTML={{
+                    __html:
+                      video.snippet.channelTitle.length > 30
+                        ? video.snippet.channelTitle.substring(0, 30) + "..."
+                        : video.snippet.channelTitle,
+                  }}
+                />
               </div>
             </div>
           ))}

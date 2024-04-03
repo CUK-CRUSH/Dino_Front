@@ -44,6 +44,7 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   const { toast } = useSelector((state: RootState) => state.toast);
   const [titleWidth, setTitleWidth] = useState(0);
   const [artistWidth, setArtistWidth] = useState(0);
+  const [isHidden, setIsHidden] = useState(false);
   const titleRef = useRef<HTMLSpanElement>(null);
   const artistRef = useRef<HTMLSpanElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -89,7 +90,8 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           // '삭제' 버튼을 눌렀을 때 실행할 코드를 여기에 작성합니다.
           try {
-            await deleteMusicList(musicData.id, token);
+            // await deleteMusicList(musicData.id, token);
+            setIsHidden(true);
             dispatch(setToast("delete"));
             fetchPlaylist();
           } catch (error) {
@@ -143,7 +145,12 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
     }
   };
   return (
-    <div ref={contentRef} className="relative flex justify-between mb-2 mx-2">
+    <div
+      ref={contentRef}
+      className={`relative flex justify-between mb-2 mx-2 ${
+        isHidden ? "hidden" : "block"
+      }`}
+    >
       <div
         style={{
           height:
