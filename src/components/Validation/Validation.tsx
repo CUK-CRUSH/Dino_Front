@@ -11,15 +11,11 @@ import {
   updateMember,
 } from "@api/member-controller/memberController";
 import { useNavigate } from "react-router-dom";
-import { useSelector } from "react-redux";
-import { RootState } from "@store/index";
-import ToastComponent from "@components/Toast/Toast";
-import { useDispatch } from "react-redux";
-import { setToast } from "@reducer/Toast/toast";
 import { checkBadWord } from "@utils/checkBadWord/checkBadWord";
 import { UpdateMemberParams } from "types/AdminEdit";
 import useDecodedJWT from "@hooks/useDecodedJWT";
 import {useTranslation} from "react-i18next";
+import { notify } from "@utils/toast/toast";
 
 const ValidationProps = () => {
   const navigate = useNavigate();
@@ -32,21 +28,19 @@ const ValidationProps = () => {
   const [cookies] = useCookies(["accessToken"]);
   // 액세스 토큰
   const token = cookies.accessToken;
-
-  const dispatch = useDispatch();
   
   // 닉네임 체크
-const checkNickname = (nickname: string) => {
-  // 숫자영어 _ . 허용
-  const nicknameRegex = /^[a-zA-Z0-9._]{3,30}$/;
-  if (nicknameRegex.test(nickname)) {
-    if (!checkBadWord(nickname)) {
-      return true;
+  const checkNickname = (nickname: string) => {
+    // 숫자영어 _ . 허용
+    const nicknameRegex = /^[a-zA-Z0-9._]{3,30}$/;
+    if (nicknameRegex.test(nickname)) {
+      if (!checkBadWord(nickname)) {
+        return true;
+      }
+    } else if (!nicknameRegex.test(nickname)) {
+      return false;
     }
-  } else if (!nicknameRegex.test(nickname)) {
-    return false;
-  }
-};
+  };
 // import { checkNickname } from "@utils/checkNickname/checkNickname";
 
   const onChange = debounce(async (e) => {
@@ -69,15 +63,17 @@ const checkNickname = (nickname: string) => {
           checkNicknameBack.status !== 200
         ) {
           setNicknameValidation(false);
+          notify('닉네임을 확인해 주세요 ! ','black');
         } else {
           setNicknameValidation(false);
+          notify('닉네임을 확인해 주세요 ! ','black');
         }
       } catch (error : any) {
         console.log(error)
         // If the status is 400, simply skip the error
         if (error.response && error.response.status === 400) {
-          dispatch(setToast('duplicate'));
           setNicknameValidation(false);
+          notify('중복된 닉네임 입니다 ! ','black');
         } else {
           console.error("Error checking nickname:", error);
         }
@@ -102,22 +98,18 @@ const checkNickname = (nickname: string) => {
     const code = await updateMember(data);
 
     if (code.status === 200) {
-      dispatch(setToast('login'));
 
       localStorage.setItem("homeUrl", code.data.username); // Set refreshToken in local storage
       navigate(`/SetProfile/${code.data.username}/1`);
     }
   };
 
-  // 토스트
-  const { toast } = useSelector(
-    (state: RootState) => state.toast
-  );
-  
+
   const decodedToken = useDecodedJWT(cookies.accessToken);
   const id = decodedToken?.sub;
 
   useEffect(() => {
+
     /* eslint-disable react-hooks/exhaustive-deps */
     if (decodedToken) {
       (async () => {
@@ -126,7 +118,6 @@ const checkNickname = (nickname: string) => {
             const getUserData = await getMember(id);
   
             if (getUserData.data.username) {
-              dispatch(setToast("login"));
               navigate(`/user/${getUserData.data.username}`);
             }
           }
@@ -140,9 +131,7 @@ const checkNickname = (nickname: string) => {
   }, []);
 
     return (
-    <div className="w-full h-full relative bg-white flex flex-col align-middle items-center">
-      {toast === 'login' && <ToastComponent background="black" text={t("success")} /> }
-      {toast === 'duplicate' && <ToastComponent background="black" text={t("fail")} /> }
+      <div className="w-full h-full relative bg-white flex flex-col align-middle items-center">
 
       <div className="text-center text-black text-xl font-semibold font-['Noto Sans'] my-10">
         <img className="mx-auto mt-16 mb-10" src={Fanfare} alt="Fanfare" />

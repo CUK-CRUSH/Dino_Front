@@ -4,8 +4,8 @@ import { useCookies } from "react-cookie";
 import useDecodedJWT from "@hooks/useDecodedJWT";
 import { getMember } from "@api/member-controller/memberController";
 import { useDispatch } from "react-redux";
-import { setToast } from "@reducer/Toast/toast";
 import setItemWithExpiry from "@utils/setItemWithExpiry/setItemWithExpiry";
+import { notify } from "@utils/toast/toast";
 
 const fetchData = async (setCookie: any) => {
   const params = new URLSearchParams(window.location.search);
@@ -46,10 +46,8 @@ const Redirect = () => {
             localStorage.setItem("homeUrl", getUserData.data.username); // Set refreshToken in local storage
 
             if (success && !getUserData.data.username) {
-              dispatch(setToast("login"));
               navigate("/login/validation");
             } else {
-              dispatch(setToast("login"));
 
               const prevUrl = localStorage.getItem("prevUrl");
               if (prevUrl) {
@@ -58,7 +56,9 @@ const Redirect = () => {
               } else {
                 setTimeout(() => {
                   navigate(`/user/${getUserData.data.username}`);
-
+                  setTimeout(() => {
+                    notify('로그인 완료 !','black'); 
+                  }, 500);
                 }, 1000);
               }
             }
@@ -74,7 +74,7 @@ const Redirect = () => {
     redirectAfterFetch();
   }, [navigate, setCookie, decodedToken, dispatch, id]);
 
-  return <h2 className={"text-white"}>로그인중입니다....</h2>;
+  return (<h2 className={"text-white"}>로그인중입니다....</h2>);
 };
 
 export default Redirect;

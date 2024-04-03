@@ -7,7 +7,6 @@ import Swal from "sweetalert2";
 import { deleteMusicList } from "@api/music-controller/musicControl";
 import { useEffect, useRef, useState } from "react";
 import ToastComponent from "@components/Toast/Toast";
-import { setToast } from "@reducer/Toast/toast";
 import { RootState } from "@store/index";
 import { updateArtist, updateTitle, updateUrl } from "@reducer/musicadd";
 import YouTube from "react-youtube";
@@ -17,6 +16,7 @@ import { userNameState } from "@atoms/Playlist/username";
 import { playlistIdState } from "@atoms/Playlist/playlistId";
 import { tokenState } from "@atoms/Playlist/token";
 import { fromButtonState } from "@atoms/Musics/locationState";
+import { notify } from "@utils/toast/toast";
 
 export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   musicData,
@@ -90,7 +90,7 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
           // '삭제' 버튼을 눌렀을 때 실행할 코드를 여기에 작성합니다.
           try {
             await deleteMusicList(musicData.id, token);
-            dispatch(setToast("delete"));
+            notify('노래가 삭제되었습니다.','white')
             fetchPlaylist();
           } catch (error) {
             console.log(error);
