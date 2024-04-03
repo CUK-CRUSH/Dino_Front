@@ -74,6 +74,7 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   };
 
   const handleDeleteClick = () => {
+    console.log(musicData.id);
     swalButton
       .fire({
         title: "노래를 삭제하시겠습니까?",
@@ -88,9 +89,13 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
         if (result.isConfirmed) {
           // '취소' 버튼을 눌렀을 때 실행할 코드를 여기에 작성합니다.
         } else if (result.dismiss === Swal.DismissReason.cancel) {
-          // '삭제' 버튼을 눌렀을 때 실행할 코드를 여기에 작성합니다.
           try {
-            // await deleteMusicList(musicData.id, token);
+            await deleteMusicList(
+              Number(playlistId),
+              [{ musicId: String(musicData.id) }], // musicId를 배열로 감싸서 전달
+              token
+            );
+
             setIsHidden(true);
             dispatch(setToast("delete"));
             fetchPlaylist();

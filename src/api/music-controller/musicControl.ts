@@ -51,12 +51,20 @@ export const postMultipleMusicList = async (
 };
 
 // 음악 삭제하기
-export const deleteMusicList = async (playlistId: string, cookies?: string) => {
+export const deleteMusicList = async (
+  playlistId: number,
+  musicId: { musicId: string }[],
+  cookies?: string
+) => {
+  if (!playlistId || !musicId || musicId.length === 0) {
+    throw new Error("Input all items.");
+  }
   try {
     const response = await axiosInstance.delete(`/api/v1/music/${playlistId}`, {
       headers: {
         Authorization: `Bearer ${cookies}`,
       },
+      data: musicId,
     });
     if (response) {
       return response.data;
