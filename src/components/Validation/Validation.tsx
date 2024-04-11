@@ -14,8 +14,9 @@ import { useNavigate } from "react-router-dom";
 import { checkBadWord } from "@utils/checkBadWord/checkBadWord";
 import { UpdateMemberParams } from "types/AdminEdit";
 import useDecodedJWT from "@hooks/useDecodedJWT";
-import {useTranslation} from "react-i18next";
+import { useTranslation } from "react-i18next";
 import { notify } from "@utils/toast/toast";
+import useWindowSizeCustom from "@hooks/useCustomMargin/useWindowSizeCustom";
 
 const ValidationProps = () => {
   const navigate = useNavigate();
@@ -28,7 +29,7 @@ const ValidationProps = () => {
   const [cookies] = useCookies(["accessToken"]);
   // 액세스 토큰
   const token = cookies.accessToken;
-  
+
   // 닉네임 체크
   const checkNickname = (nickname: string) => {
     // 숫자영어 _ . 허용
@@ -41,13 +42,13 @@ const ValidationProps = () => {
       return false;
     }
   };
-// import { checkNickname } from "@utils/checkNickname/checkNickname";
+  // import { checkNickname } from "@utils/checkNickname/checkNickname";
 
   const onChange = debounce(async (e) => {
     setUpdateMemberData((prevData) => ({
       ...prevData,
       username: e.target.value.toLowerCase(),
-    }));  
+    }));
     if (e.target.value) {
       try {
         // Check backend nickname
@@ -55,7 +56,7 @@ const ValidationProps = () => {
           e.target.value,
           token
         );
-  
+
         if (!checkBadWord(e.target.value) && checkNickname(e.target.value) && checkNicknameBack.status === 200) {
           setNicknameValidation(true);
         } else if (
@@ -63,17 +64,17 @@ const ValidationProps = () => {
           checkNicknameBack.status !== 200
         ) {
           setNicknameValidation(false);
-          notify('닉네임을 확인해 주세요 ! ','black');
+          notify('닉네임을 확인해 주세요 ! ', 'black');
         } else {
           setNicknameValidation(false);
-          notify('닉네임을 확인해 주세요 ! ','black');
+          notify('닉네임을 확인해 주세요 ! ', 'black');
         }
-      } catch (error : any) {
+      } catch (error: any) {
         console.log(error)
         // If the status is 400, simply skip the error
         if (error.response && error.response.status === 400) {
           setNicknameValidation(false);
-          notify('중복된 닉네임 입니다 ! ','black');
+          notify('중복된 닉네임 입니다 ! ', 'black');
         } else {
           console.error("Error checking nickname:", error);
         }
@@ -91,7 +92,7 @@ const ValidationProps = () => {
     backgroundImage: '',
     cookies: token,
   });
-  
+
   const handleMember = async (data: UpdateMemberParams) => {
 
     await new Promise(resolve => setTimeout(resolve, 300));
@@ -116,7 +117,7 @@ const ValidationProps = () => {
         try {
           if (id !== null) {
             const getUserData = await getMember(id);
-  
+
             if (getUserData.data.username) {
               navigate(`/user/${getUserData.data.username}`);
             }
@@ -130,8 +131,10 @@ const ValidationProps = () => {
     }
   }, []);
 
-    return (
-      <div className="w-full h-full relative bg-white flex flex-col align-middle items-center">
+  const {isMobile} = useWindowSizeCustom();
+
+  return (
+    <div className="w-full h-full relative bg-white flex flex-col align-middle items-center">
 
       <div className="text-center text-black text-xl font-semibold font-['Noto Sans'] my-10">
         <img className="mx-auto mt-16 mb-10" src={Fanfare} alt="Fanfare" />
@@ -158,22 +161,18 @@ const ValidationProps = () => {
             <img src={not} alt="Edit" className="w-4 h-4 cursor-pointer" />
           )}
         </div>
-        
+
       </div>
-      {!nicknameValidation ? 
-        <div
-          className="absolute bottom-0 -left-0 p-4 w-full bg-[#b6b6b6] text-white flex items-center justify-center overflow-hidden"
-        >
-          {t("next")}
-        </div>
-        :
-        <div
-          className="absolute bottom-0 -left-0 p-4 w-full bg-[#000000] text-white flex items-center justify-center overflow-hidden"
-          onClick={() => handleMember(updateMemberData)}
-        >
-          {t("next")}
-        </div>
-      }
+      <div
+        className={`${!isMobile ? "absolute " : "fixed "} bottom-0 -left-0 
+                    p-4 w-full text-white flex items-center justify-center overflow-hidden 
+                    ${!nicknameValidation ? "bg-[#b6b6b6]" : "bg-[#000000]"}`
+                  }
+        onClick={() => nicknameValidation && handleMember(updateMemberData)}
+      >
+        {t("next")}
+      </div>
+
     </div>
   );
 };
