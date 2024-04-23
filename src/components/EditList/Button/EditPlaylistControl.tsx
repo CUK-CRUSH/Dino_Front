@@ -1,3 +1,4 @@
+import { notify } from "@utils/toast/toast";
 import { EditPlayListControlsDTO } from "types/EditplayList";
 
 export const EditPlaylistControls = ({
@@ -31,7 +32,8 @@ export const EditPlaylistControls = ({
               tutorialStep === "list1" ? "pointer-events-none" : ""
             }`}
           >
-            <button onClick={onSave}>저장</button>
+           <button onClick={() => { onSave(); notify('플레이리스트가 수정되었습니다 ', 'white'); }}>저장</button>
+
           </div>
           {tutorialStep === "list1" && (
             <>

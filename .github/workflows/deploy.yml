@@ -17,6 +17,16 @@ jobs:
           echo "REACT_APP_FB_API_ID=${{ secrets.REACT_APP_FB_API_ID }}" >> .env
           echo "REACT_APP_FB_MEASUREMENT_ID=${{ secrets.REACT_APP_FB_MEASUREMENT_ID }}" >> .env
           echo "REACT_APP_SERVER=${{ secrets.REACT_APP_SERVER }}" >> .env
+          echo "REACT_APP_EMAILJS_SERVICE_ID=${{ secrets.REACT_APP_EMAILJS_SERVICE_ID }}" >> .env
+          echo "REACT_APP_EMAILJS_TEMPLATE_ID=${{ secrets.REACT_APP_EMAILJS_TEMPLATE_ID }}" >> .env
+          echo "REACT_APP_EMAILJS_USER_ID=${{ secrets.REACT_APP_EMAILJS_USER_ID }}" >> .env
+          echo "REACT_APP_YOUTUBE_API_KEY_0=${{ secrets.REACT_APP_YOUTUBE_API_KEY_0 }}" >> .env
+          echo "REACT_APP_YOUTUBE_API_KEY_1=${{ secrets.REACT_APP_YOUTUBE_API_KEY_1 }}" >> .env
+          echo "REACT_APP_YOUTUBE_API_KEY_2=${{ secrets.REACT_APP_YOUTUBE_API_KEY_2 }}" >> .env
+          echo "REACT_APP_YOUTUBE_API_KEY_3=${{ secrets.REACT_APP_YOUTUBE_API_KEY_3 }}" >> .env
+          echo "REACT_APP_YOUTUBE_API_KEY_4=${{ secrets.REACT_APP_YOUTUBE_API_KEY_4 }}" >> .env
+          echo "REACT_APP_YOUTUBE_API_KEY_5=${{ secrets.REACT_APP_YOUTUBE_API_KEY_5 }}" >> .env
+          echo "REACT_APP_YOUTUBE_API_KEY_6=${{ secrets.REACT_APP_YOUTUBE_API_KEY_6 }}" >> .env
 
       - name: Build
         run: npm ci && npm run build

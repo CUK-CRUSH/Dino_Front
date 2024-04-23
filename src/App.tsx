@@ -9,6 +9,8 @@ import { RecoilRoot } from "recoil";
 import PrivateRoute from '@components/PrivateRouter/PrivateRouter';
 import RankingMember from "@pages/Ranking/RankingMember";
 import usePageNavigationTracker from "@hooks/usePageNavigationTracker/usePageNavigationTracker.tsx/usePageNavigationTracker";
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 const Loading = loadable(() => import("@pages/Loading/Loading"));
 const Welcome = loadable(() => import("@pages/Welcome/Welcome"));
@@ -44,10 +46,38 @@ function App() {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
+        <ToastContainer
+              
+              position="bottom-center"
+              // autoClose: 토스트가 자동으로 닫히는 시간(ms 단위), false로 설정하면 자동 닫힘 비활성화
+              autoClose={3000}
+              // limit: 한 번에 표시할 수 있는 토스트의 최대 개수
+              limit={1}
+              // hideProgressBar: 토스트 로딩 바 숨김 여부
+              hideProgressBar={true}
+              // newestOnTop: 새로운 토스트를 위에 표시할지 여부
+              newestOnTop={false}
+              // closeOnClick: 토스트 클릭 시 닫을지 여부
+              closeOnClick
+              // rtl: 텍스트 방향이 오른쪽에서 왼쪽으로 (Right To Left)인지 여부
+              rtl={false}
+              // pauseOnFocusLoss: 포커스를 잃었을 때 토스트 타이머 일시 정지 여부
+              pauseOnFocusLoss
+              // draggable: 토스트를 드래그하여 닫을 수 있는지 여부
+              draggable
+              // pauseOnHover: 마우스 호버 시 토스트 타이머 일시 정지 여부
+              pauseOnHover
+              // closeButton: "닫기" 버튼 표시 여부, false로 설정하면 닫기 버튼 숨김
+              closeButton={false}
+            />
         <RecoilRoot>
+       
+
           <Layout>
+            
             <Routes>
-            <Route path="/" element={<Loading />} />
+
+              <Route path="/" element={<Loading />} />
 
               <Route path="/welcome" element={<Welcome />} />
               <Route path="/login" element={<LogIn />} />
@@ -63,8 +93,8 @@ function App() {
                 path="user/:username/:playlistId"
                 element={<EditPlayList />}
               />
-               {/* 인증을 반드시 해야지만 접속 가능한 페이지 정의 */}
-               <Route element={<PrivateRoute authentication={true} />}>
+              {/* 인증을 반드시 해야지만 접속 가능한 페이지 정의 */}
+              <Route element={<PrivateRoute authentication={true} />}>
                 <Route path="/login/validation" element={<Validation />} />
               </Route>
 
@@ -110,7 +140,7 @@ function App() {
               />
               <Route
                 path="/ranking/member"
-                element={<RankingMember /> }
+                element={<RankingMember />}
               />
               <Route path="/search/member" element={<SearchMemberDetail />} />
 

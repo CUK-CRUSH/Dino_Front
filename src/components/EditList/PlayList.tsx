@@ -13,7 +13,6 @@ import { useCookies } from "react-cookie";
 import { getSinglePlayList } from "@api/playlist-controller/playlistControl";
 import { getMusicList } from "@api/music-controller/musicControl";
 import { useParams } from "react-router-dom";
-import ToastComponent from "@components/Toast/Toast";
 import NotFound from "@pages/NotFound/NotFonud";
 import Footer from "@components/Layout/footer";
 import { useRecoilState, useSetRecoilState } from "recoil";
@@ -29,7 +28,7 @@ import VisitorButton from "@components/Visitor/VisitorButton";
 import { useDispatch } from "react-redux";
 import { setMemberId } from "@reducer/editPlayList/isMemberId";
 import useImageCompress from "@hooks/useImageCompress";
-import { useTranslation } from "react-i18next";
+// import { useTranslation } from "react-i18next";
 import { useTutorial } from "@hooks/useTutorial/useTutorial";
 import { setIsEditing } from "@reducer/editPlayList/isEdit";
 
@@ -66,12 +65,11 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
   const setPlaylistId = useSetRecoilState(playlistIdState);
   //
 
-  const { toast } = useSelector((state: RootState) => state.toast);
   // 쿠키에서 유저 id 가져오기
   const [cookies] = useCookies(["accessToken"]);
 
   const setToken = useSetRecoilState(tokenState);
-  const { t } = useTranslation("AddPlayList");
+  // const { t } = useTranslation("AddPlayList");
 
   const { tutorialStep, toggleTutorialMode, setTutorialStep } = useTutorial();
   const isTutorialMode = tutorialStep !== null;
@@ -205,14 +203,6 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       }`}
       onClick={handlePageClick}
     >
-      {/* 플리 추가 토스트 */}
-      {toast === "add" && (
-        <ToastComponent background="white" text={t("addplaylist")} />
-      )}
-      {isTutorialMode && (
-        <div className="fixed inset-0 bg-black bg-opacity-70 z-10"></div>
-      )}
-
       {!isEditing && (
         <MainEditButton
           memberId={memberId}
@@ -284,12 +274,7 @@ const PlayList: React.FC<EditPlsyListDTO> = () => {
       )}
 
       {!isEditing && <Footer bgColor="black" />}
-      {toast === "editPlayList" && (
-        <ToastComponent
-          background="white"
-          text="플레이리스트가 수정되었습니다!"
-        />
-      )}
+     
     </div>
   );
 };

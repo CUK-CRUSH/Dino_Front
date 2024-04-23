@@ -22,7 +22,6 @@ import {
 import { RootState } from "@store/index";
 import { setToast } from "@reducer/Toast/toast";
 import { checkBadWord } from "@utils/checkBadWord/checkBadWord";
-import ToastComponent from "@components/Toast/Toast";
 import { useMemberDataUpdate } from "@hooks/useMemberDataUpdate";
 import { useHandleImageUpdates } from "@hooks/useHandleImageUpdates/useHandleImageUpdates";
 import SetUserProfileNickname from "@components/AdminEdit/SetUserProfileNickname";
@@ -32,6 +31,7 @@ import convertUrlToBlobFile from "@utils/convertFile/convertFile";
 import useHandleUploadImage from "@hooks/useHandleUploadImage/useHandleUploadImage";
 import useCompressHandleImage from "@hooks/useCompressHandleImage/useCompressHandleImage";
 import useResponsiveWidth from "@hooks/useResponsiveWidth/useResponsiveWidth";
+import { notify } from "@utils/toast/toast";
 
 interface AdminEditModalProps {
   onClose: () => void; // A function to close the modal
@@ -243,7 +243,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
 
   useEffect(() => {
     if (!nicknameValidation) {
-      dispatch(setToast("nicknameValidation"));
+      notify('닉네임을 확인해주세요 !',"black")
       return;
     }
   }, [nicknameValidation, dispatch]);
@@ -280,9 +280,7 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
           uploadUserProfileBackgroundImage: uploadUserProfileBackgroundImage,
           deleteBackgroundImage: deleteBackgroundImage,
         });
-        dispatch(setToast("profile"));
         localStorage.setItem("homeUrl", code.data.username); // Set refreshToken in local storage
-
       }
 
       setIsOpen(!isOpen);
@@ -292,8 +290,6 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
       }, 900);
     }
   };
-  // 토스트
-  const { toast } = useSelector((state: RootState) => state.toast);
 
   const handleNotMember = () => {
     dispatch(setToast("nicknameValidation"));
@@ -308,15 +304,6 @@ const AdminEdit: React.FC<AdminEditModalProps> = ({ onClose }) => {
         className={`relative ${modalResponsiveWidth} h-full mt-5 bg-white rounded-t-3xl shadow-lg
         animate-slide-edit-${isOpen ? "in" : "out"}`}
       >
-        {toast === "duplicate" && (
-          <ToastComponent
-            background="black"
-            text="닉네임이 중복되었습니다 ! "
-          />
-        )}
-        {toast === "nicknameValidation" && (
-          <ToastComponent background="black" text="닉네임을 수정해주세요 ! " />
-        )}
 
         {/* 상단 취소/저장 버튼 */}
         <div className="flex justify-between h-[50px]">
