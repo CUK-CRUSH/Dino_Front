@@ -1,0 +1,25 @@
+/* 기본 스타일 */
+.custom-toast {
+    /* 여기에는 기본 스타일 속성을 넣습니다 */
+    border-radius: 16px;
+    text-align: center;
+    margin-bottom: 20px;
+    margin-left: 0;
+    margin-right: 0;
+    font-family: 'Pretendard Medium';
+    height: 10px;
+
+}
+  
+  /* 화면 너비가 768px 이하일 때 적용될 스타일 */
+  @media (max-width: 768px) {
+    .custom-toast {
+      width: 90% !important; /* 모바일 화면에서 너비 조정 */
+      margin-left: 5% !important; /* 왼쪽 마진을 자동으로 설정 */
+      margin-right: 5% !important; /* 오른쪽 마진을 자동으로 설정 */
+      /* 필요에 따라 다른 스타일 속성도 여기에 추가할 수 있습니다 */
+    }
+  }
+  
+ 
+  

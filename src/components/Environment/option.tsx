@@ -13,7 +13,6 @@ import Footer from "@components/Layout/footer";
 import Swal from "sweetalert2";
 import { useCookies } from "react-cookie";
 import OptionHeader from "@components/Layout/optionHeader";
-import ToastComponent from "@components/Toast/Toast";
 import { useRecoilValue } from "recoil";
 import { adminuserNameState } from "@atoms/Admin/adminUsername";
 import defaultImage from "@assets/Admin/defaultImage.svg";
@@ -49,7 +48,6 @@ const OptionComponents = () => {
   const id = sessionStorage.getItem("id");
 
   // 토스트
-  const { toast } = useSelector((state: RootState) => state.toast);
 
   const handleShare = () => {
     if (navigator.share) {
@@ -160,26 +158,11 @@ const OptionComponents = () => {
     (state: RootState) => state.userProfile
   );
 
+  
   return (
     <div className="h-full min-h-screen w-full scrollbar-hide overflow-scroll flex  flex-col bg-white text-black text-[15px] font-medium leading-[18px]">
       <OptionHeader />
-      {/* 프로필 성공 토스트 */}
-
-      {toast === "profile" && (
-        <ToastComponent
-          background="black"
-          text="프로필이 정상적으로 수정되었습니다 !"
-        />
-      )}
-
-      {/* 프로필 실패 토스트 */}
-      {toast === "not_profile" && (
-        <ToastComponent
-          background="black"
-          text="프로필이 수정을 실패했습니다 !"
-        />
-      )}
-
+ 
       {!isLoading && (
         <div className="flex-crow h-full">
           <main className="relative flex py-4">
@@ -279,7 +262,6 @@ const OptionComponents = () => {
               <button onClick={handleUnprepared}>신고</button>
             </div>
           </main>
-          
         </div>
       )}
       {!isLoading && <Footer bgColor="white" />}

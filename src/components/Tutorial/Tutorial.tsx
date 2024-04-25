@@ -11,20 +11,19 @@ interface TutorialProps {
 const Tutorial: React.FC<
   TutorialProps & { setTutorialMode: (step: TutorialStep) => void }
 > = ({ username, setTutorialMode, length }) => {
-  // 컴포넌트 내용...
   const [isVisible, setIsVisible] = useState(true);
   const [token] = useCookies(["accessToken"]);
   const accessToken = token.accessToken;
   const { tutorialStep } = useTutorial();
 
-  // 튜토리얼 닫기 함수
+  // 튜토리얼 진행
   const handleNext = (e: React.MouseEvent) => {
     e.stopPropagation();
     setIsVisible(false);
     setTutorialMode("header");
   };
 
-  // 건너뛰기 함수
+  // 튜토리얼 건너뛰기
   const handleSkip = (e: React.MouseEvent) => {
     // localStorage에 튜토리얼을 본 것으로 표시
     e.stopPropagation();
@@ -35,7 +34,7 @@ const Tutorial: React.FC<
 
   useEffect(() => {
     const tutorialSeen = localStorage.getItem("tutorial");
-    // accessToken이 존재하고, 튜토리얼을 본 적이 없으며, 리스트 길이가 0인 경우에만 모달을 초기에 표시합니다.
+    // accessToken이 존재하고, 튜토리얼을 본 적이 없으며, 리스트 길이가 0인 경우에만 모달을 초기에 표시
     if (!tutorialSeen && accessToken && length === 0 && tutorialStep === null) {
       setIsVisible(true);
     } else {

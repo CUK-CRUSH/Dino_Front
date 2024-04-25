@@ -7,7 +7,6 @@ import Swal from "sweetalert2";
 import { deleteMusicList } from "@api/music-controller/musicControl";
 import { useEffect, useRef, useState } from "react";
 import ToastComponent from "@components/Toast/Toast";
-import { setToast } from "@reducer/Toast/toast";
 import { RootState } from "@store/index";
 import { updateArtist, updateTitle, updateUrl } from "@reducer/musicadd";
 import YouTube from "react-youtube";
@@ -44,6 +43,7 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   const { toast } = useSelector((state: RootState) => state.toast);
   const [titleWidth, setTitleWidth] = useState(0);
   const [artistWidth, setArtistWidth] = useState(0);
+  const [isHidden, setIsHidden] = useState(false);
   const titleRef = useRef<HTMLSpanElement>(null);
   const artistRef = useRef<HTMLSpanElement>(null);
   const contentRef = useRef<HTMLDivElement>(null);
@@ -73,6 +73,7 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
   };
 
   const handleDeleteClick = () => {
+    console.log(musicData.id);
     swalButton
       .fire({
         title: "노래를 삭제하시겠습니까?",
@@ -87,10 +88,15 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
         if (result.isConfirmed) {
           // '취소' 버튼을 눌렀을 때 실행할 코드를 여기에 작성합니다.
         } else if (result.dismiss === Swal.DismissReason.cancel) {
-          // '삭제' 버튼을 눌렀을 때 실행할 코드를 여기에 작성합니다.
           try {
-            await deleteMusicList(musicData.id, token);
-            dispatch(setToast("delete"));
+            await deleteMusicList(
+              Number(playlistId),
+              [{ musicId: String(musicData.id) }], // musicId를 배열로 감싸서 전달
+              token
+            );
+
+            setIsHidden(true);
+            // dispatch(setToast("delete"));
             fetchPlaylist();
           } catch (error) {
             console.log(error);
@@ -143,7 +149,12 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
     }
   };
   return (
-    <div ref={contentRef} className="relative flex justify-between mb-2 mx-2">
+    <div
+      ref={contentRef}
+      className={`relative flex justify-between mb-2 mx-2 ${
+        isHidden ? "hidden" : "block"
+      }`}
+    >
       <div
         style={{
           height:

@@ -18,8 +18,8 @@ const EditMusic: React.FC = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { musicId } = useParams();
+  const { playlistId } = useParams<{ playlistId: string }>();
   const labels = useSelector((state: RootState) => state.labels);
-  // recoil에서 id에 맞는 title, artist 가져옴(빈칸채우기)
 
   // 쿠키에서 유저 id 가져오기
   const [cookies] = useCookies(["accessToken"]);
@@ -89,7 +89,15 @@ const EditMusic: React.FC = () => {
     }
 
     try {
-      await patchMusicList(String(musicId), title, artist, url, token);
+      const musicList = [
+        {
+          musicId: String(musicId),
+          title,
+          artist,
+          url,
+        },
+      ];
+      await patchMusicList(String(playlistId), musicList, token);
       dispatch(updateTitle(""));
       dispatch(updateArtist(""));
       dispatch(updateUrl(""));

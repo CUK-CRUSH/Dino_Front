@@ -7,7 +7,6 @@ import { PlayList } from "@components/Admin/playlist/PlayList";
 import { getMemberUsername } from "@api/member-controller/memberController";
 import { getMemberDTO, getPlaylistDTO } from "types/Admin";
 import { useParams } from "react-router-dom";
-import ToastComponent from "@components/Toast/Toast";
 import { useDispatch, useSelector } from "react-redux";
 import { AppDispatch, RootState } from "@store/index";
 import Footer from "@components/Layout/footer";
@@ -18,7 +17,6 @@ import ShareImg from "@assets/Share.svg";
 import { Img } from "react-image";
 import SkeltonPlaylist from "./SkeltonPlaylist";
 import { useCustomPlaylistMargin } from "@hooks/useCustomMargin/useCustomPlaylistMargin";
-import { useTranslation } from "react-i18next";
 import { fetchPlaylistData } from "@reducer/Admin/adminPlaylist";
 import { useSetRecoilState } from "recoil";
 import { adminuserNameState } from "@atoms/Admin/adminUsername";
@@ -125,11 +123,6 @@ const AdminPage: React.FC = () => {
     return () => clearTimeout(timer); // 컴포넌트 언마운트 시 타이머 정리
   }, []); // 의존성 배열이 비어 있으므로 컴포넌트가 마운트될 때 한 번만 실행
 
-  // 토스트
-  const { toast } = useSelector((state: RootState) => state.toast);
-
-  const { t } = useTranslation("AdminAdmin");
-
   // 권한부여
   const authority = useCompareToken(userData && userData?.id);
 
@@ -194,18 +187,6 @@ const AdminPage: React.FC = () => {
       <UserProfileBackground
         userBackgroundImage={userData?.backgroundImageUrl}
       />
-
-      {/* 로그인 성공 토스트 */}
-
-      {toast === "login" && (
-        <ToastComponent background="white" text={t("login")} />
-      )}
-
-      {/* 복사 성공 토스트 */}
-
-      {toast === "copy" && (
-        <ToastComponent background="white" text={t("link")} />
-      )}
 
       {/* 검은화면 */}
       <main
