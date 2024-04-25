@@ -97,7 +97,7 @@ export const MusicDataRowContent: React.FC<MusicDataRowContentProps> = ({
             );
 
             setIsHidden(true);
-            dispatch(setToast("delete"));
+            // dispatch(setToast("delete"));
             fetchPlaylist();
           } catch (error) {
             console.log(error);
