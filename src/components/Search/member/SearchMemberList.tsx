@@ -22,7 +22,7 @@ const SearchMemberList: React.FC<SearchMemberProps> = ({ searchResults,size, mar
     const { windowSize } = useWindowSizeCustom();
     const customMargin = useCustomPlaylistMargin();
   return (
-    <div className="py-4">
+    <div className="py-[4%]">
 
       {searchResults && searchResults.map((member) => (
         <div className={`flex flex-row cursor-pointer relative  `} style={{ marginBottom: marginY }}  key={member.id} onClick={() => handleNavigate(member.username)}>

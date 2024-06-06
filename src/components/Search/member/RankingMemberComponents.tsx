@@ -34,7 +34,7 @@ const RankingMemberComponents: React.FC<SearchMemberProps> = ({ rank, member, si
 
   const { windowSize } = useWindowSizeCustom();
   return (
-    <div className="">
+    <div className="py-[4%]">
 
       {member &&
         <div
@@ -62,7 +62,6 @@ const RankingMemberComponents: React.FC<SearchMemberProps> = ({ rank, member, si
 
         </div>
       }
-      <div className="bg-transparents h-[20px]" />
     </div>
   )
 }

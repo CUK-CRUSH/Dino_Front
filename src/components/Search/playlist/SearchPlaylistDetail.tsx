@@ -6,8 +6,6 @@ import { getPlaylistDTO } from 'types/Admin';
 import { useInView } from 'react-intersection-observer';
 import OptionHeader from '@components/Layout/optionHeader';
 import QueryText from '../part/QueryText';
-import SkeltonPlaylist from '@components/Admin/SkeltonPlaylist';
-import { useCustomPlaylistMargin } from '@hooks/useCustomMargin/useCustomPlaylistMargin';
 import InfiniteDiv from '@components/InfiniteDiv/InfiniteDiv';
 
 const SearchPlaylistDetail: React.FC = () => {
@@ -15,10 +13,7 @@ const SearchPlaylistDetail: React.FC = () => {
   const [view, inView] = useInView();
   const [isLast, setLast] = useState<boolean>(false);
   const [page, setPage] = useState(0); // 현재 페이지를 저장할 상태
-  const [isLoading, setIsLoding] = useState<boolean>(true);
   
-  // skelton margin
-  const customMargin = useCustomPlaylistMargin();
   // URL 파라미터 읽기
   const searchParams = new URLSearchParams(location.search);
   const query = searchParams.get('query');
@@ -29,7 +24,7 @@ const SearchPlaylistDetail: React.FC = () => {
   // API 호출
   const fetchData = async () => {
     try {
-      const searchResult = await getSearchPlaylist(query, page,setIsLoding);
+      const searchResult = await getSearchPlaylist(query, page);
       setPlaylistdata([...playlistData, ...searchResult.data]); // 기존 데이터에 새로운 데이터를 추가
       setPage((page) => page + 1);
 
@@ -61,8 +56,6 @@ const SearchPlaylistDetail: React.FC = () => {
       {query && <QueryText query={query} />}
       <p className='p-4'> 플레이리스트 </p>
       
-      {isLoading && <SkeltonPlaylist customMargin={customMargin} /> }
-
       {playlistData &&
         playlistData.map((playlist: getPlaylistDTO, index: number) => (
           <PlayList key={playlist.id} playlist={playlist} fontColor='#000' visible={true} />
