@@ -3,7 +3,7 @@ import OptionHeader from "@components/Layout/optionHeader";
 import { fetchFavoriteList } from "@reducer/Favorites/favorites";
 import { AppDispatch, RootState } from "@store/index";
 
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef} from "react";
 import { useCookies } from "react-cookie";
 import { useDispatch, useSelector } from "react-redux";
 import { getPlaylistDTO } from "types/Admin";
