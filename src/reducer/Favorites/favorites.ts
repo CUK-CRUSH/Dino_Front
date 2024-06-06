@@ -3,8 +3,8 @@ import { createAsyncThunk, createSlice } from "@reduxjs/toolkit";
 import { AppDispatch, RootState } from "@store/index";
 
 interface FetchFavoriteListDTO {
-  token : string | undefined;
   page: number;
+  token : string;
 }
 
 interface favoriteList {
@@ -17,17 +17,12 @@ interface favoriteList {
   isLike?: boolean,
 }
 
-export const fetchReset = () => {
-  
-  return;
-}
-
 export const fetchFavoriteList = createAsyncThunk<
   favoriteList[],
   FetchFavoriteListDTO,
   { dispatch: AppDispatch; state: RootState }
->("favoriteList/fetchFavoriteList", async ({ token, page }) => {
-  const response = await getFavoritesPlayList(token, page);
+>("favoriteList/fetchFavoriteList", async ({ page, token }) => {
+  const response = await getFavoritesPlayList(page, token);
   if (!response.data) {
     throw new Error("API Response is missing data field");
   }
@@ -64,7 +59,6 @@ export const favoriteListSlice = createSlice({
           state.favoriteList = [...state.favoriteList, ...action.payload];
         }
         state.currentPage += 1;
-        
         if(action.payload.length < 8) {
           state.isLast = true;  
         }

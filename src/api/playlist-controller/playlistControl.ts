@@ -239,8 +239,8 @@ export const getLikeList = async (playlistId: number, page: any = "0") => {
 
 // 좋아요한 플레이리스트 조회
 export const getFavoritesPlayList = async (
+  page: number,
   cookies?: string,
-  page: any = "0",
   setIsLoading?: (loading: boolean) => void
 ) => {
   try {
