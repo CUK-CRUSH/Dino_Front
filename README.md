@@ -1,7 +1,7 @@
 # MyList
 
 ### 배포 주소
-
+---
 MyList : https://mylist.im/
 
 ### 기술 스택
